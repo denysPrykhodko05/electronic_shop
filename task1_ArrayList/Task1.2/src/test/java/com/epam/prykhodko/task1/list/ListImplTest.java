@@ -5,6 +5,7 @@ import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Telephone;
 import org.junit.jupiter.api.Assertions;
 
+import java.awt.*;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -82,23 +83,10 @@ class ListImplTest {
         telephone.setCommunicationStandard("4G");
         list.add(telephone);
         Iterator it = list.iterator();
-        it.next();
         it.remove();
         int expected = 0;
         int actual = list.size();
         assertEquals(expected, actual);
-    }
-
-    @org.junit.jupiter.api.Test
-    void iterator_remove_WithoutNext_ExceptionExpected() {
-        ListImpl list = new ListImpl();
-        Telephone telephone = new Telephone();
-        telephone.setCommunicationStandard("4G");
-        list.add(telephone);
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            Iterator it = list.iterator();
-            it.remove();
-        });
     }
 
     @org.junit.jupiter.api.Test
@@ -197,4 +185,32 @@ class ListImplTest {
             list.get(3);
         });
     }
+
+    @org.junit.jupiter.api.Test
+    void toArray_ExpectedTrue(){
+        ListImpl list = new ListImpl();
+        int actual = list.toArray().length;
+        int expected = 10;
+        assertEquals(actual,expected);
+    }
+
+    @org.junit.jupiter.api.Test
+    void containsAll_ExpectedTrue(){
+        ListImpl list = new ListImpl();
+        ListImpl list2 = new ListImpl();
+        list.add(new Telephone());
+        list.add(new Telephone());
+        list.add(new Notebook());
+
+        list2.add(new Telephone());
+        list2.add(new Telephone());
+        list2.add(new Notebook());
+
+        boolean actual = list.containsAll(list2);
+        boolean expected = true;
+        assertEquals(expected,actual);
+    }
+
+
+
 }

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
@@ -42,33 +43,11 @@ public class ListImpl<T extends Product> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> it = new Iterator<T>() {
+        return iterator(t -> true);
+    }
 
-            private boolean nextCall = false;
-            private int currentIndex = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < size && innerArray[currentIndex] != null;
-            }
-
-            @Override
-            public T next() {
-                nextCall = true;
-                return innerArray[currentIndex++];
-            }
-
-            @Override
-            public void remove() {
-                if (nextCall) {
-                    nextCall = false;
-                    ListImpl.this.remove(size - 1);
-                    return;
-                }
-                throw new IllegalStateException();
-            }
-        };
-        return it;
+    public Iterator<T> iterator(Predicate<T> predicate) {
+        return new IteratorImpl<T>(predicate, this);
     }
 
     @Override
@@ -100,8 +79,12 @@ public class ListImpl<T extends Product> implements List<T> {
     public boolean containsAll(Collection collection) {
         checkCollectionClass(collection);
         for (Object o : collection) {
-            if (!contains(o)) {
-                return false;
+            try {
+                if (!contains(o)) {
+                    return false;
+                }
+            }catch (NullPointerException ex){
+                break;
             }
         }
         return true;
@@ -256,9 +239,12 @@ public class ListImpl<T extends Product> implements List<T> {
 
     private void checkCollectionClass(Collection collection) {
         checkCollectionOnNull(collection);
+
         for (Object o : collection) {
-            if (!(o instanceof Product)) {
-                throw new ClassCastException();
+            try {
+                checkElementClass(o);
+            }catch (NullPointerException e){
+                break;
             }
         }
     }
