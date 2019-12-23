@@ -56,16 +56,6 @@ class ListImplTest {
     }
 
     @Test
-    void comtainsShouldThrowClassCastException() {
-        ListImpl list = new ListImpl();
-
-        Assertions.assertThrows(ClassCastException.class, () -> {
-            list.add(new Telephone());
-            list.contains(new String());
-        });
-    }
-
-    @Test
     void hasNextShouldReturnFalse() {
         ListImpl list = new ListImpl();
 
@@ -156,7 +146,7 @@ class ListImplTest {
     }
 
     @Test
-    void removeShouldReturnFalse() {
+    void removeShouldThrowNullPointerEception() {
         ListImpl list = new ListImpl();
         Telephone telephone = new Telephone();
         Telephone telephone2 = new Telephone();
@@ -164,10 +154,11 @@ class ListImplTest {
         telephone2.setCommunicationStandard("4G");
         list.add(telephone);
 
-        boolean expected = false;
-        boolean actual = list.remove(telephone2);
 
-        assertEquals(expected, actual);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            list.add(new Telephone());
+            list.contains(new Telephone());
+        });
     }
 
     @Test
