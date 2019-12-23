@@ -40,7 +40,6 @@ public class ListImpl implements List<Product> {
 
     @Override
     public boolean contains(Object o) {
-        checkElementOnNull(o);
         return indexOf(o) > INTEGER_MINUS_ONE;
     }
 
@@ -61,10 +60,6 @@ public class ListImpl implements List<Product> {
 
     @Override
     public Object[] toArray(Object[] objects) {
-
-        if (objects == null) {
-            throw new NullPointerException();
-        }
 
         if (!(objects instanceof Product[])) {
             throw new ArrayStoreException();
@@ -96,7 +91,6 @@ public class ListImpl implements List<Product> {
 
     @Override
     public boolean containsAll(Collection collection) {
-        checkCollectionOnNull(collection);
         for (Object o : collection) {
             try {
                 if (!contains(o)) {
@@ -117,7 +111,6 @@ public class ListImpl implements List<Product> {
 
     @Override
     public boolean addAll(int i, Collection<? extends Product> collection) {
-        checkCollectionOnNull(collection);
         checkIndex(i);
 
         Product[] tempArray = new Product[innerArray.length + collection.size()];
@@ -130,12 +123,11 @@ public class ListImpl implements List<Product> {
 
     @Override
     public boolean removeAll(Collection collection) {
-        checkCollectionOnNull(collection);
-        int oldSize=size;
+        int oldSize = size;
         for (Object o : collection) {
             remove(o);
         }
-        if (oldSize!=size){
+        if (oldSize != size) {
             return true;
         }
         return false;
@@ -143,9 +135,8 @@ public class ListImpl implements List<Product> {
 
     @Override
     public boolean retainAll(Collection collection) {
-        checkCollectionOnNull(collection);
         Product[] tempArray = new Product[innerArray.length];
-        int oldSize=size;
+        int oldSize = size;
         int tempSize = INTEGER_ZERO;
         for (Object o : collection) {
             if (contains(o)) {
@@ -153,7 +144,7 @@ public class ListImpl implements List<Product> {
             }
         }
         size = tempSize;
-        if (oldSize!=size) {
+        if (oldSize != size) {
             return true;
         }
         return false;
@@ -174,7 +165,6 @@ public class ListImpl implements List<Product> {
     @Override
     public Product set(int i, Product o) {
         checkIndex(i);
-        checkElementOnNull(o);
         Product oldElement = innerArray[i];
         innerArray[i] = o;
         return oldElement;
@@ -183,7 +173,6 @@ public class ListImpl implements List<Product> {
     @Override
     public void add(int i, Product o) {
         checkIndex(i);
-        checkElementOnNull(o);
         if (size >= innerArray.length * 0.8) {
             Product[] tempArr = Arrays.copyOf(innerArray, size);
             innerArray = new Product[size + size / INTEGER_TWO + INTEGER_ONE];
@@ -221,8 +210,7 @@ public class ListImpl implements List<Product> {
 
     @Override
     public int lastIndexOf(Object o) {
-        checkElementOnNull(o);
-        for (int i = size-1; i != 0; i--) {
+        for (int i = size - 1; i != 0; i--) {
             if (innerArray[i].equals(o)) {
                 return i;
             }
@@ -248,18 +236,6 @@ public class ListImpl implements List<Product> {
     private void checkIndex(int i) {
         if (i < INTEGER_ZERO || i > size) {
             throw new IndexOutOfBoundsException();
-        }
-    }
-
-    private void checkCollectionOnNull(Collection collection) {
-        if (collection == null) {
-            throw new NullPointerException();
-        }
-    }
-
-    private void checkElementOnNull(Object o) {
-        if (o == null) {
-            throw new NullPointerException();
         }
     }
 
