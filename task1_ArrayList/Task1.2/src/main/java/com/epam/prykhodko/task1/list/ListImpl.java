@@ -2,11 +2,13 @@ package com.epam.prykhodko.task1.list;
 
 import com.epam.prykhodko.task1.entity.Product;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -15,14 +17,15 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_TWO;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-public class ListImpl<T extends Product> implements List<T> {
+public class ListImpl implements List<Product> {
 
-    public static final int DEFAULT_CAPACITY = 10;
-    private T[] innerArray;
+    private static final int DEFAULT_CAPACITY = 10;
+
+    private Product[] innerArray;
     private int size = INTEGER_ZERO;
 
     ListImpl() {
-        innerArray = (T[]) new Product[DEFAULT_CAPACITY];
+        innerArray = new Product[DEFAULT_CAPACITY];
     }
 
     @Override
@@ -37,17 +40,18 @@ public class ListImpl<T extends Product> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        checkElementClass(o);
+        checkElementOnNull(o);
         return indexOf(o) > INTEGER_MINUS_ONE;
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<Product> iterator() {
         return iterator(t -> true);
     }
 
-    public Iterator<T> iterator(Predicate<T> predicate) {
-        return new IteratorImpl<T>(predicate, this);
+    public Iterator<Product> iterator(Predicate<Product> predicate) {
+        return new IteratorImpl(predicate);
+
     }
 
     @Override
@@ -57,33 +61,48 @@ public class ListImpl<T extends Product> implements List<T> {
 
     @Override
     public Object[] toArray(Object[] objects) {
-        return toArray();
+
+        if (objects == null) {
+            throw new NullPointerException();
+        }
+
+        if (!(objects instanceof Product[])) {
+            throw new ArrayStoreException();
+        }
+
+        if (objects.length < size) {
+            objects = new Object[size];
+            return Arrays.copyOf(innerArray, size, objects.getClass());
+        }
+        return Arrays.copyOf(innerArray, size, objects.getClass());
     }
 
     @Override
-    public boolean add(T o) {
+    public boolean add(Product o) {
         add(size, o);
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        if (!contains(o)) {
-            return false;
+        int position = indexOf(o);
+
+        if (position > INTEGER_MINUS_ONE) {
+            remove(position);
+            return true;
         }
-        remove(indexOf(o));
-        return true;
+        return false;
     }
 
     @Override
     public boolean containsAll(Collection collection) {
-        checkCollectionClass(collection);
+        checkCollectionOnNull(collection);
         for (Object o : collection) {
             try {
                 if (!contains(o)) {
                     return false;
                 }
-            }catch (NullPointerException ex){
+            } catch (NullPointerException ex) {
                 break;
             }
         }
@@ -91,17 +110,17 @@ public class ListImpl<T extends Product> implements List<T> {
     }
 
     @Override
-    public boolean addAll(Collection collection) {
+    public boolean addAll(Collection<? extends Product> collection) {
         addAll(size, collection);
         return true;
     }
 
     @Override
-    public boolean addAll(int i, Collection collection) {
+    public boolean addAll(int i, Collection<? extends Product> collection) {
+        checkCollectionOnNull(collection);
         checkIndex(i);
-        checkCollectionClass(collection);
 
-        T[] tempArray = (T[]) new Product[innerArray.length + collection.size()];
+        Product[] tempArray = new Product[innerArray.length + collection.size()];
         System.arraycopy(innerArray, 0, tempArray, 0, i);
         System.arraycopy(collection.toArray(), 0, tempArray, i, collection.size());
         System.arraycopy(innerArray, i, tempArray, i + collection.size(), size);
@@ -111,71 +130,79 @@ public class ListImpl<T extends Product> implements List<T> {
 
     @Override
     public boolean removeAll(Collection collection) {
-        checkCollectionClass(collection);
+        checkCollectionOnNull(collection);
+        int oldSize=size;
         for (Object o : collection) {
             remove(o);
+        }
+        if (oldSize!=size){
+            return true;
         }
         return false;
     }
 
     @Override
     public boolean retainAll(Collection collection) {
-        checkCollectionClass(collection);
-        T[] tempArray = (T[]) new Product[innerArray.length];
-        int tempSize = 0;
+        checkCollectionOnNull(collection);
+        Product[] tempArray = new Product[innerArray.length];
+        int oldSize=size;
+        int tempSize = INTEGER_ZERO;
         for (Object o : collection) {
             if (contains(o)) {
-                tempArray[tempSize++] = (T) o;
+                tempArray[tempSize++] = (Product) o;
             }
         }
         size = tempSize;
-        return true;
+        if (oldSize!=size) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void clear() {
-        innerArray = (T[]) new Product[DEFAULT_CAPACITY];
+        innerArray = new Product[DEFAULT_CAPACITY];
         size = 0;
     }
 
     @Override
-    public T get(int i) {
+    public Product get(int i) {
         checkIndex(i);
         return innerArray[i];
     }
 
     @Override
-    public T set(int i, T o) {
+    public Product set(int i, Product o) {
         checkIndex(i);
         checkElementOnNull(o);
-        T oldElement = innerArray[i];
+        Product oldElement = innerArray[i];
         innerArray[i] = o;
         return oldElement;
     }
 
     @Override
-    public void add(int i, T o) {
+    public void add(int i, Product o) {
         checkIndex(i);
         checkElementOnNull(o);
         if (size >= innerArray.length * 0.8) {
             Product[] tempArr = Arrays.copyOf(innerArray, size);
-            innerArray = (T[]) new Product[size + size / INTEGER_TWO + INTEGER_ONE];
-            innerArray = (T[]) Arrays.copyOf(tempArr, innerArray.length);
+            innerArray = new Product[size + size / INTEGER_TWO + INTEGER_ONE];
+            innerArray = Arrays.copyOf(tempArr, innerArray.length);
         }
         innerArray[size++] = o;
     }
 
     @Override
-    public T remove(int i) {
-        T removableProduct;
+    public Product remove(int i) {
+        Product removableProduct;
         checkIndex(i);
 
         for (int j = i; j < size - 1; j++) {
-            T temp = innerArray[j];
+            Product temp = innerArray[j];
             innerArray[j] = innerArray[j + INTEGER_ONE];
             innerArray[j + INTEGER_ONE] = temp;
         }
-        removableProduct = (T) innerArray[size - INTEGER_ONE];
+        removableProduct = innerArray[size - INTEGER_ONE];
         innerArray[size - INTEGER_ONE] = null;
         size--;
 
@@ -194,14 +221,13 @@ public class ListImpl<T extends Product> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        checkElementClass(o);
-        int temp = INTEGER_MINUS_ONE;
-        for (int i = 0; i < size; i++) {
+        checkElementOnNull(o);
+        for (int i = size-1; i != 0; i--) {
             if (innerArray[i].equals(o)) {
-                temp = i;
+                return i;
             }
         }
-        return temp;
+        return INTEGER_MINUS_ONE;
     }
 
     @Override
@@ -237,22 +263,45 @@ public class ListImpl<T extends Product> implements List<T> {
         }
     }
 
-    private void checkCollectionClass(Collection collection) {
-        checkCollectionOnNull(collection);
+    class IteratorImpl implements Iterator<Product> {
 
-        for (Object o : collection) {
-            try {
-                checkElementClass(o);
-            }catch (NullPointerException e){
-                break;
-            }
+        private int size;
+        private int currentIndex = 0;
+        private Predicate<Product> predicate;
+        boolean result = false;
+
+        public IteratorImpl(Predicate<Product> predicate) {
+            this.predicate = predicate;
+            this.size = size();
         }
-    }
 
-    private void checkElementClass(Object o) {
-        checkElementOnNull(o);
-        if (!(o instanceof Product)) {
-            throw new ClassCastException();
+        @Override
+        public boolean hasNext() {
+            while (currentIndex < size) {
+                if (predicate.test(innerArray[currentIndex])) {
+                    result = true;
+                    break;
+                }
+                currentIndex++;
+            }
+            return result;
+        }
+
+        @Override
+        public Product next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            result = false;
+            return innerArray[currentIndex++];
+        }
+
+        @Override
+        public void remove() {
+            Product temp = next();
+            if (temp != null) {
+                ListImpl.this.remove(temp);
+            }
         }
     }
 }

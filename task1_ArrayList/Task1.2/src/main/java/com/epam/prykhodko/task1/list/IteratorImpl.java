@@ -1,3 +1,4 @@
+/*
 package com.epam.prykhodko.task1.list;
 
 import java.util.Iterator;
@@ -46,3 +47,4 @@ public class IteratorImpl<T> implements Iterator<T> {
         }
     }
 }
+*/

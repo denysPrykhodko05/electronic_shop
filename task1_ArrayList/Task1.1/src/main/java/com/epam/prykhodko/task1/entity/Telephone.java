@@ -1,14 +1,17 @@
 package com.epam.prykhodko.task1.entity;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 public class Telephone extends Product {
 
     private String communicationStandard;
 
-    public Telephone(){
+    public Telephone() {
 
     }
 
-    public Telephone(int id, double price, String manufacturer, String communicationStandard) {
+    public Telephone(int id, BigDecimal price, String manufacturer, String communicationStandard) {
         super(id, price, manufacturer);
         this.communicationStandard = communicationStandard;
     }
@@ -22,15 +25,22 @@ public class Telephone extends Product {
     }
 
     @Override
-    public String toString() {
-        return "communicationStandard='" + communicationStandard + '\'';
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) {
+            return false;
+        }
         Telephone telephone = (Telephone) o;
         return communicationStandard.equals(telephone.communicationStandard);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), communicationStandard);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "communicationStandard='" + communicationStandard + '\'';
+    }
+
 }

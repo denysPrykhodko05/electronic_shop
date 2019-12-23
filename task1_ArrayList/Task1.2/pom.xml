@@ -10,6 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Task1.2</artifactId>
+
+    <properties>
+        <junit.version>5.5.2</junit.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.example</groupId>
@@ -20,12 +26,12 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.5.2</version>
+            <version>${junit.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
     </dependencies>
 

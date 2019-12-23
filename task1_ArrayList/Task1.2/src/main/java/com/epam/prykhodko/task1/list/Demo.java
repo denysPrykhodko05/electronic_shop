@@ -13,16 +13,25 @@ public class Demo {
         ListImpl list = new ListImpl();
         ListImpl list2 = new ListImpl();
 
-        list.add(new Telephone());
-        list.add(new Smartphone());
-        list.add(new Notebook());
+        Telephone telephone = new Telephone();
+        Smartphone smartphone = new Smartphone();
+        Notebook notebook = new Notebook();
 
-        list2.add(new Telephone());
-        list2.add(new Smartphone());
+        telephone.setCommunicationStandard("4G");
+        smartphone.setModelOfTouchScreen("motorola");
+        notebook.setModelOfTouchpad("asus");
 
-        list.containsAll(list2);
+        list.add(telephone);
+        list.add(smartphone);
+        list.add(telephone);
+        list.add(notebook);
 
-        Iterator it = list.iterator(x->x.equals(new Notebook()));
+        Product[] products = new Product[0];
+
+        list.toArray(products);
+        list.lastIndexOf(telephone);
+        list.stream().forEach(System.out::println);
+        Iterator it = list.iterator();
         it.remove();
     }
 

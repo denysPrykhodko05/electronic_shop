@@ -1,5 +1,6 @@
 package com.epam.prykhodko.task1.entity;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Notebook extends Product {
@@ -9,9 +10,9 @@ public class Notebook extends Product {
     public Notebook() {
     }
 
-    public Notebook(int id, double price, String manufacturer, String modelOfTouchpad) {
+    public Notebook(int id, BigDecimal price, String manufacturer, String modelOfTouchpad) {
         super(id, price, manufacturer);
-        this.modelOfTouchpad=modelOfTouchpad;
+        this.modelOfTouchpad = modelOfTouchpad;
     }
 
     public String getModelOfTouchpad() {
@@ -24,14 +25,20 @@ public class Notebook extends Product {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) {
+            return false;
+        }
         Notebook notebook = (Notebook) o;
         return Objects.equals(modelOfTouchpad, notebook.modelOfTouchpad);
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(modelOfTouchpad);
+    }
+
+    @Override
     public String toString() {
-        return "modelOfTouchpad='" + modelOfTouchpad + '\'';
+        return super.toString() + "modelOfTouchpad='" + modelOfTouchpad + '\'';
     }
 }
