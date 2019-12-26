@@ -1,14 +1,13 @@
-package com.epam.prykhodko.failSafeList;
+package com.epam.prykhodko.list;
 
 import com.epam.prykhodko.task1.entity.Notebook;
-import com.epam.prykhodko.task1.entity.Smartphone;
 import com.epam.prykhodko.task1.entity.Telephone;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FailSafeListTest {
+public class FailSafeListTest {
 
     @Test
     void addSizeShouldBeEqualOne() {

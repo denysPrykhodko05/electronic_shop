@@ -1,4 +1,4 @@
-package com.epam.prykhodko.failSafeList;
+package com.epam.prykhodko.list;
 
 import com.epam.prykhodko.task1.entity.Product;
 
