@@ -4,12 +4,9 @@ import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.list.ListImpl;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;

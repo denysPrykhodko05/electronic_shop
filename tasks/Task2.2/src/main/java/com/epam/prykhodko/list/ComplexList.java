@@ -60,7 +60,7 @@ public class ComplexList implements List<String> {
     @Override
     public boolean remove(Object o) {
         int index = indexOf(o);
-        if (index > unMod.size()) {
+        if (index >= unMod.size()) {
             remove(indexOf(o));
             return true;
         }
@@ -82,7 +82,7 @@ public class ComplexList implements List<String> {
 
     @Override
     public void clear() {
-       throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -100,8 +100,9 @@ public class ComplexList implements List<String> {
         if (i < unMod.size()) {
             throw new UnsupportedOperationException();
         }
+        String prevEl = mod.get(i - unMod.size());
         mod.set(i - unMod.size(), o);
-        return null;
+        return prevEl;
     }
 
     @Override
@@ -131,42 +132,40 @@ public class ComplexList implements List<String> {
         if (index > INTEGER_MINUS_ONE) {
             return index;
         }
-        index = mod.indexOf(o);
-        return index;
+        return mod.indexOf(o) + unMod.size();
     }
 
     @Override
     public int lastIndexOf(Object o) {
         int index = mod.lastIndexOf(o);
         if (index > INTEGER_MINUS_ONE) {
-            return index;
+            return index + unMod.size();
         }
         return unMod.lastIndexOf(o);
     }
 
     @Override
     public ListIterator listIterator() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ListIterator listIterator(int i) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List subList(int i, int i1) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean retainAll(Collection collection) {
         for (Object o : collection) {
-            if (unMod.contains(o)) {
+            if (!unMod.contains(o)) {
                 throw new UnsupportedOperationException();
             }
         }
-
         return mod.retainAll(collection);
     }
 
@@ -192,7 +191,11 @@ public class ComplexList implements List<String> {
 
     @Override
     public Object[] toArray(Object[] objects) {
-        return new Object[0];
+        if (objects.length < size()) {
+            objects = new Object[size()];
+        }
+        System.arraycopy(toArray(), 0, objects, 0, size());
+        return objects;
     }
 
     private void checkIndex(int i) {
@@ -218,10 +221,12 @@ public class ComplexList implements List<String> {
         @Override
         public Object next() {
             nextCalled = true;
-            if (currentIndex < unMod.size()) {
-                return unMod.get(currentIndex);
+            int index = currentIndex;
+            currentIndex++;
+            if (index < unMod.size()) {
+                return unMod.get(index);
             }
-            return mod.get(currentIndex - unMod.size());
+            return mod.get(index - unMod.size());
         }
 
         @Override

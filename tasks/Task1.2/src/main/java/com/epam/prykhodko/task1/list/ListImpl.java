@@ -2,7 +2,6 @@ package com.epam.prykhodko.task1.list;
 
 import com.epam.prykhodko.task1.entity.Product;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -24,7 +23,7 @@ public class ListImpl implements List<Product> {
     private Product[] innerArray;
     private int size = INTEGER_ZERO;
 
-    ListImpl() {
+    public ListImpl() {
         innerArray = new Product[DEFAULT_CAPACITY];
     }
 
