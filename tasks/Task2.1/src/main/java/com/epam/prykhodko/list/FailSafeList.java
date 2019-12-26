@@ -147,7 +147,9 @@ public class FailSafeList implements List<Product> {
     public boolean removeAll(Collection collection) {
         int oldSize = size;
         for (Object o : collection) {
-            remove(o);
+            if (remove(o)) {
+                removeAll(collection);
+            }
         }
         return oldSize != size;
     }

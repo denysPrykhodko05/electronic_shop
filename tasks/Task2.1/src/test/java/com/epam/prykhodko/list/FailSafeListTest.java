@@ -123,6 +123,7 @@ public class FailSafeListTest {
 
         failSafeList.add(telephone);
         failSafeList.add(notebook);
+        failSafeList.add(notebook);
         failSafeList1.add(notebook);
         failSafeList.removeAll(failSafeList1);
 
