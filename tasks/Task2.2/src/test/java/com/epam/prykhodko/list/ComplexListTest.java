@@ -136,7 +136,6 @@ class ComplexListTest {
     void removeObjectShouldThrowIllegalStateException() {
         ComplexList complexList = new ComplexList(Arrays.asList("1", "2", "3"), Arrays.asList());
 
-
         Assertions.assertThrows(IllegalStateException.class, () -> {
             complexList.remove("8");
         });

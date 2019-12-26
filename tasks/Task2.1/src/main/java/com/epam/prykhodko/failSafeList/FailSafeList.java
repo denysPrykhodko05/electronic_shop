@@ -100,9 +100,9 @@ public class FailSafeList implements List<Product> {
     @Override
     public boolean containsAll(Collection<?> collection) {
         for (Object o : collection) {
-                if (!contains(o)) {
-                    return false;
-                }
+            if (!contains(o)) {
+                return false;
+            }
         }
         return true;
     }
@@ -121,6 +121,7 @@ public class FailSafeList implements List<Product> {
         System.arraycopy(innerArray, 0, tempArray, 0, i);
         System.arraycopy(collection.toArray(), 0, tempArray, i, collection.size());
         System.arraycopy(innerArray, i, tempArray, i + collection.size(), size);
+        size += collection.size();
         innerArray = tempArray;
         return true;
     }
