@@ -1,11 +1,9 @@
-package com.epam.prykhodko.fail_safe_list;
+package com.epam.prykhodko.failSafeList;
 
 import com.epam.prykhodko.task1.entity.Product;
-import com.epam.prykhodko.task1.list.ListImpl;
 
 import java.util.List;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -102,13 +100,9 @@ public class FailSafeList implements List<Product> {
     @Override
     public boolean containsAll(Collection<?> collection) {
         for (Object o : collection) {
-            try {
                 if (!contains(o)) {
                     return false;
                 }
-            } catch (NullPointerException ex) {
-                break;
-            }
         }
         return true;
     }
@@ -161,7 +155,7 @@ public class FailSafeList implements List<Product> {
     public void clear() {
         innerArray = Arrays.copyOf(innerArray, innerArray.length);
         innerArray = new Product[DEFAULT_CAPACITY];
-        size = 0;
+        size = INTEGER_ZERO;
     }
 
     @Override
@@ -206,7 +200,7 @@ public class FailSafeList implements List<Product> {
                 return i;
             }
         }
-        return -1;
+        return INTEGER_MINUS_ONE;
     }
 
     @Override
@@ -260,9 +254,9 @@ public class FailSafeList implements List<Product> {
 
         private int size;
         private int currentIndex = INTEGER_ZERO;
-        private Predicate<Product> predicate;
+        private final Predicate<Product> predicate;
         boolean result = false;
-        Product[] snapshot;
+        private final Product[] snapshot;
 
         public IteratorImpl(Predicate<Product> predicate, Product[] array, int size) {
             snapshot = array;

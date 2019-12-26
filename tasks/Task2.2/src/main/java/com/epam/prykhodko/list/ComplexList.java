@@ -1,7 +1,6 @@
 package com.epam.prykhodko.list;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -10,14 +9,14 @@ import java.util.ListIterator;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-public class ComplexList implements List<String> {
+public class ComplexList<T> implements List<T> {
 
-    private List<String> mod = new ArrayList<>();
-    private List<String> unMod = new ArrayList<>(Arrays.asList("1", "2", "3"));
-    private int size;
+    private List<T> mod;
+    private List<T> unMod;
 
-    public ComplexList() {
-        size = unMod.size() + mod.size();
+    public ComplexList(List<T> list, List<T> list1) {
+        unMod = new ArrayList<>(list);
+        mod = new ArrayList<>(list1);
     }
 
     @Override
@@ -27,44 +26,39 @@ public class ComplexList implements List<String> {
 
     @Override
     public boolean isEmpty() {
-        return unMod.size() + mod.size() == 0;
+        return unMod.size() + mod.size() == INTEGER_ZERO;
     }
 
     @Override
     public boolean contains(Object o) {
-        if (unMod.contains(o)) {
-            return true;
-        }
-        return mod.contains(o);
+        return mod.contains(o) || unMod.contains(o);
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new IteratorImpl();
     }
 
     @Override
     public Object[] toArray() {
         Object[] temp = new Object[unMod.size() + mod.size()];
-        System.arraycopy(unMod.toArray(), 0, temp, 0, unMod.size());
-        System.arraycopy(mod.toArray(), 0, temp, unMod.size(), mod.size());
+        System.arraycopy(unMod.toArray(), INTEGER_ZERO, temp, INTEGER_ZERO, unMod.size());
+        System.arraycopy(mod.toArray(), INTEGER_ZERO, temp, unMod.size(), mod.size());
         return temp;
     }
 
     @Override
-    public boolean add(String o) {
-        add(size, o);
+    public boolean add(T o) {
+        mod.add(o);
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
         int index = indexOf(o);
-        if (index >= unMod.size()) {
-            remove(indexOf(o));
-            return true;
-        }
-        return false;
+        checkUnmodList(index);
+        remove(indexOf(o));
+        return true;
     }
 
     @Override
@@ -74,56 +68,48 @@ public class ComplexList implements List<String> {
 
     @Override
     public boolean addAll(int i, Collection collection) {
-        if (i < unMod.size()) {
-            throw new UnsupportedOperationException();
-        }
-        return mod.addAll(i - unMod.size(), collection);
+        checkUnmodList(i);
+        return mod.addAll(position(i), collection);
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        if (!unMod.isEmpty()) {
+            throw new IllegalStateException();
+        }
+        mod.clear();
     }
 
     @Override
-    public String get(int i) {
+    public T get(int i) {
         checkIndex(i);
         if (i < unMod.size()) {
             return unMod.get(i);
         }
-        return mod.get(i - unMod.size());
+        return mod.get(position(i));
     }
 
     @Override
-    public String set(int i, String o) {
+    public T set(int i, T o) {
         checkIndex(i);
-        if (i < unMod.size()) {
-            throw new UnsupportedOperationException();
-        }
-        String prevEl = mod.get(i - unMod.size());
-        mod.set(i - unMod.size(), o);
+        checkUnmodList(i);
+        T prevEl = mod.get(position(i));
+        mod.set(position(i), o);
         return prevEl;
     }
 
     @Override
-    public void add(int i, String o) {
+    public void add(int i, T o) {
         checkIndex(i);
-        if (unMod.size() > i) {
-            throw new UnsupportedOperationException();
-        }
-
-        mod.add(i - unMod.size(), o);
-        size++;
+        checkUnmodList(i);
+        mod.add(position(i), o);
     }
 
     @Override
-    public String remove(int i) {
+    public T remove(int i) {
         checkIndex(i);
-        if (unMod.size() > i) {
-            throw new UnsupportedOperationException();
-        }
-        size--;
-        return mod.remove(i - unMod.size());
+        checkUnmodList(i);
+        return mod.remove(position(i));
     }
 
     @Override
@@ -163,7 +149,7 @@ public class ComplexList implements List<String> {
     public boolean retainAll(Collection collection) {
         for (Object o : collection) {
             if (!unMod.contains(o)) {
-                throw new UnsupportedOperationException();
+                throw new IllegalStateException();
             }
         }
         return mod.retainAll(collection);
@@ -173,7 +159,7 @@ public class ComplexList implements List<String> {
     public boolean removeAll(Collection collection) {
         for (Object o : collection) {
             if (unMod.contains(o)) {
-                throw new UnsupportedOperationException();
+                throw new IllegalStateException();
             }
         }
         return mod.removeAll(collection);
@@ -194,17 +180,27 @@ public class ComplexList implements List<String> {
         if (objects.length < size()) {
             objects = new Object[size()];
         }
-        System.arraycopy(toArray(), 0, objects, 0, size());
+        System.arraycopy(toArray(), INTEGER_ZERO, objects, INTEGER_ZERO, size());
         return objects;
     }
 
     private void checkIndex(int i) {
-        if (i < INTEGER_ZERO || i > size) {
+        if (i < INTEGER_ZERO || i > size()) {
             throw new IndexOutOfBoundsException();
         }
     }
 
-    class IteratorImpl implements Iterator {
+    private void checkUnmodList(int index) {
+        if (index < unMod.size()) {
+            throw new IllegalStateException();
+        }
+    }
+
+    private int position(int index) {
+        return index - unMod.size();
+    }
+
+    class IteratorImpl implements Iterator<T> {
 
         private int currentIndex = INTEGER_ZERO;
         private boolean nextCalled;
@@ -212,14 +208,11 @@ public class ComplexList implements List<String> {
 
         @Override
         public boolean hasNext() {
-            if (currentIndex < size) {
-                return true;
-            }
-            return false;
+            return currentIndex < size();
         }
 
         @Override
-        public Object next() {
+        public T next() {
             nextCalled = true;
             int index = currentIndex;
             currentIndex++;
@@ -234,9 +227,7 @@ public class ComplexList implements List<String> {
             if (!nextCalled) {
                 throw new IllegalStateException();
             }
-            if (currentIndex < unMod.size()) {
-                throw new UnsupportedOperationException();
-            }
+            checkUnmodList(currentIndex);
             mod.remove(currentIndex - unMod.size());
         }
     }
