@@ -1,17 +1,15 @@
 package com.epam.prykhodko.list;
 
-import com.epam.prykhodko.task1.entity.Notebook;
-import com.epam.prykhodko.task1.entity.Telephone;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Iterator;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class ComplexListTest {
 
@@ -170,7 +168,7 @@ class ComplexListTest {
   }
 
   @Test
-  void clear() {
+  void clearShouldThrowIllegalStateException() {
     Assertions.assertThrows(IllegalStateException.class, () -> {
       complexList.clear();
     });
