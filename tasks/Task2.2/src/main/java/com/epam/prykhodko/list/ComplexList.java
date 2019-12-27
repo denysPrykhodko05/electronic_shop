@@ -57,7 +57,7 @@ public class ComplexList<T> implements List<T> {
     public boolean remove(Object o) {
         int index = indexOf(o);
         checkUnmodList(index);
-        remove(indexOf(o));
+        remove(index);
         return true;
     }
 
