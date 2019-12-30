@@ -3,11 +3,14 @@ package com.epam.prykhodko.list;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -46,14 +49,21 @@ class SetArrayListTest {
   }
 
   @Test
-  void addShouldNotAddObject() {
-    arrayList.add(smartphone);
+  void constructorShouldThrowIllegalArgumentException() {
+    assertThrows(IllegalArgumentException.class,
+        () -> arrayList = new SetArrayList<>(Arrays.asList(smartphone, smartphone1, smartphone)));
+  }
+
+  @Test
+  void constructorShouldInitialize() {
+    arrayList = new SetArrayList<>(Arrays.asList(smartphone, smartphone1));
+  }
+
+  @Test
+  void addShouldThrowIllegalStateException() {
     arrayList.add(smartphone);
 
-    int expected = 1;
-    int actual = arrayList.size();
-
-    assertEquals(expected, actual);
+    assertThrows(IllegalArgumentException.class, () -> arrayList.add(smartphone));
   }
 
   @Test
@@ -68,15 +78,12 @@ class SetArrayListTest {
   }
 
   @Test
-  void addByIndexShouldNotAddObject() {
+  void addByIndexShouldThrowIllegalArgumentException() {
     arrayList.add(smartphone);
     arrayList.add(smartphone1);
-    arrayList.add(0, smartphone1);
 
-    int expected = 2;
-    int actual = arrayList.size();
-
-    assertEquals(expected, actual);
+    assertThrows(IllegalArgumentException.class, () ->
+        arrayList.add(0, smartphone1));
   }
 
   @Test
@@ -93,7 +100,7 @@ class SetArrayListTest {
   }
 
   @Test
-  void addAllByIndexShouldNotAddCollection() {
+  void addAllByIndexShouldThrowIllegalStateException() {
     List<Product> list = new ArrayList<>();
     arrayList.add(smartphone);
     arrayList.add(smartphone1);
@@ -101,12 +108,8 @@ class SetArrayListTest {
     list.add(smartphone2);
     list.add(smartphone1);
 
-    arrayList.addAll(0, list);
-
-    int expected = 2;
-    int actual = arrayList.size();
-
-    assertEquals(expected, actual);
+    assertThrows(IllegalArgumentException.class, () ->
+        arrayList.addAll(0, list));
   }
 
   @Test
@@ -143,7 +146,7 @@ class SetArrayListTest {
 
 
   @Test
-  void addAllShouldNotAddCollection() {
+  void addAllShouldThrowIllegalArgumentException() {
     List<Product> list = new ArrayList<>();
     arrayList.add(smartphone);
     arrayList.add(smartphone1);
@@ -151,20 +154,24 @@ class SetArrayListTest {
     list.add(smartphone2);
     list.add(smartphone1);
 
-    arrayList.addAll(0, list);
-
-    int expected = 2;
-    int actual = arrayList.size();
-
-    assertEquals(expected, actual);
+    assertThrows(IllegalArgumentException.class, () ->
+        arrayList.addAll(0, list));
   }
 
   @Test
-  void setShouldReturnNull() {
+  void setShouldReturnElement() {
     arrayList.add(smartphone);
     arrayList.add(smartphone1);
 
-    assertNull(arrayList.set(0, smartphone));
+    assertNotNull(arrayList.set(0, smartphone));
+  }
+
+  @Test
+  void setShouldThrowIllegalArgumentException() {
+    arrayList.add(smartphone);
+    arrayList.add(smartphone1);
+
+    assertThrows(IllegalArgumentException.class, () -> arrayList.set(1, smartphone));
   }
 
   @Test
