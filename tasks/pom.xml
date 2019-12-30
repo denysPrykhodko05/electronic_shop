@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-<<<<<<< HEAD
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -28,14 +27,6 @@
       </plugin>
     </plugins>
   </build>
-  <modules>
-    <module>Task1.1</module>
-    <module>Task1.2</module>
-    <module>Task2.1</module>
-    <module>Task2.2</module>
-    <module>Task3.1</module>
-    <module>Task3.2</module>
-  </modules>
 
   <dependencies>
     <dependency>
@@ -49,53 +40,13 @@
       <version>${junit.version}</version>
     </dependency>
   </dependencies>
-=======
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.example</groupId>
-    <artifactId>Task1</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-
-    <properties>
-        <java.version>1.8</java.version>
-        <junit.version>5.5.2</junit.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-    </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <modules>
         <module>Task1.1</module>
         <module>Task1.2</module>
         <module>Task2.1</module>
         <module>Task2.2</module>
+        <module>Task3.1</module>
+        <module>Task3.2</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-        </dependency>
-    </dependencies>
->>>>>>> 597f34cd0656d6e11d5f493a8350153521bf04aa
 
 </project>
