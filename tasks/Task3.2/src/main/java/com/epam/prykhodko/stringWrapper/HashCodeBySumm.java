@@ -25,10 +25,13 @@ public class HashCodeBySumm {
   @Override
   public int hashCode() {
     int sum = 0;
-    for (int i = 0; i < string.length(); i++) {
-      sum += string.charAt(i);
+    if (string.length() < 4) {
+      for (int i = 0; i < string.length(); i++) {
+        sum += string.charAt(i);
+      }
+      return sum;
     }
-    return sum;
+    return string.charAt(0) + string.charAt(1) + string.charAt(2) + string.charAt(4);
   }
 
   @Override
