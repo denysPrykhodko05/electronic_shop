@@ -13,9 +13,7 @@ public class SetArrayList<E> extends ArrayList<E> {
   public SetArrayList(Collection<? extends E> c) {
     List<E> list = new ArrayList<>();
     for (E o : c) {
-      if (list.contains(o)) {
-        throw new IllegalArgumentException();
-      }
+      checkContains(o, list);
       list.add(o);
     }
     addAll(c);
@@ -23,17 +21,13 @@ public class SetArrayList<E> extends ArrayList<E> {
 
   @Override
   public boolean add(E o) {
-    if (contains(o)) {
-      throw new IllegalArgumentException();
-    }
+    checkContains(o);
     return super.add(o);
   }
 
   @Override
   public void add(int index, E element) {
-    if (contains(element)) {
-      throw new IllegalArgumentException();
-    }
+    checkContains(element);
     super.add(index, element);
   }
 
@@ -41,9 +35,7 @@ public class SetArrayList<E> extends ArrayList<E> {
   public boolean addAll(int index, Collection<? extends E> c) {
     List<E> list = new ArrayList<>();
     for (E o : c) {
-      if (contains(o) || list.contains(o)) {
-        throw new IllegalArgumentException();
-      }
+      checkContains(o, this, list);
       list.add(o);
     }
     return super.addAll(index, list);
@@ -61,9 +53,26 @@ public class SetArrayList<E> extends ArrayList<E> {
       return super.set(index, element);
     }
 
-    if (contains(element)) {
-      throw new IllegalArgumentException();
-    }
+    checkContains(element);
     return super.set(index, element);
   }
+
+  private void checkContains(E o) {
+    if (contains(o)) {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  private void checkContains(E o, List<E> list) {
+    if (list.contains(o)) {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  private void checkContains(E o, List<E> list, List<E> list2) {
+    if (list.contains(o) || list2.contains(o)) {
+      throw new IllegalArgumentException();
+    }
+  }
+
 }
