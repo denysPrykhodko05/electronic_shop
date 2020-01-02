@@ -3,6 +3,7 @@ package com.epam.prykhodko.list;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class SetArrayList<E> extends ArrayList<E> {
 
@@ -13,7 +14,7 @@ public class SetArrayList<E> extends ArrayList<E> {
   public SetArrayList(Collection<? extends E> c) {
     List<E> list = new ArrayList<>();
     for (E o : c) {
-      checkContains(o, list);
+      checkContains(o, list::contains);
       list.add(o);
     }
     addAll(c);
@@ -21,13 +22,13 @@ public class SetArrayList<E> extends ArrayList<E> {
 
   @Override
   public boolean add(E o) {
-    checkContains(o);
+    checkContains(o, this::contains);
     return super.add(o);
   }
 
   @Override
   public void add(int index, E element) {
-    checkContains(element);
+    checkContains(element, this::contains);
     super.add(index, element);
   }
 
@@ -35,7 +36,7 @@ public class SetArrayList<E> extends ArrayList<E> {
   public boolean addAll(int index, Collection<? extends E> c) {
     List<E> list = new ArrayList<>();
     for (E o : c) {
-      checkContains(o, this, list);
+      checkContains(o, (e) -> contains(e) || list.contains(e));
       list.add(o);
     }
     return super.addAll(index, list);
@@ -53,26 +54,13 @@ public class SetArrayList<E> extends ArrayList<E> {
       return super.set(index, element);
     }
 
-    checkContains(element);
+    checkContains(element, this::contains);
     return super.set(index, element);
   }
 
-  private void checkContains(E o) {
-    if (contains(o)) {
+  private void checkContains(E o, Predicate<E> predicate) {
+    if (predicate.test(o)) {
       throw new IllegalArgumentException();
     }
   }
-
-  private void checkContains(E o, List<E> list) {
-    if (list.contains(o)) {
-      throw new IllegalArgumentException();
-    }
-  }
-
-  private void checkContains(E o, List<E> list, List<E> list2) {
-    if (list.contains(o) || list2.contains(o)) {
-      throw new IllegalArgumentException();
-    }
-  }
-
 }
