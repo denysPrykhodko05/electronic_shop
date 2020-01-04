@@ -2,13 +2,16 @@ package com.epam.prykhodko.controller;
 
 import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.repository.Basket;
+import com.epam.prykhodko.repository.Order;
 import com.epam.prykhodko.repository.Products;
 import com.epam.prykhodko.service.AddToBasketService;
 import com.epam.prykhodko.service.BuyAllFromBasketService;
 import com.epam.prykhodko.service.ExitService;
 import com.epam.prykhodko.service.GetAllFromBasketService;
 import com.epam.prykhodko.service.GetAllProductsService;
+import com.epam.prykhodko.service.GetLastFiveProductsService;
 import com.epam.prykhodko.service.InavalidNumberService;
+import com.epam.prykhodko.service.MakeOrderService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,12 +21,14 @@ public class ShopView {
   private static Command invalidCommandNumber;
   private static Basket basket;
   private static Products products;
+  private static Order order;
   private static Map<Integer, Command> commandMap;
 
   static {
     basket = new Basket();
     products = new Products();
     commandMap = new HashMap<>();
+    order = new Order();
 
     commandInit();
   }
@@ -39,7 +44,8 @@ public class ShopView {
           + "2 - Add product to basket\n"
           + "3 - Show basket\n"
           + "4 - Buy all products\n"
-          + "5 - Show least 5 products in bucket");
+          + "5 - Show least 5 products in bucket\n"
+          + "6 - Make order");
       command = input.nextInt();
       commandMap.getOrDefault(command, invalidCommandNumber).execute();
     }
@@ -51,6 +57,8 @@ public class ShopView {
     Command addToBasket = new AddToBasketService(basket);
     Command getAllFromBasket = new GetAllFromBasketService(basket);
     Command buyAll = new BuyAllFromBasketService(basket, products);
+    Command getLastFiveOrders = new GetLastFiveProductsService(basket);
+    Command makeOrder = new MakeOrderService(order, basket);
     invalidCommandNumber = new InavalidNumberService();
 
     commandMap.put(0, exit);
@@ -58,5 +66,7 @@ public class ShopView {
     commandMap.put(2, addToBasket);
     commandMap.put(3, getAllFromBasket);
     commandMap.put(4, buyAll);
+    commandMap.put(5, getLastFiveOrders);
+    commandMap.put(6, makeOrder);
   }
 }
