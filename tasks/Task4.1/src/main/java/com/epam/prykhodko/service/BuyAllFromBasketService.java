@@ -1,15 +1,15 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.service;
 
+import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.repository.Basket;
 import com.epam.prykhodko.repository.Products;
-import commandInterface.Command;
 
-public class CommandBuyAllFromBasket implements Command {
+public class BuyAllFromBasketService implements Command {
 
   private Basket basket;
   private Products products;
 
-  public CommandBuyAllFromBasket(Basket basket, Products products) {
+  public BuyAllFromBasketService(Basket basket, Products products) {
     this.basket = basket;
     this.products = products;
   }

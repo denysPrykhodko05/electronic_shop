@@ -1,13 +1,13 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.service;
 
+import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.repository.Basket;
-import commandInterface.Command;
 
-public class CommandGetAllFromBasket implements Command {
+public class GetAllFromBasketService implements Command {
 
   private Basket basket;
 
-  public CommandGetAllFromBasket(Basket basket) {
+  public GetAllFromBasketService(Basket basket) {
     this.basket = basket;
   }
 

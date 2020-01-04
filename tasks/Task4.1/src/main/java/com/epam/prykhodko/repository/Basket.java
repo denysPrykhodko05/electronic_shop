@@ -48,6 +48,6 @@ public class Basket {
   }
 
   public Map<Integer, Integer> getHistory() {
-    return getHistory();
+    return history;
   }
 }

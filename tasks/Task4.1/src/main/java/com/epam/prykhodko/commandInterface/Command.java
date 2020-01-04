@@ -1,4 +1,4 @@
-package commandInterface;
+package com.epam.prykhodko.commandInterface;
 
 public interface Command {
 

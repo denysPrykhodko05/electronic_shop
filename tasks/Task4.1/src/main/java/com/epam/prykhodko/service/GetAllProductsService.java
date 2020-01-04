@@ -1,13 +1,13 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.service;
 
+import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.repository.Products;
-import commandInterface.Command;
 
-public class CommandGetAllProducts implements Command {
+public class GetAllProductsService implements Command {
 
   private Products products;
 
-  public CommandGetAllProducts(Products products) {
+  public GetAllProductsService(Products products) {
     this.products = products;
   }
 

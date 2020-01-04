@@ -1,13 +1,13 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.service;
 
+import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.repository.Basket;
-import commandInterface.Command;
 
-public class CommandGetLastFiveProducts implements Command {
+public class GetLastFiveProductsService implements Command {
 
   private Basket basket;
 
-  public CommandGetLastFiveProducts(Basket basket) {
+  public GetLastFiveProductsService(Basket basket) {
     this.basket = basket;
   }
 

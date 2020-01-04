@@ -1,14 +1,14 @@
-package com.epam.prykhodko.view;
+package com.epam.prykhodko.controller;
 
-import com.epam.prykhodko.command.CommandAddToBasket;
-import com.epam.prykhodko.command.CommandBuyAllFromBasket;
-import com.epam.prykhodko.command.CommandExit;
-import com.epam.prykhodko.command.CommandGetAllFromBasket;
-import com.epam.prykhodko.command.CommandGetAllProducts;
-import com.epam.prykhodko.command.CommandInavalidNumber;
+import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.repository.Basket;
 import com.epam.prykhodko.repository.Products;
-import commandInterface.Command;
+import com.epam.prykhodko.service.AddToBasketService;
+import com.epam.prykhodko.service.BuyAllFromBasketService;
+import com.epam.prykhodko.service.ExitService;
+import com.epam.prykhodko.service.GetAllFromBasketService;
+import com.epam.prykhodko.service.GetAllProductsService;
+import com.epam.prykhodko.service.InavalidNumberService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -46,12 +46,12 @@ public class ShopView {
   }
 
   private static void commandInit() {
-    Command exit = new CommandExit();
-    Command getAll = new CommandGetAllProducts(products);
-    Command addToBasket = new CommandAddToBasket(basket);
-    Command getAllFromBasket = new CommandGetAllFromBasket(basket);
-    Command buyAll = new CommandBuyAllFromBasket(basket, products);
-    invalidCommandNumber = new CommandInavalidNumber();
+    Command exit = new ExitService();
+    Command getAll = new GetAllProductsService(products);
+    Command addToBasket = new AddToBasketService(basket);
+    Command getAllFromBasket = new GetAllFromBasketService(basket);
+    Command buyAll = new BuyAllFromBasketService(basket, products);
+    invalidCommandNumber = new InavalidNumberService();
 
     commandMap.put(0, exit);
     commandMap.put(1, getAll);
@@ -59,5 +59,4 @@ public class ShopView {
     commandMap.put(3, getAllFromBasket);
     commandMap.put(4, buyAll);
   }
-
 }
