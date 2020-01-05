@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Basket {
@@ -13,21 +12,13 @@ public class Basket {
   private int count = 0;
   private Map<Integer, Integer> history;
   private Map<Integer, Integer> basket;
-  private Scanner input;
 
   public Basket() {
     basket = new HashMap<>();
     history = new LinkedHashMap<>();
-    input = new Scanner(System.in);
   }
 
-  public void add() {
-    int productId;
-    int amount;
-    System.out.println("Enter product id: ");
-    productId = input.nextInt();
-    System.out.println("Enter amount: ");
-    amount = input.nextInt();
+  public void add(int productId, int amount) {
     basket.put(productId, amount);
     history.put(count++, productId);
   }

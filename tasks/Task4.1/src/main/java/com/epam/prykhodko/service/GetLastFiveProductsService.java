@@ -10,15 +10,14 @@ public class GetLastFiveProductsService implements Command {
   public GetLastFiveProductsService(Basket basket) {
     this.basket = basket;
   }
-
-  //what is the information should be in output?
+  
   @Override
   public void execute() {
     basket.getHistory().entrySet().stream().forEach(e -> {
       if (e.getKey() == 5) {
         return;
       }
-      System.out.println();
+      System.out.println("Product id = " + e.getValue());
     });
   }
 }
