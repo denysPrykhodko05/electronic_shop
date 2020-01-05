@@ -6,7 +6,9 @@ import com.epam.prykhodko.repository.Order;
 import com.epam.prykhodko.repository.Products;
 import com.epam.prykhodko.service.AddToBasketService;
 import com.epam.prykhodko.service.BuyAllFromBasketService;
+import com.epam.prykhodko.service.CheckOrdersForGivenPeriodService;
 import com.epam.prykhodko.service.ExitService;
+import com.epam.prykhodko.service.FindOrderForNearestDateService;
 import com.epam.prykhodko.service.GetAllFromBasketService;
 import com.epam.prykhodko.service.GetAllProductsService;
 import com.epam.prykhodko.service.GetLastFiveProductsService;
@@ -45,7 +47,9 @@ public class ShopView {
           + "3 - Show basket\n"
           + "4 - Buy all products\n"
           + "5 - Show least 5 products in bucket\n"
-          + "6 - Make order");
+          + "6 - Make order\n"
+          + "7 - Get order for given period\n"
+          + "8 - Find order for nearest date");
       command = input.nextInt();
       commandMap.getOrDefault(command, invalidCommandNumber).execute();
     }
@@ -58,7 +62,9 @@ public class ShopView {
     Command getAllFromBasket = new GetAllFromBasketService(basket);
     Command buyAll = new BuyAllFromBasketService(basket, products);
     Command getLastFiveOrders = new GetLastFiveProductsService(basket);
-    Command makeOrder = new MakeOrderService(order, basket);
+    Command makeOrder = new MakeOrderService(order);
+    Command getOrder = new CheckOrdersForGivenPeriodService(order);
+    Command findOrderForNearestDate = new FindOrderForNearestDateService(order);
     invalidCommandNumber = new InavalidNumberService();
 
     commandMap.put(0, exit);
@@ -68,5 +74,7 @@ public class ShopView {
     commandMap.put(4, buyAll);
     commandMap.put(5, getLastFiveOrders);
     commandMap.put(6, makeOrder);
+    commandMap.put(7, getOrder);
+    commandMap.put(8, findOrderForNearestDate);
   }
 }

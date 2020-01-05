@@ -16,4 +16,8 @@ public class Order {
     this.orders.put(time, basket);
   }
 
+  public Map<Date,Basket> getAll(){
+    return orders;
+  }
+
 }

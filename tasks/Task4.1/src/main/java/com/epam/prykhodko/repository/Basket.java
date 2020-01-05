@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class Basket {
+public class Basket implements Cloneable{
 
   private int count = 0;
   private Map<Integer, Integer> history;
@@ -21,6 +21,10 @@ public class Basket {
   public void add(int productId, int amount) {
     basket.put(productId, amount);
     history.put(count++, productId);
+  }
+
+  public Map<Integer, Integer> get() {
+    return basket;
   }
 
   public Set<Entry<Integer, Integer>> getAll() {
