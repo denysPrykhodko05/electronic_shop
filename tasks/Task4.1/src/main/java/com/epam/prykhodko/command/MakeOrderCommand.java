@@ -27,10 +27,10 @@ public class MakeOrderCommand implements Command {
     Map<Product, Integer> basket = new HashMap<>();
     final Scanner productInput = new Scanner(System.in);
     final Scanner dateInput = new Scanner(System.in);
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     Date date = null;
 
-    System.out.println("Enter date(dd/MM/yyyy HH:mm:ss: ");
+    System.out.println("Enter date(dd/MM/yyyy HH:mm: ");
     try {
       date = formatter.parse(dateInput.nextLine());
     } catch (ParseException e) {

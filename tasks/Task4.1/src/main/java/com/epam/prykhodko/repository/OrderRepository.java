@@ -17,7 +17,7 @@ public class OrderRepository {
     this.orders.put(time, productList);
   }
 
-  public Map<Date, Map<Product, Integer>> get() {
+  public TreeMap<Date, Map<Product, Integer>> get() {
     return orders;
   }
 

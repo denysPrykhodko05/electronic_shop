@@ -37,7 +37,7 @@ public class ShopView {
     commandMap = new HashMap<>();
     orderRepository = new OrderRepository();
 
-    basketService=new BasketService(basketRepository);
+    basketService = new BasketService(basketRepository);
     productService = new ProductService(productRepository);
     orderService = new OrderService(orderRepository);
 
@@ -52,8 +52,8 @@ public class ShopView {
     while (command != 0) {
       System.out.println("Enter:\n0 - EXIT\n"
           + "1 - Show all products\n"
-          + "2 - Show basket\n"
-          + "3 - Buy all products\n"
+          + "2 - Add to basket\n"
+          + "3 - Show all from basket\n"
           + "4 - Show least 5 products in bucket\n"
           + "5 - Make order\n"
           + "6 - Get order for given period\n"
@@ -66,10 +66,10 @@ public class ShopView {
   private static void commandInit() {
     Command exit = new ExitCommand();
     Command getAll = new GetAllProductsCommand(productRepository);
-    Command addToBasket = new AddToBasketCommand(basketService,productService);
+    Command addToBasket = new AddToBasketCommand(basketService, productService);
     Command getAllFromBasket = new GetAllFromBasketCommand(basketService);
     Command getLastFiveOrders = new GetLastFiveProductsCommand(basketService);
-    Command makeOrder = new MakeOrderCommand(orderService,basketService);
+    Command makeOrder = new MakeOrderCommand(orderService, basketService);
     Command getOrder = new CheckOrdersForGivenPeriodCommand(orderService);
     Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderService);
     invalidCommandNumber = new InavalidNumberCommand();
