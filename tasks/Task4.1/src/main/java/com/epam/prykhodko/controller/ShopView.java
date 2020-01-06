@@ -1,19 +1,21 @@
 package com.epam.prykhodko.controller;
 
+import com.epam.prykhodko.command.AddToBasketCommand;
+import com.epam.prykhodko.command.CheckOrdersForGivenPeriodCommand;
+import com.epam.prykhodko.command.ExitCommand;
+import com.epam.prykhodko.command.FindOrderForNearestDateCommand;
+import com.epam.prykhodko.command.GetAllFromBasketCommand;
+import com.epam.prykhodko.command.GetAllProductsCommand;
+import com.epam.prykhodko.command.GetLastFiveProductsCommand;
+import com.epam.prykhodko.command.InavalidNumberCommand;
+import com.epam.prykhodko.command.MakeOrderCommand;
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.repository.Basket;
-import com.epam.prykhodko.repository.Order;
-import com.epam.prykhodko.repository.Products;
-import com.epam.prykhodko.service.AddToBasketService;
-import com.epam.prykhodko.service.BuyAllFromBasketService;
-import com.epam.prykhodko.service.CheckOrdersForGivenPeriodService;
-import com.epam.prykhodko.service.ExitService;
-import com.epam.prykhodko.service.FindOrderForNearestDateService;
-import com.epam.prykhodko.service.GetAllFromBasketService;
-import com.epam.prykhodko.service.GetAllProductsService;
-import com.epam.prykhodko.service.GetLastFiveProductsService;
-import com.epam.prykhodko.service.InavalidNumberService;
-import com.epam.prykhodko.service.MakeOrderService;
+import com.epam.prykhodko.repository.BasketRepository;
+import com.epam.prykhodko.repository.OrderRepository;
+import com.epam.prykhodko.repository.ProductRepository;
+import com.epam.prykhodko.service.BasketService;
+import com.epam.prykhodko.service.OrderService;
+import com.epam.prykhodko.service.ProductService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,16 +23,23 @@ import java.util.Scanner;
 public class ShopView {
 
   private static Command invalidCommandNumber;
-  private static Basket basket;
-  private static Products products;
-  private static Order order;
+  private static BasketRepository basketRepository;
+  private static ProductRepository productRepository;
+  private static OrderRepository orderRepository;
   private static Map<Integer, Command> commandMap;
+  private static BasketService basketService;
+  private static ProductService productService;
+  private static OrderService orderService;
 
   static {
-    basket = new Basket();
-    products = new Products();
+    basketRepository = new BasketRepository();
+    productRepository = new ProductRepository();
     commandMap = new HashMap<>();
-    order = new Order();
+    orderRepository = new OrderRepository();
+
+    basketService=new BasketService(basketRepository);
+    productService = new ProductService(productRepository);
+    orderService = new OrderService(orderRepository);
 
     commandInit();
   }
@@ -43,38 +52,35 @@ public class ShopView {
     while (command != 0) {
       System.out.println("Enter:\n0 - EXIT\n"
           + "1 - Show all products\n"
-          + "2 - Add product to basket\n"
-          + "3 - Show basket\n"
-          + "4 - Buy all products\n"
-          + "5 - Show least 5 products in bucket\n"
-          + "6 - Make order\n"
-          + "7 - Get order for given period\n"
-          + "8 - Find order for nearest date");
+          + "2 - Show basket\n"
+          + "3 - Buy all products\n"
+          + "4 - Show least 5 products in bucket\n"
+          + "5 - Make order\n"
+          + "6 - Get order for given period\n"
+          + "7 - Find order for nearest date");
       command = input.nextInt();
       commandMap.getOrDefault(command, invalidCommandNumber).execute();
     }
   }
 
   private static void commandInit() {
-    Command exit = new ExitService();
-    Command getAll = new GetAllProductsService(products);
-    Command addToBasket = new AddToBasketService(basket);
-    Command getAllFromBasket = new GetAllFromBasketService(basket);
-    Command buyAll = new BuyAllFromBasketService(basket, products);
-    Command getLastFiveOrders = new GetLastFiveProductsService(basket);
-    Command makeOrder = new MakeOrderService(order);
-    Command getOrder = new CheckOrdersForGivenPeriodService(order);
-    Command findOrderForNearestDate = new FindOrderForNearestDateService(order);
-    invalidCommandNumber = new InavalidNumberService();
+    Command exit = new ExitCommand();
+    Command getAll = new GetAllProductsCommand(productRepository);
+    Command addToBasket = new AddToBasketCommand(basketService,productService);
+    Command getAllFromBasket = new GetAllFromBasketCommand(basketService);
+    Command getLastFiveOrders = new GetLastFiveProductsCommand(basketService);
+    Command makeOrder = new MakeOrderCommand(orderService,basketService);
+    Command getOrder = new CheckOrdersForGivenPeriodCommand(orderService);
+    Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderService);
+    invalidCommandNumber = new InavalidNumberCommand();
 
     commandMap.put(0, exit);
     commandMap.put(1, getAll);
     commandMap.put(2, addToBasket);
     commandMap.put(3, getAllFromBasket);
-    commandMap.put(4, buyAll);
-    commandMap.put(5, getLastFiveOrders);
-    commandMap.put(6, makeOrder);
-    commandMap.put(7, getOrder);
-    commandMap.put(8, findOrderForNearestDate);
+    commandMap.put(4, getLastFiveOrders);
+    commandMap.put(5, makeOrder);
+    commandMap.put(6, getOrder);
+    commandMap.put(7, findOrderForNearestDate);
   }
 }

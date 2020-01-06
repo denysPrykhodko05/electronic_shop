@@ -1,8 +1,8 @@
-package com.epam.prykhodko.service;
+package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
 
-public class ExitService implements Command {
+public class ExitCommand implements Command {
 
   @Override
   public void execute() {

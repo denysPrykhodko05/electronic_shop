@@ -1,8 +1,8 @@
-package com.epam.prykhodko.service;
+package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
 
-public class InavalidNumberService implements Command {
+public class InavalidNumberCommand implements Command {
 
   @Override
   public void execute() {

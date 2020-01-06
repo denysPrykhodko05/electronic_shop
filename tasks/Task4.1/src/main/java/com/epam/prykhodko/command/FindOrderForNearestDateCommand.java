@@ -1,10 +1,10 @@
-package com.epam.prykhodko.service;
+package com.epam.prykhodko.command;
 
 import static java.lang.Math.abs;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.repository.Basket;
-import com.epam.prykhodko.repository.Order;
+import com.epam.prykhodko.service.OrderService;
+import com.epam.prykhodko.task1.entity.Product;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,17 +12,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-public class FindOrderForNearestDateService implements Command {
+public class FindOrderForNearestDateCommand implements Command {
 
-  private Order order;
+  private OrderService orderService;
 
-  public FindOrderForNearestDateService(Order order) {
-    this.order = order;
+  public FindOrderForNearestDateCommand(OrderService orderService) {
+    this.orderService = orderService;
   }
 
   @Override
   public void execute() {
-    Basket basket = null;
+    Map<Product,Integer> order = null;
     final Scanner input = new Scanner(System.in);
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     Date date = null;
@@ -34,20 +34,20 @@ public class FindOrderForNearestDateService implements Command {
       e.printStackTrace();
     }
 
-    basket = findMin(order.getAll(), date);
-    new GetAllFromBasketService(basket).execute();
+    order = findMin(orderService.get(), date);
+    System.out.println(order);
   }
 
-  private Basket findMin(Map<Date, Basket> basketMap, Date date) {
-    Basket basket = null;
+  private Map<Product,Integer> findMin(Map<Date, Map<Product,Integer>> basketMap, Date date) {
+    Map<Product,Integer> order = null;
     long min = Integer.MAX_VALUE;
-    for (Entry<Date, Basket> entry : basketMap.entrySet()) {
+    for (Entry<Date, Map<Product,Integer>> entry : basketMap.entrySet()) {
       long time = abs(entry.getKey().getTime() - date.getTime());
       if (time < min) {
         min = time;
-        basket = entry.getValue();
+        order = entry.getValue();
       }
     }
-    return basket;
+    return order;
   }
 }
