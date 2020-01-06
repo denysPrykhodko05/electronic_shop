@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class Maps {
 
-  Telephone telephone;
-  Telephone telephone1;
-  Notebook notebook;
-  Notebook notebook1;
+  private Telephone telephone;
+  private Telephone telephone1;
+  private Notebook notebook;
+  private Notebook notebook1;
 
 
   private void entityInit() {
