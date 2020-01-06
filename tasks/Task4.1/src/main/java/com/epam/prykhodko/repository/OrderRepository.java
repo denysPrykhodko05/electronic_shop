@@ -13,8 +13,8 @@ public class OrderRepository {
     orders = new TreeMap<>();
   }
 
-  public void add(Date time, Map<Product, Integer> productList) {
-    this.orders.put(time, productList);
+  public void add(Date time, Map<Product, Integer> products) {
+    this.orders.put(time, products);
   }
 
   public TreeMap<Date, Map<Product, Integer>> get() {
