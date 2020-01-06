@@ -30,6 +30,6 @@ public class CheckOrdersForGivenPeriodCommand implements Command {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    System.out.println(orderService.get().subMap(date, date1));
+    System.out.println(orderService.getOrdersInGivenPeriod(date,date1));
   }
 }

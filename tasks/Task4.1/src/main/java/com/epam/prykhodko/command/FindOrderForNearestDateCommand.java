@@ -32,7 +32,6 @@ public class FindOrderForNearestDateCommand implements Command {
       e.printStackTrace();
     }
 
-    order = orderService.get().ceilingEntry(date);
-    System.out.println(order);
+    System.out.println(orderService.getNearestOrder(date));
   }
 }
