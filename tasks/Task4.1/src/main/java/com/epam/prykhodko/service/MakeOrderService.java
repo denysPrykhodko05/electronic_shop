@@ -34,7 +34,7 @@ public class MakeOrderService implements Command {
     System.out.println("Enter date(dd/MM/yyyy HH:mm:ss: ");
     try {
       date = formatter.parse(dateInput.nextLine());
-      order.addOrder(date, basket);
+      order.add(date, basket);
     } catch (ParseException e) {
       e.printStackTrace();
     }

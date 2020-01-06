@@ -12,7 +12,7 @@ public class Order {
     orders = new TreeMap<>();
   }
 
-  public void addOrder(Date time, Basket basket) {
+  public void add(Date time, Basket basket) {
     this.orders.put(time, basket);
   }
 
