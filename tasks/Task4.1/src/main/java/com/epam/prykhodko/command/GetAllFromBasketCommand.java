@@ -5,7 +5,7 @@ import com.epam.prykhodko.service.BasketService;
 
 public class GetAllFromBasketCommand implements Command {
 
-  private BasketService basketService;
+  private final BasketService basketService;
 
   public GetAllFromBasketCommand(BasketService basketService) {
     this.basketService=basketService;
@@ -13,6 +13,6 @@ public class GetAllFromBasketCommand implements Command {
 
   @Override
   public void execute() {
-    basketService.getAll().forEach(System.out::println);
+    basketService.get().forEach((e,k)-> System.out.println(e));
   }
 }

@@ -1,18 +1,18 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.BasketService;
+import com.epam.prykhodko.service.CacheService;
 
 public class GetLastFiveProductsCommand implements Command {
 
-  private BasketService basketService;
+  private final CacheService cacheRepository;
 
-  public GetLastFiveProductsCommand(BasketService basketService) {
-    this.basketService = basketService;
+  public GetLastFiveProductsCommand(CacheService cacheRepository) {
+    this.cacheRepository = cacheRepository;
   }
 
   @Override
   public void execute() {
-    basketService.getCache().forEach((e)-> System.out.println(e.getKey()));
+    cacheRepository.get().forEach(System.out::println);
   }
 }

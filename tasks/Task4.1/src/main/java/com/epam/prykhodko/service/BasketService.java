@@ -1,10 +1,8 @@
 package com.epam.prykhodko.service;
 
-import com.epam.prykhodko.repository.BasketRepository;
+import com.epam.prykhodko.repository.repositoryInterface.BasketRepository;
 import com.epam.prykhodko.task1.entity.Product;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 public class BasketService {
 
@@ -18,16 +16,12 @@ public class BasketService {
     basket.add(product, amount);
   }
 
-  public Map<Product, Integer> getBasket() {
+  public Map<Product, Integer> get() {
     return basket.get();
   }
 
-  public Set<Entry<Product, Integer>> getAll() {
-    return basket.get().entrySet();
-  }
-
-  public Set<Entry<Product, Integer>> getCache() {
-    return basket.getCache().entrySet();
+  public void clear(){
+    basket.clear();
   }
 
 }

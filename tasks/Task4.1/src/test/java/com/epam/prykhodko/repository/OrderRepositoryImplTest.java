@@ -10,12 +10,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
 
-class OrderRepositoryTest {
+class OrderRepositoryImplTest {
 
   @Test
   void addSizeShouldBeEqualOne() {
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-    OrderRepository repository = new OrderRepository();
+    OrderRepositoryImpl repository = new OrderRepositoryImpl();
     Map<Product, Integer> map = new TreeMap<>();
     map.put(new Product(), 4);
     try {
@@ -30,6 +30,6 @@ class OrderRepositoryTest {
 
   @Test
   void get() {
-    assertNotNull(new OrderRepository().get());
+    assertNotNull(new OrderRepositoryImpl().get());
   }
 }

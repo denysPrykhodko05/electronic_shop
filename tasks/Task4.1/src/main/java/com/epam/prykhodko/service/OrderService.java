@@ -1,6 +1,6 @@
 package com.epam.prykhodko.service;
 
-import com.epam.prykhodko.repository.OrderRepository;
+import com.epam.prykhodko.repository.repositoryInterface.OrderRepository;
 import com.epam.prykhodko.task1.entity.Product;
 import java.util.Date;
 import java.util.Map;
@@ -19,16 +19,15 @@ public class OrderService {
     orderRepository.add(time, basket);
   }
 
-  public TreeMap<Date, Map<Product, Integer>> get(){
+  public TreeMap<Date, Map<Product, Integer>> get() {
     return orderRepository.get();
   }
 
-  public Map<Date, Map<Product,Integer>> getOrdersInGivenPeriod(Date date,Date date1){
-    return orderRepository.get().subMap(date, date1);
+  public Map<Date, Map<Product, Integer>> getOrdersInGivenPeriod(Date date, Date date1) {
+    return orderRepository.getOrdersInGivenPeriod(date, date1);
   }
 
-  public Entry<Date,Map<Product,Integer>> getNearestOrder(Date date){
-    return orderRepository.get().ceilingEntry(date);
+  public  Entry<Date, Map<Product, Integer>> getNearestOrder(Date date) {
+    return orderRepository.getNearestOrder(date);
   }
-
 }

@@ -12,7 +12,7 @@ class BasketRepositoryTest {
   @Test
   void addSizeSholudBeEqualOne() {
     Product product = new Smartphone();
-    BasketRepository basketRepository = new BasketRepository();
+    BasketRepositoryImpl basketRepository = new BasketRepositoryImpl();
     basketRepository.add(product,2);
 
     int expected = 1;
@@ -24,16 +24,8 @@ class BasketRepositoryTest {
   @Test
   void getShouldBeNull() {
     Product product = new Smartphone();
-    BasketRepository basketRepository = new BasketRepository();
+    BasketRepositoryImpl basketRepository = new BasketRepositoryImpl();
     basketRepository.add(product,2);
     assertNotNull(basketRepository.get());
-  }
-
-  @Test
-  void getCache() {
-    Product product = new Smartphone();
-    BasketRepository basketRepository = new BasketRepository();
-    basketRepository.add(product,2);
-    assertNotNull(basketRepository.getCache());
   }
 }
