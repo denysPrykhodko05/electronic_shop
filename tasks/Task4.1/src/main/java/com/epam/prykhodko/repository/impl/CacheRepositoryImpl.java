@@ -1,6 +1,6 @@
-package com.epam.prykhodko.repository;
+package com.epam.prykhodko.repository.impl;
 
-import com.epam.prykhodko.repository.repositoryInterface.CacheRepository;
+import com.epam.prykhodko.repository.CacheRepository;
 import com.epam.prykhodko.task1.entity.Product;
 import java.util.LinkedHashMap;
 import java.util.Map;

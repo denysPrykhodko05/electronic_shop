@@ -10,16 +10,17 @@ import com.epam.prykhodko.command.GetLastFiveProductsCommand;
 import com.epam.prykhodko.command.InavalidNumberCommand;
 import com.epam.prykhodko.command.MakeOrderCommand;
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.repository.BasketRepositoryImpl;
-import com.epam.prykhodko.repository.CacheRepositoryImpl;
-import com.epam.prykhodko.repository.OrderRepositoryImpl;
-import com.epam.prykhodko.repository.ProductRepositoryImpl;
-import com.epam.prykhodko.repository.repositoryInterface.CacheRepository;
-import com.epam.prykhodko.service.BasketService;
-import com.epam.prykhodko.service.CacheService;
-import com.epam.prykhodko.service.OrderService;
-import com.epam.prykhodko.service.ProductService;
-import com.epam.prykhodko.util.ReadWrapper;
+import com.epam.prykhodko.repository.BasketRepository;
+import com.epam.prykhodko.repository.CacheRepository;
+import com.epam.prykhodko.repository.impl.BasketRepositoryImpl;
+import com.epam.prykhodko.repository.impl.CacheRepositoryImpl;
+import com.epam.prykhodko.repository.impl.OrderRepositoryImpl;
+import com.epam.prykhodko.repository.impl.ProductRepository;
+import com.epam.prykhodko.service.impl.BasketService;
+import com.epam.prykhodko.service.impl.CacheService;
+import com.epam.prykhodko.service.impl.OrderService;
+import com.epam.prykhodko.service.impl.ProductService;
+import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,21 +28,22 @@ import java.util.Map;
 public class ShopView {
 
   private static Command invalidCommandNumber;
-  private static ProductRepositoryImpl productRepositoryImpl;
+  private static ProductRepository productRepository;
   private static Map<Integer, Command> commandMap;
   private static BasketService basketService;
   private static ProductService productService;
   private static OrderService orderService;
   private static CacheService cacheService;
+
   static {
-    BasketRepositoryImpl basketRepository = new BasketRepositoryImpl();
-    productRepositoryImpl = new ProductRepositoryImpl();
+    BasketRepository basketRepository = new BasketRepositoryImpl();
+    productRepository = new ProductRepository();
     CacheRepository cacheRepository = new CacheRepositoryImpl();
     commandMap = new HashMap<>();
     OrderRepositoryImpl orderRepository = new OrderRepositoryImpl();
 
-    basketService = new BasketService(basketRepository);
-    productService = new ProductService(productRepositoryImpl);
+    basketService = new BasketService(basketRepository, cacheRepository);
+    productService = new ProductService(productRepository);
     orderService = new OrderService(orderRepository);
     cacheService = new CacheService(cacheRepository);
 
@@ -60,7 +62,7 @@ public class ShopView {
           + "6 - Get order for given period\n"
           + "7 - Find order for nearest date");
       try {
-        command =  Integer.parseInt(ReadWrapper.readLine());
+        command = ConsoleHelper.readInt();
       } catch (IOException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
@@ -72,8 +74,9 @@ public class ShopView {
   private static void commandInit() {
     int counter = 0;
     Command exit = new ExitCommand();
-    Command getAll = new GetAllProductsCommand(productRepositoryImpl);
-    Command addToBasket = new AddToBasketCommand(basketService, productService,cacheService);
+    Command getAll = new GetAllProductsCommand(productRepository);
+    Command addToBasket = new AddToBasketCommand(basketService, productService,
+        cacheService);
     Command getAllFromBasket = new GetAllFromBasketCommand(basketService);
     Command getLastFiveOrders = new GetLastFiveProductsCommand(cacheService);
     Command makeOrder = new MakeOrderCommand(orderService, basketService);

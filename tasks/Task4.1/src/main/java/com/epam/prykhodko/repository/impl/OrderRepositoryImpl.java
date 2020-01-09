@@ -1,6 +1,6 @@
-package com.epam.prykhodko.repository;
+package com.epam.prykhodko.repository.impl;
 
-import com.epam.prykhodko.repository.repositoryInterface.OrderRepository;
+import com.epam.prykhodko.repository.OrderRepository;
 import com.epam.prykhodko.task1.entity.Product;
 import java.util.Date;
 import java.util.Map;
@@ -31,10 +31,6 @@ public class OrderRepositoryImpl implements OrderRepository {
   public  Entry<Date, Map<Product, Integer>> getNearestOrder(Date date) {
     Entry<Date, Map<Product, Integer>> entry = orders.ceilingEntry(date);
     Entry<Date, Map<Product, Integer>> entry1=orders.floorEntry(date);
-
-    if (orders.isEmpty()){
-      return null;
-    }
 
     if (entry==null && entry1!=null){
       return entry1;

@@ -1,15 +1,15 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.repository.ProductRepositoryImpl;
-import com.epam.prykhodko.service.ProductService;
+import com.epam.prykhodko.repository.impl.ProductRepository;
+import com.epam.prykhodko.service.impl.ProductService;
 
 public class GetAllProductsCommand implements Command {
 
   private final ProductService productService;
 
-  public GetAllProductsCommand(ProductRepositoryImpl productRepositoryImpl) {
-    productService = new ProductService(productRepositoryImpl);
+  public GetAllProductsCommand(ProductRepository productRepository) {
+    productService = new ProductService(productRepository);
   }
 
   @Override

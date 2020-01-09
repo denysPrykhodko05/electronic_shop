@@ -3,6 +3,7 @@ package com.epam.prykhodko.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.epam.prykhodko.repository.impl.BasketRepositoryImpl;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
 import org.junit.jupiter.api.Test;

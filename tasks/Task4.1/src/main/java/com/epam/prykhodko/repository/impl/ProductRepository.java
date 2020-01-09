@@ -1,6 +1,5 @@
-package com.epam.prykhodko.repository;
+package com.epam.prykhodko.repository.impl;
 
-import com.epam.prykhodko.repository.repositoryInterface.ProductRepository;
 import com.epam.prykhodko.task1.entity.Notebook;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
@@ -8,11 +7,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductRepositoryImpl implements ProductRepository {
+public class ProductRepository implements com.epam.prykhodko.repository.ProductRepository {
 
   private final List<Product> productList = new ArrayList<>();
 
-  public ProductRepositoryImpl() {
+  public ProductRepository() {
     productInit();
   }
 

@@ -1,19 +1,19 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.BasketService;
-import com.epam.prykhodko.service.CacheService;
-import com.epam.prykhodko.service.ProductService;
+import com.epam.prykhodko.service.impl.BasketService;
+import com.epam.prykhodko.service.impl.CacheService;
+import com.epam.prykhodko.service.impl.ProductService;
 import com.epam.prykhodko.task1.entity.Product;
-import com.epam.prykhodko.util.ReadWrapper;
+import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.util.InputMismatchException;
 
 public class AddToBasketCommand implements Command {
 
-  private final BasketService basketService;
-  private final ProductService productService;
-  private final CacheService cacheService;
+  private final com.epam.prykhodko.service.BasketService basketService;
+  private final com.epam.prykhodko.service.ProductService productService;
+  private final com.epam.prykhodko.service.CacheService cacheService;
 
   public AddToBasketCommand(BasketService basketService, ProductService productService,
       CacheService cacheService) {
@@ -26,25 +26,26 @@ public class AddToBasketCommand implements Command {
   public void execute() {
     int amount = 0;
     int productId = 0;
+    Product product=null;
     while (amount <= 0 && productId <= 0) {
       try {
         System.out.println("Enter product id: ");
-        productId = Integer.parseInt(ReadWrapper.readLine());
-        if (productService.getById(productId) == null) {
-          throw new InputMismatchException();
+        productId = ConsoleHelper.readInt();
+        product = productService.getById(productId);
+        if (product == null) {
+          productId=0;
+          System.out.println("Incorrect input. Try again!!!");
+          continue;
         }
         System.out.println("Enter amount: ");
-        amount = Integer.parseInt(ReadWrapper.readLine());
-        if (amount <= 0 || productId <= 0) {
-          throw new InputMismatchException();
+        amount = ConsoleHelper.readInt();
+        if (amount <= 0) {
+          System.out.println("Incorrect input. Try again!!!");
         }
       } catch (InputMismatchException | NumberFormatException | IOException e) {
-        amount = 0;
-        productId = 0;
         System.out.println("Incorrect input. Try again!!!");
       }
     }
-    Product product = productService.getById(productId);
     basketService.add(product, amount);
     cacheService.put(product, amount);
   }

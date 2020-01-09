@@ -3,6 +3,7 @@ package com.epam.prykhodko.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.epam.prykhodko.repository.impl.OrderRepositoryImpl;
 import com.epam.prykhodko.task1.entity.Product;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

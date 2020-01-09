@@ -1,17 +1,15 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.BasketService;
-import com.epam.prykhodko.service.OrderService;
+import com.epam.prykhodko.service.impl.BasketService;
+import com.epam.prykhodko.service.impl.OrderService;
 import com.epam.prykhodko.task1.entity.Product;
-import com.epam.prykhodko.util.ReadWrapper;
+import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class MakeOrderCommand implements Command {
 
@@ -25,23 +23,20 @@ public class MakeOrderCommand implements Command {
 
   @Override
   public void execute() {
-    Map<Product, Integer> basket = new HashMap<>();
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     Date date = null;
 
     while (date == null) {
       System.out.println("Enter date(dd/MM/yyyy HH:mm: ");
       try {
-        date = formatter.parse(ReadWrapper.readLine());
+        date = ConsoleHelper.readDate();
       } catch (ParseException | IOException e) {
         System.out.println("Incorrect input");
         date = null;
       }
     }
-    for (Entry<Product, Integer> entry : basketService.get().entrySet()) {
-      basket.put(entry.getKey(), entry.getValue());
-    }
+
+    Map<Product, Integer> basket = new HashMap<>(basketService.get());
     orderService.add(date, basket);
     basketService.clear();
   }

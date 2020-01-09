@@ -1,4 +1,4 @@
-package com.epam.prykhodko.repository.repositoryInterface;
+package com.epam.prykhodko.repository;
 
 import com.epam.prykhodko.task1.entity.Product;
 import java.util.List;
