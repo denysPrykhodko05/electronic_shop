@@ -1,9 +1,9 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.impl.BasketService;
-import com.epam.prykhodko.service.impl.CacheService;
-import com.epam.prykhodko.service.impl.ProductService;
+import com.epam.prykhodko.service.BasketService;
+import com.epam.prykhodko.service.CacheService;
+import com.epam.prykhodko.service.ProductService;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
@@ -11,9 +11,9 @@ import java.util.InputMismatchException;
 
 public class AddToBasketCommand implements Command {
 
-  private final com.epam.prykhodko.service.BasketService basketService;
-  private final com.epam.prykhodko.service.ProductService productService;
-  private final com.epam.prykhodko.service.CacheService cacheService;
+  private final BasketService basketService;
+  private final ProductService productService;
+  private final CacheService cacheService;
 
   public AddToBasketCommand(BasketService basketService, ProductService productService,
       CacheService cacheService) {
