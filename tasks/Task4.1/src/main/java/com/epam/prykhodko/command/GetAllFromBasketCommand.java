@@ -1,7 +1,7 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.impl.BasketService;
+import com.epam.prykhodko.service.BasketService;
 
 public class GetAllFromBasketCommand implements Command {
 

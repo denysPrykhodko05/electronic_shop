@@ -1,7 +1,7 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.impl.CacheService;
+import com.epam.prykhodko.service.CacheService;
 
 public class GetLastFiveProductsCommand implements Command {
 

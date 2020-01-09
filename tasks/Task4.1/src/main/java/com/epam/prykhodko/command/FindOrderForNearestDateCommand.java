@@ -1,7 +1,7 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.impl.OrderService;
+import com.epam.prykhodko.service.OrderService;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
@@ -12,10 +12,10 @@ import java.util.Map.Entry;
 
 public class FindOrderForNearestDateCommand implements Command {
 
-  private final OrderService orderService;
+  private final OrderService orderServiceImpl;
 
-  public FindOrderForNearestDateCommand(OrderService orderService) {
-    this.orderService = orderService;
+  public FindOrderForNearestDateCommand(OrderService orderServiceImpl) {
+    this.orderServiceImpl = orderServiceImpl;
   }
 
   @Override
@@ -31,6 +31,6 @@ public class FindOrderForNearestDateCommand implements Command {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
-    System.out.println(orderService.getNearestOrder(date));
+    System.out.println(orderServiceImpl.getNearestOrder(date));
   }
 }

@@ -16,10 +16,10 @@ import com.epam.prykhodko.repository.impl.BasketRepositoryImpl;
 import com.epam.prykhodko.repository.impl.CacheRepositoryImpl;
 import com.epam.prykhodko.repository.impl.OrderRepositoryImpl;
 import com.epam.prykhodko.repository.impl.ProductRepository;
-import com.epam.prykhodko.service.impl.BasketService;
-import com.epam.prykhodko.service.impl.CacheService;
-import com.epam.prykhodko.service.impl.OrderService;
-import com.epam.prykhodko.service.impl.ProductService;
+import com.epam.prykhodko.service.impl.BasketServiceImpl;
+import com.epam.prykhodko.service.impl.CacheServiceImpl;
+import com.epam.prykhodko.service.impl.OrderServiceImpl;
+import com.epam.prykhodko.service.impl.ProductServiceImpl;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,10 +30,10 @@ public class ShopView {
   private static Command invalidCommandNumber;
   private static ProductRepository productRepository;
   private static Map<Integer, Command> commandMap;
-  private static BasketService basketService;
-  private static ProductService productService;
-  private static OrderService orderService;
-  private static CacheService cacheService;
+  private static BasketServiceImpl basketServiceImpl;
+  private static ProductServiceImpl productServiceImpl;
+  private static OrderServiceImpl orderServiceImpl;
+  private static CacheServiceImpl cacheServiceImpl;
 
   static {
     BasketRepository basketRepository = new BasketRepositoryImpl();
@@ -42,10 +42,10 @@ public class ShopView {
     commandMap = new HashMap<>();
     OrderRepositoryImpl orderRepository = new OrderRepositoryImpl();
 
-    basketService = new BasketService(basketRepository, cacheRepository);
-    productService = new ProductService(productRepository);
-    orderService = new OrderService(orderRepository);
-    cacheService = new CacheService(cacheRepository);
+    basketServiceImpl = new BasketServiceImpl(basketRepository, cacheRepository);
+    productServiceImpl = new ProductServiceImpl(productRepository);
+    orderServiceImpl = new OrderServiceImpl(orderRepository);
+    cacheServiceImpl = new CacheServiceImpl(cacheRepository);
 
     commandInit();
   }
@@ -75,13 +75,13 @@ public class ShopView {
     int counter = 0;
     Command exit = new ExitCommand();
     Command getAll = new GetAllProductsCommand(productRepository);
-    Command addToBasket = new AddToBasketCommand(basketService, productService,
-        cacheService);
-    Command getAllFromBasket = new GetAllFromBasketCommand(basketService);
-    Command getLastFiveOrders = new GetLastFiveProductsCommand(cacheService);
-    Command makeOrder = new MakeOrderCommand(orderService, basketService);
-    Command getOrder = new CheckOrdersForGivenPeriodCommand(orderService);
-    Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderService);
+    Command addToBasket = new AddToBasketCommand(basketServiceImpl, productServiceImpl,
+        cacheServiceImpl);
+    Command getAllFromBasket = new GetAllFromBasketCommand(basketServiceImpl);
+    Command getLastFiveOrders = new GetLastFiveProductsCommand(cacheServiceImpl);
+    Command makeOrder = new MakeOrderCommand(orderServiceImpl, basketServiceImpl);
+    Command getOrder = new CheckOrdersForGivenPeriodCommand(orderServiceImpl);
+    Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderServiceImpl);
     invalidCommandNumber = new InavalidNumberCommand();
 
     commandMap.put(counter++, exit);

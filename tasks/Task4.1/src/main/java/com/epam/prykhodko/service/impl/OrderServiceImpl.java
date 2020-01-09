@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-public class OrderService implements com.epam.prykhodko.service.OrderService {
+public class OrderServiceImpl implements com.epam.prykhodko.service.OrderService {
 
   private OrderRepository orderRepository;
 
-  public OrderService(OrderRepository orderRepository) {
+  public OrderServiceImpl(OrderRepository orderRepository) {
     this.orderRepository = orderRepository;
   }
 

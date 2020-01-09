@@ -1,8 +1,8 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.impl.BasketService;
-import com.epam.prykhodko.service.impl.OrderService;
+import com.epam.prykhodko.service.BasketService;
+import com.epam.prykhodko.service.OrderService;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
@@ -13,12 +13,12 @@ import java.util.Map;
 
 public class MakeOrderCommand implements Command {
 
-  private final OrderService orderService;
-  private final BasketService basketService;
+  private final OrderService orderServiceImpl;
+  private final BasketService basketServiceImpl;
 
-  public MakeOrderCommand(OrderService orderService, BasketService basketService) {
-    this.orderService = orderService;
-    this.basketService = basketService;
+  public MakeOrderCommand(OrderService orderServiceImpl, BasketService basketServiceImpl) {
+    this.orderServiceImpl = orderServiceImpl;
+    this.basketServiceImpl = basketServiceImpl;
   }
 
   @Override
@@ -36,8 +36,8 @@ public class MakeOrderCommand implements Command {
       }
     }
 
-    Map<Product, Integer> basket = new HashMap<>(basketService.get());
-    orderService.add(date, basket);
-    basketService.clear();
+    Map<Product, Integer> basket = new HashMap<>(basketServiceImpl.get());
+    orderServiceImpl.add(date, basket);
+    basketServiceImpl.clear();
   }
 }

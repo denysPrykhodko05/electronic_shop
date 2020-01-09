@@ -5,11 +5,11 @@ import com.epam.prykhodko.task1.entity.Product;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class CacheService implements com.epam.prykhodko.service.CacheService {
+public class CacheServiceImpl implements com.epam.prykhodko.service.CacheService {
 
   private final CacheRepository cacheRepository;
 
-  public CacheService(CacheRepository cacheRepository) {
+  public CacheServiceImpl(CacheRepository cacheRepository) {
     this.cacheRepository = cacheRepository;
   }
 

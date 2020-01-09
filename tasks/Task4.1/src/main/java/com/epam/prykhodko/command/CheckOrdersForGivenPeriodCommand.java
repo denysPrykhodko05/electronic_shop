@@ -1,7 +1,7 @@
 package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
-import com.epam.prykhodko.service.impl.OrderService;
+import com.epam.prykhodko.service.OrderService;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.text.ParseException;
