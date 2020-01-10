@@ -12,15 +12,14 @@ import java.util.Map.Entry;
 
 public class FindOrderForNearestDateCommand implements Command {
 
-  private final OrderService orderServiceImpl;
+  private final OrderService orderService;
 
-  public FindOrderForNearestDateCommand(OrderService orderServiceImpl) {
-    this.orderServiceImpl = orderServiceImpl;
+  public FindOrderForNearestDateCommand(OrderService orderService) {
+    this.orderService = orderService;
   }
 
   @Override
   public void execute() {
-    Entry<Date, Map<Product, Integer>> order = null;
     Date date = null;
 
     while (date == null) {
@@ -31,6 +30,11 @@ public class FindOrderForNearestDateCommand implements Command {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
-    System.out.println(orderServiceImpl.getNearestOrder(date));
+    Entry<Date, Map<Product, Integer>> entry = orderService.getNearestOrder(date);
+    if (entry == null) {
+      System.out.println("You haven't orders");
+      return;
+    }
+    System.out.println(entry);
   }
 }

@@ -13,10 +13,12 @@ public class BasketRepositoryImpl implements BasketRepository {
     basket = new HashMap<>();
   }
 
+  @Override
   public void add(Product product, int amount) {
     basket.put(product, amount);
   }
 
+  @Override
   public Map<Product, Integer> get() {
     return basket;
   }

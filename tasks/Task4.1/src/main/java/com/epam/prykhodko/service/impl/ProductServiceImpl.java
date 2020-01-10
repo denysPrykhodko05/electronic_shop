@@ -1,23 +1,26 @@
 package com.epam.prykhodko.service.impl;
 
 import com.epam.prykhodko.repository.ProductRepository;
+import com.epam.prykhodko.service.ProductService;
 import com.epam.prykhodko.task1.entity.Product;
 import java.util.List;
 
-public class ProductServiceImpl implements com.epam.prykhodko.service.ProductService {
+public class ProductServiceImpl implements ProductService {
 
-  private ProductRepository products;
+  private final ProductRepository productRepository;
 
-  public ProductServiceImpl(ProductRepository products) {
-    this.products = products;
+  public ProductServiceImpl(ProductRepository productRepository) {
+    this.productRepository = productRepository;
   }
 
+  @Override
   public List<Product> getAll() {
-    return products.get();
+    return productRepository.get();
   }
 
+  @Override
   public Product getById(int id) {
-    return products.get().stream().filter(e -> e.getId() == id).findFirst().get();
+    return productRepository.getById(id).get();
   }
 
 }

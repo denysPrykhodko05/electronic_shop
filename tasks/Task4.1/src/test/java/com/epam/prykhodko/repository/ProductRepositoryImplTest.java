@@ -2,15 +2,15 @@ package com.epam.prykhodko.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.epam.prykhodko.repository.impl.ProductRepository;
+import com.epam.prykhodko.repository.impl.ProductRepositoryImpl;
 import org.junit.jupiter.api.Test;
 
-class ProductRepositoryTest {
+class ProductRepositoryImplTest {
 
   @Test
   void get() {
     int expected = 6;
-    int actual = new ProductRepository().get().size();
+    int actual = new ProductRepositoryImpl().get().size();
     assertEquals(expected,actual);
   }
 }
