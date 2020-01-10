@@ -53,7 +53,6 @@ public class SetArrayList<E> extends ArrayList<E> {
     if (element.equals(get(index))) {
       return super.set(index, element);
     }
-
     checkContains(element, this::contains);
     return super.set(index, element);
   }
