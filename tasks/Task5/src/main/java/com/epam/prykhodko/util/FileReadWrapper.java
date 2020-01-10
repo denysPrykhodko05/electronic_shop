@@ -13,21 +13,12 @@ public class FileReadWrapper implements Iterable {
     this.name = name;
   }
 
-  public void readFile() {
-    /*
-    int amountOfLine = 0;
-    try (BufferedReader bf = new BufferedReader(new FileReader(name));
-        Scanner scanner = new Scanner(new FileReader(name))) {
-      while (scanner.hasNextLine()) {
-        amountOfLine++;
-        scanner.next();
-      }
-      for (int i = 0; i < amountOfLine; i++) {
-        System.out.println(bf.readLine());
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }*/
+  public String readFile() {
+    StringBuilder stringBuilder= new StringBuilder();
+    for (Object o : this) {
+      stringBuilder.append(o).append(System.lineSeparator());
+    }
+    return stringBuilder.toString();
   }
 
   @Override
@@ -41,7 +32,7 @@ public class FileReadWrapper implements Iterable {
 
     IteratorImpl(String file) {
       try {
-        scanner = new Scanner(new FileReader(name));
+        scanner = new Scanner(new FileReader(file));
       } catch (FileNotFoundException e) {
         System.out.println("Error. Cannot open file.");
       }
@@ -50,20 +41,15 @@ public class FileReadWrapper implements Iterable {
 
     @Override
     public boolean hasNext() {
-        if (scanner.hasNextLine()) {
-          return true;
-        }
+      if (scanner.hasNextLine()) {
+        return true;
+      }
       return false;
     }
 
     @Override
     public Object next() {
-        return scanner.nextLine();
-    }
-
-    @Override
-    public void remove() {
-
+      return scanner.nextLine();
     }
   }
 }
