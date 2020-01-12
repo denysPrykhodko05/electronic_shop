@@ -7,25 +7,24 @@ public abstract class Handler {
 
   private Handler next;
 
-
   public Handler linkWith(Handler next) {
-    this.next = next;
+    Handler prev = this;
+    while (prev.next != null) {
+      prev = this.next;
+    }
+    prev.next = next;
     return next;
   }
 
-  public abstract boolean check(String parameter, File directory);
+  public abstract boolean check();
 
   public abstract boolean check(List<String> paths, File directory);
 
-  protected boolean checkNext(String name, File file) {
-    if (next == null) {
-      return true;
-    }
-    return next.check(name, file);
-  }
 
   protected boolean checkNext(List<String> paths, File file) {
     if (next == null) {
+      System.out.println("Found files: ");
+      paths.forEach(System.out::println);
       return true;
     }
     return next.check(paths, file);

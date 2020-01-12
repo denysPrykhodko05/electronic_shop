@@ -32,7 +32,6 @@ public class MakeOrderCommand implements Command {
         date = ConsoleHelper.readDate();
       } catch (ParseException | IOException e) {
         System.out.println("Incorrect input");
-        date = null;
       }
     }
 

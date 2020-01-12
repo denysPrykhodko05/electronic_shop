@@ -44,6 +44,7 @@ public class FileReadWrapper implements Iterable {
       if (scanner.hasNextLine()) {
         return true;
       }
+      scanner.close();
       return false;
     }
 
