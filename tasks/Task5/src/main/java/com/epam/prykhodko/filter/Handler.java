@@ -6,13 +6,18 @@ import java.util.List;
 public abstract class Handler {
 
   private Handler next;
+  private Handler last;
+  private boolean flag;
 
   public Handler linkWith(Handler next) {
-    Handler prev = this;
-    while (prev.next != null) {
-      prev = this.next;
+    if (!flag) {
+      this.next = next;
+      last = next;
+      flag = true;
+      return next;
     }
-    prev.next = next;
+    last.next = next;
+    last = next;
     return next;
   }
 
