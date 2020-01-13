@@ -15,7 +15,7 @@ import com.epam.prykhodko.repository.CacheRepository;
 import com.epam.prykhodko.repository.impl.BasketRepositoryImpl;
 import com.epam.prykhodko.repository.impl.CacheRepositoryImpl;
 import com.epam.prykhodko.repository.impl.OrderRepositoryImpl;
-import com.epam.prykhodko.repository.impl.ProductRepository;
+import com.epam.prykhodko.repository.impl.ProductRepositoryImpl;
 import com.epam.prykhodko.service.impl.BasketServiceImpl;
 import com.epam.prykhodko.service.impl.CacheServiceImpl;
 import com.epam.prykhodko.service.impl.OrderServiceImpl;
@@ -28,7 +28,7 @@ import java.util.Map;
 public class ShopView {
 
   private static Command invalidCommandNumber;
-  private static ProductRepository productRepository;
+  private static ProductRepositoryImpl productRepositoryImpl;
   private static Map<Integer, Command> commandMap;
   private static BasketServiceImpl basketServiceImpl;
   private static ProductServiceImpl productServiceImpl;
@@ -37,13 +37,13 @@ public class ShopView {
 
   static {
     BasketRepository basketRepository = new BasketRepositoryImpl();
-    productRepository = new ProductRepository();
+    productRepositoryImpl = new ProductRepositoryImpl();
     CacheRepository cacheRepository = new CacheRepositoryImpl();
     commandMap = new HashMap<>();
     OrderRepositoryImpl orderRepository = new OrderRepositoryImpl();
 
     basketServiceImpl = new BasketServiceImpl(basketRepository, cacheRepository);
-    productServiceImpl = new ProductServiceImpl(productRepository);
+    productServiceImpl = new ProductServiceImpl(productRepositoryImpl);
     orderServiceImpl = new OrderServiceImpl(orderRepository);
     cacheServiceImpl = new CacheServiceImpl(cacheRepository);
 
@@ -74,7 +74,7 @@ public class ShopView {
   private static void commandInit() {
     int counter = 0;
     Command exit = new ExitCommand();
-    Command getAll = new GetAllProductsCommand(productRepository);
+    Command getAll = new GetAllProductsCommand(productRepositoryImpl);
     Command addToBasket = new AddToBasketCommand(basketServiceImpl, productServiceImpl,
         cacheServiceImpl);
     Command getAllFromBasket = new GetAllFromBasketCommand(basketServiceImpl);
