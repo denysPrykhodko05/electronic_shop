@@ -5,12 +5,12 @@ import static com.epam.prykhodko.util.FileUtils.findFileByName;
 import java.io.File;
 import java.util.List;
 
-public class SearchByName extends Handler {
+public class SearchByNameFilter extends Handler {
 
   private final String name;
   private final File directory;
 
-  public SearchByName(String name, String directory) {
+  public SearchByNameFilter(String name, String directory) {
     this.name = name;
     this.directory = new File(directory);
   }

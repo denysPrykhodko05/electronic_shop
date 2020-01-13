@@ -7,10 +7,10 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.filter.Handler;
-import com.epam.prykhodko.filter.SearchByDate;
-import com.epam.prykhodko.filter.SearchByFilenameExtension;
-import com.epam.prykhodko.filter.SearchByName;
-import com.epam.prykhodko.filter.SearchBySize;
+import com.epam.prykhodko.filter.SearchByDateFilter;
+import com.epam.prykhodko.filter.SearchByFilenameExtensionFilter;
+import com.epam.prykhodko.filter.SearchByNameFilter;
+import com.epam.prykhodko.filter.SearchBySizeFilter;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class DemoPart2 {
         if (nameChoose == INTEGER_ONE) {
           System.out.println("Enter the file name: ");
           name = ConsoleHelper.readLine();
-          handler = new SearchByName(name, directory);
+          handler = new SearchByNameFilter(name, directory);
         }
         if (nameChoose == INTEGER_ZERO) {
           break;
@@ -72,7 +72,7 @@ public class DemoPart2 {
         if (extensionChoose == INTEGER_ONE) {
           System.out.println("Enter the file extension");
           extension = ConsoleHelper.readLine();
-          handler = link(handler, new SearchByFilenameExtension(extension, directory));
+          handler = link(handler, new SearchByFilenameExtensionFilter(extension, directory));
         }
         if (extensionChoose == INTEGER_ZERO) {
           break;
@@ -91,7 +91,7 @@ public class DemoPart2 {
           minSize = ConsoleHelper.readInt();
           System.out.println("Enter the max size: ");
           maxSize = ConsoleHelper.readInt();
-          handler = link(handler, new SearchBySize(minSize, maxSize, directory));
+          handler = link(handler, new SearchBySizeFilter(minSize, maxSize, directory));
         }
         if (sizeChoose == INTEGER_ZERO) {
           break;
@@ -117,7 +117,7 @@ public class DemoPart2 {
             System.out.println("Incorrect input. Try again!!!");
             continue;
           }
-          handler = link(handler, new SearchByDate(firstDate, lastDate, directory));
+          handler = link(handler, new SearchByDateFilter(firstDate, lastDate, directory));
         }
         if (dateChoose == INTEGER_ZERO) {
           break;

@@ -5,13 +5,13 @@ import static com.epam.prykhodko.util.FileUtils.findFileByExtension;
 import java.io.File;
 import java.util.List;
 
-public class SearchByFilenameExtension extends Handler {
+public class SearchByFilenameExtensionFilter extends Handler {
 
   private String extension;
   private File directory;
   private List<String> paths;
 
-  public SearchByFilenameExtension(String extension, String directory) {
+  public SearchByFilenameExtensionFilter(String extension, String directory) {
     this.extension = extension;
     this.directory = new File(directory);
   }

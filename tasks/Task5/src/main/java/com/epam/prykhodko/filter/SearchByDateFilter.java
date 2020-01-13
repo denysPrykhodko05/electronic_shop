@@ -6,14 +6,14 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-public class SearchByDate extends Handler {
+public class SearchByDateFilter extends Handler {
 
   private File directory;
   private Date firstDate;
   private Date lastDate;
   private List<String> paths;
 
-  public SearchByDate(Date firstDate, Date lastDate, String directory) {
+  public SearchByDateFilter(Date firstDate, Date lastDate, String directory) {
     this.firstDate = firstDate;
     this.lastDate = lastDate;
     this.directory = new File(directory);
