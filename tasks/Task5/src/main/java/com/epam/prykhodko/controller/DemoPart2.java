@@ -2,7 +2,6 @@ package com.epam.prykhodko.controller;
 
 
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.filter.Handler;
@@ -18,6 +17,8 @@ import java.util.Date;
 
 public class DemoPart2 {
 
+  private static Handler last;
+
   public static Handler link(Handler chain, Handler filter) {
     if (chain != null) {
       chain.linkWith(filter);
@@ -30,12 +31,12 @@ public class DemoPart2 {
 //private static String directory = "C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019";
     String directory = null;
     Handler handler = null;
-    int nameChoose = INTEGER_MINUS_ONE;
-    int extensionChoose = INTEGER_MINUS_ONE;
-    int sizeChoose = INTEGER_MINUS_ONE;
-    int dateChoose = INTEGER_MINUS_ONE;
-    String name = null;
-    String extension = null;
+    String nameChoose="";
+    String extensionChoose="";
+    String sizeChoose ="";
+    String dateChoose ="";
+    String name ="";
+    String extension ="";
     int minSize = INTEGER_MINUS_ONE;
     int maxSize = INTEGER_MINUS_ONE;
     Date firstDate = null;
@@ -55,33 +56,35 @@ public class DemoPart2 {
       }
     }
 
-    while (nameChoose != INTEGER_ONE || name == null) {
+    while (name.equals("") || !nameChoose.equals("1")) {
       try {
         System.out.println("Do you want search by name? 0/1");
-        nameChoose = ConsoleHelper.readInt();
-        if (nameChoose == INTEGER_ONE) {
+        nameChoose = ConsoleHelper.readLine();
+        if (nameChoose.equalsIgnoreCase("1")) {
           System.out.println("Enter the file name: ");
           name = ConsoleHelper.readLine();
-          handler = new SearchByNameFilter(name, directory);
+          handler = link(handler, new SearchByNameFilter(name, directory));
         }
-        if (nameChoose == INTEGER_ZERO) {
+        if (nameChoose.equals("0")) {
           break;
         }
       } catch (IOException e) {
+        name="";
+        nameChoose="";
         System.out.println("Incorrect input. Try again!!!");
       }
     }
 
-    while (extensionChoose == INTEGER_MINUS_ONE || extension == null) {
+    while (extension.equals("")) {
       try {
         System.out.println("Do you want search by extension? 0/1");
-        extensionChoose = ConsoleHelper.readInt();
-        if (extensionChoose == INTEGER_ONE) {
+        extensionChoose = ConsoleHelper.readLine();
+        if (extensionChoose.equalsIgnoreCase("1")) {
           System.out.println("Enter the file extension");
           extension = ConsoleHelper.readLine();
           handler = link(handler, new SearchByFilenameExtensionFilter(extension, directory));
         }
-        if (extensionChoose == INTEGER_ZERO) {
+        if (extensionChoose.equalsIgnoreCase("0")) {
           break;
         }
       } catch (IOException e) {
@@ -89,46 +92,51 @@ public class DemoPart2 {
       }
     }
 
-    while (sizeChoose != INTEGER_ONE || minSize <= INTEGER_ONE || maxSize <= INTEGER_ONE) {
+    while (true) {
       try {
         System.out.println("Do you want search by size? 0/1");
-        sizeChoose = ConsoleHelper.readInt();
-        if (sizeChoose == INTEGER_ONE) {
+        sizeChoose = ConsoleHelper.readLine();
+        if (sizeChoose.equalsIgnoreCase("1")) {
           System.out.println("Enter the min size: ");
           minSize = ConsoleHelper.readInt();
           System.out.println("Enter the max size: ");
           maxSize = ConsoleHelper.readInt();
+          if (maxSize<=INTEGER_ZERO || minSize <= INTEGER_ZERO){
+            continue;
+          }
           handler = link(handler, new SearchBySizeFilter(minSize, maxSize, directory));
-        }
-        if (sizeChoose == INTEGER_ZERO) {
           break;
         }
+        if (sizeChoose.equalsIgnoreCase("0")) {
+          break;
+        }
+        sizeChoose=null;
       } catch (IOException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
 
-    while (dateChoose != INTEGER_ONE || firstDate == null || lastDate == null) {
+    while (true) {
       try {
         System.out.println("Do you want search by date? 0/1");
-        dateChoose = ConsoleHelper.readInt();
-        if (dateChoose == INTEGER_ONE) {
+        dateChoose = ConsoleHelper.readLine();
+        if (dateChoose.equalsIgnoreCase("1")) {
           System.out.println("Enter the first date(dd/mm/yyyy hh:mm): ");
           firstDate = ConsoleHelper.readDate();
           System.out.println("Enter the last date(dd/mm/yyyy hh:mm): ");
           lastDate = ConsoleHelper.readDate();
           if (firstDate.getTime() - System.currentTimeMillis() > 0
               || lastDate.getTime() - System.currentTimeMillis() > 0) {
-            firstDate = null;
-            lastDate = null;
             System.out.println("Incorrect input. Try again!!!");
             continue;
           }
           handler = link(handler, new SearchByDateFilter(firstDate, lastDate, directory));
-        }
-        if (dateChoose == INTEGER_ZERO) {
           break;
         }
+        if (dateChoose.equalsIgnoreCase("0")) {
+          break;
+        }
+        dateChoose=null;
       } catch (IOException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
