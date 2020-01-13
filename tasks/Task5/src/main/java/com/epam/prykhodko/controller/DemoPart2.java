@@ -1,7 +1,6 @@
 package com.epam.prykhodko.controller;
 
 
-import static com.epam.prykhodko.util.FileUtils.link;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
@@ -18,6 +17,14 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class DemoPart2 {
+
+  public static Handler link(Handler chain, Handler filter) {
+    if (chain != null) {
+      chain.linkWith(filter);
+      return chain;
+    }
+    return filter;
+  }
 
   public static void main(String[] args) throws ParseException {
 //private static String directory = "C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019";

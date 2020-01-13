@@ -1,8 +1,8 @@
 package com.epam.prykhodko.filter;
 
-import static com.epam.prykhodko.util.FileUtils.findByDate;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +12,7 @@ public class SearchByDateFilter extends Handler {
   private Date firstDate;
   private Date lastDate;
   private List<String> paths;
+  public final List<String> pathsFilteredByDate = new ArrayList<>();
 
   public SearchByDateFilter(Date firstDate, Date lastDate, String directory) {
     this.firstDate = firstDate;
@@ -35,5 +36,36 @@ public class SearchByDateFilter extends Handler {
       return false;
     }
     return checkNext(this.paths, directory);
+  }
+
+  public List<String> findByDate(File directory, Date firstDate, Date lastDate) {
+    File[] list = directory.listFiles();
+
+    if (list == null) {
+      return null;
+    }
+
+    for (File file : list) {
+      if (file.isDirectory()) {
+        findByDate(file, firstDate, lastDate);
+      } else {
+        long modDate = file.lastModified();
+        if (modDate > firstDate.getTime() && modDate < lastDate.getTime()) {
+          pathsFilteredByDate.add(file.getAbsolutePath());
+        }
+      }
+    }
+    return pathsFilteredByDate;
+  }
+
+
+  public List<String> findByDate(List<String> paths, Date firstDate, Date lastDate) {
+    for (String path : paths) {
+      long modDate = new File(path).lastModified();
+      if (modDate > firstDate.getTime() && modDate < lastDate.getTime()) {
+        pathsFilteredByDate.add(path);
+      }
+    }
+    return pathsFilteredByDate;
   }
 }

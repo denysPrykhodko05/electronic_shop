@@ -7,13 +7,16 @@ public abstract class Handler {
 
   private Handler next;
 
+  //TODO
   public Handler linkWith(Handler next) {
-    Handler prev = this;
+    this.next = next;
+    return next;
+  /*  Handler prev = this;
     while (prev.next != null) {
       prev = this.next;
     }
     prev.next = next;
-    return next;
+    return next;*/
   }
 
   public abstract boolean check();
