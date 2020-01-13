@@ -75,13 +75,17 @@ public class DemoPart2 {
       }
     }
 
-    while (extension.equals("")) {
+    while (extension.equals("") || !extensionChoose.equals("1")) {
       try {
         System.out.println("Do you want search by extension? 0/1");
         extensionChoose = ConsoleHelper.readLine();
         if (extensionChoose.equalsIgnoreCase("1")) {
           System.out.println("Enter the file extension");
           extension = ConsoleHelper.readLine();
+          if (extension.matches("(.*)\\.(.*)")){
+            extensionChoose="";
+            continue;
+          }
           handler = link(handler, new SearchByFilenameExtensionFilter(extension, directory));
         }
         if (extensionChoose.equalsIgnoreCase("0")) {
@@ -92,31 +96,31 @@ public class DemoPart2 {
       }
     }
 
-    while (true) {
+    while (!sizeChoose.equals("1")) {
       try {
         System.out.println("Do you want search by size? 0/1");
         sizeChoose = ConsoleHelper.readLine();
-        if (sizeChoose.equalsIgnoreCase("1")) {
+        if (sizeChoose.equals("1")) {
           System.out.println("Enter the min size: ");
           minSize = ConsoleHelper.readInt();
           System.out.println("Enter the max size: ");
           maxSize = ConsoleHelper.readInt();
           if (maxSize<=INTEGER_ZERO || minSize <= INTEGER_ZERO){
+            sizeChoose="";
             continue;
           }
           handler = link(handler, new SearchBySizeFilter(minSize, maxSize, directory));
           break;
         }
-        if (sizeChoose.equalsIgnoreCase("0")) {
+        if (sizeChoose.equals("0")) {
           break;
         }
-        sizeChoose=null;
       } catch (IOException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
 
-    while (true) {
+    while (!dateChoose.equals("1")) {
       try {
         System.out.println("Do you want search by date? 0/1");
         dateChoose = ConsoleHelper.readLine();
@@ -128,6 +132,7 @@ public class DemoPart2 {
           if (firstDate.getTime() - System.currentTimeMillis() > 0
               || lastDate.getTime() - System.currentTimeMillis() > 0) {
             System.out.println("Incorrect input. Try again!!!");
+            dateChoose="";
             continue;
           }
           handler = link(handler, new SearchByDateFilter(firstDate, lastDate, directory));
@@ -136,7 +141,6 @@ public class DemoPart2 {
         if (dateChoose.equalsIgnoreCase("0")) {
           break;
         }
-        dateChoose=null;
       } catch (IOException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
