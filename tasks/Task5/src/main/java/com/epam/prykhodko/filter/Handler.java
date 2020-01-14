@@ -7,18 +7,9 @@ public abstract class Handler {
 
   protected File directory;
   private Handler next;
-  private Handler last;
-  private boolean flag;
 
   public Handler linkWith(Handler next) {
-    if (!flag) {
-      this.next = next;
-      last = next;
-      flag = true;
-      return next;
-    }
-    last.next = next;
-    last = next;
+    this.next = next;
     return next;
   }
 
