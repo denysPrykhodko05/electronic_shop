@@ -11,6 +11,7 @@ public class FullSearchFilter extends Handler {
     super.directory = new File(directory);
   }
 
+  
   @Override
   public boolean check() {
     List<String> paths = findAll(directory);
