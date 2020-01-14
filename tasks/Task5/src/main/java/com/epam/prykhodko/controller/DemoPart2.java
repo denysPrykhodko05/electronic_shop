@@ -1,7 +1,21 @@
 package com.epam.prykhodko.controller;
 
 
+import static com.epam.prykhodko.constant.Constants.CHOOSE_DATE_FILTER_STRING;
+import static com.epam.prykhodko.constant.Constants.CHOOSE_EXTENSION_FILTER_STRING;
+import static com.epam.prykhodko.constant.Constants.CHOOSE_NAME_FILTER_STRING;
+import static com.epam.prykhodko.constant.Constants.CHOOSE_SIZE_FILTER_STRING;
 import static com.epam.prykhodko.constant.Constants.EMPTY_STRING;
+import static com.epam.prykhodko.constant.Constants.ENTER_DIRECTORY_NAME_STRING;
+import static com.epam.prykhodko.constant.Constants.ENTER_EXTENSION_STRING;
+import static com.epam.prykhodko.constant.Constants.ENTER_FILE_NAME_STRING;
+import static com.epam.prykhodko.constant.Constants.ENTER_FIRST_DATE_STRING;
+import static com.epam.prykhodko.constant.Constants.ENTER_LAST_DATE_STRING;
+import static com.epam.prykhodko.constant.Constants.ENTER_MAX_SIZE_STRING;
+import static com.epam.prykhodko.constant.Constants.ENTER_MIN_SIZE_STRING;
+import static com.epam.prykhodko.constant.Constants.FILE_NOT_FOUND_ERROR;
+import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
+import static com.epam.prykhodko.constant.Constants.REG_MATCH_EXTENSION;
 import static com.epam.prykhodko.constant.Constants.STRING_ONE;
 import static com.epam.prykhodko.constant.Constants.STRING_ZERO;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
@@ -56,17 +70,17 @@ public class DemoPart2 {
 
   private static String enterDirectory() {
     String directory = null;
-    System.out.println("Enter directory name: ");
+    System.out.println(ENTER_DIRECTORY_NAME_STRING);
     while (directory == null) {
       try {
         directory = ConsoleHelper.readLine();
         File directoryFile = new File(directory);
         if (!directoryFile.exists()) {
           directory = null;
-          System.out.println("File with this name doesn't exists. Try again!!!");
+          System.out.println(FILE_NOT_FOUND_ERROR);
         }
       } catch (IOException e) {
-        System.out.println("Incorrect input. Try again!!!");
+        System.out.println(INCORRECT_INPUT);
       }
     }
     return directory;
@@ -77,10 +91,10 @@ public class DemoPart2 {
     String name = EMPTY_STRING;
     while (name.isEmpty() || !nameChoose.equals(STRING_ONE)) {
       try {
-        System.out.println("Do you want search by name? 0/1");
+        System.out.println(CHOOSE_NAME_FILTER_STRING);
         nameChoose = ConsoleHelper.readLine();
         if (nameChoose.equalsIgnoreCase(STRING_ONE)) {
-          System.out.println("Enter the file name: ");
+          System.out.println(ENTER_FILE_NAME_STRING);
           name = ConsoleHelper.readLine();
           return new SearchByNameFilter(name, directory);
         }
@@ -90,7 +104,7 @@ public class DemoPart2 {
       } catch (IOException e) {
         name = EMPTY_STRING;
         nameChoose = EMPTY_STRING;
-        System.out.println("Incorrect input. Try again!!!");
+        System.out.println(INCORRECT_INPUT);
       }
     }
     return null;
@@ -101,12 +115,12 @@ public class DemoPart2 {
     String extensionChoose = EMPTY_STRING;
     while (extension.isEmpty() || !extensionChoose.equals(STRING_ONE)) {
       try {
-        System.out.println("Do you want search by extension? 0/1");
+        System.out.println(CHOOSE_EXTENSION_FILTER_STRING);
         extensionChoose = ConsoleHelper.readLine();
         if (extensionChoose.equalsIgnoreCase(STRING_ONE)) {
-          System.out.println("Enter the file extension");
+          System.out.println(ENTER_EXTENSION_STRING);
           extension = ConsoleHelper.readLine();
-          if (extension.matches("(.*)\\.(.*)")) {
+          if (extension.matches(REG_MATCH_EXTENSION)) {
             extensionChoose = EMPTY_STRING;
             continue;
           }
@@ -116,7 +130,7 @@ public class DemoPart2 {
           return null;
         }
       } catch (IOException e) {
-        System.out.println("Incorrect input. Try again!!!");
+        System.out.println(INCORRECT_INPUT);
       }
     }
     return null;
@@ -128,12 +142,12 @@ public class DemoPart2 {
     int maxSize;
     while (!sizeChoose.equals(STRING_ONE)) {
       try {
-        System.out.println("Do you want search by size? 0/1");
+        System.out.println(CHOOSE_SIZE_FILTER_STRING);
         sizeChoose = ConsoleHelper.readLine();
-        if (sizeChoose.equals("1")) {
-          System.out.println("Enter the min size in kilobytes: ");
+        if (sizeChoose.equals(STRING_ONE)) {
+          System.out.println(ENTER_MIN_SIZE_STRING);
           minSize = ConsoleHelper.readInt();
-          System.out.println("Enter the max size in kilobytes: ");
+          System.out.println(ENTER_MAX_SIZE_STRING);
           maxSize = ConsoleHelper.readInt();
           if (maxSize <= INTEGER_ZERO || minSize <= INTEGER_ZERO) {
             sizeChoose = "";
@@ -145,7 +159,7 @@ public class DemoPart2 {
           return null;
         }
       } catch (IOException e) {
-        System.out.println("Incorrect input. Try again!!!");
+        System.out.println(INCORRECT_INPUT);
       }
     }
     return null;
@@ -157,26 +171,26 @@ public class DemoPart2 {
     Date lastDate;
     while (!dateChoose.equals(STRING_ONE)) {
       try {
-        System.out.println("Do you want search by date? 0/1");
+        System.out.println(CHOOSE_DATE_FILTER_STRING);
         dateChoose = ConsoleHelper.readLine();
         if (dateChoose.equalsIgnoreCase(STRING_ONE)) {
-          System.out.println("Enter the first date(dd/mm/yyyy hh:mm): ");
+          System.out.println(ENTER_FIRST_DATE_STRING);
           firstDate = ConsoleHelper.readDate();
-          System.out.println("Enter the last date(dd/mm/yyyy hh:mm): ");
+          System.out.println(ENTER_LAST_DATE_STRING);
           lastDate = ConsoleHelper.readDate();
           if (firstDate.getTime() - System.currentTimeMillis() > INTEGER_ZERO
               || lastDate.getTime() - System.currentTimeMillis() > INTEGER_ZERO) {
-            System.out.println("Incorrect input. Try again!!!");
+            System.out.println(INCORRECT_INPUT);
             dateChoose = "";
             continue;
           }
           return new SearchByDateFilter(firstDate, lastDate, directory);
         }
-        if (dateChoose.equalsIgnoreCase("0")) {
+        if (dateChoose.equalsIgnoreCase(STRING_ZERO)) {
           return null;
         }
       } catch (IOException | ParseException e) {
-        System.out.println("Incorrect input. Try again!!!");
+        System.out.println(INCORRECT_INPUT);
       }
     }
     return null;
