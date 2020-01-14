@@ -6,7 +6,6 @@ public class Constants {
   public static final String REG_MATCH_EXTENSION = "(.*)\\.(.*)";
   public static final String STRING_ONE = "1";
   public static final String STRING_ZERO = "0";
-  public static final String EMPTY_STRING = "";
   public static final String INCORRECT_INPUT = "Incorrect input. Try again!!!";
   public static final String FILE_NOT_FOUND_ERROR = "File with this name doesn't exists. Try again!!!";
   public static final String CHOOSE_NAME_FILTER_STRING = "Do you want search by name? 0/1";
