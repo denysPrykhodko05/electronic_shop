@@ -51,16 +51,17 @@ public class DemoPart2 {
     handlerList.add(sizeFilter(directory));
     handlerList.add(dateFilter(directory));
 
-    linkFilters(
+    handler = linkFilters(
         Arrays.asList(handlerList.stream().filter(Objects::nonNull).toArray(Handler[]::new)));
     handler.check();
   }
 
 
-  private static void linkFilters(List<Handler> handlers) {
+  private static Handler linkFilters(List<Handler> handlers) {
+    Handler handler;
     if (handlers.isEmpty()) {
       handler = new FullSearchFilter(directory);
-      return;
+      return handler;
     }
     Handler first = handlers.get(0);
     Handler last;
@@ -70,6 +71,7 @@ public class DemoPart2 {
       last.linkWith(handlers.get(i));
       last = handlers.get(i);
     }
+    return handler;
   }
 
   private static String enterDirectory() {
@@ -87,7 +89,6 @@ public class DemoPart2 {
   }
 
   private static Handler fullSearch(String directory) {
-
     return new FullSearchFilter(directory);
   }
 
