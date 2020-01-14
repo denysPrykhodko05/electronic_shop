@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class Handler {
 
+  protected File directory;
   private Handler next;
   private Handler last;
   private boolean flag;

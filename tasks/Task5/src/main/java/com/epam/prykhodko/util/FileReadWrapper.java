@@ -34,7 +34,7 @@ public class FileReadWrapper implements Iterable {
       try {
         scanner = new Scanner(new FileReader(file));
       } catch (FileNotFoundException e) {
-        System.out.println("Error. Cannot open file.");
+        System.err.println("Error. Cannot open file.");
       }
     }
 
