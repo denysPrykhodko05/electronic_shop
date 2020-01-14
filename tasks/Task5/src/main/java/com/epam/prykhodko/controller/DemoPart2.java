@@ -16,35 +16,46 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class DemoPart2 {
 
   private static Handler handler = null;
 
-  private static void linkFilters(List<Handler> handlers) {
-    handler = handlers.get(0);
-    for (int i = 1; i < handlers.size() - 1; i++) {
-      handler.linkWith(handlers.get(i));
-    }
-  }
-
   //C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019
   public static void main(String[] args) throws ParseException {
     List<Handler> handlerList = new ArrayList<>();
     String directory = null;
-    String nameChoose = EMPTY_STRING;
-    String extensionChoose = EMPTY_STRING;
-    String sizeChoose = EMPTY_STRING;
-    String dateChoose = EMPTY_STRING;
-    String name = EMPTY_STRING;
-    String extension = EMPTY_STRING;
-    int minSize;
-    int maxSize;
-    Date firstDate;
-    Date lastDate;
 
+    directory = enterDirectory();
+
+    handlerList.add(nameFilter(directory));
+    handlerList.add(extensionFilter(directory));
+    handlerList.add(sizeFilter(directory));
+    handlerList.add(dateFilter(directory));
+
+    linkFilters(
+        Arrays.asList(handlerList.stream().filter(Objects::nonNull).toArray(Handler[]::new)));
+    handler.check();
+  }
+
+
+  private static void linkFilters(List<Handler> handlers) {
+    Handler first = handlers.get(0);
+    Handler last;
+    handler = first;
+    last = first;
+    for (int i = 1; i < handlers.size(); i++) {
+      last.linkWith(handlers.get(i));
+      last = handlers.get(i);
+    }
+  }
+
+  private static String enterDirectory() {
+    String directory = null;
     System.out.println("Enter directory name: ");
     while (directory == null) {
       try {
@@ -58,7 +69,12 @@ public class DemoPart2 {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
+    return directory;
+  }
 
+  private static Handler nameFilter(String directory) {
+    String nameChoose = EMPTY_STRING;
+    String name = EMPTY_STRING;
     while (name.isEmpty() || !nameChoose.equals(STRING_ONE)) {
       try {
         System.out.println("Do you want search by name? 0/1");
@@ -66,10 +82,10 @@ public class DemoPart2 {
         if (nameChoose.equalsIgnoreCase(STRING_ONE)) {
           System.out.println("Enter the file name: ");
           name = ConsoleHelper.readLine();
-          handlerList.add(new SearchByNameFilter(name, directory));
+          return new SearchByNameFilter(name, directory);
         }
         if (nameChoose.equals(STRING_ZERO)) {
-          break;
+          return null;
         }
       } catch (IOException e) {
         name = EMPTY_STRING;
@@ -77,7 +93,12 @@ public class DemoPart2 {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
+    return null;
+  }
 
+  private static Handler extensionFilter(String directory) {
+    String extension = EMPTY_STRING;
+    String extensionChoose = EMPTY_STRING;
     while (extension.isEmpty() || !extensionChoose.equals(STRING_ONE)) {
       try {
         System.out.println("Do you want search by extension? 0/1");
@@ -86,19 +107,25 @@ public class DemoPart2 {
           System.out.println("Enter the file extension");
           extension = ConsoleHelper.readLine();
           if (extension.matches("(.*)\\.(.*)")) {
-            extensionChoose = "";
+            extensionChoose = EMPTY_STRING;
             continue;
           }
-          handlerList.add(new SearchByFilenameExtensionFilter(extension, directory));
+          return new SearchByFilenameExtensionFilter(extension, directory);
         }
         if (extensionChoose.equalsIgnoreCase(STRING_ZERO)) {
-          break;
+          return null;
         }
       } catch (IOException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
+    return null;
+  }
 
+  private static Handler sizeFilter(String directory) {
+    String sizeChoose = EMPTY_STRING;
+    int minSize;
+    int maxSize;
     while (!sizeChoose.equals(STRING_ONE)) {
       try {
         System.out.println("Do you want search by size? 0/1");
@@ -112,16 +139,22 @@ public class DemoPart2 {
             sizeChoose = "";
             continue;
           }
-          handlerList.add(new SearchBySizeFilter(minSize, maxSize, directory));
+          return new SearchBySizeFilter(minSize, maxSize, directory);
         }
         if (sizeChoose.equals(STRING_ZERO)) {
-          break;
+          return null;
         }
       } catch (IOException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
+    return null;
+  }
 
+  private static Handler dateFilter(String directory) {
+    String dateChoose = EMPTY_STRING;
+    Date firstDate;
+    Date lastDate;
     while (!dateChoose.equals(STRING_ONE)) {
       try {
         System.out.println("Do you want search by date? 0/1");
@@ -137,18 +170,15 @@ public class DemoPart2 {
             dateChoose = "";
             continue;
           }
-          handlerList.add(new SearchByDateFilter(firstDate, lastDate, directory));
+          return new SearchByDateFilter(firstDate, lastDate, directory);
         }
         if (dateChoose.equalsIgnoreCase("0")) {
-          break;
+          return null;
         }
-      } catch (IOException e) {
+      } catch (IOException | ParseException e) {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
-    linkFilters(handlerList);
-    if (handler != null) {
-      handler.check();
-    }
+    return null;
   }
 }
