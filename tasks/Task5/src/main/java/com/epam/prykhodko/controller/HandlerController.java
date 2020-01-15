@@ -34,29 +34,18 @@ import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
-public class DemoPart2 {
+public class HandlerController {
 
   private static Handler handler = null;
   private static String directory = null;
 
   //C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019
   public static void main(String[] args) throws ParseException {
-    List<Handler> handlerList = new ArrayList<>();
-
-    directory = enterDirectory();
-
-    handlerList.add(nameFilter(directory));
-    handlerList.add(extensionFilter(directory));
-    handlerList.add(sizeFilter(directory));
-    handlerList.add(dateFilter(directory));
-
-    handler = linkFilters(
-        Arrays.asList(handlerList.stream().filter(Objects::nonNull).toArray(Handler[]::new)));
-    handler.check();
+    HandlerController start = new HandlerController();
+    start.startFindFiles();
   }
 
-
-  private static Handler linkFilters(List<Handler> handlers) {
+  private Handler linkFilters(List<Handler> handlers) {
     Handler handler;
     if (handlers.isEmpty()) {
       handler = fullSearch(directory);
@@ -73,7 +62,7 @@ public class DemoPart2 {
     return handler;
   }
 
-  private static String enterDirectory() {
+  private String enterDirectory() {
     String directory = StringUtils.EMPTY;
     System.out.println(ENTER_DIRECTORY_NAME_STRING);
     while (directory.isEmpty()) {
@@ -87,11 +76,11 @@ public class DemoPart2 {
     return directory;
   }
 
-  private static Handler fullSearch(String directory) {
+  private Handler fullSearch(String directory) {
     return new FullSearchFilter(directory);
   }
 
-  private static Handler nameFilter(String directory) {
+  private Handler nameFilter(String directory) {
     String nameChoose;
     String name = StringUtils.EMPTY;
     System.out.println(CHOOSE_NAME_FILTER_STRING);
@@ -115,7 +104,7 @@ public class DemoPart2 {
     return handler;
   }
 
-  private static Handler extensionFilter(String directory) {
+  private Handler extensionFilter(String directory) {
     String extension = StringUtils.EMPTY;
     String extensionChoose;
     System.out.println(CHOOSE_EXTENSION_FILTER_STRING);
@@ -137,7 +126,7 @@ public class DemoPart2 {
     return handler;
   }
 
-  private static Handler sizeFilter(String directory) {
+  private Handler sizeFilter(String directory) {
     String sizeChoose;
     int minSize;
     int maxSize;
@@ -166,7 +155,7 @@ public class DemoPart2 {
 
   }
 
-  private static Handler dateFilter(String directory) {
+  private Handler dateFilter(String directory) {
     String dateChoose;
     Date firstDate;
     Date lastDate;
@@ -194,5 +183,18 @@ public class DemoPart2 {
       handler = new SearchByDateFilter(firstDate, lastDate, directory);
       return handler;
     }
+  }
+
+  public void startFindFiles() {
+    List<Handler> handlerList = new ArrayList<>();
+    directory = enterDirectory();
+    handlerList.add(nameFilter(directory));
+    handlerList.add(extensionFilter(directory));
+    handlerList.add(sizeFilter(directory));
+    handlerList.add(dateFilter(directory));
+
+    handler = linkFilters(
+        Arrays.asList(handlerList.stream().filter(Objects::nonNull).toArray(Handler[]::new)));
+    handler.check();
   }
 }

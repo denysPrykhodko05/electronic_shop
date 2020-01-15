@@ -13,22 +13,17 @@ public class SearchByNameFilter extends Handler {
   private final String name;
 
   public SearchByNameFilter(String name, String directory) {
+    super(new File(directory));
     this.name = name;
-    super.directory = new File(directory);
-  }
-
-
-  @Override
-  public boolean check() {
-    List<String> paths = findFileByName(name, directory);
-    if (paths.isEmpty()) {
-      return false;
-    }
-    return checkNext(paths, directory);
   }
 
   @Override
-  public boolean check(List<String> paths, File directory) {
+  protected List<String> findFiles(File directory) {
+    return findFileByName(name,directory);
+  }
+
+  @Override
+  protected List<String> findFiles(List<String> paths) {
     throw new UnsupportedOperationException();
   }
 

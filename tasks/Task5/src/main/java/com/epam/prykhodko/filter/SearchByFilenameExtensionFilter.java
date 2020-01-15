@@ -11,31 +11,21 @@ import java.util.List;
 
 public class SearchByFilenameExtensionFilter extends Handler {
 
-  private String extension;
+  private final String extension;
 
   public SearchByFilenameExtensionFilter(String extension, String directory) {
+    super(new File(directory));
     this.extension = extension;
-    super.directory = new File(directory);
   }
 
   @Override
-  public boolean check() {
-    List<String> paths;
-    paths = findFileByExtension(extension, directory);
-    if (paths == null) {
-      return false;
-    }
-    return checkNext(paths, directory);
+  protected List<String> findFiles(File directory) {
+    return findFileByExtension(extension, directory);
   }
 
   @Override
-  public boolean check(List<String> paths, File directory) {
-    List<String> tempPaths;
-    tempPaths = findFileByExtension(paths, extension);
-    if (tempPaths.isEmpty()) {
-      return false;
-    }
-    return checkNext(tempPaths, directory);
+  protected List<String> findFiles(List<String> paths) {
+    return findFileByExtension(paths, extension);
   }
 
   private List<String> findFileByExtension(String extension, File directory) {

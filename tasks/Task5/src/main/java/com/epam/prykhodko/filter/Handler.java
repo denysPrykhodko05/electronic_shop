@@ -5,17 +5,27 @@ import java.util.List;
 
 public abstract class Handler {
 
-  protected File directory;
+  private File directory;
   private Handler next;
+
+  public Handler(File directory) {
+    this.directory = directory;
+  }
 
   public Handler linkWith(Handler next) {
     this.next = next;
     return next;
   }
 
-  public abstract boolean check();
+  public boolean check(){
+    List<String> paths = findFiles(directory);
+    return !paths.isEmpty() && checkNext(paths,directory);
+  }
 
-  public abstract boolean check(List<String> paths, File directory);
+  public boolean check(List<String> paths, File directory){
+    List<String> tempPaths = findFiles(paths);
+    return !tempPaths.isEmpty() && checkNext(paths,directory);
+  }
 
 
   protected boolean checkNext(List<String> paths, File file) {
@@ -26,4 +36,9 @@ public abstract class Handler {
     }
     return next.check(paths, file);
   }
+
+  protected abstract List<String> findFiles(File directory);
+
+  protected abstract List<String> findFiles(List<String> paths);
+
 }

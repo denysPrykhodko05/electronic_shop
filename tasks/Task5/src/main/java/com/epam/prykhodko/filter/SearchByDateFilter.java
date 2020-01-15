@@ -9,34 +9,24 @@ import java.util.List;
 
 public class SearchByDateFilter extends Handler {
 
-  private Date firstDate;
-  private Date lastDate;
+  private final Date firstDate;
+  private final Date lastDate;
 
 
   public SearchByDateFilter(Date firstDate, Date lastDate, String directory) {
+    super(new File(directory));
     this.firstDate = firstDate;
     this.lastDate = lastDate;
-    super.directory = new File(directory);
   }
 
   @Override
-  public boolean check() {
-    List<String> paths;
-    paths = findByDate(directory, firstDate, lastDate);
-    if (paths.isEmpty()) {
-      return false;
-    }
-    return checkNext(paths, directory);
+  protected List<String> findFiles(File directory) {
+   return findByDate(directory,firstDate,lastDate);
   }
 
   @Override
-  public boolean check(List<String> paths, File directory) {
-    List<String> tempPaths;
-    tempPaths = findByDate(paths, firstDate, lastDate);
-    if (tempPaths.isEmpty()) {
-      return false;
-    }
-    return checkNext(tempPaths, directory);
+  protected List<String> findFiles(List<String> paths) {
+    return findByDate(paths,firstDate,lastDate);
   }
 
   private List<String> findByDate(File directory, Date firstDate, Date lastDate) {

@@ -8,18 +8,16 @@ import java.util.List;
 public class FullSearchFilter extends Handler {
 
   public FullSearchFilter(String directory) {
-    super.directory = new File(directory);
-  }
-
-  
-  @Override
-  public boolean check() {
-    List<String> paths = findAll(directory);
-    return checkNext(paths, directory);
+    super(new File(directory));
   }
 
   @Override
-  public boolean check(List<String> paths, File directory) {
+  protected List<String> findFiles(File directory) {
+    return findAll(directory);
+  }
+
+  @Override
+  protected List<String> findFiles(List<String> paths) {
     throw new UnsupportedOperationException();
   }
 

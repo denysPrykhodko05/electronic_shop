@@ -8,35 +8,24 @@ import java.util.List;
 
 public class SearchBySizeFilter extends Handler {
 
-  private int minSize;
-  private int maxSize;
+  private final int minSize;
+  private final int maxSize;
 
   public SearchBySizeFilter(int minSize, int maxSize, String directory) {
-    super.directory = new File(directory);
+    super(new File(directory));
     this.minSize = minSize;
     this.maxSize = maxSize;
   }
 
   @Override
-  public boolean check() {
-    List<String> paths;
-    paths = findBySize(directory, minSize, maxSize);
-    if (paths.isEmpty()) {
-      return false;
-    }
-    return checkNext(paths, directory);
+  protected List<String> findFiles(File directory) {
+    return findBySize(directory, minSize, maxSize);
   }
 
   @Override
-  public boolean check(List<String> paths, File directory) {
-    List<String> tempPaths;
-    tempPaths = findBySize(paths, minSize, maxSize);
-    if (tempPaths.isEmpty()) {
-      return false;
-    }
-    return checkNext(tempPaths, directory);
+  protected List<String> findFiles(List<String> paths) {
+    return findBySize(paths, minSize, maxSize);
   }
-
 
   private List<String> findBySize(File directory, int minSize, int maxSize) {
     List<String> pathsFilteredBySize = new ArrayList<>();
