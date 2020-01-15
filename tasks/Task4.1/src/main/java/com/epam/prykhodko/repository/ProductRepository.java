@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface ProductRepository {
 
-  public List<Product> get();
+  List<Product> get();
   Optional<Product> getById(int id);
 }

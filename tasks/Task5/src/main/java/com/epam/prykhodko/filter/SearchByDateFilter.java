@@ -3,51 +3,43 @@ package com.epam.prykhodko.filter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class SearchByDateFilter extends Handler {
 
-  private File directory;
-  private Date firstDate;
-  private Date lastDate;
-  private List<String> paths;
-  public final List<String> pathsFilteredByDate = new ArrayList<>();
+  private final Date firstDate;
+  private final Date lastDate;
+
 
   public SearchByDateFilter(Date firstDate, Date lastDate, String directory) {
+    super(new File(directory));
     this.firstDate = firstDate;
     this.lastDate = lastDate;
-    this.directory = new File(directory);
   }
 
   @Override
-  public boolean check() {
-    paths = findByDate(directory, firstDate, lastDate);
-    if (this.paths == null) {
-      return false;
-    }
-    return checkNext(paths, directory);
+  protected List<String> findFiles(File directory) {
+   return findByDate(directory,firstDate,lastDate);
   }
 
   @Override
-  public boolean check(List<String> paths, File directory) {
-    this.paths = findByDate(paths, firstDate, lastDate);
-    if (this.paths == null) {
-      return false;
-    }
-    return checkNext(this.paths, directory);
+  protected List<String> findFiles(List<String> paths) {
+    return findByDate(paths,firstDate,lastDate);
   }
 
-  public List<String> findByDate(File directory, Date firstDate, Date lastDate) {
+  private List<String> findByDate(File directory, Date firstDate, Date lastDate) {
+    List<String> pathsFilteredByDate = new ArrayList<>();
     File[] list = directory.listFiles();
 
     if (list == null) {
-      return null;
+      return Collections.emptyList();
     }
 
     for (File file : list) {
       if (file.isDirectory()) {
-        findByDate(file, firstDate, lastDate);
+        pathsFilteredByDate.addAll(findByDate(file, firstDate, lastDate));
       } else {
         long modDate = file.lastModified();
         if (modDate > firstDate.getTime() && modDate < lastDate.getTime()) {
@@ -59,7 +51,8 @@ public class SearchByDateFilter extends Handler {
   }
 
 
-  public List<String> findByDate(List<String> paths, Date firstDate, Date lastDate) {
+  private List<String> findByDate(List<String> paths, Date firstDate, Date lastDate) {
+    List<String> pathsFilteredByDate = new ArrayList<>();
     for (String path : paths) {
       long modDate = new File(path).lastModified();
       if (modDate > firstDate.getTime() && modDate < lastDate.getTime()) {
