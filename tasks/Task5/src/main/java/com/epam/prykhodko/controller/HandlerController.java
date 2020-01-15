@@ -36,8 +36,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class HandlerController {
 
-  private static Handler handler = null;
-  private static String directory = null;
+  public static Handler handler;
+  public static String directory;
 
   //C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019
   public static void main(String[] args) throws ParseException {
