@@ -5,7 +5,6 @@ import static com.epam.prykhodko.constant.Constants.CHOOSE_DATE_FILTER_STRING;
 import static com.epam.prykhodko.constant.Constants.CHOOSE_EXTENSION_FILTER_STRING;
 import static com.epam.prykhodko.constant.Constants.CHOOSE_NAME_FILTER_STRING;
 import static com.epam.prykhodko.constant.Constants.CHOOSE_SIZE_FILTER_STRING;
-import static com.epam.prykhodko.constant.Constants.EMPTY_STRING;
 import static com.epam.prykhodko.constant.Constants.ENTER_DIRECTORY_NAME_STRING;
 import static com.epam.prykhodko.constant.Constants.ENTER_EXTENSION_STRING;
 import static com.epam.prykhodko.constant.Constants.ENTER_FILE_NAME_STRING;
@@ -17,7 +16,6 @@ import static com.epam.prykhodko.constant.Constants.FILE_NOT_FOUND_ERROR;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 import static com.epam.prykhodko.constant.Constants.REG_MATCH_EXTENSION;
 import static com.epam.prykhodko.constant.Constants.STRING_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.filter.FullSearchFilter;
@@ -34,6 +32,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 
 public class DemoPart2 {
 
@@ -51,16 +50,17 @@ public class DemoPart2 {
     handlerList.add(sizeFilter(directory));
     handlerList.add(dateFilter(directory));
 
-    linkFilters(
+    handler = linkFilters(
         Arrays.asList(handlerList.stream().filter(Objects::nonNull).toArray(Handler[]::new)));
     handler.check();
   }
 
 
-  private static void linkFilters(List<Handler> handlers) {
+  private static Handler linkFilters(List<Handler> handlers) {
+    Handler handler;
     if (handlers.isEmpty()) {
-      handler = new FullSearchFilter(directory);
-      return;
+      handler = fullSearch(directory);
+      return handler;
     }
     Handler first = handlers.get(0);
     Handler last;
@@ -70,12 +70,13 @@ public class DemoPart2 {
       last.linkWith(handlers.get(i));
       last = handlers.get(i);
     }
+    return handler;
   }
 
   private static String enterDirectory() {
-    String directory = null;
+    String directory = StringUtils.EMPTY;
     System.out.println(ENTER_DIRECTORY_NAME_STRING);
-    while (directory == null) {
+    while (directory.isEmpty()) {
       directory = ConsoleScanner.readLine();
       File directoryFile = new File(directory);
       if (!directoryFile.exists()) {
@@ -87,13 +88,12 @@ public class DemoPart2 {
   }
 
   private static Handler fullSearch(String directory) {
-
     return new FullSearchFilter(directory);
   }
 
   private static Handler nameFilter(String directory) {
     String nameChoose;
-    String name = EMPTY_STRING;
+    String name = StringUtils.EMPTY;
     System.out.println(CHOOSE_NAME_FILTER_STRING);
     nameChoose = ConsoleScanner.readLine();
 
@@ -105,7 +105,7 @@ public class DemoPart2 {
       System.out.println(ENTER_FILE_NAME_STRING);
       name = ConsoleScanner.readLine();
       if (name.matches(REG_MATCH_EXTENSION)) {
-        name = EMPTY_STRING;
+        name = StringUtils.EMPTY;
         System.out.println(INCORRECT_INPUT);
         continue;
       }
@@ -116,8 +116,8 @@ public class DemoPart2 {
   }
 
   private static Handler extensionFilter(String directory) {
-    String extension = EMPTY_STRING;
-    String extensionChoose = EMPTY_STRING;
+    String extension = StringUtils.EMPTY;
+    String extensionChoose;
     System.out.println(CHOOSE_EXTENSION_FILTER_STRING);
     extensionChoose = ConsoleScanner.readLine();
     if (!extensionChoose.equals(STRING_ONE)) {
@@ -128,7 +128,7 @@ public class DemoPart2 {
       System.out.println(ENTER_EXTENSION_STRING);
       extension = ConsoleScanner.readLine();
       if (extension.matches(REG_MATCH_EXTENSION)) {
-        extension = EMPTY_STRING;
+        extension = StringUtils.EMPTY;
         continue;
       }
       handler = new SearchByFilenameExtensionFilter(extension, directory);
@@ -138,15 +138,15 @@ public class DemoPart2 {
   }
 
   private static Handler sizeFilter(String directory) {
-    String sizeChoose = EMPTY_STRING;
-    int minSize = INTEGER_MINUS_ONE;
-    int maxSize = INTEGER_MINUS_ONE;
+    String sizeChoose;
+    int minSize;
+    int maxSize;
     System.out.println(CHOOSE_SIZE_FILTER_STRING);
     sizeChoose = ConsoleScanner.readLine();
     if (!sizeChoose.equals(STRING_ONE)) {
       return null;
     }
-    Handler handler = null;
+    Handler handler;
     while (true) {
       try {
         System.out.println(ENTER_MIN_SIZE_STRING);
@@ -167,7 +167,7 @@ public class DemoPart2 {
   }
 
   private static Handler dateFilter(String directory) {
-    String dateChoose = EMPTY_STRING;
+    String dateChoose;
     Date firstDate;
     Date lastDate;
     System.out.println(CHOOSE_DATE_FILTER_STRING);
@@ -175,7 +175,7 @@ public class DemoPart2 {
     if (!dateChoose.equals(STRING_ONE)) {
       return null;
     }
-    Handler handler = null;
+    Handler handler;
     while (true) {
       try {
         System.out.println(ENTER_FIRST_DATE_STRING);
