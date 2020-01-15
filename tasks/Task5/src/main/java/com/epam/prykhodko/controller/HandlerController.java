@@ -28,10 +28,10 @@ import com.epam.prykhodko.util.ConsoleScanner;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 public class HandlerController {
@@ -39,7 +39,6 @@ public class HandlerController {
   public static Handler handler;
   public static String directory;
 
-  //C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019
   public static void main(String[] args) throws ParseException {
     HandlerController start = new HandlerController();
     start.startFindFiles();
@@ -51,7 +50,7 @@ public class HandlerController {
       handler = fullSearch(directory);
       return handler;
     }
-    Handler first = handlers.get(0);
+    Handler first = handlers.get(INTEGER_ZERO);
     Handler last;
     handler = first;
     last = first;
@@ -193,8 +192,11 @@ public class HandlerController {
     handlerList.add(sizeFilter(directory));
     handlerList.add(dateFilter(directory));
 
-    handler = linkFilters(
-        Arrays.asList(handlerList.stream().filter(Objects::nonNull).toArray(Handler[]::new)));
+    handlerList = handlerList
+        .stream()
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+    handler = linkFilters(handlerList);
     handler.check();
   }
 }

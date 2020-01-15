@@ -27,7 +27,6 @@ public abstract class Handler {
     return !tempPaths.isEmpty() && checkNext(paths,directory);
   }
 
-
   protected boolean checkNext(List<String> paths, File file) {
     if (next == null) {
       System.out.println("Found files: ");

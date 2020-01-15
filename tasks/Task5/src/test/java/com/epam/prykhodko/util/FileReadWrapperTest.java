@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-class FileReadWrapperTest {
+public class FileReadWrapperTest {
 
   @Test
   void readFileShouldReturnString() {
-    FileReadWrapper fileReadWrapper = new FileReadWrapper("src/test/resource/1.txt");
+    FileReadWrapper fileReadWrapper = new FileReadWrapper("src/test/resources/1.txt");
     assertNotNull(fileReadWrapper.readFile());
   }
 
