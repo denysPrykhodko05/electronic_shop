@@ -1,6 +1,5 @@
 package com.epam.prykhodko.list;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,10 +9,9 @@ import com.epam.prykhodko.task1.entity.Smartphone;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.junit.jupiter.api.Assertions;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
 class SetArrayListTest {
 
