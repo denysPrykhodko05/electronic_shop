@@ -11,10 +11,10 @@ public class WriteToFileController {
 
   public static void main(String[] args) {
     FileUtil fileUtil = new FileUtil("2.xml");
-    System.out.println(fileUtil.read());
+    System.out.println(fileUtil.deserialize());
     Product product = new Smartphone(1,new BigDecimal(1),"Apple","4G","Apple");
     BasketRepository basket = new BasketRepositoryImpl();
     basket.add(product,1);
-    fileUtil.write(basket);
+    fileUtil.serialize(basket);
   }
 }
