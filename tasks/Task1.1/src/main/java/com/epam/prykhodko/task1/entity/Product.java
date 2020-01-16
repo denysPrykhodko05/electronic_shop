@@ -1,10 +1,11 @@
 package com.epam.prykhodko.task1.entity;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable {
 
   private int id;
   private BigDecimal price;
