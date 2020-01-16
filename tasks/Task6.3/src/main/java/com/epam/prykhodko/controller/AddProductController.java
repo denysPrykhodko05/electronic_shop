@@ -37,16 +37,18 @@ public class AddProductController {
   }
 
   private static void productInput() {
-    System.out.println("What do you want add?\n1-Smartphone\n2-Notebook");
-    Predicate<String> predicate = x -> {
-      x = ConsoleScanner.readLine();
-      product = productMap.getOrDefault(x, null);
-      return product == null;
-    };
-    input(predicate);
+    while (true) {
+      System.out.println("What do you want add?\n1-Smartphone\n2-Notebook");
+      Predicate<String> predicate = x -> {
+        x = ConsoleScanner.readLine();
+        product = productMap.getOrDefault(x, null);
+        return product == null;
+      };
+      input(predicate);
 
-    inputType.setProduct(product.get());
-    inputType.input();
+      inputType.setProduct(product.get());
+      inputType.input();
+    }
   }
 
   private static void inputType() {
