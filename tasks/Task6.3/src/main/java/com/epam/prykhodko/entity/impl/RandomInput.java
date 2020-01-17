@@ -1,0 +1,27 @@
+package com.epam.prykhodko.entity.impl;
+
+import com.epam.prykhodko.entity.InputType;
+import com.epam.prykhodko.util.ConsoleHelper;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.security.SecureRandom;
+
+public class RandomInput implements InputType {
+
+  private SecureRandom random = new SecureRandom();
+
+  @Override
+  public BigDecimal readBigDecimal() throws IOException {
+    return BigDecimal.valueOf(random.nextInt(2000));
+  }
+
+  @Override
+  public int readInt() {
+    return random.nextInt(1000);
+  }
+
+  @Override
+  public String readLine() throws IOException {
+    return ConsoleHelper.readLine() + random.nextInt(10000);
+  }
+}

@@ -4,12 +4,13 @@ import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.task1.entity.Notebook;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductRepositoryImpl implements ProductRepository {
+public class ProductRepositoryImpl implements ProductRepository, Serializable {
 
   private final List<Product> productList = new ArrayList<>();
 
@@ -25,6 +26,11 @@ public class ProductRepositoryImpl implements ProductRepository {
   @Override
   public Optional<Product> getById(int id) {
     return productList.stream().filter(e -> e.getId() == id).findFirst();
+  }
+
+  @Override
+  public void add(Product product){
+    productList.add(product);
   }
 
   private void productInit() {

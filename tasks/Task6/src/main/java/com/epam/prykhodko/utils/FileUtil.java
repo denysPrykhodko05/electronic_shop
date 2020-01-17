@@ -1,12 +1,7 @@
 package com.epam.prykhodko.utils;
 
-import static com.epam.prykhodko.constants.Constants.CANNOT_COMPRESS_FILE;
-import static com.epam.prykhodko.constants.Constants.CANNOT_DECOMPRESS_FILE;
-import static com.epam.prykhodko.constants.Constants.CANNOT_READ_FILE;
-import static com.epam.prykhodko.constants.Constants.CANNOT_WRITE_TO_FILE;
-import static com.epam.prykhodko.constants.Constants.FILE_NOT_FOUND;
 
-import com.epam.prykhodko.repository.BasketRepository;
+import com.epam.prykhodko.repository.ProductRepository;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,24 +14,30 @@ import org.apache.log4j.Logger;
 
 public class FileUtil {
 
-  private static final Logger log =Logger.getLogger(FileUtil.class);
+  public static final String CANNOT_WRITE_TO_FILE = "Cannot write to file!!!";
+  public static final String FILE_NOT_FOUND = "File not found!!!";
+  public static final String CANNOT_READ_FILE = "Cannot read file!!!";
+  public static final String CANNOT_COMPRESS_FILE = "Cannot compress file!!!";
+  public static final String CANNOT_DECOMPRESS_FILE = "Cannot decompress file!!!";
+
+  private static final Logger log = Logger.getLogger(FileUtil.class);
   private File file;
 
   public FileUtil(String fileName) {
     this.file = new File(fileName);
   }
 
-  public void serialize(BasketRepository product) {
+  public void serialize(ProductRepository product) {
     ObjectOutputStream oos = null;
     try {
       oos = new ObjectOutputStream(new FileOutputStream(file));
       oos.writeObject(product);
     } catch (IOException e) {
-      log.error(CANNOT_WRITE_TO_FILE);
+       log.error(CANNOT_WRITE_TO_FILE);
     }
   }
 
-  public void serialize(BasketRepository product, int amount) {
+  public void serialize(ProductRepository product, int amount) {
     ObjectOutputStream oos = null;
     try {
       for (int i = 0; i < amount; i++) {
@@ -48,15 +49,16 @@ public class FileUtil {
     }
   }
 
-  public BasketRepository deserialize() {
-    if (!file.exists()) {
-      log.error(FILE_NOT_FOUND);
-      return null;
-    }
+  public ProductRepository deserialize() {
     ObjectInputStream ois = null;
     try {
+      if (!file.exists()) {
+        file.createNewFile();
+        log.error(FILE_NOT_FOUND);
+        return null;
+      }
       ois = new ObjectInputStream(new FileInputStream(file));
-      return (BasketRepository) ois.readObject();
+      return (ProductRepository) ois.readObject();
     } catch (IOException | ClassNotFoundException e) {
       System.out.println(CANNOT_READ_FILE);
     }
@@ -76,7 +78,7 @@ public class FileUtil {
     }
   }
 
-  public void gzipDecompress(File input, File output){
+  public void gzipDecompress(File input, File output) {
     try (GZIPInputStream in = new GZIPInputStream(new FileInputStream(input));
         FileOutputStream out = new FileOutputStream(output)) {
       byte[] buffer = new byte[1024];

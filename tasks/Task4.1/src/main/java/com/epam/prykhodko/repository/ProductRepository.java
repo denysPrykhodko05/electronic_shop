@@ -8,4 +8,5 @@ public interface ProductRepository {
 
   List<Product> get();
   Optional<Product> getById(int id);
+  void add(Product product);
 }
