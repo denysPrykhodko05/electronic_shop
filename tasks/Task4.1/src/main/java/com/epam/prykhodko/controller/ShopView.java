@@ -45,8 +45,8 @@ public class ShopView {
 
   public static void main(String[] args) {
     productRepositoryImpl = fileUtil.deserialize();
-    if (productRepositoryImpl ==null){
-      productRepositoryImpl =new ProductRepositoryImpl();
+    if (productRepositoryImpl == null) {
+      productRepositoryImpl = new ProductRepositoryImpl();
     }
     entityInit();
     int command = -1;
@@ -71,7 +71,7 @@ public class ShopView {
     fileUtil.serialize(productRepositoryImpl);
   }
 
-  private static void entityInit(){
+  private static void entityInit() {
 
     BasketRepository basketRepository = new BasketRepositoryImpl();
     CacheRepository cacheRepository = new CacheRepositoryImpl();
