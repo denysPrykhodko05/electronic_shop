@@ -3,7 +3,7 @@ package com.epam.prykhodko.task1.list;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.epam.prykhodko.task1.entity.Notebook;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Telephone;
 import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
@@ -171,7 +171,7 @@ class ListImplTest {
         list.add(notebook);
 
         Telephone expected = telephone;
-        ProductRepository actual = list.remove(0);
+        Product actual = list.remove(0);
 
         assertEquals(expected, actual);
     }
@@ -186,8 +186,8 @@ class ListImplTest {
         list.add(telephone);
         list.add(telephone2);
 
-        ProductRepository actual = list.get(1);
-        ProductRepository expected = telephone2;
+        Product actual = list.get(1);
+        Product expected = telephone2;
 
         assertEquals(actual, expected);
     }

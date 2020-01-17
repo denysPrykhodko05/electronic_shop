@@ -3,7 +3,7 @@ package com.epam.prykhodko.service.impl;
 import com.epam.prykhodko.repository.BasketRepository;
 import com.epam.prykhodko.repository.CacheRepository;
 import com.epam.prykhodko.service.BasketService;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import java.util.Map;
 
 public class BasketServiceImpl implements BasketService {
@@ -17,13 +17,13 @@ public class BasketServiceImpl implements BasketService {
   }
 
   @Override
-  public void add(ProductRepository product, int amount) {
+  public void add(Product product, int amount) {
     basketRepository.add(product, amount);
     cacheRepository.put(product, amount);
   }
 
   @Override
-  public Map<ProductRepository, Integer> get() {
+  public Map<Product, Integer> get() {
     return basketRepository.get();
   }
 

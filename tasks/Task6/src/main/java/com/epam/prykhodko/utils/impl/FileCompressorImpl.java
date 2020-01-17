@@ -3,8 +3,7 @@ package com.epam.prykhodko.utils.impl;
 import static com.epam.prykhodko.utils.impl.FileSerializationImpl.CANNOT_COMPRESS_FILE;
 import static com.epam.prykhodko.utils.impl.FileSerializationImpl.CANNOT_DECOMPRESS_FILE;
 
-import com.epam.prykhodko.repository.ProductRepository;
-import com.epam.prykhodko.utils.FileReaderWriter;
+import com.epam.prykhodko.utils.FileCompress;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +12,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import org.apache.log4j.Logger;
 
-public class FileCompressorImpl implements FileReaderWriter {
+public class FileCompressorImpl implements FileCompress {
 
   private static final Logger log = Logger.getLogger(FileCompressorImpl.class);
 
@@ -29,16 +28,6 @@ public class FileCompressorImpl implements FileReaderWriter {
     } catch (IOException e) {
       log.error(CANNOT_COMPRESS_FILE);
     }
-  }
-
-  @Override
-  public void write(ProductRepository product) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public ProductRepository read() {
-    throw new UnsupportedOperationException();
   }
 
   @Override

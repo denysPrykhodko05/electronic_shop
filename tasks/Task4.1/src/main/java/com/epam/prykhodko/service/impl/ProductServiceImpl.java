@@ -1,7 +1,7 @@
 package com.epam.prykhodko.service.impl;
 
 import com.epam.prykhodko.service.ProductService;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -13,17 +13,17 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<ProductRepository> getAll() {
+  public List<Product> getAll() {
     return productRepository.get();
   }
 
   @Override
-  public ProductRepository getById(int id) {
+  public Product getById(int id) {
     return productRepository.getById(id).get();
   }
 
   @Override
-  public void add(ProductRepository product){
+  public void add(Product product){
     productRepository.add(product);
   }
 }

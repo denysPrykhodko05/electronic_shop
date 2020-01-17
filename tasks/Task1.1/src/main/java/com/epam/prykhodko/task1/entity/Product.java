@@ -1,21 +1,20 @@
 package com.epam.prykhodko.task1.entity;
 
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class ProductRepository implements Serializable {
+public class Product {
 
   private int id;
   private BigDecimal price;
   private String manufacturer;
 
-  public ProductRepository() {
+  public Product() {
 
   }
 
-  public ProductRepository(int id, BigDecimal price, String manufacturer) {
+  public Product(int id, BigDecimal price, String manufacturer) {
     this.id = id;
     this.price = price;
     this.manufacturer = manufacturer;
@@ -53,7 +52,7 @@ public class ProductRepository implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ProductRepository product = (ProductRepository) o;
+    Product product = (Product) o;
     return id == product.id &&
         product.price.compareTo(price) == 0 &&
         manufacturer.equals(product.manufacturer);

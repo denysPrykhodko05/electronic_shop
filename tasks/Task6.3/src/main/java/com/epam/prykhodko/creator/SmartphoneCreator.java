@@ -3,7 +3,7 @@ package com.epam.prykhodko.creator;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.entity.InputType;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class SmartphoneCreator extends ProductCreator {
   }
 
   @Override
-  public ProductRepository create() {
+  public Product create() {
     super.create();
     setParameters();
     return smartphone;

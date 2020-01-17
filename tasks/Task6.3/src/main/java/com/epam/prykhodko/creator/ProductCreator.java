@@ -3,7 +3,7 @@ package com.epam.prykhodko.creator;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.entity.InputType;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import org.apache.log4j.Logger;
@@ -11,10 +11,10 @@ import org.apache.log4j.Logger;
 public class ProductCreator extends Creator {
 
   private final Logger logger = Logger.getLogger(ProductCreator.class);
-  private ProductRepository product;
+  private Product product;
   private boolean correctInputFlag;
 
-  public ProductCreator(InputType inputType, ProductRepository product) {
+  public ProductCreator(InputType inputType, Product product) {
     super(inputType);
     this.product = product;
   }
@@ -38,7 +38,7 @@ public class ProductCreator extends Creator {
   }
 
   @Override
-  public ProductRepository create() {
+  public Product create() {
     setParameters();
     return product;
   }

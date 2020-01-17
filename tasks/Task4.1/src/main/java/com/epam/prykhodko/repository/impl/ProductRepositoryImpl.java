@@ -1,7 +1,8 @@
 package com.epam.prykhodko.repository.impl;
 
+import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.task1.entity.Notebook;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -9,26 +10,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductRepositoryImpl implements com.epam.prykhodko.repository.ProductRepository, Serializable {
+public class ProductRepositoryImpl implements ProductRepository, Serializable {
 
-  private final List<ProductRepository> productList = new ArrayList<>();
+  private final List<Product> productList = new ArrayList<>();
 
   public ProductRepositoryImpl() {
     productInit();
   }
 
   @Override
-  public List<ProductRepository> get() {
+  public List<Product> get() {
     return productList;
   }
 
   @Override
-  public Optional<ProductRepository> getById(int id) {
+  public Optional<Product> getById(int id) {
     return productList.stream().filter(e -> e.getId() == id).findFirst();
   }
 
   @Override
-  public void add(ProductRepository product){
+  public void add(Product product){
     productList.add(product);
   }
 

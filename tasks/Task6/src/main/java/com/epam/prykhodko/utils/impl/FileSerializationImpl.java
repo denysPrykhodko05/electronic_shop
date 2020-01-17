@@ -3,7 +3,7 @@ package com.epam.prykhodko.utils.impl;
 
 import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.repository.impl.ProductRepositoryImpl;
-import com.epam.prykhodko.utils.FileReaderWriter;
+import com.epam.prykhodko.utils.FileDeserialization;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import org.apache.log4j.Logger;
 
-public class FileSerializationImpl implements FileReaderWriter {
+public class FileSerializationImpl implements FileDeserialization {
 
   public static final String CANNOT_WRITE_TO_FILE = "Cannot write to file!!!";
   public static final String CANNOT_READ_FILE = "Cannot read file!!!";
@@ -34,6 +34,7 @@ public class FileSerializationImpl implements FileReaderWriter {
     }
   }
 
+  @Override
   public void write(ProductRepository product, int amount) {
     try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, true))) {
       for (int i = 0; i < amount; i++) {
@@ -43,17 +44,6 @@ public class FileSerializationImpl implements FileReaderWriter {
       log.error(CANNOT_WRITE_TO_FILE);
     }
   }
-
-  @Override
-  public void write(File input, File output) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void read(File input, File output) {
-    throw new UnsupportedOperationException();
-  }
-
   @Override
   public ProductRepository read() {
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {

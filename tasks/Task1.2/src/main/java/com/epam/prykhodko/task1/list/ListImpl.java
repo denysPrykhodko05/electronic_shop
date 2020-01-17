@@ -5,7 +5,7 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_TWO;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -15,15 +15,15 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public class ListImpl implements List<ProductRepository> {
+public class ListImpl implements List<Product> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    private ProductRepository[] innerArray;
+    private Product[] innerArray;
     private int size = INTEGER_ZERO;
 
     public ListImpl() {
-        innerArray = new ProductRepository[DEFAULT_CAPACITY];
+        innerArray = new Product[DEFAULT_CAPACITY];
     }
 
     @Override
@@ -42,11 +42,11 @@ public class ListImpl implements List<ProductRepository> {
     }
 
     @Override
-    public Iterator<ProductRepository> iterator() {
+    public Iterator<Product> iterator() {
         return iterator(t -> true);
     }
 
-    public Iterator<ProductRepository> iterator(Predicate<ProductRepository> predicate) {
+    public Iterator<Product> iterator(Predicate<Product> predicate) {
         return new IteratorImpl(predicate);
 
     }
@@ -59,7 +59,7 @@ public class ListImpl implements List<ProductRepository> {
     @Override
     public Object[] toArray(Object[] objects) {
 
-        if (!(objects instanceof ProductRepository[])) {
+        if (!(objects instanceof Product[])) {
             throw new ArrayStoreException();
         }
 
@@ -71,7 +71,7 @@ public class ListImpl implements List<ProductRepository> {
     }
 
     @Override
-    public boolean add(ProductRepository o) {
+    public boolean add(Product o) {
         add(size, o);
         return true;
     }
@@ -102,16 +102,16 @@ public class ListImpl implements List<ProductRepository> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends ProductRepository> collection) {
+    public boolean addAll(Collection<? extends Product> collection) {
         addAll(size, collection);
         return true;
     }
 
     @Override
-    public boolean addAll(int i, Collection<? extends ProductRepository> collection) {
+    public boolean addAll(int i, Collection<? extends Product> collection) {
         checkIndex(i);
 
-        ProductRepository[] tempArray = new ProductRepository[innerArray.length + collection.size()];
+        Product[] tempArray = new Product[innerArray.length + collection.size()];
         System.arraycopy(innerArray, 0, tempArray, 0, i);
         System.arraycopy(collection.toArray(), 0, tempArray, i, collection.size());
         System.arraycopy(innerArray, i, tempArray, i + collection.size(), size);
@@ -133,12 +133,12 @@ public class ListImpl implements List<ProductRepository> {
 
     @Override
     public boolean retainAll(Collection collection) {
-        ProductRepository[] tempArray = new ProductRepository[innerArray.length];
+        Product[] tempArray = new Product[innerArray.length];
         int oldSize = size;
         int tempSize = INTEGER_ZERO;
         for (Object o : collection) {
             if (contains(o)) {
-                tempArray[tempSize++] = (ProductRepository) o;
+                tempArray[tempSize++] = (Product) o;
             }
         }
         size = tempSize;
@@ -150,42 +150,42 @@ public class ListImpl implements List<ProductRepository> {
 
     @Override
     public void clear() {
-        innerArray = new ProductRepository[DEFAULT_CAPACITY];
+        innerArray = new Product[DEFAULT_CAPACITY];
         size = 0;
     }
 
     @Override
-    public ProductRepository get(int i) {
+    public Product get(int i) {
         checkIndex(i);
         return innerArray[i];
     }
 
     @Override
-    public ProductRepository set(int i, ProductRepository o) {
+    public Product set(int i, Product o) {
         checkIndex(i);
-        ProductRepository oldElement = innerArray[i];
+        Product oldElement = innerArray[i];
         innerArray[i] = o;
         return oldElement;
     }
 
     @Override
-    public void add(int i, ProductRepository o) {
+    public void add(int i, Product o) {
         checkIndex(i);
         if (size >= innerArray.length * 0.8) {
-            ProductRepository[] tempArr = Arrays.copyOf(innerArray, size);
-            innerArray = new ProductRepository[size + size / INTEGER_TWO + INTEGER_ONE];
+            Product[] tempArr = Arrays.copyOf(innerArray, size);
+            innerArray = new Product[size + size / INTEGER_TWO + INTEGER_ONE];
             innerArray = Arrays.copyOf(tempArr, innerArray.length);
         }
         innerArray[size++] = o;
     }
 
     @Override
-    public ProductRepository remove(int i) {
-        ProductRepository removableProduct;
+    public Product remove(int i) {
+        Product removableProduct;
         checkIndex(i);
 
         for (int j = i; j < size - 1; j++) {
-            ProductRepository temp = innerArray[j];
+            Product temp = innerArray[j];
             innerArray[j] = innerArray[j + INTEGER_ONE];
             innerArray[j + INTEGER_ONE] = temp;
         }
@@ -237,14 +237,14 @@ public class ListImpl implements List<ProductRepository> {
         }
     }
 
-    class IteratorImpl implements Iterator<ProductRepository> {
+    class IteratorImpl implements Iterator<Product> {
 
         private int size;
         private int currentIndex = 0;
-        private Predicate<ProductRepository> predicate;
+        private Predicate<Product> predicate;
         boolean result = false;
 
-        public IteratorImpl(Predicate<ProductRepository> predicate) {
+        public IteratorImpl(Predicate<Product> predicate) {
             this.predicate = predicate;
             this.size = size();
         }
@@ -262,7 +262,7 @@ public class ListImpl implements List<ProductRepository> {
         }
 
         @Override
-        public ProductRepository next() {
+        public Product next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -272,7 +272,7 @@ public class ListImpl implements List<ProductRepository> {
 
         @Override
         public void remove() {
-            ProductRepository temp = next();
+            Product temp = next();
             if (temp != null) {
                 ListImpl.this.remove(temp);
             }

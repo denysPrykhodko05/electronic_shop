@@ -1,10 +1,10 @@
 package com.epam.prykhodko.repository;
 
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import java.util.Map;
 
 public interface CacheRepository {
 
-  void put(ProductRepository product, int amount);
-  Map<ProductRepository,Integer> get();
+  void put(Product product, int amount);
+  Map<Product,Integer> get();
 }

@@ -4,7 +4,7 @@ import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.service.BasketService;
 import com.epam.prykhodko.service.CacheService;
 import com.epam.prykhodko.service.ProductService;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -26,7 +26,7 @@ public class AddToBasketCommand implements Command {
   public void execute() {
     int amount = 0;
     int productId = 0;
-    ProductRepository product=null;
+    Product product=null;
     while (amount <= 0 && productId <= 0) {
       try {
         System.out.println("Enter product id: ");

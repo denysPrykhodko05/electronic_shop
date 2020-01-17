@@ -1,14 +1,14 @@
 package com.epam.prykhodko.repository;
 
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import java.io.Serializable;
 import java.util.Map;
 
 public interface BasketRepository extends Cloneable, Serializable {
 
-  void add(ProductRepository product, int amount);
+  void add(Product product, int amount);
 
-  Map<ProductRepository, Integer> get();
+  Map<Product, Integer> get();
 
   void clear();
 }

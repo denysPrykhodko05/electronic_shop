@@ -2,7 +2,7 @@ package com.epam.prykhodko.command;
 
 import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.service.OrderService;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,7 +30,7 @@ public class FindOrderForNearestDateCommand implements Command {
         System.out.println("Incorrect input. Try again!!!");
       }
     }
-    Entry<Date, Map<ProductRepository, Integer>> entry = orderService.getNearestOrder(date);
+    Entry<Date, Map<Product, Integer>> entry = orderService.getNearestOrder(date);
     if (entry == null) {
       System.out.println("You haven't orders");
       return;

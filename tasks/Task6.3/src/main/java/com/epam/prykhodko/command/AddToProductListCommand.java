@@ -10,7 +10,7 @@ import com.epam.prykhodko.creator.SmartphoneCreator;
 import com.epam.prykhodko.entity.InputType;
 import com.epam.prykhodko.service.ProductService;
 import com.epam.prykhodko.task1.entity.Notebook;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class AddToProductListCommand implements Command {
 
   private final Logger logger = Logger.getLogger(AddToProductListCommand.class);
   private InputType inputType;
-  private ProductRepository product;
+  private Product product;
   private ProductService productService;
   private Map<String, ProductCreator> creatorMap = new HashMap<>();
 

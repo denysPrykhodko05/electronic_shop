@@ -3,7 +3,7 @@ package com.epam.prykhodko.command;
 import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.service.BasketService;
 import com.epam.prykhodko.service.OrderService;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.text.ParseException;
@@ -36,7 +36,7 @@ public class MakeOrderCommand implements Command {
       }
     }
 
-    Map<ProductRepository, Integer> basket = new HashMap<>(basketServiceImpl.get());
+    Map<Product, Integer> basket = new HashMap<>(basketServiceImpl.get());
     orderServiceImpl.add(date, basket);
     basketServiceImpl.clear();
   }

@@ -2,7 +2,7 @@ package com.epam.prykhodko.service.impl;
 
 import com.epam.prykhodko.repository.OrderRepository;
 import com.epam.prykhodko.service.OrderService;
-import com.epam.prykhodko.task1.entity.ProductRepository;
+import com.epam.prykhodko.task1.entity.Product;
 import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,22 +17,22 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public void add(Date time, Map<ProductRepository, Integer> basket) {
+  public void add(Date time, Map<Product, Integer> basket) {
     orderRepository.add(time, basket);
   }
 
   @Override
-  public TreeMap<Date, Map<ProductRepository, Integer>> get() {
+  public TreeMap<Date, Map<Product, Integer>> get() {
     return orderRepository.get();
   }
 
   @Override
-  public Map<Date, Map<ProductRepository, Integer>> getOrdersInGivenPeriod(Date date, Date date1) {
+  public Map<Date, Map<Product, Integer>> getOrdersInGivenPeriod(Date date, Date date1) {
     return orderRepository.getOrdersInGivenPeriod(date, date1);
   }
 
   @Override
-  public Entry<Date, Map<ProductRepository, Integer>> getNearestOrder(Date date) {
+  public Entry<Date, Map<Product, Integer>> getNearestOrder(Date date) {
     if (orderRepository.get().isEmpty()) {
       return null;
     }
