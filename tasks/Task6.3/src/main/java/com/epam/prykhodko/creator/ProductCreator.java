@@ -8,15 +8,14 @@ import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import org.apache.log4j.Logger;
 
-public class ProductCreator {
+public class ProductCreator extends Creator {
 
   private final Logger logger = Logger.getLogger(ProductCreator.class);
-  private InputType inputType;
   private ProductRepository product;
   private boolean correctInputFlag;
 
   public ProductCreator(InputType inputType, ProductRepository product) {
-    this.inputType = inputType;
+    super(inputType);
     this.product = product;
   }
 
@@ -38,6 +37,7 @@ public class ProductCreator {
     }
   }
 
+  @Override
   public ProductRepository create() {
     setParameters();
     return product;

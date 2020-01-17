@@ -13,7 +13,6 @@ public class NotebookCreator extends ProductCreator {
 
   private final Logger logger = Logger.getLogger(NotebookCreator.class);
   private Notebook notebook;
-  private InputType inputType;
   private boolean correctInputFlag;
 
   public NotebookCreator(InputType inputType, Notebook notebook) {

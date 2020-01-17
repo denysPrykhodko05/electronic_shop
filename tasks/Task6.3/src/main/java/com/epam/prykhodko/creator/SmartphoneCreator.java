@@ -13,7 +13,6 @@ public class SmartphoneCreator extends ProductCreator {
 
   private final Logger logger = Logger.getLogger(ProductCreator.class);
   private Smartphone smartphone;
-  private InputType inputType;
   private boolean correctInputFlag;
 
   public SmartphoneCreator(InputType inputType, Smartphone smartphone) {
