@@ -3,7 +3,7 @@ package com.epam.prykhodko.map;
 import com.epam.prykhodko.stringWrapper.HashCodeByLength;
 import com.epam.prykhodko.stringWrapper.HashCodeBySumm;
 import com.epam.prykhodko.task1.entity.Notebook;
-import com.epam.prykhodko.task1.entity.Product;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import com.epam.prykhodko.task1.entity.Telephone;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -46,8 +46,8 @@ public class Maps {
   }
 
   public void mapsInit() {
-    Map<HashCodeByLength, Product> hashMap = new HashMap();
-    Map<HashCodeBySumm, Product> linkedHashMap = new LinkedHashMap(16, 0.75f, true);
+    Map<HashCodeByLength, ProductRepository> hashMap = new HashMap();
+    Map<HashCodeBySumm, ProductRepository> linkedHashMap = new LinkedHashMap(16, 0.75f, true);
 
     entityInit();
 

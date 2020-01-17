@@ -3,7 +3,9 @@ package com.epam.prykhodko.creator;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.entity.InputType;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import com.epam.prykhodko.task1.entity.Smartphone;
+import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import org.apache.log4j.Logger;
 
@@ -18,16 +20,24 @@ public class SmartphoneCreator extends ProductCreator {
     super(inputType, smartphone);
     this.inputType = inputType;
     this.smartphone = smartphone;
+  }
+
+  @Override
+  public ProductRepository create() {
+    super.create();
     setParameters();
+    return smartphone;
   }
 
   private void setParameters() {
     while (!correctInputFlag) {
       try {
         System.out.println("Enter model of touchscreen: ");
-        smartphone.setModelOfTouchScreen(inputType.readLine());
+        String touchscreen = ConsoleHelper.readLine();
+        smartphone.setModelOfTouchScreen(inputType.readLine(touchscreen));
         System.out.println("Enter communication standard");
-        smartphone.setCommunicationStandard(inputType.readLine());
+        String communication = ConsoleHelper.readLine();
+        smartphone.setCommunicationStandard(inputType.readLine(communication));
       } catch (IOException | NumberFormatException e) {
         logger.error(INCORRECT_INPUT);
         continue;

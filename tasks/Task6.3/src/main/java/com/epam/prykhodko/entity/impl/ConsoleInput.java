@@ -29,6 +29,11 @@ public class ConsoleInput implements InputType {
   }
 
   @Override
+  public String readLine(String line) throws IOException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public BigDecimal readBigDecimal() {
     return new BigDecimal(readInt());
   }

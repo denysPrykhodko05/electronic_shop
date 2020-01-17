@@ -1,13 +1,13 @@
 package com.epam.prykhodko.service;
 
-import com.epam.prykhodko.task1.entity.Product;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import java.util.Map;
 
 public interface BasketService {
 
-  void add(Product product, int amount);
+  void add(ProductRepository product, int amount);
 
-  Map<Product, Integer> get();
+  Map<ProductRepository, Integer> get();
 
   void clear();
 }

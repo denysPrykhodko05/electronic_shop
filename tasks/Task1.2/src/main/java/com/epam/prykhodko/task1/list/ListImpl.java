@@ -1,7 +1,11 @@
 package com.epam.prykhodko.task1.list;
 
-import com.epam.prykhodko.task1.entity.Product;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_TWO;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,20 +15,15 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_TWO;
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
-
-public class ListImpl implements List<Product> {
+public class ListImpl implements List<ProductRepository> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    private Product[] innerArray;
+    private ProductRepository[] innerArray;
     private int size = INTEGER_ZERO;
 
     public ListImpl() {
-        innerArray = new Product[DEFAULT_CAPACITY];
+        innerArray = new ProductRepository[DEFAULT_CAPACITY];
     }
 
     @Override
@@ -43,11 +42,11 @@ public class ListImpl implements List<Product> {
     }
 
     @Override
-    public Iterator<Product> iterator() {
+    public Iterator<ProductRepository> iterator() {
         return iterator(t -> true);
     }
 
-    public Iterator<Product> iterator(Predicate<Product> predicate) {
+    public Iterator<ProductRepository> iterator(Predicate<ProductRepository> predicate) {
         return new IteratorImpl(predicate);
 
     }
@@ -60,7 +59,7 @@ public class ListImpl implements List<Product> {
     @Override
     public Object[] toArray(Object[] objects) {
 
-        if (!(objects instanceof Product[])) {
+        if (!(objects instanceof ProductRepository[])) {
             throw new ArrayStoreException();
         }
 
@@ -72,7 +71,7 @@ public class ListImpl implements List<Product> {
     }
 
     @Override
-    public boolean add(Product o) {
+    public boolean add(ProductRepository o) {
         add(size, o);
         return true;
     }
@@ -103,16 +102,16 @@ public class ListImpl implements List<Product> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends Product> collection) {
+    public boolean addAll(Collection<? extends ProductRepository> collection) {
         addAll(size, collection);
         return true;
     }
 
     @Override
-    public boolean addAll(int i, Collection<? extends Product> collection) {
+    public boolean addAll(int i, Collection<? extends ProductRepository> collection) {
         checkIndex(i);
 
-        Product[] tempArray = new Product[innerArray.length + collection.size()];
+        ProductRepository[] tempArray = new ProductRepository[innerArray.length + collection.size()];
         System.arraycopy(innerArray, 0, tempArray, 0, i);
         System.arraycopy(collection.toArray(), 0, tempArray, i, collection.size());
         System.arraycopy(innerArray, i, tempArray, i + collection.size(), size);
@@ -134,12 +133,12 @@ public class ListImpl implements List<Product> {
 
     @Override
     public boolean retainAll(Collection collection) {
-        Product[] tempArray = new Product[innerArray.length];
+        ProductRepository[] tempArray = new ProductRepository[innerArray.length];
         int oldSize = size;
         int tempSize = INTEGER_ZERO;
         for (Object o : collection) {
             if (contains(o)) {
-                tempArray[tempSize++] = (Product) o;
+                tempArray[tempSize++] = (ProductRepository) o;
             }
         }
         size = tempSize;
@@ -151,42 +150,42 @@ public class ListImpl implements List<Product> {
 
     @Override
     public void clear() {
-        innerArray = new Product[DEFAULT_CAPACITY];
+        innerArray = new ProductRepository[DEFAULT_CAPACITY];
         size = 0;
     }
 
     @Override
-    public Product get(int i) {
+    public ProductRepository get(int i) {
         checkIndex(i);
         return innerArray[i];
     }
 
     @Override
-    public Product set(int i, Product o) {
+    public ProductRepository set(int i, ProductRepository o) {
         checkIndex(i);
-        Product oldElement = innerArray[i];
+        ProductRepository oldElement = innerArray[i];
         innerArray[i] = o;
         return oldElement;
     }
 
     @Override
-    public void add(int i, Product o) {
+    public void add(int i, ProductRepository o) {
         checkIndex(i);
         if (size >= innerArray.length * 0.8) {
-            Product[] tempArr = Arrays.copyOf(innerArray, size);
-            innerArray = new Product[size + size / INTEGER_TWO + INTEGER_ONE];
+            ProductRepository[] tempArr = Arrays.copyOf(innerArray, size);
+            innerArray = new ProductRepository[size + size / INTEGER_TWO + INTEGER_ONE];
             innerArray = Arrays.copyOf(tempArr, innerArray.length);
         }
         innerArray[size++] = o;
     }
 
     @Override
-    public Product remove(int i) {
-        Product removableProduct;
+    public ProductRepository remove(int i) {
+        ProductRepository removableProduct;
         checkIndex(i);
 
         for (int j = i; j < size - 1; j++) {
-            Product temp = innerArray[j];
+            ProductRepository temp = innerArray[j];
             innerArray[j] = innerArray[j + INTEGER_ONE];
             innerArray[j + INTEGER_ONE] = temp;
         }
@@ -238,14 +237,14 @@ public class ListImpl implements List<Product> {
         }
     }
 
-    class IteratorImpl implements Iterator<Product> {
+    class IteratorImpl implements Iterator<ProductRepository> {
 
         private int size;
         private int currentIndex = 0;
-        private Predicate<Product> predicate;
+        private Predicate<ProductRepository> predicate;
         boolean result = false;
 
-        public IteratorImpl(Predicate<Product> predicate) {
+        public IteratorImpl(Predicate<ProductRepository> predicate) {
             this.predicate = predicate;
             this.size = size();
         }
@@ -263,7 +262,7 @@ public class ListImpl implements List<Product> {
         }
 
         @Override
-        public Product next() {
+        public ProductRepository next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -273,7 +272,7 @@ public class ListImpl implements List<Product> {
 
         @Override
         public void remove() {
-            Product temp = next();
+            ProductRepository temp = next();
             if (temp != null) {
                 ListImpl.this.remove(temp);
             }

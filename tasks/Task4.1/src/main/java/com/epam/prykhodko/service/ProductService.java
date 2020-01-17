@@ -1,14 +1,14 @@
 package com.epam.prykhodko.service;
 
-import com.epam.prykhodko.task1.entity.Product;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import java.util.List;
 
 public interface ProductService {
 
 
-  List<Product> getAll();
+  List<ProductRepository> getAll();
 
-  Product getById(int id);
+  ProductRepository getById(int id);
 
-  void add(Product product);
+  void add(ProductRepository product);
 }

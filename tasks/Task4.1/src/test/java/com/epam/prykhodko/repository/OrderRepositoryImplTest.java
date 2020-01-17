@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.epam.prykhodko.repository.impl.OrderRepositoryImpl;
-import com.epam.prykhodko.task1.entity.Product;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -17,8 +17,8 @@ class OrderRepositoryImplTest {
   void addSizeShouldBeEqualOne() {
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     OrderRepositoryImpl repository = new OrderRepositoryImpl();
-    Map<Product, Integer> map = new TreeMap<>();
-    map.put(new Product(), 4);
+    Map<ProductRepository, Integer> map = new TreeMap<>();
+    map.put(new ProductRepository(), 4);
     try {
       repository.add(format.parse("20/02/2020 20:20"), map);
     } catch (ParseException e) {

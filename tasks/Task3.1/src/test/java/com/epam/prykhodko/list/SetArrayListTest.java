@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.epam.prykhodko.task1.entity.Product;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import com.epam.prykhodko.task1.entity.Smartphone;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class SetArrayListTest {
 
-  SetArrayList<Product> arrayList;
+  SetArrayList<ProductRepository> arrayList;
   Smartphone smartphone;
   Smartphone smartphone1;
   Smartphone smartphone2;
@@ -99,7 +99,7 @@ class SetArrayListTest {
 
   @Test
   void addAllByIndexShouldThrowIllegalStateException() {
-    List<Product> list = new ArrayList<>();
+    List<ProductRepository> list = new ArrayList<>();
     arrayList.add(smartphone);
     arrayList.add(smartphone1);
 
@@ -112,7 +112,7 @@ class SetArrayListTest {
 
   @Test
   void addAllByIndexShouldAddCollection() {
-    List<Product> list = new ArrayList<>();
+    List<ProductRepository> list = new ArrayList<>();
     list.add(smartphone2);
 
     arrayList.add(smartphone);
@@ -128,7 +128,7 @@ class SetArrayListTest {
 
   @Test
   void addAllShouldAddCollection() {
-    List<Product> list = new ArrayList<>();
+    List<ProductRepository> list = new ArrayList<>();
     list.add(smartphone2);
 
     arrayList.add(smartphone);
@@ -145,7 +145,7 @@ class SetArrayListTest {
 
   @Test
   void addAllShouldThrowIllegalArgumentException() {
-    List<Product> list = new ArrayList<>();
+    List<ProductRepository> list = new ArrayList<>();
     arrayList.add(smartphone);
     arrayList.add(smartphone1);
 

@@ -1,36 +1,34 @@
 package com.epam.prykhodko.list;
 
-import com.epam.prykhodko.task1.entity.Product;
-
-import java.util.List;
-
-import java.util.Collection;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.function.Predicate;
-
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_MINUS_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_TWO;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-public class FailSafeList implements List<Product> {
+import com.epam.prykhodko.task1.entity.ProductRepository;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.function.Predicate;
+
+public class FailSafeList implements List<ProductRepository> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    private Product[] innerArray;
+    private ProductRepository[] innerArray;
     private int size = INTEGER_ZERO;
 
     public FailSafeList() {
-        innerArray = new Product[DEFAULT_CAPACITY];
+        innerArray = new ProductRepository[DEFAULT_CAPACITY];
     }
 
 
     @Override
-    public Iterator<Product> iterator() {
+    public Iterator<ProductRepository> iterator() {
         return iterator(t -> true);
     }
 
@@ -41,7 +39,7 @@ public class FailSafeList implements List<Product> {
 
     @Override
     public Object[] toArray(Object[] objects) {
-        if (!(objects instanceof Product[])) {
+        if (!(objects instanceof ProductRepository[])) {
             throw new ArrayStoreException();
         }
 
@@ -52,7 +50,7 @@ public class FailSafeList implements List<Product> {
         return Arrays.copyOf(innerArray, size, objects.getClass());
     }
 
-    public Iterator<Product> iterator(Predicate<Product> predicate) {
+    public Iterator<ProductRepository> iterator(Predicate<ProductRepository> predicate) {
         return new IteratorImpl(predicate, innerArray, size);
     }
 
@@ -73,15 +71,15 @@ public class FailSafeList implements List<Product> {
     }
 
     @Override
-    public boolean add(Product o) {
+    public boolean add(ProductRepository o) {
         add(size, o);
         return true;
     }
 
     @Override
-    public Product set(int i, Product o) {
+    public ProductRepository set(int i, ProductRepository o) {
         checkIndex(i);
-        Product oldElement = innerArray[i];
+        ProductRepository oldElement = innerArray[i];
         innerArray[i] = o;
         return oldElement;
     }
@@ -108,16 +106,16 @@ public class FailSafeList implements List<Product> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends Product> collection) {
+    public boolean addAll(Collection<? extends ProductRepository> collection) {
         addAll(size, collection);
         return true;
     }
 
     @Override
-    public boolean addAll(int i, Collection<? extends Product> collection) {
+    public boolean addAll(int i, Collection<? extends ProductRepository> collection) {
         checkIndex(i);
 
-        Product[] tempArray = new Product[innerArray.length + collection.size()];
+        ProductRepository[] tempArray = new ProductRepository[innerArray.length + collection.size()];
         System.arraycopy(innerArray, 0, tempArray, 0, i);
         System.arraycopy(collection.toArray(), 0, tempArray, i, collection.size());
         System.arraycopy(innerArray, i, tempArray, i + collection.size(), size);
@@ -128,12 +126,12 @@ public class FailSafeList implements List<Product> {
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        Product[] tempArray = new Product[innerArray.length];
+        ProductRepository[] tempArray = new ProductRepository[innerArray.length];
         int oldSize = size;
         int tempSize = INTEGER_ZERO;
         for (Object o : collection) {
             if (contains(o)) {
-                tempArray[tempSize++] = (Product) o;
+                tempArray[tempSize++] = (ProductRepository) o;
             }
         }
         size = tempSize;
@@ -157,35 +155,35 @@ public class FailSafeList implements List<Product> {
     @Override
     public void clear() {
         innerArray = Arrays.copyOf(innerArray, innerArray.length);
-        innerArray = new Product[DEFAULT_CAPACITY];
+        innerArray = new ProductRepository[DEFAULT_CAPACITY];
         size = INTEGER_ZERO;
     }
 
     @Override
-    public Product get(int i) {
+    public ProductRepository get(int i) {
         checkIndex(i);
         return innerArray[i];
     }
 
     @Override
-    public void add(int i, Product o) {
+    public void add(int i, ProductRepository o) {
         checkIndex(i);
         innerArray = Arrays.copyOf(innerArray, innerArray.length);
         if (size >= innerArray.length * 0.8) {
-            Product[] tempArr = Arrays.copyOf(innerArray, size);
-            innerArray = new Product[size + size / INTEGER_TWO + INTEGER_ONE];
+            ProductRepository[] tempArr = Arrays.copyOf(innerArray, size);
+            innerArray = new ProductRepository[size + size / INTEGER_TWO + INTEGER_ONE];
             innerArray = Arrays.copyOf(tempArr, innerArray.length);
         }
         innerArray[size++] = o;
     }
 
     @Override
-    public Product remove(int i) {
-        Product removableProduct;
+    public ProductRepository remove(int i) {
+        ProductRepository removableProduct;
         checkIndex(i);
         innerArray = Arrays.copyOf(innerArray, innerArray.length);
         for (int j = i; j < size - 1; j++) {
-            Product temp = innerArray[j];
+            ProductRepository temp = innerArray[j];
             innerArray[j] = innerArray[j + INTEGER_ONE];
             innerArray[j + INTEGER_ONE] = temp;
         }
@@ -217,17 +215,17 @@ public class FailSafeList implements List<Product> {
     }
 
     @Override
-    public ListIterator<Product> listIterator() {
+    public ListIterator<ProductRepository> listIterator() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public ListIterator<Product> listIterator(int i) {
+    public ListIterator<ProductRepository> listIterator(int i) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Product> subList(int i, int i1) {
+    public List<ProductRepository> subList(int i, int i1) {
         throw new UnsupportedOperationException();
     }
 
@@ -253,15 +251,15 @@ public class FailSafeList implements List<Product> {
         }
     }
 
-    static class IteratorImpl implements Iterator<Product> {
+    static class IteratorImpl implements Iterator<ProductRepository> {
 
         private int size;
         private int currentIndex = INTEGER_ZERO;
-        private final Predicate<Product> predicate;
+        private final Predicate<ProductRepository> predicate;
         boolean result = false;
-        private final Product[] snapshot;
+        private final ProductRepository[] snapshot;
 
-        public IteratorImpl(Predicate<Product> predicate, Product[] array, int size) {
+        public IteratorImpl(Predicate<ProductRepository> predicate, ProductRepository[] array, int size) {
             snapshot = array;
             this.predicate = predicate;
             this.size = size;
@@ -280,7 +278,7 @@ public class FailSafeList implements List<Product> {
         }
 
         @Override
-        public Product next() {
+        public ProductRepository next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }

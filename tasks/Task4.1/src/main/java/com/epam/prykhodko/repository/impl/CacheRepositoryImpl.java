@@ -1,7 +1,7 @@
 package com.epam.prykhodko.repository.impl;
 
 import com.epam.prykhodko.repository.CacheRepository;
-import com.epam.prykhodko.task1.entity.Product;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 public class CacheRepositoryImpl implements CacheRepository {
 
   private final int MAX_CAPACITY = 5;
-  private Map<Product, Integer> cache;
+  private Map<ProductRepository, Integer> cache;
 
   public CacheRepositoryImpl() {
     cache = new LinkedHashMap(MAX_CAPACITY, 0.75f, true) {
@@ -20,12 +20,12 @@ public class CacheRepositoryImpl implements CacheRepository {
     };
   }
   @Override
-  public void put(Product product, int amount){
+  public void put(ProductRepository product, int amount){
     cache.put(product,amount);
   }
 
   @Override
-  public Map<Product, Integer> get() {
+  public Map<ProductRepository, Integer> get() {
     return cache;
   }
 }

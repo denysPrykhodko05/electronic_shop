@@ -19,21 +19,19 @@ import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.repository.impl.BasketRepositoryImpl;
 import com.epam.prykhodko.repository.impl.CacheRepositoryImpl;
 import com.epam.prykhodko.repository.impl.OrderRepositoryImpl;
-import com.epam.prykhodko.repository.impl.ProductRepositoryImpl;
 import com.epam.prykhodko.service.impl.BasketServiceImpl;
 import com.epam.prykhodko.service.impl.CacheServiceImpl;
 import com.epam.prykhodko.service.impl.OrderServiceImpl;
 import com.epam.prykhodko.service.impl.ProductServiceImpl;
 import com.epam.prykhodko.util.ConsoleHelper;
-import com.epam.prykhodko.utils.FileUtil;
+import com.epam.prykhodko.utils.impl.FileSerializationImpl;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ShopView {
 
-  private static final InputUtil inputUtil = new InputUtil();
-  private static final FileUtil fileUtil = new FileUtil("container.txt");
+  private static final FileSerializationImpl serializer = new FileSerializationImpl("container.txt");
 
   private static Command invalidCommandNumber;
   private static ProductRepository productRepositoryImpl;
@@ -44,10 +42,7 @@ public class ShopView {
   private static CacheServiceImpl cacheServiceImpl;
 
   public static void main(String[] args) {
-    productRepositoryImpl = fileUtil.deserialize();
-    if (productRepositoryImpl == null) {
-      productRepositoryImpl = new ProductRepositoryImpl();
-    }
+    productRepositoryImpl = serializer.read();
     entityInit();
     int command = -1;
     while (command != 0) {
@@ -68,7 +63,7 @@ public class ShopView {
       }
       commandMap.getOrDefault(command, invalidCommandNumber).execute();
     }
-    fileUtil.serialize(productRepositoryImpl);
+    serializer.write(productRepositoryImpl);
   }
 
   private static void entityInit() {
@@ -90,7 +85,7 @@ public class ShopView {
     int counter = 0;
     Command exit = new ExitCommand();
     Command getAll = new GetAllProductsCommand(productRepositoryImpl);
-    InputType inputType = inputUtil.inputType();
+    InputType inputType = InputUtil.inputType();
     Command addToBasket = new AddToBasketCommand(basketServiceImpl, productServiceImpl,
         cacheServiceImpl);
     Command getAllFromBasket = new GetAllFromBasketCommand(basketServiceImpl);

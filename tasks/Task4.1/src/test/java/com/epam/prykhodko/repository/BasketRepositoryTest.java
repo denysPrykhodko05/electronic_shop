@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.epam.prykhodko.repository.impl.BasketRepositoryImpl;
-import com.epam.prykhodko.task1.entity.Product;
+import com.epam.prykhodko.task1.entity.ProductRepository;
 import com.epam.prykhodko.task1.entity.Smartphone;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ class BasketRepositoryTest {
 
   @Test
   void addSizeSholudBeEqualOne() {
-    Product product = new Smartphone();
+    ProductRepository product = new Smartphone();
     BasketRepositoryImpl basketRepository = new BasketRepositoryImpl();
     basketRepository.add(product,2);
 
@@ -24,7 +24,7 @@ class BasketRepositoryTest {
 
   @Test
   void getShouldBeNull() {
-    Product product = new Smartphone();
+    ProductRepository product = new Smartphone();
     BasketRepositoryImpl basketRepository = new BasketRepositoryImpl();
     basketRepository.add(product,2);
     assertNotNull(basketRepository.get());

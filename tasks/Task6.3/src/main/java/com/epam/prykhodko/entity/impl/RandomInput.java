@@ -1,7 +1,6 @@
 package com.epam.prykhodko.entity.impl;
 
 import com.epam.prykhodko.entity.InputType;
-import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -21,7 +20,11 @@ public class RandomInput implements InputType {
   }
 
   @Override
-  public String readLine() throws IOException {
-    return ConsoleHelper.readLine() + random.nextInt(10000);
+  public String readLine() {
+    return String.valueOf(random.nextInt(10000));
+  }
+
+  public String readLine(String line) {
+    return line + random.nextInt(10000);
   }
 }

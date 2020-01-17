@@ -5,17 +5,17 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Product implements Serializable {
+public class ProductRepository implements Serializable {
 
   private int id;
   private BigDecimal price;
   private String manufacturer;
 
-  public Product() {
+  public ProductRepository() {
 
   }
 
-  public Product(int id, BigDecimal price, String manufacturer) {
+  public ProductRepository(int id, BigDecimal price, String manufacturer) {
     this.id = id;
     this.price = price;
     this.manufacturer = manufacturer;
@@ -53,7 +53,7 @@ public class Product implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Product product = (Product) o;
+    ProductRepository product = (ProductRepository) o;
     return id == product.id &&
         product.price.compareTo(price) == 0 &&
         manufacturer.equals(product.manufacturer);
