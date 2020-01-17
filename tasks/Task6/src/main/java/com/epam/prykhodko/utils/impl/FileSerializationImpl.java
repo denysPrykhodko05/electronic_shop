@@ -44,15 +44,16 @@ public class FileSerializationImpl implements FileDeserialization {
       log.error(CANNOT_WRITE_TO_FILE);
     }
   }
+
   @Override
   public ProductRepository read() {
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-      return (com.epam.prykhodko.repository.ProductRepository) ois.readObject();
+      return (ProductRepository) ois.readObject();
     } catch (IOException | ClassNotFoundException e) {
       log.error(CANNOT_READ_FILE);
+      //TODO call productInit
       return new ProductRepositoryImpl();
     }
-
   }
 
 
