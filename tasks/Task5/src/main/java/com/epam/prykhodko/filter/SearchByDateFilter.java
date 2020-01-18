@@ -1,6 +1,5 @@
 package com.epam.prykhodko.filter;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,12 +20,12 @@ public class SearchByDateFilter extends Handler {
 
   @Override
   protected List<String> findFiles(File directory) {
-   return findByDate(directory,firstDate,lastDate);
+    return findByDate(directory, firstDate, lastDate);
   }
 
   @Override
   protected List<String> findFiles(List<String> paths) {
-    return findByDate(paths,firstDate,lastDate);
+    return findByDate(paths, firstDate, lastDate);
   }
 
   private List<String> findByDate(File directory, Date firstDate, Date lastDate) {

@@ -19,9 +19,10 @@ public class CacheRepositoryImpl implements CacheRepository {
       }
     };
   }
+
   @Override
-  public void put(Product product, int amount){
-    cache.put(product,amount);
+  public void put(Product product, int amount) {
+    cache.put(product, amount);
   }
 
   @Override

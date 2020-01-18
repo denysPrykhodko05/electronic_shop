@@ -17,14 +17,14 @@ public abstract class Handler {
     return next;
   }
 
-  public boolean check(){
+  public boolean check() {
     List<String> paths = findFiles(directory);
-    return !paths.isEmpty() && checkNext(paths,directory);
+    return !paths.isEmpty() && checkNext(paths, directory);
   }
 
-  public boolean check(List<String> paths, File directory){
+  public boolean check(List<String> paths, File directory) {
     List<String> tempPaths = findFiles(paths);
-    return !tempPaths.isEmpty() && checkNext(paths,directory);
+    return !tempPaths.isEmpty() && checkNext(paths, directory);
   }
 
   protected boolean checkNext(List<String> paths, File file) {

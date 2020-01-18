@@ -15,5 +15,6 @@ public interface ProductRepository extends Serializable {
   Optional<Product> getById(int id);
 
   void add(Product product);
+
   void add(ArrayList<Product> product);
 }

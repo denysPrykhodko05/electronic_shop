@@ -1,6 +1,5 @@
 package com.epam.prykhodko.task1.entity;
 
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -54,9 +53,9 @@ public class Product implements Serializable {
       return false;
     }
     Product product = (Product) o;
-    return id == product.id &&
-        product.price.compareTo(price) == 0 &&
-        manufacturer.equals(product.manufacturer);
+    return id == product.id
+        && product.price.compareTo(price) == 0
+        && manufacturer.equals(product.manufacturer);
   }
 
   @Override
@@ -66,8 +65,8 @@ public class Product implements Serializable {
 
   @Override
   public String toString() {
-    return "id=" + id +
-        ", price=" + price +
-        ", manufacturer='" + manufacturer + '\'';
+    return "id=" + id
+        + ", price=" + price
+        + ", manufacturer='" + manufacturer + '\'';
   }
 }

@@ -1,6 +1,5 @@
 package com.epam.prykhodko.entity.impl;
 
-
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.entity.InputType;

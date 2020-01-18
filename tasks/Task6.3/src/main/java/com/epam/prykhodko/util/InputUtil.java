@@ -1,11 +1,10 @@
-package com.epam.prykhodko.inputUtil;
+package com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.entity.InputType;
 import com.epam.prykhodko.entity.impl.ConsoleInput;
 import com.epam.prykhodko.entity.impl.RandomInput;
-import com.epam.prykhodko.util.ConsoleScanner;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;

@@ -1,6 +1,5 @@
 package com.epam.prykhodko.utils.impl;
 
-
 import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.repository.impl.ProductRepositoryImpl;
 import com.epam.prykhodko.task1.entity.Product;
@@ -25,7 +24,8 @@ public class FileSerializationImpl implements FileDeserialization {
   private File file;
 
   public FileSerializationImpl(String fileName) {
-    DOMConfigurator.configure("C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019\\tasks\\resources\\log4j.xml");
+    DOMConfigurator.configure(
+        "C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019\\tasks\\resources\\log4j.xml");
     this.file = new File(fileName);
   }
 

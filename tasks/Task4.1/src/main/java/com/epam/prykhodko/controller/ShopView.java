@@ -1,18 +1,17 @@
 package com.epam.prykhodko.controller;
 
-import com.epam.prykhodko.command.AddToBasketCommand;
 import com.epam.prykhodko.command.AddToProductListCommand;
-import com.epam.prykhodko.command.CheckOrdersForGivenPeriodCommand;
-import com.epam.prykhodko.command.ExitCommand;
-import com.epam.prykhodko.command.FindOrderForNearestDateCommand;
-import com.epam.prykhodko.command.GetAllFromBasketCommand;
-import com.epam.prykhodko.command.GetAllProductsCommand;
-import com.epam.prykhodko.command.GetLastFiveProductsCommand;
-import com.epam.prykhodko.command.InavalidNumberCommand;
-import com.epam.prykhodko.command.MakeOrderCommand;
-import com.epam.prykhodko.commandInterface.Command;
+import com.epam.prykhodko.command.Command;
+import com.epam.prykhodko.command.impl.AddToBasketCommand;
+import com.epam.prykhodko.command.impl.CheckOrdersForGivenPeriodCommand;
+import com.epam.prykhodko.command.impl.ExitCommand;
+import com.epam.prykhodko.command.impl.FindOrderForNearestDateCommand;
+import com.epam.prykhodko.command.impl.GetAllFromBasketCommand;
+import com.epam.prykhodko.command.impl.GetAllProductsCommand;
+import com.epam.prykhodko.command.impl.GetLastFiveProductsCommand;
+import com.epam.prykhodko.command.impl.InavalidNumberCommand;
+import com.epam.prykhodko.command.impl.MakeOrderCommand;
 import com.epam.prykhodko.entity.InputType;
-import com.epam.prykhodko.inputUtil.InputUtil;
 import com.epam.prykhodko.repository.BasketRepository;
 import com.epam.prykhodko.repository.CacheRepository;
 import com.epam.prykhodko.repository.ProductRepository;
@@ -24,6 +23,7 @@ import com.epam.prykhodko.service.impl.CacheServiceImpl;
 import com.epam.prykhodko.service.impl.OrderServiceImpl;
 import com.epam.prykhodko.service.impl.ProductServiceImpl;
 import com.epam.prykhodko.util.ConsoleHelper;
+import com.epam.prykhodko.util.InputUtil;
 import com.epam.prykhodko.utils.impl.FileSerializationImpl;
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,7 +31,8 @@ import java.util.Map;
 
 public class ShopView {
 
-  private static final FileSerializationImpl serializer = new FileSerializationImpl("container.txt");
+  private static final FileSerializationImpl serializer = new FileSerializationImpl(
+      "container.txt");
 
   private static Command invalidCommandNumber;
   private static ProductRepository productRepositoryImpl;
@@ -83,28 +84,37 @@ public class ShopView {
 
   private static void commandInit() {
     int counter = 0;
-    Command exit = new ExitCommand();
-    Command getAll = new GetAllProductsCommand(productRepositoryImpl);
     InputType inputType = InputUtil.inputType();
+
+    Command exit = new ExitCommand();
+    commandMap.put(counter++, exit);
+
+    Command getAll = new GetAllProductsCommand(productRepositoryImpl);
+    commandMap.put(counter++, getAll);
+
     Command addToBasket = new AddToBasketCommand(basketServiceImpl, productServiceImpl,
         cacheServiceImpl);
+    commandMap.put(counter++, addToBasket);
+
     Command getAllFromBasket = new GetAllFromBasketCommand(basketServiceImpl);
+    commandMap.put(counter++, getAllFromBasket);
+
     Command getLastFiveOrders = new GetLastFiveProductsCommand(cacheServiceImpl);
+    commandMap.put(counter++, getLastFiveOrders);
+
     Command makeOrder = new MakeOrderCommand(orderServiceImpl, basketServiceImpl);
+    commandMap.put(counter++, makeOrder);
+
     Command getOrder = new CheckOrdersForGivenPeriodCommand(orderServiceImpl);
+    commandMap.put(counter++, getOrder);
+
     Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderServiceImpl);
+    commandMap.put(counter++, findOrderForNearestDate);
+
     Command addToProductList = new AddToProductListCommand(inputType, productServiceImpl);
+    commandMap.put(counter++, addToProductList);
 
     invalidCommandNumber = new InavalidNumberCommand();
 
-    commandMap.put(counter++, exit);
-    commandMap.put(counter++, getAll);
-    commandMap.put(counter++, addToBasket);
-    commandMap.put(counter++, getAllFromBasket);
-    commandMap.put(counter++, getLastFiveOrders);
-    commandMap.put(counter++, makeOrder);
-    commandMap.put(counter++, getOrder);
-    commandMap.put(counter++, findOrderForNearestDate);
-    commandMap.put(counter++, addToProductList);
   }
 }

@@ -1,9 +1,7 @@
 package com.epam.prykhodko.command;
 
-
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
-import com.epam.prykhodko.commandInterface.Command;
 import com.epam.prykhodko.creator.NotebookCreator;
 import com.epam.prykhodko.creator.ProductCreator;
 import com.epam.prykhodko.creator.SmartphoneCreator;
