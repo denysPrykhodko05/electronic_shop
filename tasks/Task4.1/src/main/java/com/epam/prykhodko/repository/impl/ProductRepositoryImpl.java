@@ -12,10 +12,10 @@ import java.util.Optional;
 
 public class ProductRepositoryImpl implements ProductRepository, Serializable {
 
-  private static final List<Product> productList = new ArrayList<>();
+  private final List<Product> productList = new ArrayList<>();
 
   public ProductRepositoryImpl() {
-    productInit();
+
   }
 
   public void productInit() {
@@ -50,5 +50,9 @@ public class ProductRepositoryImpl implements ProductRepository, Serializable {
   @Override
   public void add(Product product) {
     productList.add(product);
+  }
+
+  public void add(ArrayList<Product> list) {
+    productList.addAll(list);
   }
 }
