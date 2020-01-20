@@ -5,7 +5,7 @@ import com.epam.prykhodko.task1.entity.Product;
 
 public abstract class Creator {
 
-  protected InputType inputType;
+  protected final InputType inputType;
 
   public Creator(InputType inputType) {
     this.inputType = inputType;

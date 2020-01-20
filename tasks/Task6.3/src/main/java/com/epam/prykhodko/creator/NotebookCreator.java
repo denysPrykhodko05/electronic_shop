@@ -16,7 +16,6 @@ public class NotebookCreator extends ProductCreator {
 
   public NotebookCreator(InputType inputType) {
     super(inputType);
-    this.inputType = inputType;
   }
 
   @Override

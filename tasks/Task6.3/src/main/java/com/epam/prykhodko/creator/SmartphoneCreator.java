@@ -16,7 +16,6 @@ public class SmartphoneCreator extends ProductCreator {
 
   public SmartphoneCreator(InputType inputType) {
     super(inputType);
-    this.inputType = inputType;
   }
 
   @Override
