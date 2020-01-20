@@ -20,12 +20,13 @@ public class FileSerializationImpl implements FileDeserialization {
   public static final String CANNOT_READ_FILE = "Cannot read file!!!";
   public static final String CANNOT_COMPRESS_FILE = "Cannot compress file!!!";
   public static final String CANNOT_DECOMPRESS_FILE = "Cannot decompress file!!!";
-  private static final Logger log = Logger.getLogger(FileSerializationImpl.class);
+  private static final Logger LOGGER = Logger.getLogger(FileSerializationImpl.class);
+
   private File file;
 
   public FileSerializationImpl(String fileName) {
     DOMConfigurator.configure(
-        "C:\\task1\\git pracrice I\\pre_prod_java_q4q1_2019\\tasks\\resources\\log4j.xml");
+        "resources\\log4j.xml");
     this.file = new File(fileName);
   }
 
@@ -34,7 +35,7 @@ public class FileSerializationImpl implements FileDeserialization {
     try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
       oos.writeObject(product.get());
     } catch (IOException e) {
-      log.error(CANNOT_WRITE_TO_FILE);
+      LOGGER.error(CANNOT_WRITE_TO_FILE);
     }
   }
 
@@ -45,7 +46,7 @@ public class FileSerializationImpl implements FileDeserialization {
         oos.writeObject(product);
       }
     } catch (IOException e) {
-      log.error(CANNOT_WRITE_TO_FILE);
+      LOGGER.error(CANNOT_WRITE_TO_FILE);
     }
   }
 
@@ -56,7 +57,7 @@ public class FileSerializationImpl implements FileDeserialization {
       productRepository.add((ArrayList<Product>) ois.readObject());
       return productRepository;
     } catch (IOException | ClassNotFoundException e) {
-      log.error(CANNOT_READ_FILE);
+      LOGGER.error(CANNOT_READ_FILE);
       productRepository.productInit();
     }
     return productRepository;

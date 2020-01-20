@@ -10,16 +10,14 @@ import org.apache.log4j.Logger;
 
 public class ProductCreator extends Creator {
 
-  private final Logger logger = Logger.getLogger(ProductCreator.class);
-  private Product product;
+  private static final Logger LOGGER = Logger.getLogger(ProductCreator.class);
   private boolean correctInputFlag;
 
-  public ProductCreator(InputType inputType, Product product) {
+  public ProductCreator(InputType inputType) {
     super(inputType);
-    this.product = product;
   }
 
-  private void setParameters() {
+  private void setParameters(Product product) {
     while (!correctInputFlag) {
       try {
         System.out.println("Enter product id: ");
@@ -30,7 +28,7 @@ public class ProductCreator extends Creator {
         String manufacture = ConsoleHelper.readLine();
         product.setManufacturer(inputType.readLine(manufacture));
       } catch (IOException | NumberFormatException e) {
-        logger.error(INCORRECT_INPUT);
+        LOGGER.error(INCORRECT_INPUT);
         continue;
       }
       correctInputFlag = true;
@@ -39,7 +37,8 @@ public class ProductCreator extends Creator {
 
   @Override
   public Product create() {
-    setParameters();
+    final Product product = new Product();
+    setParameters(product);
     return product;
   }
 

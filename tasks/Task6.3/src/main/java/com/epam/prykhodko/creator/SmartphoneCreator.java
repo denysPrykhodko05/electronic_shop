@@ -11,24 +11,22 @@ import org.apache.log4j.Logger;
 
 public class SmartphoneCreator extends ProductCreator {
 
-  private final Logger logger = Logger.getLogger(ProductCreator.class);
-  private Smartphone smartphone;
+  private static final Logger LOGGER = Logger.getLogger(ProductCreator.class);
   private boolean correctInputFlag;
 
-  public SmartphoneCreator(InputType inputType, Smartphone smartphone) {
-    super(inputType, smartphone);
+  public SmartphoneCreator(InputType inputType) {
+    super(inputType);
     this.inputType = inputType;
-    this.smartphone = smartphone;
   }
 
   @Override
   public Product create() {
-    super.create();
-    setParameters();
+    final Smartphone smartphone =  new Smartphone(super.create());
+    setParameters(smartphone);
     return smartphone;
   }
 
-  private void setParameters() {
+  private void setParameters(Smartphone smartphone) {
     while (!correctInputFlag) {
       try {
         System.out.println("Enter model of touchscreen: ");
@@ -37,11 +35,10 @@ public class SmartphoneCreator extends ProductCreator {
         System.out.println("Enter communication standard");
         String communication = ConsoleHelper.readLine();
         smartphone.setCommunicationStandard(inputType.readLine(communication));
+        correctInputFlag = true;
       } catch (IOException | NumberFormatException e) {
-        logger.error(INCORRECT_INPUT);
-        continue;
+        LOGGER.error(INCORRECT_INPUT);
       }
-      correctInputFlag = true;
     }
   }
 }

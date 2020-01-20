@@ -11,6 +11,10 @@ public class Telephone extends Product {
 
   }
 
+  public Telephone(Product telephone){
+    super(telephone);
+  }
+
   public Telephone(int id, BigDecimal price, String manufacturer, String communicationStandard) {
     super(id, price, manufacturer);
     this.communicationStandard = communicationStandard;

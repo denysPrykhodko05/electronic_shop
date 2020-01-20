@@ -11,34 +11,31 @@ import org.apache.log4j.Logger;
 
 public class NotebookCreator extends ProductCreator {
 
-  private final Logger logger = Logger.getLogger(NotebookCreator.class);
-  private Notebook notebook;
+  private static final Logger LOGGER = Logger.getLogger(NotebookCreator.class);
   private boolean correctInputFlag;
 
-  public NotebookCreator(InputType inputType, Notebook notebook) {
-    super(inputType,notebook);
+  public NotebookCreator(InputType inputType) {
+    super(inputType);
     this.inputType = inputType;
-    this.notebook = notebook;
   }
 
   @Override
   public Product create() {
-    super.create();
-    setParameters();
+    final Notebook notebook = new Notebook(super.create());
+    setParameters(notebook);
     return notebook;
   }
 
-  private void setParameters() {
+  private void setParameters(Notebook notebook) {
     while (!correctInputFlag) {
       try {
         System.out.println("Enter model of touchpad");
         String model = ConsoleHelper.readLine();
         notebook.setModelOfTouchpad(inputType.readLine(model));
+        correctInputFlag = true;
       } catch (IOException | NumberFormatException e) {
-        logger.error(INCORRECT_INPUT);
-        continue;
+        LOGGER.error(INCORRECT_INPUT);
       }
-      correctInputFlag = true;
     }
   }
 }

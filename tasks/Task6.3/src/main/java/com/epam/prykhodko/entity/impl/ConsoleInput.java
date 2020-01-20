@@ -10,14 +10,14 @@ import org.apache.log4j.Logger;
 
 public class ConsoleInput implements InputType {
 
-  Logger logger = Logger.getLogger(ConsoleInput.class);
+  public static final  Logger LOGGER = Logger.getLogger(ConsoleInput.class);
 
   @Override
   public int readInt() {
     try {
       return ConsoleHelper.readInt();
     } catch (IOException e) {
-        logger.error(INCORRECT_INPUT);
+      LOGGER.error(INCORRECT_INPUT);
     }
     return -1;
   }

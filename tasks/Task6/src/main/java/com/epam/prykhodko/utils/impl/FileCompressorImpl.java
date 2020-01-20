@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 
 public class FileCompressorImpl implements FileCompress {
 
-  private static final Logger log = Logger.getLogger(FileCompressorImpl.class);
+  private static final Logger LOGGER = Logger.getLogger(FileCompressorImpl.class);
 
   @Override
   public void write(File input, File output) {
@@ -26,7 +26,7 @@ public class FileCompressorImpl implements FileCompress {
         outputStream.write(buffer, 0, len);
       }
     } catch (IOException e) {
-      log.error(CANNOT_COMPRESS_FILE);
+      LOGGER.error(CANNOT_COMPRESS_FILE);
     }
   }
 
@@ -40,7 +40,7 @@ public class FileCompressorImpl implements FileCompress {
         out.write(buffer, 0, len);
       }
     } catch (IOException e) {
-      log.error(CANNOT_DECOMPRESS_FILE);
+      LOGGER.error(CANNOT_DECOMPRESS_FILE);
     }
   }
 }

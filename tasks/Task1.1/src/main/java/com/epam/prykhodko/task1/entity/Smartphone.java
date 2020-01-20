@@ -10,6 +10,10 @@ public class Smartphone extends Telephone {
   public Smartphone() {
   }
 
+  public Smartphone(Product smartphone) {
+    super(smartphone);
+  }
+
   public Smartphone(int id, BigDecimal price, String manufacturer, String communicationStandard,
       String modelOfTouchScreen) {
     super(id, price, manufacturer, communicationStandard);

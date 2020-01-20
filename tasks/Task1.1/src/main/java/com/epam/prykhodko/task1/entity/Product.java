@@ -14,6 +14,12 @@ public class Product implements Serializable {
 
   }
 
+  public Product(Product product) {
+    this.id = product.id;
+    this.price = product.price;
+    this.manufacturer = product.manufacturer;
+  }
+
   public Product(int id, BigDecimal price, String manufacturer) {
     this.id = id;
     this.price = price;
