@@ -11,7 +11,7 @@ public class Telephone extends Product {
 
   }
 
-  public Telephone(Product telephone){
+  public Telephone(Product telephone) {
     super(telephone);
   }
 

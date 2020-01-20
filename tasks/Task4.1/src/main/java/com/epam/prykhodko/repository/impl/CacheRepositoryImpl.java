@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 
 public class CacheRepositoryImpl implements CacheRepository {
 
-  private final int MAX_CAPACITY = 5;
+  private static final int MAX_CAPACITY = 5;
   private Map<Product, Integer> cache;
 
   public CacheRepositoryImpl() {
