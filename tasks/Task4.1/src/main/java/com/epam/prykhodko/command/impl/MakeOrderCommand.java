@@ -1,6 +1,6 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.command.impl;
 
-import com.epam.prykhodko.commandInterface.Command;
+import com.epam.prykhodko.command.Command;
 import com.epam.prykhodko.service.BasketService;
 import com.epam.prykhodko.service.OrderService;
 import com.epam.prykhodko.task1.entity.Product;

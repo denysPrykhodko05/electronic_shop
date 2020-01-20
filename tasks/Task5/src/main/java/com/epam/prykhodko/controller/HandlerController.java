@@ -1,6 +1,5 @@
 package com.epam.prykhodko.controller;
 
-
 import static com.epam.prykhodko.constant.Constants.CHOOSE_DATE_FILTER_STRING;
 import static com.epam.prykhodko.constant.Constants.CHOOSE_EXTENSION_FILTER_STRING;
 import static com.epam.prykhodko.constant.Constants.CHOOSE_NAME_FILTER_STRING;
@@ -81,7 +80,6 @@ public class HandlerController {
 
   private Handler nameFilter(String directory) {
     String nameChoose;
-    String name = StringUtils.EMPTY;
     System.out.println(CHOOSE_NAME_FILTER_STRING);
     nameChoose = ConsoleScanner.readLine();
 
@@ -89,6 +87,7 @@ public class HandlerController {
       return null;
     }
     Handler handler = null;
+    String name = StringUtils.EMPTY;
     while (name.isEmpty()) {
       System.out.println(ENTER_FILE_NAME_STRING);
       name = ConsoleScanner.readLine();
@@ -104,7 +103,6 @@ public class HandlerController {
   }
 
   private Handler extensionFilter(String directory) {
-    String extension = StringUtils.EMPTY;
     String extensionChoose;
     System.out.println(CHOOSE_EXTENSION_FILTER_STRING);
     extensionChoose = ConsoleScanner.readLine();
@@ -112,6 +110,7 @@ public class HandlerController {
       return null;
     }
     Handler handler = null;
+    String extension = StringUtils.EMPTY;
     while (extension.isEmpty()) {
       System.out.println(ENTER_EXTENSION_STRING);
       extension = ConsoleScanner.readLine();

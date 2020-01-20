@@ -1,6 +1,6 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.command.impl;
 
-import com.epam.prykhodko.commandInterface.Command;
+import com.epam.prykhodko.command.Command;
 import com.epam.prykhodko.service.BasketService;
 import com.epam.prykhodko.service.CacheService;
 import com.epam.prykhodko.service.ProductService;
@@ -26,14 +26,14 @@ public class AddToBasketCommand implements Command {
   public void execute() {
     int amount = 0;
     int productId = 0;
-    Product product=null;
+    Product product = null;
     while (amount <= 0 && productId <= 0) {
       try {
         System.out.println("Enter product id: ");
         productId = ConsoleHelper.readInt();
         product = productService.getById(productId);
         if (product == null) {
-          productId=0;
+          productId = 0;
           System.out.println("Incorrect input. Try again!!!");
           continue;
         }

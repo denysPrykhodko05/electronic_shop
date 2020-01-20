@@ -4,30 +4,21 @@ import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.task1.entity.Notebook;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductRepositoryImpl implements ProductRepository {
+public class ProductRepositoryImpl implements ProductRepository, Serializable {
 
   private final List<Product> productList = new ArrayList<>();
 
   public ProductRepositoryImpl() {
-    productInit();
+
   }
 
-  @Override
-  public List<Product> get() {
-    return productList;
-  }
-
-  @Override
-  public Optional<Product> getById(int id) {
-    return productList.stream().filter(e -> e.getId() == id).findFirst();
-  }
-
-  private void productInit() {
+  public void productInit() {
     final Smartphone smartphone = new Smartphone(1, new BigDecimal(999), "Apple",
         "4G", "Apple");
     final Smartphone smartphone1 = new Smartphone(2, new BigDecimal(999), "Samsung",
@@ -44,5 +35,24 @@ public class ProductRepositoryImpl implements ProductRepository {
     productList.add(notebook);
     productList.add(notebook1);
     productList.add(notebook2);
+  }
+
+  @Override
+  public List<Product> get() {
+    return productList;
+  }
+
+  @Override
+  public Optional<Product> getById(int id) {
+    return productList.stream().filter(e -> e.getId() == id).findFirst();
+  }
+
+  @Override
+  public void add(Product product) {
+    productList.add(product);
+  }
+
+  public void add(ArrayList<Product> list) {
+    productList.addAll(list);
   }
 }

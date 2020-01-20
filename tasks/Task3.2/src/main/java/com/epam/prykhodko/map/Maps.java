@@ -1,10 +1,10 @@
 package com.epam.prykhodko.map;
 
-import com.epam.prykhodko.stringWrapper.HashCodeByLength;
-import com.epam.prykhodko.stringWrapper.HashCodeBySumm;
 import com.epam.prykhodko.task1.entity.Notebook;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Telephone;
+import com.epam.prykhodko.wrapper.HashCodeByLength;
+import com.epam.prykhodko.wrapper.HashCodeBySumm;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -17,6 +17,9 @@ public class Maps {
   private Notebook notebook;
   private Notebook notebook1;
 
+  public static void main(String[] args) {
+    new Maps().mapsInit();
+  }
 
   private void entityInit() {
     telephone = new Telephone();
@@ -47,7 +50,6 @@ public class Maps {
 
   public void mapsInit() {
     Map<HashCodeByLength, Product> hashMap = new HashMap();
-    Map<HashCodeBySumm, Product> linkedHashMap = new LinkedHashMap(16, 0.75f, true);
 
     entityInit();
 
@@ -55,6 +57,8 @@ public class Maps {
     hashMap.put(new HashCodeByLength(telephone1.getManufacturer()), telephone1);
     hashMap.put(new HashCodeByLength(notebook.getManufacturer()), notebook);
     hashMap.put(new HashCodeByLength(notebook1.getManufacturer()), notebook1);
+
+    Map<HashCodeBySumm, Product> linkedHashMap = new LinkedHashMap(16, 0.75f, true);
 
     linkedHashMap.put(new HashCodeBySumm(telephone.getManufacturer()), telephone);
     linkedHashMap.put(new HashCodeBySumm(telephone1.getManufacturer()), telephone1);
@@ -68,10 +72,6 @@ public class Maps {
     for (HashCodeByLength key : hashMap.keySet()) {
       System.out.println(key);
     }
-  }
-
-  public static void main(String[] args) {
-    new Maps().mapsInit();
   }
 
 }

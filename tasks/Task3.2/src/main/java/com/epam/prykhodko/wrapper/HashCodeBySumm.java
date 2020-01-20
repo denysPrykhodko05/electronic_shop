@@ -1,4 +1,4 @@
-package com.epam.prykhodko.stringWrapper;
+package com.epam.prykhodko.wrapper;
 
 import java.util.Objects;
 
@@ -36,8 +36,8 @@ public class HashCodeBySumm {
 
   @Override
   public String toString() {
-    return "HashCodeBySumm{" +
-        "string='" + string + '\'' +
-        '}';
+    return "HashCodeBySumm{"
+            + "string='" + string + '\''
+            + '}';
   }
 }

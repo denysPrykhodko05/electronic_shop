@@ -10,7 +10,7 @@ public class ConsoleScanner {
   public static final Scanner scanner = new Scanner(System.in);
   private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-  public static String readLine(){
+  public static String readLine() {
     return scanner.nextLine();
   }
 

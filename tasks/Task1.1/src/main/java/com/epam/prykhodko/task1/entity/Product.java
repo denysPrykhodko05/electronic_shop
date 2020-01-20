@@ -1,10 +1,10 @@
 package com.epam.prykhodko.task1.entity;
 
-
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable {
 
   private int id;
   private BigDecimal price;
@@ -12,6 +12,12 @@ public class Product {
 
   public Product() {
 
+  }
+
+  public Product(Product product) {
+    this.id = product.id;
+    this.price = product.price;
+    this.manufacturer = product.manufacturer;
   }
 
   public Product(int id, BigDecimal price, String manufacturer) {
@@ -53,9 +59,9 @@ public class Product {
       return false;
     }
     Product product = (Product) o;
-    return id == product.id &&
-        product.price.compareTo(price) == 0 &&
-        manufacturer.equals(product.manufacturer);
+    return id == product.id
+        && product.price.compareTo(price) == 0
+        && manufacturer.equals(product.manufacturer);
   }
 
   @Override
@@ -65,8 +71,8 @@ public class Product {
 
   @Override
   public String toString() {
-    return "id=" + id +
-        ", price=" + price +
-        ", manufacturer='" + manufacturer + '\'';
+    return "id=" + id
+        + ", price=" + price
+        + ", manufacturer='" + manufacturer + '\'';
   }
 }
