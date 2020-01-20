@@ -39,7 +39,13 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
     </dependency>
+    <dependency>
+      <artifactId>log4j</artifactId>
+      <groupId>log4j</groupId>
+      <version>1.2.17</version>
+    </dependency>
   </dependencies>
+
   <modules>
     <module>Task1.1</module>
     <module>Task1.2</module>
@@ -49,6 +55,8 @@
     <module>Task3.2</module>
     <module>Task4.1</module>
     <module>task5</module>
+    <module>Task6</module>
+    <module>Task6.3</module>
   </modules>
 
 </project>

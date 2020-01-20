@@ -6,5 +6,6 @@ import java.util.Map;
 public interface CacheRepository {
 
   void put(Product product, int amount);
-  Map<Product,Integer> get();
+
+  Map<Product, Integer> get();
 }

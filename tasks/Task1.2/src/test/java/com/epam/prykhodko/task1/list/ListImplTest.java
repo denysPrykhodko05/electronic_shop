@@ -1,14 +1,13 @@
 package com.epam.prykhodko.task1.list;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.epam.prykhodko.task1.entity.Notebook;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Telephone;
+import java.util.Iterator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Iterator;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ListImplTest {
 

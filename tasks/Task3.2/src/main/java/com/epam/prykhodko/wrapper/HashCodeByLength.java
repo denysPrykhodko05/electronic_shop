@@ -1,4 +1,4 @@
-package com.epam.prykhodko.stringWrapper;
+package com.epam.prykhodko.wrapper;
 
 import java.util.Objects;
 
@@ -29,8 +29,8 @@ public class HashCodeByLength {
 
   @Override
   public String toString() {
-    return "HashCodeByLength{" +
-        "string='" + string + '\'' +
-        '}';
+    return "HashCodeByLength{"
+        + "string='" + string + '\''
+        + '}';
   }
 }

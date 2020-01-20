@@ -1,6 +1,6 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.command.impl;
 
-import com.epam.prykhodko.commandInterface.Command;
+import com.epam.prykhodko.command.Command;
 import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.service.ProductService;
 import com.epam.prykhodko.service.impl.ProductServiceImpl;

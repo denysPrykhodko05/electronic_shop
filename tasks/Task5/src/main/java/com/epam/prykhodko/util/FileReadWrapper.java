@@ -14,7 +14,7 @@ public class FileReadWrapper implements Iterable {
   }
 
   public String readFile() {
-    StringBuilder stringBuilder= new StringBuilder();
+    StringBuilder stringBuilder = new StringBuilder();
     for (Object o : this) {
       stringBuilder.append(o).append(System.lineSeparator());
     }

@@ -27,4 +27,9 @@ public class BasketRepositoryImpl implements BasketRepository {
   public void clear() {
     basket.clear();
   }
+
+  @Override
+  public String toString() {
+    return basket.entrySet().toString();
+  }
 }

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.epam.prykhodko.repository.impl.ProductRepositoryImpl;
 import org.junit.jupiter.api.Test;
 
-class ProductRepositoryImplTest {
+class ProductServiceImplTest {
 
   @Test
   void get() {

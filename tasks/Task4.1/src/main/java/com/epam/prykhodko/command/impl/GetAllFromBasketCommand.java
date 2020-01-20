@@ -1,6 +1,6 @@
-package com.epam.prykhodko.command;
+package com.epam.prykhodko.command.impl;
 
-import com.epam.prykhodko.commandInterface.Command;
+import com.epam.prykhodko.command.Command;
 import com.epam.prykhodko.service.BasketService;
 
 public class GetAllFromBasketCommand implements Command {
@@ -13,6 +13,6 @@ public class GetAllFromBasketCommand implements Command {
 
   @Override
   public void execute() {
-    basketService.get().forEach((e,k)-> System.out.println(e));
+    basketService.get().forEach((e, k) -> System.out.println(e));
   }
 }
