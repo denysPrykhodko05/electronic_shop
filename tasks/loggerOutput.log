@@ -1,1 +1,4 @@
-2020-01-20 17:09:49 ERROR FileSerializationImpl:60 - Cannot read file!!!
+2020-01-24 13:11:08 INFO  ProductCreator:52 - Ид:
+2020-01-24 13:11:08 INFO  ProductCreator:52 - Цена:
+2020-01-24 13:11:08 INFO  ProductCreator:52 - Производитель:
+2020-01-24 13:11:11 INFO  ProductCreator:52 - Модель тачпада:

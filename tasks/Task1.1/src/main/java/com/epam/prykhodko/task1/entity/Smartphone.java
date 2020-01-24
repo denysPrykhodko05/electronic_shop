@@ -1,10 +1,12 @@
 package com.epam.prykhodko.task1.entity;
 
+import com.epam.prykhodko.task1.annotation.Description;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Smartphone extends Telephone {
 
+  @Description(title = "model_of_touchscreen")
   private String modelOfTouchScreen;
 
   public Smartphone() {

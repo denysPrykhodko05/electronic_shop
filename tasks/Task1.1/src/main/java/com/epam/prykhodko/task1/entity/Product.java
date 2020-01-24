@@ -1,13 +1,17 @@
 package com.epam.prykhodko.task1.entity;
 
+import com.epam.prykhodko.task1.annotation.Description;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Product implements Serializable {
 
+  @Description(title = "id")
   private int id;
+  @Description(title = "price")
   private BigDecimal price;
+  @Description(title = "manufacturer")
   private String manufacturer;
 
   public Product() {
