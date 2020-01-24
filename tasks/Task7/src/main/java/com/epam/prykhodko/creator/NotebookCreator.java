@@ -13,7 +13,7 @@ public class NotebookCreator extends ProductCreator {
 
   @Override
   public Product create() {
-    final Notebook notebook = new Notebook(super.create());
+    final Notebook notebook = new Notebook((Notebook) super.create());
     setParameters(notebook);
     return notebook;
   }

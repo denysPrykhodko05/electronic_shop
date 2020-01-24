@@ -13,7 +13,7 @@ public class SmartphoneCreator extends TelephoneCreator {
 
   @Override
   public Product create() {
-    final Smartphone smartphone = new Smartphone(super.create());
+    final Smartphone smartphone = new Smartphone((Smartphone) super.create());
     setParameters(smartphone);
     return smartphone;
   }
