@@ -12,9 +12,9 @@ public class Smartphone extends Telephone {
   public Smartphone() {
   }
 
-  public Smartphone(Smartphone smartphone) {
-    super(smartphone);
-    this.modelOfTouchScreen = smartphone.modelOfTouchScreen;
+  public Smartphone(Telephone telephone) {
+    super(telephone);
+    this.setCommunicationStandard(telephone.getCommunicationStandard());
   }
 
   public Smartphone(int id, BigDecimal price, String manufacturer, String communicationStandard,

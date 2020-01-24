@@ -31,7 +31,7 @@ public abstract class CreatorAnno {
   public abstract Product create();
 
   public void setParameters(Product product) {
-    final Logger LOGGER = Logger.getLogger(ProductCreator.class);
+    final Logger logger = Logger.getLogger(ProductCreator.class);
     final List<Field> fieldList = new ArrayList<>();
     final ResourceBundle resourceBundle = ResourceBundle.getBundle("product", locale);
     final List<Method> methodList = new ArrayList<>(
@@ -45,11 +45,15 @@ public abstract class CreatorAnno {
           }
         });
 
+    if (fieldList.isEmpty()) {
+      correctInput = true;
+    }
+
     while (!correctInput) {
       String value;
       for (Field e : fieldList) {
         try {
-          LOGGER.info(resourceBundle.getString(e.getAnnotation(Description.class).title()));
+          logger.info(resourceBundle.getString(e.getAnnotation(Description.class).title()));
           e.setAccessible(true);
           value = inputType.readLine();
           Optional<Method> optional = methodList
@@ -60,7 +64,7 @@ public abstract class CreatorAnno {
 
           e.set(product, method.invoke(null, value));
         } catch (IllegalAccessException | InvocationTargetException | IOException ex) {
-          LOGGER.error(INCORRECT_INPUT);
+          logger.error(INCORRECT_INPUT);
           break;
         }
         correctInput = true;

@@ -41,7 +41,12 @@ public class AddToProductListByAnno implements Command {
       try {
         System.out.println("What do you want to add: \n1-Smartphone\n2-Notebook");
         choose = ConsoleHelper.readLine();
-        product = creatorMap.get(choose).create();
+        ProductCreator productCreator = creatorMap.get(choose);
+        if (productCreator == null) {
+          LOGGER.error(INCORRECT_INPUT);
+          continue;
+        }
+        product = productCreator.create();
       } catch (IOException | NumberFormatException e) {
         LOGGER.error(INCORRECT_INPUT);
       }

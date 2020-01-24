@@ -2,7 +2,6 @@ package com.epam.prykhodko.creator;
 
 import com.epam.prykhodko.entity.InputType;
 import com.epam.prykhodko.task1.entity.Notebook;
-import com.epam.prykhodko.task1.entity.Product;
 import java.util.Locale;
 
 public class NotebookCreator extends ProductCreator {
@@ -12,9 +11,9 @@ public class NotebookCreator extends ProductCreator {
   }
 
   @Override
-  public Product create() {
-    final Notebook notebook = new Notebook((Notebook) super.create());
-    setParameters(notebook);
+  public Notebook create() {
+    final Notebook notebook = new Notebook(super.create());
+    super.setParameters(notebook);
     return notebook;
   }
 
