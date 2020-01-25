@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 public class InputUtil {
 
+  private static final Logger LOGGER = Logger.getLogger(InputUtil.class);
   private static final Map<String, InputType> inputMap = new HashMap<>();
   private static InputType inputType;
 
@@ -30,7 +32,7 @@ public class InputUtil {
 
   public static InputType inputType() {
     mapInit();
-    System.out.println("What do you want use to add products?\n1-Manually input\n2-Random input");
+    LOGGER.info("What do you want use to add products?\n1-Manually input\n2-Random input");
     Predicate<String> predicate = x -> {
       x = ConsoleScanner.readLine();
       inputType = inputMap.get(x);

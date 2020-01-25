@@ -53,7 +53,7 @@ public class ShopViewTask7 {
     repositoryInit();
     int command = -1;
     while (command != 0) {
-      System.out.println("Enter: " + lineSeparator()
+      LOGGER.info("Enter: " + lineSeparator()
           + "0 - EXIT" + lineSeparator()
           + "1 - Show all products" + lineSeparator()
           + "2 - Add to basket" + lineSeparator()
