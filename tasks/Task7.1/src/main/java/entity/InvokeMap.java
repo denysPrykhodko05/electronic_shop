@@ -14,12 +14,11 @@ public class InvokeMap implements InvocationHandler {
     String field = method.getName().substring(3);
 
     if (method.getName().startsWith("set")) {
-      return productMap.put(field.toLowerCase(), objects);
+      return productMap.put(field.toLowerCase(), objects[0]);
     }
     if (method.getName().startsWith("get")) {
-      Object id = productMap.get(field.toLowerCase());
-      return id;
+      return productMap.get(field.toLowerCase());
     }
-    return null;
+    throw new UnsupportedOperationException();
   }
 }

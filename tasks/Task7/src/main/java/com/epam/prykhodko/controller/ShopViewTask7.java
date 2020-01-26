@@ -2,7 +2,7 @@ package com.epam.prykhodko.controller;
 
 import static java.lang.System.lineSeparator;
 
-import com.epam.prykhodko.command.AddToProductListByAnno;
+import com.epam.prykhodko.command.AddToProductListByReflect;
 import com.epam.prykhodko.command.Command;
 import com.epam.prykhodko.command.impl.AddToBasketCommand;
 import com.epam.prykhodko.command.impl.CheckOrdersForGivenPeriodCommand;
@@ -51,6 +51,7 @@ public class ShopViewTask7 {
   public static void main(String[] args) {
     productRepositoryImpl = serializer.read();
     repositoryInit();
+    commandInit();
     int command = -1;
     while (command != 0) {
       LOGGER.info("Enter: " + lineSeparator()
@@ -84,8 +85,6 @@ public class ShopViewTask7 {
     productServiceImpl = new ProductServiceImpl(productRepositoryImpl);
     orderServiceImpl = new OrderServiceImpl(orderRepository);
     cacheServiceImpl = new CacheServiceImpl(cacheRepository);
-
-    commandInit();
   }
 
   private static void commandInit() {
@@ -118,7 +117,7 @@ public class ShopViewTask7 {
     Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderServiceImpl);
     commandMap.put(counter++, findOrderForNearestDate);
 
-    Command addToProductList = new AddToProductListByAnno(inputType, locale,productServiceImpl);
+    Command addToProductList = new AddToProductListByReflect(inputType, locale,productServiceImpl);
     commandMap.put(counter++, addToProductList);
 
     invalidCommandNumber = new InavalidNumberCommand();

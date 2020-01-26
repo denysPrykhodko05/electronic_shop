@@ -1,11 +1,39 @@
-2020-01-25 16:36:46 ERROR FileSerializationImpl:60 - Cannot read file!!!
-2020-01-25 16:36:46 INFO  InputUtil:35 - What do you want use to add products?
+2020-01-26 16:01:12 ERROR FileSerializationImpl:60 - Cannot read file!!!
+2020-01-26 16:01:12 INFO  InputUtil:35 - What do you want use to add products?
 1-Manually input
 2-Random input
-2020-01-25 16:36:48 INFO  LocaleUtil:25 - What language do you want to use?
+2020-01-26 16:01:13 INFO  LocaleUtil:25 - What language do you want to use?
 1-Russian
 2-English
-2020-01-25 16:36:54 INFO  ShopViewTask7:56 - Enter: 
+2020-01-26 16:01:14 INFO  ShopViewTask7:57 - Enter: 
+0 - EXIT
+1 - Show all products
+2 - Add to basket
+3 - Show all from basket
+4 - Show least 5 products in basket
+5 - Make order
+6 - Get order for given period
+7 - Find order for nearest date
+8 - Add product to catalog
+2020-01-26 16:01:15 INFO  AddToProductListByReflect:41 - What do you want to add: 
+1-Smartphone
+2-Notebook
+2020-01-26 16:01:16 INFO  CreatorAnno:58 - Ид:
+2020-01-26 16:01:16 INFO  CreatorAnno:58 - Цена:
+2020-01-26 16:01:16 INFO  CreatorAnno:58 - Производитель:
+2020-01-26 16:01:16 INFO  CreatorAnno:58 - Тип связи:
+2020-01-26 16:01:16 INFO  CreatorAnno:58 - Тачскрин:
+2020-01-26 16:01:16 INFO  ShopViewTask7:57 - Enter: 
+0 - EXIT
+1 - Show all products
+2 - Add to basket
+3 - Show all from basket
+4 - Show least 5 products in basket
+5 - Make order
+6 - Get order for given period
+7 - Find order for nearest date
+8 - Add product to catalog
+2020-01-26 16:01:18 INFO  ShopViewTask7:57 - Enter: 
 0 - EXIT
 1 - Show all products
 2 - Add to basket

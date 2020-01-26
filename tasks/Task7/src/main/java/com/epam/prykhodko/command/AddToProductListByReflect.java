@@ -14,19 +14,18 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-public class AddToProductListByAnno implements Command {
+public class AddToProductListByReflect implements Command {
 
-  private static final Logger LOGGER = Logger.getLogger(AddToProductListByAnno.class);
-  private InputType inputType;
-  private Locale locale;
-  private ProductService productService;
+  private static final Logger LOGGER = Logger.getLogger(AddToProductListByReflect.class);
+  private final InputType inputType;
+  private final Locale locale;
+  private final ProductService productService;
   private Product product;
   private Map<String, ProductCreator> creatorMap = new HashMap<>();
 
-  public AddToProductListByAnno(InputType inputType, Locale locale,
+  public AddToProductListByReflect(InputType inputType, Locale locale,
       ProductService productService) {
     this.inputType = inputType;
     this.locale = locale;
@@ -36,10 +35,10 @@ public class AddToProductListByAnno implements Command {
 
   @Override
   public void execute() {
-    String choose = StringUtils.EMPTY;
+    String choose;
     while (Objects.isNull(product)) {
       try {
-        System.out.println("What do you want to add: \n1-Smartphone\n2-Notebook");
+        LOGGER.info("What do you want to add: \n1-Smartphone\n2-Notebook");
         choose = ConsoleHelper.readLine();
         ProductCreator productCreator = creatorMap.get(choose);
         if (productCreator == null) {

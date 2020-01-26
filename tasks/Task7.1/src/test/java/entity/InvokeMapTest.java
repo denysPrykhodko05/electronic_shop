@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,12 @@ class InvokeMapTest {
   @Test
   void invokeShouldAddElement() {
     ((ProductInterface) proxy).setManufacturer("Apple");
-
     assertNotNull(((ProductInterface) proxy).getManufacturer());
+  }
+  @Test
+  void invokeShouldThrowUnsupportedOperationException() {
+    Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+       proxy.toString();
+    });
   }
 }

@@ -1,9 +1,8 @@
-package com.epam.prykhodko.strategy.impl;
+package com.epam.prykhodko.util;
 
-import com.epam.prykhodko.strategy.TypesUtil;
 import java.math.BigDecimal;
 
-public class TypesUtilImpl implements TypesUtil {
+public class TypesUtilImpl {
 
   public static int getInt(String parameter) {
     return Integer.parseInt(parameter);

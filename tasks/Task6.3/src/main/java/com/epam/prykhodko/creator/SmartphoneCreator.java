@@ -5,6 +5,7 @@ import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 import com.epam.prykhodko.entity.InputType;
 import com.epam.prykhodko.task1.entity.Product;
 import com.epam.prykhodko.task1.entity.Smartphone;
+import com.epam.prykhodko.task1.entity.Telephone;
 import com.epam.prykhodko.util.ConsoleHelper;
 import java.io.IOException;
 import org.apache.log4j.Logger;
@@ -20,7 +21,7 @@ public class SmartphoneCreator extends ProductCreator {
 
   @Override
   public Product create() {
-    final Smartphone smartphone =  new Smartphone(super.create());
+    final Smartphone smartphone =  new Smartphone((Telephone) super.create());
     setParameters(smartphone);
     return smartphone;
   }

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import org.apache.log4j.Logger;
 
-public class LocaleUtil {
+public abstract class LocaleUtil {
 
   private static final Logger LOGGER = Logger.getLogger(LocaleUtil.class);
   private static final Map<String, Locale> localeMap = new HashMap<>();
