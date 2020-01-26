@@ -64,13 +64,14 @@ public abstract class CreatorAnno {
               .findFirst();
           Method method = optional.get();
           e.set(product, method.invoke(null, value));
+          correctInput = true;
         } catch (IllegalAccessException | InvocationTargetException | IOException ex) {
           LOGGER.error(INCORRECT_INPUT);
+          correctInput=false;
           break;
         }
       }
-      fieldList.clear();
-      correctInput = true;
     }
+    fieldList.clear();
   }
 }

@@ -12,23 +12,23 @@ import org.apache.log4j.Logger;
 public abstract class LocaleUtil {
 
   private static final Logger LOGGER = Logger.getLogger(LocaleUtil.class);
-  private static final Map<String, Locale> localeMap = new HashMap<>();
+  private static final Map<Integer, Locale> localeMap = new HashMap<>();
 
   private static void mapInit() {
-    localeMap.put("1", new Locale("ru"));
-    localeMap.put("2", new Locale("en"));
+    localeMap.put(1, new Locale("ru"));
+    localeMap.put(2, new Locale("en"));
   }
 
   public static Locale getLocale() {
     mapInit();
-    String choose;
+    int choose;
     LOGGER.info("What language do you want to use?\n1-Russian\n2-English");
     Locale locale = null;
     while (Objects.isNull(locale)) {
       try {
-        choose = ConsoleHelper.readLine();
+        choose = ConsoleHelper.readInt();
         locale = localeMap.get(choose);
-      } catch (IOException e) {
+      } catch (IOException | NumberFormatException e) {
         LOGGER.error(INCORRECT_INPUT);
       }
     }
