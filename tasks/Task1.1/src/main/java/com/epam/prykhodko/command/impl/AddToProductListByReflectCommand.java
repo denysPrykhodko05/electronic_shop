@@ -36,13 +36,13 @@ public class AddToProductListByReflectCommand implements Command {
   @Override
   public void execute() {
     Product product = null;
-    boolean createFlag=false;
+    boolean createFlag = false;
     String choose;
     while (!createFlag) {
       try {
         LOGGER.info("What do you want to add: \n0-Stop input\n1-Smartphone\n2-Notebook");
         choose = ConsoleHelper.readLine();
-        if (STRING_ZERO.equals(choose)){
+        if (STRING_ZERO.equals(choose)) {
           return;
         }
         ProductCreator productCreator = creatorMap.get(choose);
@@ -51,10 +51,10 @@ public class AddToProductListByReflectCommand implements Command {
           continue;
         }
         product = productCreator.create();
-        createFlag=true;
+        createFlag = true;
       } catch (IOException | NumberFormatException e) {
         LOGGER.error(INCORRECT_INPUT);
-        createFlag=false;
+        createFlag = false;
       }
     }
     productService.add(product);

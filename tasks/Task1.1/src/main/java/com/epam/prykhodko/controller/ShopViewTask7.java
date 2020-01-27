@@ -117,7 +117,8 @@ public class ShopViewTask7 {
     Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderServiceImpl);
     commandMap.put(counter++, findOrderForNearestDate);
 
-    Command addToProductList = new AddToProductListByReflectCommand(inputType, locale,productServiceImpl);
+    Command addToProductList = new AddToProductListByReflectCommand(inputType, locale,
+        productServiceImpl);
     commandMap.put(counter++, addToProductList);
 
     invalidCommandNumber = new InavalidNumberCommand();
