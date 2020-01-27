@@ -5,6 +5,7 @@ import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 import com.epam.prykhodko.entity.invoke.input.InputType;
 import com.epam.prykhodko.entity.invoke.input.impl.ConsoleInput;
 import com.epam.prykhodko.entity.invoke.input.impl.RandomInput;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -34,9 +35,14 @@ public class InputUtil {
     mapInit();
     LOGGER.info("What do you want use to add products?\n1-Manually input\n2-Random input");
     Predicate<String> predicate = x -> {
-      x = ConsoleScanner.readLine();
-      inputType = inputMap.get(x);
-      return inputType == null;
+      try {
+        x = ConsoleHelper.readLine();
+        inputType = inputMap.get(x);
+        return inputType == null;
+      } catch (IOException e) {
+        LOGGER.info(INCORRECT_INPUT);
+      }
+      return true;
     };
     input(predicate);
     return inputType;
