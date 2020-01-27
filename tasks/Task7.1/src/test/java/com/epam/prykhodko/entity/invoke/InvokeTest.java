@@ -1,7 +1,5 @@
-package com.prykhodko.entity.invoke;
+package com.epam.prykhodko.entity.invoke;
 
-import com.epam.prykhodko.entity.invoke.Invoke;
-import com.epam.prykhodko.entity.invoke.ProductInterface;
 import com.epam.prykhodko.entity.products.Product;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

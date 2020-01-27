@@ -4,15 +4,15 @@ import java.math.BigDecimal;
 
 public class TypesUtilImpl {
 
-  public static int getInt(String parameter) {
+  public static int toInt(String parameter) {
     return Integer.parseInt(parameter);
   }
 
-  public static BigDecimal getBigDecimal(String parameter) {
+  public static BigDecimal toBigDecimal(String parameter) {
     return new BigDecimal(parameter);
   }
 
-  public static String getString(String parameter) {
+  public static String toString(String parameter) {
     return parameter;
   }
 }

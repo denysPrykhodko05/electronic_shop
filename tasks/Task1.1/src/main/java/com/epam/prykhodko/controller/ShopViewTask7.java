@@ -4,7 +4,7 @@ import static java.lang.System.lineSeparator;
 
 import com.epam.prykhodko.command.Command;
 import com.epam.prykhodko.command.impl.AddToBasketCommand;
-import com.epam.prykhodko.command.impl.AddToProductListByReflect;
+import com.epam.prykhodko.command.impl.AddToProductListByReflectCommand;
 import com.epam.prykhodko.command.impl.CheckOrdersForGivenPeriodCommand;
 import com.epam.prykhodko.command.impl.ExitCommand;
 import com.epam.prykhodko.command.impl.FindOrderForNearestDateCommand;
@@ -117,7 +117,7 @@ public class ShopViewTask7 {
     Command findOrderForNearestDate = new FindOrderForNearestDateCommand(orderServiceImpl);
     commandMap.put(counter++, findOrderForNearestDate);
 
-    Command addToProductList = new AddToProductListByReflect(inputType, locale,productServiceImpl);
+    Command addToProductList = new AddToProductListByReflectCommand(inputType, locale,productServiceImpl);
     commandMap.put(counter++, addToProductList);
 
     invalidCommandNumber = new InavalidNumberCommand();

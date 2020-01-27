@@ -23,14 +23,20 @@ public abstract class LocaleUtil {
   public static Locale getLocale() {
     mapInit();
     int choose;
+    boolean input = false;
     LOGGER.info("What language do you want to use?\n1-Russian\n2-English");
     Locale locale = null;
-    while (Objects.isNull(locale)) {
+    while (!input) {
       try {
         choose = ConsoleHelper.readInt();
         locale = localeMap.get(choose);
+        input = true;
+        if (Objects.isNull(locale)) {
+          input = false;
+        }
       } catch (IOException | NumberFormatException e) {
         LOGGER.error(INCORRECT_INPUT);
+        input = false;
       }
     }
     return locale;

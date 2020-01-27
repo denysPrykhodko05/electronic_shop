@@ -17,15 +17,15 @@ import java.util.Locale;
 import java.util.Map;
 import org.apache.log4j.Logger;
 
-public class AddToProductListByReflect implements Command {
+public class AddToProductListByReflectCommand implements Command {
 
-  private static final Logger LOGGER = Logger.getLogger(AddToProductListByReflect.class);
+  private static final Logger LOGGER = Logger.getLogger(AddToProductListByReflectCommand.class);
   private final InputType inputType;
   private final Locale locale;
   private final ProductService productService;
   private Map<String, ProductCreator> creatorMap = new HashMap<>();
 
-  public AddToProductListByReflect(InputType inputType, Locale locale,
+  public AddToProductListByReflectCommand(InputType inputType, Locale locale,
       ProductService productService) {
     this.inputType = inputType;
     this.locale = locale;

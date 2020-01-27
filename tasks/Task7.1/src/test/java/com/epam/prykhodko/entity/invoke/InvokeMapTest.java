@@ -1,9 +1,7 @@
-package com.prykhodko.entity.invoke;
+package com.epam.prykhodko.entity.invoke;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.epam.prykhodko.entity.invoke.InvokeMap;
-import com.epam.prykhodko.entity.invoke.ProductInterface;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import org.junit.jupiter.api.Assertions;
