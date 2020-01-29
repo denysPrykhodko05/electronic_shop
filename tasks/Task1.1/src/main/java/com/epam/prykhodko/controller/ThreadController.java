@@ -16,7 +16,7 @@ public class ThreadController {
     BasicConfigurator.configure();
     int min;
     int max;
-    int threads;
+    int amountOfThreads;
     boolean correctInput = false;
 
     while (!correctInput) {
@@ -28,14 +28,14 @@ public class ThreadController {
         max = ConsoleHelper.readInt();
 
         LOGGER.info("Enter amount of threads: ");
-        threads = ConsoleHelper.readInt();
+        amountOfThreads = ConsoleHelper.readInt();
 
-        if (min>=max || threads<=0){
+        if (min>=max || amountOfThreads<=0){
           LOGGER.info(INCORRECT_INPUT);
           continue;
         }
 
-        FindSimpleNumbersUtil.find(min, max, threads);
+        FindSimpleNumbersUtil.find(min, max, amountOfThreads);
         correctInput = true;
       } catch (IOException | NumberFormatException e) {
         LOGGER.info(INCORRECT_INPUT);
