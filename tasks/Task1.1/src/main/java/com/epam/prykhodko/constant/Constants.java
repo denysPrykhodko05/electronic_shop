@@ -23,4 +23,6 @@ public class Constants {
   public static final String ENTER_LAST_DATE_STRING = "Enter the last date(dd/mm/yyyy hh:mm): ";
 
   public static final String THREAD_INTERRUPTED = "Thread was interrupted!!!";
+
+  public static final String STOP_STRING = "stop";
 }

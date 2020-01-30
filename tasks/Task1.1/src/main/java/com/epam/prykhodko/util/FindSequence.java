@@ -1,12 +1,12 @@
 package com.epam.prykhodko.util;
 
-public class FindSequenceUtil {
+public class FindSequence {
 
   private final String content;
   private StringBuilder mainSB = new StringBuilder();
 
 
-  public FindSequenceUtil(String content) {
+  public FindSequence(String content) {
     this.content = content;
   }
 
@@ -38,7 +38,7 @@ public class FindSequenceUtil {
     return subSequence.contains(sequence);
   }
 
-  public String getSequence(){
+  public String getSequence() {
     return mainSB.toString();
   }
 

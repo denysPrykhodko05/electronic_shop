@@ -1,9 +1,10 @@
 package com.epam.prykhodko.controller;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
+import static com.epam.prykhodko.constant.Constants.STOP_STRING;
 
 import com.epam.prykhodko.entity.thread.FindSequenceThread;
-import com.epam.prykhodko.util.FindSequenceUtil;
+import com.epam.prykhodko.util.FindSequence;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import com.epam.prykhodko.util.readers.FileReadWrapper;
 import java.util.concurrent.ExecutorService;
@@ -17,23 +18,26 @@ public class FindSequenceController {
 
   public static void main(String[] args) {
     BasicConfigurator.configure();
-    String name = null;
-    while (!"stop".equals(name)) {
+    String name;
+    while (true) {
       try {
         LOGGER.info("Enter file name, to stop enter \"stop\": ");
         name = ConsoleHelper.readLine();
+        if (STOP_STRING.equals(name)) {
+          break;
+        }
         FileReadWrapper fileReadWrapper = new FileReadWrapper(name);
         String content = fileReadWrapper.readFile();
-        FindSequenceUtil findSequenceUtil = new FindSequenceUtil(content);
+        FindSequence findSequence = new FindSequence(content);
         ExecutorService service = Executors.newSingleThreadExecutor();
-        service.submit(new FindSequenceThread(findSequenceUtil));
+        service.submit(new FindSequenceThread(findSequence));
         while (!service.isTerminated()) {
-          LOGGER.info(findSequenceUtil.getSequence().length());
+          LOGGER.info(findSequence.getSequence().length());
           Thread.sleep(50);
           service.shutdown();
         }
       } catch (Exception e) {
-        LOGGER.info(INCORRECT_INPUT);
+        LOGGER.error(INCORRECT_INPUT);
       }
     }
   }

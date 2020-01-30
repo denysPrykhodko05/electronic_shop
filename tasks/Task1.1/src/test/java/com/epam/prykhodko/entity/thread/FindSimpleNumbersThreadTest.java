@@ -9,7 +9,7 @@ class FindSimpleNumbersThreadTest {
 
   @Test
   void runShouldFindNumbers() {
-    new FindSimpleNumbersThread(1,100);
+    new FindSimpleNumbersThread(1,100).run();
     assertNotNull(FindSimpleNumbersUtil.get());
   }
 }

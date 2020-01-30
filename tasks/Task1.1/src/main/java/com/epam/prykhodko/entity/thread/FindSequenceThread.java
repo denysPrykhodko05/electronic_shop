@@ -1,17 +1,17 @@
 package com.epam.prykhodko.entity.thread;
 
-import com.epam.prykhodko.util.FindSequenceUtil;
+import com.epam.prykhodko.util.FindSequence;
 
 public class FindSequenceThread implements Runnable {
 
-  private final FindSequenceUtil findSequenceUtil;
+  private final FindSequence findSequence;
 
-  public FindSequenceThread(FindSequenceUtil findSequenceUtil) {
-    this.findSequenceUtil = findSequenceUtil;
+  public FindSequenceThread(FindSequence findSequence) {
+    this.findSequence = findSequence;
   }
 
   @Override
   public void run() {
-    findSequenceUtil.findSequence();
+    findSequence.findSequence();
   }
 }
