@@ -2,7 +2,7 @@ package com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
 
-import com.epam.prykhodko.entity.thread.FindThread;
+import com.epam.prykhodko.entity.thread.FindSimpleNumbersThread;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -26,13 +26,13 @@ public abstract class FindSimpleNumbersUtil {
       for (int i = 0; i < countOfThread; i++) {
         if (i == countOfThread - 1) {
           max += maxRange - max;
-          thread = new Thread(new FindThread(min, max));
+          thread = new Thread(new FindSimpleNumbersThread(min, max));
           thread.join();
           long total = System.currentTimeMillis() - start;
           LOGGER.info(total);
           break;
         }
-        new Thread(new FindThread(min, max));
+        new Thread(new FindSimpleNumbersThread(min, max));
         max += remain;
         min += remain;
       }
@@ -51,10 +51,10 @@ public abstract class FindSimpleNumbersUtil {
     for (int i = 0; i < countOfThread; i++) {
       if (i == countOfThread - 1) {
         max += maxRange - max;
-        service.submit(new FindThread(min, max));
+        service.submit(new FindSimpleNumbersThread(min, max));
         break;
       }
-      service.submit(new FindThread(min, max));
+      service.submit(new FindSimpleNumbersThread(min, max));
       max += remain;
       min += remain;
     }

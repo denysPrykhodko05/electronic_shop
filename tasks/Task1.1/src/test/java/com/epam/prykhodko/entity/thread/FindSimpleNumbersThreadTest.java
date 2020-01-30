@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.epam.prykhodko.util.FindSimpleNumbersUtil;
 import org.junit.jupiter.api.Test;
 
-class FindThreadTest {
+class FindSimpleNumbersThreadTest {
 
   @Test
   void runShouldFindNumbers() {
-    new FindThread(1,100);
+    new FindSimpleNumbersThread(1,100);
     assertNotNull(FindSimpleNumbersUtil.get());
   }
 }

@@ -4,12 +4,12 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.util.FindSimpleNumbersUtil;
 
-public class FindThread implements Runnable {
+public class FindSimpleNumbersThread implements Runnable {
 
   private int minRange;
   private int maxRange;
 
-  public FindThread(int minRange, int maxRange) {
+  public FindSimpleNumbersThread(int minRange, int maxRange) {
     this.minRange = minRange;
     this.maxRange = maxRange;
   }
