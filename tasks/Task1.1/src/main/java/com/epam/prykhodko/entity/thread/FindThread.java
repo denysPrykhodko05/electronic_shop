@@ -4,9 +4,7 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.util.FindSimpleNumbersUtil;
 
-public class FindThread extends Thread {
-
-  private static final Object monitor = new Object();
+public class FindThread implements Runnable {
 
   private int minRange;
   private int maxRange;
@@ -14,7 +12,6 @@ public class FindThread extends Thread {
   public FindThread(int minRange, int maxRange) {
     this.minRange = minRange;
     this.maxRange = maxRange;
-    start();
   }
 
   private void find() {
@@ -28,9 +25,7 @@ public class FindThread extends Thread {
         }
       }
       if (isPrime) {
-        synchronized (monitor) {
-          FindSimpleNumbersUtil.add(i);
-        }
+        FindSimpleNumbersUtil.add(i);
       }
     }
   }
@@ -38,6 +33,5 @@ public class FindThread extends Thread {
   @Override
   public void run() {
     find();
-    super.run();
   }
 }

@@ -30,12 +30,13 @@ public class ThreadController {
         LOGGER.info("Enter amount of threads: ");
         amountOfThreads = ConsoleHelper.readInt();
 
-        if (min>=max || amountOfThreads<=0){
+        if (min >= max || amountOfThreads <= 0) {
           LOGGER.info(INCORRECT_INPUT);
           continue;
         }
 
         FindSimpleNumbersUtil.find(min, max, amountOfThreads);
+        FindSimpleNumbersUtil.findByExecutor(min,max,amountOfThreads);
         correctInput = true;
       } catch (IOException | NumberFormatException e) {
         LOGGER.info(INCORRECT_INPUT);
