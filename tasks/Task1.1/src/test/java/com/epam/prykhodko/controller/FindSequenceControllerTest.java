@@ -2,6 +2,7 @@ package com.epam.prykhodko.controller;
 
 import static java.lang.System.lineSeparator;
 
+import com.epam.prykhodko.task8.controller.FindSequenceController;
 import java.io.ByteArrayInputStream;
 import org.junit.jupiter.api.Test;
 

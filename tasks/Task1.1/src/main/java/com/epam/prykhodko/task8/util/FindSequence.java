@@ -1,6 +1,6 @@
-package com.epam.prykhodko.util;
+package com.epam.prykhodko.task8.util;
 
-public class FindSequence {
+public class FindSequence implements Runnable {
 
   private final String content;
   private StringBuilder mainSB = new StringBuilder();
@@ -10,6 +10,10 @@ public class FindSequence {
     this.content = content;
   }
 
+  @Override
+  public void run() {
+    findSequence();
+  }
 
   public void findSequence() {
     char[] buffer = content.toCharArray();

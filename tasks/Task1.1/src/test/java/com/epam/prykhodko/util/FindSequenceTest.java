@@ -2,6 +2,7 @@ package com.epam.prykhodko.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.epam.prykhodko.task8.util.FindSequence;
 import org.junit.jupiter.api.Test;
 
 class FindSequenceTest {

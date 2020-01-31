@@ -1,10 +1,13 @@
-package com.epam.prykhodko.controller;
+package com.epam.prykhodko.task8.controller;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
-import com.epam.prykhodko.util.FindSimpleNumbersUtil;
+import com.epam.prykhodko.task8.util.FindSimpleNumbersCommonCollection;
+import com.epam.prykhodko.task8.util.FindSimpleNumbersOwnCollection;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
@@ -18,6 +21,10 @@ public class ThreadController {
     int max;
     int amountOfThreads;
     boolean correctInput = false;
+    List<Integer> list = new ArrayList<>();
+    FindSimpleNumbersCommonCollection findSimpleNumbersCommonCollection = new FindSimpleNumbersCommonCollection(
+        list);
+    FindSimpleNumbersOwnCollection findSimpleNumbersOwnCollection = new FindSimpleNumbersOwnCollection();
 
     while (!correctInput) {
       try {
@@ -35,8 +42,10 @@ public class ThreadController {
           continue;
         }
 
-        FindSimpleNumbersUtil.find(min, max, amountOfThreads);
-        FindSimpleNumbersUtil.findByExecutor(min,max,amountOfThreads);
+        //findSimpleNumbersCommonCollection.find(min, max, amountOfThreads);
+        //findSimpleNumbersCommonCollection.findByExecutor(min, max, amountOfThreads);
+        //findSimpleNumbersOwnCollection.find(min,max,amountOfThreads);
+        findSimpleNumbersOwnCollection.findByExecutor(min,max,amountOfThreads);
         correctInput = true;
       } catch (IOException | NumberFormatException e) {
         LOGGER.info(INCORRECT_INPUT);

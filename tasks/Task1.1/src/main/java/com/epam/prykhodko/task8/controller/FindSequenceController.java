@@ -1,10 +1,9 @@
-package com.epam.prykhodko.controller;
+package com.epam.prykhodko.task8.controller;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 import static com.epam.prykhodko.constant.Constants.STOP_STRING;
 
-import com.epam.prykhodko.entity.thread.FindSequenceThread;
-import com.epam.prykhodko.util.FindSequence;
+import com.epam.prykhodko.task8.util.FindSequence;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import com.epam.prykhodko.util.readers.FileReadWrapper;
 import java.util.concurrent.ExecutorService;
@@ -30,7 +29,7 @@ public class FindSequenceController {
         String content = fileReadWrapper.readFile();
         FindSequence findSequence = new FindSequence(content);
         ExecutorService service = Executors.newSingleThreadExecutor();
-        service.submit(new FindSequenceThread(findSequence));
+
         while (!service.isTerminated()) {
           LOGGER.info(findSequence.getSequence().length());
           Thread.sleep(50);
