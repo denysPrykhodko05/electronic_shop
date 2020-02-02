@@ -1,4 +1,4 @@
-package com.epam.prykhodko.task8.util;
+package task8.util;
 
 import static com.epam.prykhodko.constant.Constants.STOP_STRING;
 import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;

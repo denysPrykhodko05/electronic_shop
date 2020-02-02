@@ -1,8 +1,7 @@
-package com.epam.prykhodko.task8.util;
+package task8.util;
 
 import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
 
-import com.epam.prykhodko.task8.entity.FindSimpleNumbersOwnCollectionThread;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -11,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
+import task8.com.epam.prykhodko.entity.FindSimpleNumbersOwnCollectionThread;
 
 public class FindSimpleNumbersOwnCollection {
 
@@ -36,7 +36,7 @@ public class FindSimpleNumbersOwnCollection {
     }
 
     listThread.forEach(e -> list.addAll(e.getResult()));
-    list.forEach(LOGGER::info);
+    list.stream().sorted().forEach(LOGGER::info);
   }
 
   public void findByExecutor(int minRange, int maxRange, int countOfThread) {
@@ -63,6 +63,6 @@ public class FindSimpleNumbersOwnCollection {
         LOGGER.info(THREAD_INTERRUPTED);
       }
     }
-    list.forEach(LOGGER::info);
+    list.stream().sorted().forEach(LOGGER::info);
   }
 }

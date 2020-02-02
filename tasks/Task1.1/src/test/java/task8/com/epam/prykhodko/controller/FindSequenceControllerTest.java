@@ -1,18 +1,18 @@
-package com.epam.prykhodko.controller;
+package task8.com.epam.prykhodko.controller;
 
 import static java.lang.System.lineSeparator;
 
-import com.epam.prykhodko.task8.controller.FindSequenceController;
 import java.io.ByteArrayInputStream;
 import org.junit.jupiter.api.Test;
 
 class FindSequenceControllerTest {
 
   @Test
-  void mainShouldFirdtlyThrowExceptionThenEndCorrectlly() {
+  void mainShouldFirstlyThrowExceptionThenEndCorrectlly() {
+    Thread.currentThread().interrupt();
     String input = "src/test/java/resources/3.txt"
         + lineSeparator()
-        + "src/test/java/resources/2.txt"
+        + "src/test/java/resources/1.txt"
         + lineSeparator()
         + "stop";
     ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());

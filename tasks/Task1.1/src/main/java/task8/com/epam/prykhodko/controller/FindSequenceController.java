@@ -1,10 +1,9 @@
-package com.epam.prykhodko.task8.controller;
+package task8.com.epam.prykhodko.controller;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 import static com.epam.prykhodko.constant.Constants.STOP_STRING;
 import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
 
-import com.epam.prykhodko.task8.util.FindSequence;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import com.epam.prykhodko.util.readers.FileReadWrapper;
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import task8.util.FindSequence;
 
 public class FindSequenceController {
 
@@ -57,8 +57,8 @@ public class FindSequenceController {
         }
       } catch (IOException | NullPointerException e) {
         LOGGER.info(INCORRECT_INPUT);
-      } catch (Exception e) {
-        LOGGER.error(THREAD_INTERRUPTED);
+      } catch (InterruptedException e) {
+        LOGGER.info(THREAD_INTERRUPTED);
       }
       length.set(0);
       localeLength = 0;

@@ -1,8 +1,7 @@
-package com.epam.prykhodko.controller;
+package task8.com.epam.prykhodko.controller;
 
 import static java.lang.System.lineSeparator;
 
-import com.epam.prykhodko.task8.controller.ThreadController;
 import java.io.ByteArrayInputStream;
 import org.junit.jupiter.api.Test;
 

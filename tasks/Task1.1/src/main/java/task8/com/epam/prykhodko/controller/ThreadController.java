@@ -1,15 +1,15 @@
-package com.epam.prykhodko.task8.controller;
+package task8.com.epam.prykhodko.controller;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
-import com.epam.prykhodko.task8.util.FindSimpleNumbersCommonCollection;
-import com.epam.prykhodko.task8.util.FindSimpleNumbersOwnCollection;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import task8.util.FindSimpleNumbersCommonCollection;
+import task8.util.FindSimpleNumbersOwnCollection;
 
 public class ThreadController {
 
