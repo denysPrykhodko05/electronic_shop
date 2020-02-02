@@ -14,6 +14,9 @@ public class FindSequence implements Runnable {
   private String content;
   private StringBuilder mainSB = new StringBuilder();
   private AtomicInteger length;
+  private int finalLength;
+  private int startPosition;
+  private int endPosition;
   private Boolean finishFlag = false;
   private String exit = StringUtils.EMPTY;
 
@@ -54,7 +57,7 @@ public class FindSequence implements Runnable {
     this.finishFlag = endFlag;
   }
 
-  public void findSequence() {
+  private void findSequence() {
     char[] buffer = content.toCharArray();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < buffer.length; i++) {
@@ -68,12 +71,16 @@ public class FindSequence implements Runnable {
           break;
         }
       }
+
       if (sb.length() > mainSB.length()) {
         mainSB = sb;
         length.set(sb.length());
       }
       sb = new StringBuilder();
     }
+    finalLength = mainSB.toString().length();
+    startPosition = content.indexOf(mainSB.toString());
+    endPosition = content.indexOf(mainSB.toString(), startPosition + 1);
     mainSB = new StringBuilder();
   }
 
@@ -89,5 +96,12 @@ public class FindSequence implements Runnable {
 
   public void setQuite(String exit) {
     this.exit = exit;
+  }
+
+  @Override
+  public String toString() {
+    return "length=" + finalLength +
+        ", startPosition=" + startPosition +
+        ", endPosition=" + endPosition;
   }
 }

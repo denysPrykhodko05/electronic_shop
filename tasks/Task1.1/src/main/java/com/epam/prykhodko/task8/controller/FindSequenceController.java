@@ -19,7 +19,7 @@ public class FindSequenceController {
   private static final Logger LOGGER = Logger.getLogger(FindSequenceController.class);
   private static final Object monitor = new Object();
   private static AtomicInteger length = new AtomicInteger(0);
-  private static AtomicInteger localeLength = new AtomicInteger(0);
+  private static int localeLength = 0;
   private static boolean startFlag = false;
 
   public static void main(String[] args) {
@@ -50,20 +50,21 @@ public class FindSequenceController {
           monitor.notify();
         }
         while (!findSequence.getFinish()) {
-          if (localeLength.get() < length.get()) {
+          if (localeLength < length.get()) {
             LOGGER.info("Current length: " + length.get());
-            localeLength.set(length.get());
+            localeLength = length.get();
           }
         }
       } catch (IOException | NullPointerException e) {
         LOGGER.info(INCORRECT_INPUT);
-      } catch (InterruptedException e) {
+      } catch (Exception e) {
         LOGGER.error(THREAD_INTERRUPTED);
       }
       length.set(0);
-      localeLength.set(0);
+      localeLength = 0;
       findSequence.setFinish(false);
     }
     service.shutdown();
+    LOGGER.info(findSequence);
   }
 }
