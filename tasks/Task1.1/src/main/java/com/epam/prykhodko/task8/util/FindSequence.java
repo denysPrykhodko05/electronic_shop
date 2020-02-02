@@ -1,18 +1,57 @@
 package com.epam.prykhodko.task8.util;
 
+import static com.epam.prykhodko.constant.Constants.STOP_STRING;
+import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
 public class FindSequence implements Runnable {
 
-  private final String content;
+  private static final Logger LOGGER = Logger.getLogger(FindSequence.class);
+  private final Object monitor;
+  private String content;
   private StringBuilder mainSB = new StringBuilder();
+  private AtomicInteger length;
+  private Boolean finishFlag = false;
+  private String exit = StringUtils.EMPTY;
 
-
-  public FindSequence(String content) {
+  public FindSequence(AtomicInteger length, String content, Object monitor) {
+    this.length = length;
     this.content = content;
+    this.monitor = monitor;
+  }
+
+  public FindSequence(AtomicInteger length, Object monitor) {
+    this.length = length;
+    this.monitor = monitor;
   }
 
   @Override
   public void run() {
-    findSequence();
+    while (true) {
+      synchronized (monitor) {
+        try {
+          monitor.wait();
+          if (STOP_STRING.equals(exit)) {
+            break;
+          }
+          findSequence();
+          finishFlag = true;
+        } catch (InterruptedException e) {
+          LOGGER.info(THREAD_INTERRUPTED);
+        }
+      }
+    }
+  }
+
+  public boolean getFinish() {
+    return finishFlag;
+  }
+
+  public void setFinish(boolean endFlag) {
+    this.finishFlag = endFlag;
   }
 
   public void findSequence() {
@@ -31,9 +70,11 @@ public class FindSequence implements Runnable {
       }
       if (sb.length() > mainSB.length()) {
         mainSB = sb;
+        length.set(sb.length());
       }
       sb = new StringBuilder();
     }
+    mainSB = new StringBuilder();
   }
 
   private boolean hasDuplicate(char[] buffer, int i) {
@@ -42,8 +83,11 @@ public class FindSequence implements Runnable {
     return subSequence.contains(sequence);
   }
 
-  public String getSequence() {
-    return mainSB.toString();
+  public void setContent(String content) {
+    this.content = content;
   }
 
+  public void setQuite(String exit) {
+    this.exit = exit;
+  }
 }
