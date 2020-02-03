@@ -1,4 +1,4 @@
-package task8.util;
+package task8.com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constant.Constants.STOP_STRING;
 import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
@@ -88,7 +88,7 @@ public class FindSequence implements Runnable {
     this.content = content;
   }
 
-  public void setQuite(String exit) {
+  public void setExit(String exit) {
     this.exit = exit;
   }
 
@@ -98,8 +98,8 @@ public class FindSequence implements Runnable {
 
   @Override
   public String toString() {
-    return "length=" + finalLength +
-        ", startPosition=" + startPosition +
-        ", endPosition=" + endPosition;
+    return "length=" + finalLength
+        + ", startPosition=" + startPosition
+        + ", endPosition=" + endPosition;
   }
 }

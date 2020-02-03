@@ -1,4 +1,4 @@
-package task8.util;
+package task8.com.epam.prykhodko.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -7,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 class FindSequenceTest {
 
   AtomicInteger length = new AtomicInteger(0);
+  @Mock
   Object monitor = new Object();
   FindSequence findSequence;
 
@@ -20,22 +22,20 @@ class FindSequenceTest {
   }
 
   @Test
-  void run() {
+  void run() throws InterruptedException {
     Thread thread = new Thread(findSequence);
-    thread.run();
+
     findSequence.setContent("as z as");
-    try {
-      Thread.sleep(100);
-    } catch (InterruptedException e) {
-      //TODO
-    }
-    synchronized (monitor) {
+    synchronized (monitor){
+      thread.start();
       monitor.notify();
     }
-    findSequence.setQuite("stop");
-
-    int expected = 2;
+    findSequence.setExit("stop");
+    synchronized (monitor){
+      monitor.notify();
+    }
     int actual = findSequence.getFinalLength();
+    int expected = 2;
     assertEquals(expected, actual);
   }
 
@@ -57,7 +57,7 @@ class FindSequenceTest {
 
   @Test
   void setQuite() {
-    findSequence.setQuite("stop");
+    findSequence.setExit("stop");
   }
 
   @Test

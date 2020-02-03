@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import task8.util.FindSequence;
+import task8.com.epam.prykhodko.util.FindSequence;
 
 public class FindSequenceController {
 
@@ -32,7 +32,7 @@ public class FindSequenceController {
       try {
         name = ConsoleHelper.readLine();
         if (STOP_STRING.equals(name)) {
-          findSequence.setQuite(name);
+          findSequence.setExit(name);
           synchronized (monitor) {
             monitor.notify();
           }
@@ -63,8 +63,8 @@ public class FindSequenceController {
       length.set(0);
       localeLength = 0;
       findSequence.setFinish(false);
+      LOGGER.info(findSequence);
     }
     service.shutdown();
-    LOGGER.info(findSequence);
   }
 }

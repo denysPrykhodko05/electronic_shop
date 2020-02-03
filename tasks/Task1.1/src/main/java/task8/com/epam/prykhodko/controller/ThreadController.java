@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import task8.util.FindSimpleNumbersCommonCollection;
-import task8.util.FindSimpleNumbersOwnCollection;
+import task8.com.epam.prykhodko.util.FindSimpleNumbersCommonCollection;
+import task8.com.epam.prykhodko.util.FindSimpleNumbersOwnCollection;
 
 public class ThreadController {
 

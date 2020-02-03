@@ -1,4 +1,4 @@
-package task8.util;
+package task8.com.epam.prykhodko.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

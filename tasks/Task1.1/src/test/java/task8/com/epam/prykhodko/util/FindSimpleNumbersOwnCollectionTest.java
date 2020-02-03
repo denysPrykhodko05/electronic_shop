@@ -1,4 +1,4 @@
-package task8.util;
+package task8.com.epam.prykhodko.util;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

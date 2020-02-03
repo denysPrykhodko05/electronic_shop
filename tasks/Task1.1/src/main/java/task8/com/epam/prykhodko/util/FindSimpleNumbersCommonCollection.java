@@ -1,7 +1,8 @@
-package task8.util;
+package task8.com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,18 +15,15 @@ public class FindSimpleNumbersCommonCollection {
   private final List<Integer> list;
 
   public FindSimpleNumbersCommonCollection(List<Integer> list) {
-    this.list = list;
+    this.list = Collections.synchronizedList(list);
   }
 
   public void find(int minRange, int maxRange, int countOfThread) {
     Thread[] thread = new Thread[countOfThread];
-
+//создать спискок с элементами для поиска
     for (int i = 0; i < countOfThread; i++) {
       thread[i] = new Thread(
           new FindSimpleNumbersCommonCollectionThread(list, minRange + i, maxRange, countOfThread));
-    }
-
-    for (int i = 0; i < countOfThread; i++) {
       thread[i].start();
     }
 
