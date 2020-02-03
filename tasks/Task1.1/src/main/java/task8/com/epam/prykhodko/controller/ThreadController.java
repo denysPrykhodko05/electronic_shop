@@ -44,8 +44,11 @@ public class ThreadController {
 
         //findSimpleNumbersCommonCollection.find(min, max, amountOfThreads);
         //findSimpleNumbersCommonCollection.findByExecutor(min, max, amountOfThreads);
+        //findSimpleNumbersCommonCollection.getList().stream().sorted().forEach(LOGGER::info);
+
         //findSimpleNumbersOwnCollection.find(min,max,amountOfThreads);
-        findSimpleNumbersOwnCollection.findByExecutor(min,max,amountOfThreads);
+        //findSimpleNumbersOwnCollection.findByExecutor(min,max,amountOfThreads);
+        //findSimpleNumbersOwnCollection.getList().stream().sorted().forEach(LOGGER::info);
         correctInput = true;
       } catch (IOException | NumberFormatException e) {
         LOGGER.info(INCORRECT_INPUT);

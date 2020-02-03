@@ -36,7 +36,6 @@ public class FindSimpleNumbersOwnCollection {
     }
 
     listThread.forEach(e -> list.addAll(e.getResult()));
-    list.stream().sorted().forEach(LOGGER::info);
   }
 
   public void findByExecutor(int minRange, int maxRange, int countOfThread) {
@@ -63,6 +62,10 @@ public class FindSimpleNumbersOwnCollection {
         LOGGER.info(THREAD_INTERRUPTED);
       }
     }
-    list.stream().sorted().forEach(LOGGER::info);
   }
+
+  public List<Integer> getList() {
+    return list;
+  }
+
 }

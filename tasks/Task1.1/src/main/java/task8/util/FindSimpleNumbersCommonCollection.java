@@ -21,7 +21,8 @@ public class FindSimpleNumbersCommonCollection {
     Thread[] thread = new Thread[countOfThread];
 
     for (int i = 0; i < countOfThread; i++) {
-      thread[i] = new Thread(new FindSimpleNumbersCommonCollectionThread(list,minRange+i,maxRange,countOfThread));
+      thread[i] = new Thread(
+          new FindSimpleNumbersCommonCollectionThread(list, minRange + i, maxRange, countOfThread));
     }
 
     for (int i = 0; i < countOfThread; i++) {
@@ -35,23 +36,27 @@ public class FindSimpleNumbersCommonCollection {
         LOGGER.info(THREAD_INTERRUPTED);
       }
     }
-    list.stream().sorted().forEach(LOGGER::info);
   }
 
   public void findByExecutor(int minRange, int maxRange, int countOfThread) {
     ExecutorService service = Executors.newFixedThreadPool(countOfThread);
 
     for (int i = 0; i < countOfThread; i++) {
-       service.submit(new FindSimpleNumbersCommonCollectionThread(list,minRange+i,maxRange,countOfThread));
+      service.submit(
+          new FindSimpleNumbersCommonCollectionThread(list, minRange + i, maxRange, countOfThread));
     }
 
     service.shutdown();
-    while (true){
-      if (!service.isTerminated()){
+    while (true) {
+      if (!service.isTerminated()) {
         continue;
       }
-      list.stream().sorted().forEach(LOGGER::info);
       return;
     }
   }
+
+  public List<Integer> getList() {
+    return list;
+  }
+
 }

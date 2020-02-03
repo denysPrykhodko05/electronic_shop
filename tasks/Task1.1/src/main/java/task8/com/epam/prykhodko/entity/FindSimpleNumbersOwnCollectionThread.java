@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class FindSimpleNumbersOwnCollectionThread extends Thread implements Callable<List<Integer>> {
+public class FindSimpleNumbersOwnCollectionThread extends Thread implements
+    Callable<List<Integer>> {
 
   private int leftBoarder;
   private int rightBoarder;
@@ -21,7 +22,7 @@ public class FindSimpleNumbersOwnCollectionThread extends Thread implements Call
   }
 
   private boolean isPrime(int number) {
-    if (number < 2){
+    if (number < 2) {
       return true;
     }
     for (int j = 2; j <= number / 2; j++) {
@@ -32,8 +33,17 @@ public class FindSimpleNumbersOwnCollectionThread extends Thread implements Call
     return true;
   }
 
-  public List<Integer> getResult(){
+  public List<Integer> getResult() {
     return list;
+  }
+
+  @Override
+  public void run() {
+    for (int i = leftBoarder; i <= rightBoarder; i += amountOfThreads) {
+      if (isPrime(i)) {
+        list.add(i);
+      }
+    }
   }
 
   @Override
