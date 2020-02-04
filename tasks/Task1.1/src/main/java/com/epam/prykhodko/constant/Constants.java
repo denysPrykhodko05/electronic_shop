@@ -21,4 +21,8 @@ public class Constants {
   public static final String ENTER_MAX_SIZE_STRING = "Enter the max size in kilobytes: ";
   public static final String ENTER_FIRST_DATE_STRING = "Enter the first date(dd/mm/yyyy hh:mm): ";
   public static final String ENTER_LAST_DATE_STRING = "Enter the last date(dd/mm/yyyy hh:mm): ";
+
+  public static final String THREAD_INTERRUPTED = "Thread was interrupted!!!";
+
+  public static final String STOP_STRING = "stop";
 }

@@ -1,19 +1,23 @@
 package com.epam.prykhodko.util.readers;
 
+import static com.epam.prykhodko.constant.Constants.FILE_NOT_FOUND_ERROR;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
 import java.util.Scanner;
+import org.apache.log4j.Logger;
 
 public class FileReadWrapper implements Iterable {
 
+  private static final Logger LOGGER = Logger.getLogger(FileReadWrapper.class);
   private String name;
 
   public FileReadWrapper(String name) {
     this.name = name;
   }
 
-  public String readFile() {
+  public String readFile() throws NullPointerException {
     StringBuilder stringBuilder = new StringBuilder();
     for (Object o : this) {
       stringBuilder.append(o).append(System.lineSeparator());
@@ -34,7 +38,7 @@ public class FileReadWrapper implements Iterable {
       try {
         scanner = new Scanner(new FileReader(file));
       } catch (FileNotFoundException e) {
-        System.err.println("Error. Cannot open file.");
+        LOGGER.info(FILE_NOT_FOUND_ERROR);
       }
     }
 
