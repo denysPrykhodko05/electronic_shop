@@ -75,7 +75,7 @@ public class FindSequence implements Runnable {
             monitor.wait();
           }
         } catch (InterruptedException e) {
-          //TODO
+          LOGGER.error(THREAD_INTERRUPTED);
         }
       }
       sb = new StringBuilder();
