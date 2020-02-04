@@ -23,14 +23,7 @@ public class FindSimpleNumbersOwnCollectionThread extends Thread implements
 
   @Override
   public void run() {
-    for (int i = leftBoarder; i <= rightBoarder; i++) {
-      if (i < 2) {
-        continue;
-      }
-      if (FindPrimeNumbersUtil.isPrime(i)) {
-        list.add(i);
-      }
-    }
+    FindPrimeNumbersUtil.search(leftBoarder, rightBoarder, list);
   }
 
   @Override

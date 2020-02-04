@@ -14,20 +14,20 @@ class FindSimpleNumbersOwnCollectionTest {
   }
 
   @Test
-  void findShouldFindFiveElements() {
+  void findShouldFindFourElements() {
     findSimpleNumbersOwnCollection.find(1, 10, 2);
 
     int actual = findSimpleNumbersOwnCollection.getList().size();
-    int expected = 5;
+    int expected = 4;
     Assertions.assertEquals(expected, actual);
   }
 
   @Test
-  void findByExecutor() {
+  void findByExecutorShouldFindFourElements() {
     findSimpleNumbersOwnCollection.findByExecutor(1, 10, 2);
 
     int actual = findSimpleNumbersOwnCollection.getList().size();
-    int expected = 5;
+    int expected = 4;
     Assertions.assertEquals(expected, actual);
   }
 }

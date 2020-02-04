@@ -20,24 +20,6 @@ class FindSequenceTest {
   }
 
   @Test
-  void run() throws InterruptedException {
-    Thread thread = new Thread(findSequence);
-
-    findSequence.setContent("as z as");
-    synchronized (monitor){
-      thread.start();
-      monitor.notify();
-    }
-    findSequence.setExit("stop");
-    synchronized (monitor){
-      monitor.notify();
-    }
-    int actual = findSequence.getFinalLength();
-    int expected = 2;
-    assertEquals(expected, actual);
-  }
-
-  @Test
   void getFinishShouldReturnFalse() {
     assertFalse(findSequence.getFinish());
   }

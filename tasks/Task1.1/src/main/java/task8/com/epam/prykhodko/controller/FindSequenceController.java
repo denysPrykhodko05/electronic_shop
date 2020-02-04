@@ -31,17 +31,15 @@ public class FindSequenceController {
         name = ConsoleHelper.readLine();
         if (STOP_STRING.equals(name)) {
           findSequence.setExit(name);
-          synchronized (monitor) {
-            monitor.notifyAll();
-          }
+          monitorNotify();
           break;
         }
+
         FileReadWrapper fileReadWrapper = new FileReadWrapper(name);
         String content = fileReadWrapper.readFile();
+
         findSequence.setContent(content);
-        synchronized (monitor) {
-          monitor.notifyAll();
-        }
+        monitorNotify();
         if (!startFlag) {
           service.submit(findSequence);
           startFlag = true;
@@ -59,12 +57,18 @@ public class FindSequenceController {
       } catch (IOException | NullPointerException e) {
         LOGGER.info(INCORRECT_INPUT);
       } catch (InterruptedException e) {
-        LOGGER.error(THREAD_INTERRUPTED);
+        LOGGER.info(THREAD_INTERRUPTED);
       }
       localeLength = 0;
       findSequence.setFinish(false);
       LOGGER.info(findSequence);
     }
     service.shutdown();
+  }
+
+  private static void monitorNotify() {
+    synchronized (monitor) {
+      monitor.notifyAll();
+    }
   }
 }

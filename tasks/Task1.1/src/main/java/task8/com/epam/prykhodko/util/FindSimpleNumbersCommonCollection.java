@@ -49,7 +49,6 @@ public class FindSimpleNumbersCommonCollection {
 
   public void findByExecutor(int minRange, int maxRange, int countOfThread) {
     ExecutorService service = Executors.newFixedThreadPool(countOfThread);
-
     int remain = maxRange / countOfThread;
     int leftBoarder = minRange;
     int rightBoarder = remain;
