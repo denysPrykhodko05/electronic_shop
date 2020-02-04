@@ -32,31 +32,34 @@ public class FindSequenceController {
         if (STOP_STRING.equals(name)) {
           findSequence.setExit(name);
           synchronized (monitor) {
-            monitor.notify();
+            monitor.notifyAll();
           }
           break;
         }
         FileReadWrapper fileReadWrapper = new FileReadWrapper(name);
         String content = fileReadWrapper.readFile();
+        findSequence.setContent(content);
+        synchronized (monitor) {
+          monitor.notifyAll();
+        }
         if (!startFlag) {
           service.submit(findSequence);
           startFlag = true;
         }
-        findSequence.setContent(content);
-        Thread.sleep(100);
-        synchronized (monitor) {
-          monitor.notify();
-        }
         while (!findSequence.getFinish()) {
-          if (localeLength < findSequence.getLength()) {
-            LOGGER.info("Current length: " + findSequence.getLength());
-            localeLength = findSequence.getLength();
+          synchronized (monitor) {
+            if (localeLength < findSequence.getLength()) {
+              LOGGER.info("Current length: " + findSequence.getLength());
+              localeLength = findSequence.getLength();
+              monitor.notifyAll();
+            }
+            monitor.wait();
           }
         }
       } catch (IOException | NullPointerException e) {
         LOGGER.info(INCORRECT_INPUT);
       } catch (InterruptedException e) {
-        LOGGER.info(THREAD_INTERRUPTED);
+        LOGGER.error(THREAD_INTERRUPTED);
       }
       localeLength = 0;
       findSequence.setFinish(false);

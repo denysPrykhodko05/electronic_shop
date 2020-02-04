@@ -13,7 +13,7 @@ public class FindSequence implements Runnable {
   private final Object monitor;
   private String content;
   private StringBuilder mainSB = new StringBuilder();
-  private AtomicInteger length;
+  private AtomicInteger length = new AtomicInteger(0);
   private int finalLength;
   private int startPosition;
   private int endPosition;
@@ -28,15 +28,16 @@ public class FindSequence implements Runnable {
   public void run() {
     while (true) {
       synchronized (monitor) {
+        if (STOP_STRING.equals(exit)) {
+          break;
+        }
+        findSequence();
+        finishFlag = true;
         try {
+          monitor.notifyAll();
           monitor.wait();
-          if (STOP_STRING.equals(exit)) {
-            break;
-          }
-          findSequence();
-          finishFlag = true;
         } catch (InterruptedException e) {
-          LOGGER.info(THREAD_INTERRUPTED);
+          LOGGER.error(THREAD_INTERRUPTED);
         }
       }
     }
@@ -66,8 +67,16 @@ public class FindSequence implements Runnable {
       }
 
       if (sb.length() > mainSB.length()) {
-        mainSB = sb;
-        length.set(sb.length());
+        try {
+          synchronized (monitor) {
+            mainSB = sb;
+            length.set(sb.length());
+            monitor.notifyAll();
+            monitor.wait();
+          }
+        } catch (InterruptedException e) {
+          //TODO
+        }
       }
       sb = new StringBuilder();
     }
