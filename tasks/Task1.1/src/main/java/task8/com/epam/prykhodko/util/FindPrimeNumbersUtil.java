@@ -8,18 +8,15 @@ public class FindPrimeNumbersUtil {
 
   public static void search(int leftBoarder, int rightBoarder, List<Integer> list) {
     for (int i = leftBoarder; i <= rightBoarder; i++) {
-      if (i < 2) {
-        continue;
-      }
       if (FindPrimeNumbersUtil.isPrime(i)) {
         list.add(i);
       }
     }
   }
 
-  public static boolean isPrime(int number) {
+  private static boolean isPrime(int number) {
     if (number < 2) {
-      return true;
+      return false;
     }
     for (int j = 2; j <= Math.sqrt(number); j++) {
       if ((number % j) == INTEGER_ZERO) {
