@@ -9,7 +9,6 @@ import com.epam.prykhodko.util.readers.FileReadWrapper;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import task8.com.epam.prykhodko.util.FindSequence;
@@ -18,13 +17,12 @@ public class FindSequenceController {
 
   private static final Logger LOGGER = Logger.getLogger(FindSequenceController.class);
   private static final Object monitor = new Object();
-  private static AtomicInteger length = new AtomicInteger(0);
   private static int localeLength = 0;
   private static boolean startFlag = false;
 
   public static void main(String[] args) {
     BasicConfigurator.configure();
-    FindSequence findSequence = new FindSequence(length, monitor);
+    FindSequence findSequence = new FindSequence(monitor);
     ExecutorService service = Executors.newSingleThreadExecutor();
     String name;
     while (true) {
@@ -50,9 +48,9 @@ public class FindSequenceController {
           monitor.notify();
         }
         while (!findSequence.getFinish()) {
-          if (localeLength < length.get()) {
-            LOGGER.info("Current length: " + length.get());
-            localeLength = length.get();
+          if (localeLength < findSequence.getLength()) {
+            LOGGER.info("Current length: " + findSequence.getLength());
+            localeLength = findSequence.getLength();
           }
         }
       } catch (IOException | NullPointerException e) {
@@ -60,7 +58,6 @@ public class FindSequenceController {
       } catch (InterruptedException e) {
         LOGGER.info(THREAD_INTERRUPTED);
       }
-      length.set(0);
       localeLength = 0;
       findSequence.setFinish(false);
       LOGGER.info(findSequence);

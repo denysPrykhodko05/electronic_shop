@@ -20,8 +20,7 @@ public class FindSequence implements Runnable {
   private Boolean finishFlag = false;
   private String exit = StringUtils.EMPTY;
 
-  public FindSequence(AtomicInteger length, Object monitor) {
-    this.length = length;
+  public FindSequence(Object monitor) {
     this.monitor = monitor;
   }
 
@@ -75,6 +74,7 @@ public class FindSequence implements Runnable {
     finalLength = mainSB.toString().length();
     startPosition = content.indexOf(mainSB.toString());
     endPosition = content.indexOf(mainSB.toString(), startPosition + 1);
+    length.set(0);
     mainSB = new StringBuilder();
   }
 
@@ -86,6 +86,10 @@ public class FindSequence implements Runnable {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  public int getLength() {
+    return length.get();
   }
 
   public void setExit(String exit) {

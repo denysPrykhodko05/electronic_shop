@@ -4,21 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 class FindSequenceTest {
 
-  AtomicInteger length = new AtomicInteger(0);
   @Mock
   Object monitor = new Object();
   FindSequence findSequence;
 
   @BeforeEach
   void init() {
-    findSequence = new FindSequence(length, monitor);
+    findSequence = new FindSequence(monitor);
   }
 
   @Test

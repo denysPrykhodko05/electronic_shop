@@ -20,11 +20,22 @@ public class FindSimpleNumbersCommonCollection {
 
   public void find(int minRange, int maxRange, int countOfThread) {
     Thread[] thread = new Thread[countOfThread];
-//создать спискок с элементами для поиска
+    int remain = maxRange / countOfThread;
+    int leftBoarder = minRange;
+    int rightBoarder = remain;
     for (int i = 0; i < countOfThread; i++) {
+      if (i == countOfThread - 1) {
+        rightBoarder += maxRange - rightBoarder;
+        thread[i] = new Thread(
+            new FindSimpleNumbersCommonCollectionThread(list, leftBoarder, rightBoarder));
+        thread[i].start();
+        break;
+      }
       thread[i] = new Thread(
-          new FindSimpleNumbersCommonCollectionThread(list, minRange + i, maxRange, countOfThread));
+          new FindSimpleNumbersCommonCollectionThread(list, leftBoarder, rightBoarder));
       thread[i].start();
+      leftBoarder += remain;
+      rightBoarder += remain;
     }
 
     for (int i = 0; i < countOfThread; i++) {
@@ -39,9 +50,20 @@ public class FindSimpleNumbersCommonCollection {
   public void findByExecutor(int minRange, int maxRange, int countOfThread) {
     ExecutorService service = Executors.newFixedThreadPool(countOfThread);
 
+    int remain = maxRange / countOfThread;
+    int leftBoarder = minRange;
+    int rightBoarder = remain;
     for (int i = 0; i < countOfThread; i++) {
+      if (i == countOfThread - 1) {
+        rightBoarder += maxRange - rightBoarder;
+        service.submit(
+            new FindSimpleNumbersCommonCollectionThread(list, leftBoarder, rightBoarder));
+        break;
+      }
       service.submit(
-          new FindSimpleNumbersCommonCollectionThread(list, minRange + i, maxRange, countOfThread));
+          new FindSimpleNumbersCommonCollectionThread(list, leftBoarder, rightBoarder));
+      leftBoarder += remain;
+      rightBoarder += remain;
     }
 
     service.shutdown();

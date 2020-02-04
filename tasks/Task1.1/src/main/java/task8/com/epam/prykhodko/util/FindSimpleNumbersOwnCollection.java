@@ -3,6 +3,7 @@ package task8.com.epam.prykhodko.util;
 import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -15,14 +16,24 @@ import task8.com.epam.prykhodko.entity.FindSimpleNumbersOwnCollectionThread;
 public class FindSimpleNumbersOwnCollection {
 
   private static final Logger LOGGER = Logger.getLogger(FindSimpleNumbersCommonCollection.class);
-  private final List<Integer> list = new ArrayList<>();
+  private final List<Integer> list = Collections.synchronizedList(new ArrayList<>());
   private List<Future<List<Integer>>> futureList = new ArrayList<>();
 
   public void find(int minRange, int maxRange, int countOfThread) {
     List<FindSimpleNumbersOwnCollectionThread> listThread = new ArrayList<>();
+    int remain = maxRange / countOfThread;
+    int leftBoarder = minRange;
+    int rightBorder = remain;
     for (int i = 0; i < countOfThread; i++) {
+      if (i == countOfThread - 1) {
+        rightBorder += maxRange - rightBorder;
+        listThread.add(new FindSimpleNumbersOwnCollectionThread(leftBoarder, rightBorder));
+        break;
+      }
       listThread
-          .add(new FindSimpleNumbersOwnCollectionThread(minRange + i, maxRange, countOfThread));
+          .add(new FindSimpleNumbersOwnCollectionThread(leftBoarder, rightBorder));
+      rightBorder += remain;
+      leftBoarder += remain;
     }
 
     listThread.forEach(FindSimpleNumbersOwnCollectionThread::run);
@@ -40,14 +51,23 @@ public class FindSimpleNumbersOwnCollection {
 
   public void findByExecutor(int minRange, int maxRange, int countOfThread) {
     ExecutorService service = Executors.newFixedThreadPool(countOfThread);
-
+    int remain = maxRange / countOfThread;
+    int leftBoarder = minRange;
+    int rightBoarder = remain;
     for (int i = 0; i < countOfThread; i++) {
+      if (i == countOfThread - 1) {
+        rightBoarder += maxRange - rightBoarder;
+        futureList.add(service.submit(
+            (Callable<List<Integer>>) new FindSimpleNumbersOwnCollectionThread(leftBoarder,
+                rightBoarder)));
+        break;
+      }
       futureList.add(service.submit(
-          (Callable<List<Integer>>) new FindSimpleNumbersOwnCollectionThread(minRange + i, maxRange,
-              countOfThread)));
+          (Callable<List<Integer>>) new FindSimpleNumbersOwnCollectionThread(leftBoarder,
+              rightBoarder)));
+      rightBoarder += remain;
+      leftBoarder += remain;
     }
-
-    service.shutdown();
 
     while (!futureList.isEmpty()) {
       try {
@@ -62,6 +82,7 @@ public class FindSimpleNumbersOwnCollection {
         LOGGER.info(THREAD_INTERRUPTED);
       }
     }
+    service.shutdown();
   }
 
   public List<Integer> getList() {

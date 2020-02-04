@@ -11,7 +11,7 @@ class FindSimpleNumbersOwnCollectionThreadTest {
 
   @BeforeEach
   void init() {
-    findSimpleNumbersOwnCollectionThread = new FindSimpleNumbersOwnCollectionThread(1, 10, 2);
+    findSimpleNumbersOwnCollectionThread = new FindSimpleNumbersOwnCollectionThread(1, 10);
   }
 
   @Test
