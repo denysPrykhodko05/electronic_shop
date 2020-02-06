@@ -24,6 +24,8 @@ import com.epam.prykhodko.service.impl.BasketServiceImpl;
 import com.epam.prykhodko.service.impl.CacheServiceImpl;
 import com.epam.prykhodko.service.impl.OrderServiceImpl;
 import com.epam.prykhodko.service.impl.ProductServiceImpl;
+import com.epam.prykhodko.task9.com.epam.prykhodko.entity.socket.Client;
+import com.epam.prykhodko.task9.com.epam.prykhodko.entity.socket.Server;
 import com.epam.prykhodko.util.LocaleUtil;
 import com.epam.prykhodko.util.files.FileSerializationImpl;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
@@ -49,6 +51,13 @@ public class ShopViewTask7 {
   private static CacheServiceImpl cacheServiceImpl;
 
   public static void main(String[] args) {
+    new Thread(){
+      @Override
+      public void run() {
+        Server.main(new String[]{});
+        Client.main(new String[]{});
+      }
+    }.start();
     productRepositoryImpl = serializer.read();
     repositoryInit();
     commandInit();

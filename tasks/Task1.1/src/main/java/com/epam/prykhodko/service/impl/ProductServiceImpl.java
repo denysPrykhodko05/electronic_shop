@@ -19,7 +19,10 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public Product getById(int id) {
-    return productRepository.getById(id).get();
+    if (productRepository.getById(id).isPresent()) {
+      return productRepository.getById(id).get();
+    }
+    return null;
   }
 
   @Override
