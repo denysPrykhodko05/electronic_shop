@@ -1,4 +1,4 @@
-package com.epam.prykhodko.task9.com.epam.prykhodko.command;
+package task9.com.epam.prykhodko.command;
 
 import static com.epam.prykhodko.constant.Constants.HEADER;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
@@ -9,13 +9,13 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import org.apache.log4j.Logger;
 
-public class GetCountCommand implements Command {
+public class GetCountByHttpCommand implements Command {
 
-  private static final Logger LOGGER = Logger.getLogger(GetCountCommand.class);
+  private static final Logger LOGGER = Logger.getLogger(GetCountByHttpCommand.class);
   private ProductService productService;
   private BufferedWriter bufferedWriter;
 
-  public GetCountCommand(ProductService productService, BufferedWriter bufferedWriter) {
+  public GetCountByHttpCommand(ProductService productService, BufferedWriter bufferedWriter) {
     this.productService = productService;
     this.bufferedWriter = bufferedWriter;
   }
@@ -25,7 +25,7 @@ public class GetCountCommand implements Command {
     int size = productService.getAll().size();
     try {
 
-      bufferedWriter.write(HEADER + size);
+      bufferedWriter.write(HEADER + "{count:" + size + "}");
       bufferedWriter.newLine();
       bufferedWriter.flush();
     } catch (IOException e) {

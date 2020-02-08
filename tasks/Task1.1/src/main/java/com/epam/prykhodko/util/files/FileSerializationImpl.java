@@ -12,7 +12,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 
 public class FileSerializationImpl implements FileDeserialization {
 
@@ -25,8 +24,6 @@ public class FileSerializationImpl implements FileDeserialization {
   private File file;
 
   public FileSerializationImpl(String fileName) {
-    DOMConfigurator.configure(
-        "resources\\log4j.xml");
     this.file = new File(fileName);
   }
 

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 public class InputUtil {
@@ -32,6 +33,7 @@ public class InputUtil {
   }
 
   public static InputType inputType() {
+    BasicConfigurator.configure();
     mapInit();
     LOGGER.info("What do you want use to add products?\n1-Manually input\n2-Random input");
     Predicate<String> predicate = x -> {

@@ -1,6 +1,6 @@
-package com.epam.prykhodko.task9.com.epam.prykhodko.entity.socket;
+package task9.com.epam.prykhodko.controller;
 
-import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
+import static com.epam.prykhodko.constant.Constants.CANT_CONNECT_TO_THE_SERVER;
 
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import java.io.BufferedReader;
@@ -12,16 +12,15 @@ import java.net.Socket;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class Client {
+public class TcpClient {
 
-  private static final Logger LOGGER = Logger.getLogger(Client.class);
+  private static final Logger LOGGER = Logger.getLogger(TcpClient.class);
 
   private static void createConnection() {
     BasicConfigurator.configure();
-    try {
-      Socket clientSocket = new Socket("127.0.0.1", 3000);
-      BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    try (Socket clientSocket = new Socket("127.0.0.1", 3000);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));) {
 
       bufferedWriter.write(ConsoleHelper.readLine());
       bufferedWriter.newLine();
@@ -31,15 +30,13 @@ public class Client {
       LOGGER.info(response);
 
       bufferedWriter.flush();
-      bufferedWriter.close();
-      bufferedReader.close();
-      clientSocket.close();
     } catch (IOException e) {
-      LOGGER.error(INCORRECT_INPUT);
+      LOGGER.error(CANT_CONNECT_TO_THE_SERVER);
     }
   }
 
   public static void main(String[] args) {
     createConnection();
   }
+
 }

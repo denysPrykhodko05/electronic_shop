@@ -1,4 +1,4 @@
-package com.epam.prykhodko.task9.com.epam.prykhodko.command;
+package task9.com.epam.prykhodko.command;
 
 import static com.epam.prykhodko.constant.Constants.HEADER;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
@@ -33,8 +33,8 @@ public class GetByIdProductCommand implements Command {
     try {
       if (!Objects.isNull(product)) {
 
-
-        bufferedWriter.write(HEADER + product.getManufacturer() + "|" + product.getPrice().toString());
+        String response = product.getManufacturer() + "|" + product.getPrice().toString();
+        bufferedWriter.write(response);
         bufferedWriter.newLine();
         bufferedWriter.flush();
         return;
