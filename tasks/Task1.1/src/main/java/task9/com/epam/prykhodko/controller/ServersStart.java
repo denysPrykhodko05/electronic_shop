@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Objects;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import task9.com.epam.prykhodko.entity.socket.Handler;
-import task9.com.epam.prykhodko.entity.socket.HttpHandler;
-import task9.com.epam.prykhodko.entity.socket.TcpHandler;
+import task9.com.epam.prykhodko.entity.Handler;
+import task9.com.epam.prykhodko.entity.handlerImpl.HttpHandler;
+import task9.com.epam.prykhodko.entity.handlerImpl.TcpHandler;
 
 public class ServersStart implements Runnable {
 

@@ -1,4 +1,4 @@
-package task9.com.epam.prykhodko.entity.socket;
+package task9.com.epam.prykhodko.entity.serverImpl;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import task9.com.epam.prykhodko.entity.Server;
 import task9.com.epam.prykhodko.util.EntityInit;
 
 public class TcpServer implements Server {
@@ -34,23 +35,19 @@ public class TcpServer implements Server {
     BasicConfigurator.configure();
     try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));) {
-      while (true) {
+      EntityInit entityInit = new EntityInit();
+      entityInit.entityInit(commands, bufferedWriter, request, productService);
+      request.append(bufferedReader.readLine());
 
-        EntityInit entityInit = new EntityInit();
-        entityInit.entityInit(commands, bufferedWriter, request, productService);
-        request.append(bufferedReader.readLine());
-
-        for (Entry<String, Command> entry : commands.entrySet()) {
-          if (request.toString().contains(entry.getKey())) {
-            entry.getValue().execute();
-            break;
-          }
+      for (Entry<String, Command> entry : commands.entrySet()) {
+        if (request.toString().contains(entry.getKey())) {
+          entry.getValue().execute();
+          break;
         }
-
-        request = new StringBuilder();
-        bufferedWriter.flush();
-        socket.close();
       }
+      request = new StringBuilder();
+      bufferedWriter.flush();
+      socket.close();
     } catch (IOException e) {
       LOGGER.error(INCORRECT_INPUT);
     }

@@ -1,4 +1,4 @@
-package task9.com.epam.prykhodko.entity.socket;
+package task9.com.epam.prykhodko.entity.serverImpl;
 
 import static com.epam.prykhodko.constant.Constants.HEADER;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
+import task9.com.epam.prykhodko.entity.Server;
 import task9.com.epam.prykhodko.util.EntityInit;
 
 public class HttpServer implements Server {
