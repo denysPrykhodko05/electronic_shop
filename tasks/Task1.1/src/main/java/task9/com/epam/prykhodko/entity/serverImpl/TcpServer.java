@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import task9.com.epam.prykhodko.entity.Server;
-import task9.com.epam.prykhodko.util.EntityInit;
+import task9.com.epam.prykhodko.util.ServerWriterUtil;
 
 public class TcpServer implements Server {
 
@@ -35,8 +35,8 @@ public class TcpServer implements Server {
     BasicConfigurator.configure();
     try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));) {
-      EntityInit entityInit = new EntityInit();
-      entityInit.entityInit(commands, bufferedWriter, request, productService);
+      ServerWriterUtil serverWriterUtil = new ServerWriterUtil();
+      serverWriterUtil.writeToTcp(commands, bufferedWriter, request, productService);
       request.append(bufferedReader.readLine());
 
       for (Entry<String, Command> entry : commands.entrySet()) {

@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import task9.com.epam.prykhodko.entity.Server;
-import task9.com.epam.prykhodko.util.EntityInit;
+import task9.com.epam.prykhodko.util.ServerWriterUtil;
 
 public class HttpServer implements Server {
 
@@ -43,8 +43,8 @@ public class HttpServer implements Server {
   @Override
   public void createConnection() {
     try {
-      EntityInit entityInit = new EntityInit();
-      entityInit.writeByJson(commands, new BufferedWriter(new OutputStreamWriter(os)), request, productService);
+      ServerWriterUtil serverWriterUtil = new ServerWriterUtil();
+      serverWriterUtil.writeByJson(commands, new BufferedWriter(new OutputStreamWriter(os)), request, productService);
       readInputHeaders();
       writeResponse();
     } catch (IOException t) {

@@ -9,9 +9,9 @@ import task9.com.epam.prykhodko.command.GetByIdProductHttpCommand;
 import task9.com.epam.prykhodko.command.GetCountByHttpCommand;
 import task9.com.epam.prykhodko.command.GetCountCommand;
 
-public class EntityInit {
+public class ServerWriterUtil {
 
-  public void entityInit(Map<String, Command> map, BufferedWriter bufferedWriter, StringBuilder request, ProductService productService) {
+  public void writeToTcp(Map<String, Command> map, BufferedWriter bufferedWriter, StringBuilder request, ProductService productService) {
     map.put("count", new GetCountCommand(productService, bufferedWriter));
     map.put("item", new GetByIdProductCommand(bufferedWriter, productService, request));
   }

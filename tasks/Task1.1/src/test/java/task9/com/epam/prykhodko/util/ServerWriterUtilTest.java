@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-class EntityInitTest {
+class ServerWriterUtilTest {
 
   @Mock
   Map<String, Command> map = mock(HashMap.class);
@@ -34,16 +34,16 @@ class EntityInitTest {
 
   @Test
   void entityInitMapShouldAddTwoCommands() throws IOException {
-    EntityInit entityInit = new EntityInit();
-    entityInit.entityInit(map, new BufferedWriter(new OutputStreamWriter(new Socket("127.0.0.1", 3000).getOutputStream())), new StringBuilder(),
+    ServerWriterUtil serverWriterUtil = new ServerWriterUtil();
+    serverWriterUtil.writeToTcp(map, new BufferedWriter(new OutputStreamWriter(new Socket("127.0.0.1", 3000).getOutputStream())), new StringBuilder(),
         new ProductServiceImpl(new ProductRepositoryImpl()));
     verify(map, times(2)).put(anyString(), any(Command.class));
   }
 
   @Test
   void writeByJsonMapShouldAddTwoCommands() throws IOException {
-    EntityInit entityInit = new EntityInit();
-    entityInit.writeByJson(map, new BufferedWriter(new OutputStreamWriter(new Socket("127.0.0.1", 3000).getOutputStream())), new StringBuilder(),
+    ServerWriterUtil serverWriterUtil = new ServerWriterUtil();
+    serverWriterUtil.writeByJson(map, new BufferedWriter(new OutputStreamWriter(new Socket("127.0.0.1", 3000).getOutputStream())), new StringBuilder(),
         new ProductServiceImpl(new ProductRepositoryImpl()));
     verify(map, times(2)).put(anyString(), any(Command.class));
   }
