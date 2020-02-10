@@ -16,7 +16,7 @@ public class TcpClient {
 
   private static final Logger LOGGER = Logger.getLogger(TcpClient.class);
 
-  private static void createConnection() {
+  public static void main(String[] args) {
     BasicConfigurator.configure();
     try (Socket clientSocket = new Socket("127.0.0.1", 3000);
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
@@ -34,9 +34,4 @@ public class TcpClient {
       LOGGER.error(CANT_CONNECT_TO_THE_SERVER);
     }
   }
-
-  public static void main(String[] args) {
-    createConnection();
-  }
-
 }

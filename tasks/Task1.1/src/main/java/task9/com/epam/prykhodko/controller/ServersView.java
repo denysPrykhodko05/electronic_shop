@@ -16,14 +16,14 @@ import task9.com.epam.prykhodko.entity.Handler;
 import task9.com.epam.prykhodko.entity.handlerImpl.HttpHandler;
 import task9.com.epam.prykhodko.entity.handlerImpl.TcpHandler;
 
-public class ServersStart implements Runnable {
+public class ServersView implements Runnable {
 
-  private static final Logger LOGGER = Logger.getLogger(ServersStart.class);
-  private static final Map<String, Handler> commands = new HashMap<>();
+  private static final Logger LOGGER = Logger.getLogger(ServersView.class);
+  private final Map<String, Handler> handlers = new HashMap<>();
   private final Object monitor;
   private ProductService productService;
 
-  public ServersStart(Object monitor, ProductService productService) {
+  public ServersView(Object monitor, ProductService productService) {
     this.monitor = monitor;
     this.productService = productService;
   }
@@ -32,11 +32,12 @@ public class ServersStart implements Runnable {
     ServerSocket serverSocket = new ServerSocket(3000);
     TcpHandler tcpHandler = new TcpHandler(serverSocket, productService);
     HttpHandler httpHandler = new HttpHandler(serverSocket, productService);
-    commands.put("1", tcpHandler);
-    commands.put("2", httpHandler);
+    handlers.put("1", tcpHandler);
+    handlers.put("2", httpHandler);
   }
 
-  private void start() {
+  @Override
+  public void run() {
     BasicConfigurator.configure();
     Handler handler = null;
     try {
@@ -46,7 +47,7 @@ public class ServersStart implements Runnable {
           LOGGER.info("What do you want to start? 1-TCP 2-HTTP");
           String command = ConsoleHelper.readLine();
           monitor.notify();
-          handler = commands.get(command);
+          handler = handlers.get(command);
         }
         if (Objects.isNull(handler)) {
           LOGGER.info(INCORRECT_INPUT);
@@ -59,10 +60,5 @@ public class ServersStart implements Runnable {
     } catch (IOException e) {
       LOGGER.error(INCORRECT_INPUT);
     }
-  }
-
-  @Override
-  public void run() {
-    start();
   }
 }

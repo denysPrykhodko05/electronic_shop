@@ -24,7 +24,6 @@ public class GetCountByHttpCommand implements Command {
   public void execute() {
     int size = productService.getAll().size();
     try {
-
       bufferedWriter.write(HEADER + "{count:" + size + "}");
       bufferedWriter.newLine();
       bufferedWriter.flush();

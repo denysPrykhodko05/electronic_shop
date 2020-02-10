@@ -1,6 +1,5 @@
 package task9.com.epam.prykhodko.command;
 
-import static com.epam.prykhodko.constant.Constants.HEADER;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.command.Command;
@@ -31,15 +30,14 @@ public class GetByIdProductCommand implements Command {
     product = productService.getById(id);
 
     try {
-      if (!Objects.isNull(product)) {
-
+      if (Objects.nonNull(product)) {
         String response = product.getManufacturer() + "|" + product.getPrice().toString();
         bufferedWriter.write(response);
         bufferedWriter.newLine();
         bufferedWriter.flush();
         return;
       }
-      bufferedWriter.write(HEADER + INCORRECT_INPUT);
+      bufferedWriter.write(INCORRECT_INPUT);
       bufferedWriter.newLine();
       bufferedWriter.flush();
     } catch (IOException e) {
