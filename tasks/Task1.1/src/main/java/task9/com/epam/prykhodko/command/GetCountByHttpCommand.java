@@ -1,6 +1,6 @@
 package task9.com.epam.prykhodko.command;
 
-import static com.epam.prykhodko.constant.Constants.HEADER;
+import static com.epam.prykhodko.constant.Constants.HEADER_CORRECT;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.command.Command;
@@ -24,7 +24,7 @@ public class GetCountByHttpCommand implements Command {
   public void execute() {
     int size = productService.getAll().size();
     try {
-      bufferedWriter.write(HEADER + "{count:" + size + "}");
+      bufferedWriter.write(HEADER_CORRECT + "{count:" + size + "}");
       bufferedWriter.newLine();
       bufferedWriter.flush();
     } catch (IOException e) {

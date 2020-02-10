@@ -1,6 +1,7 @@
 package task9.com.epam.prykhodko.command;
 
-import static com.epam.prykhodko.constant.Constants.HEADER;
+import static com.epam.prykhodko.constant.Constants.HEADER_CORRECT;
+import static com.epam.prykhodko.constant.Constants.HEADER_ERROR;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.command.Command;
@@ -31,13 +32,13 @@ public class GetByIdProductHttpCommand implements Command {
     product = productService.getById(id);
 
     try {
-      if (!Objects.isNull(product)) {
-        bufferedWriter.write(HEADER + "{manufacture:" + product.getManufacturer() + ", price:" + product.getPrice().toString() + "}");
+      if (Objects.nonNull(product)) {
+        bufferedWriter.write(HEADER_CORRECT + "{manufacture:" + product.getManufacturer() + ", price:" + product.getPrice().toString() + "}");
         bufferedWriter.newLine();
         bufferedWriter.flush();
         return;
       }
-      bufferedWriter.write(HEADER + INCORRECT_INPUT);
+      bufferedWriter.write(HEADER_ERROR + INCORRECT_INPUT);
       bufferedWriter.newLine();
       bufferedWriter.flush();
     } catch (IOException e) {

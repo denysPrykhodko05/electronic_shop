@@ -21,7 +21,8 @@ public class Constants {
   public static final String ENTER_MAX_SIZE_STRING = "Enter the max size in kilobytes: ";
   public static final String ENTER_FIRST_DATE_STRING = "Enter the first date(dd/mm/yyyy hh:mm): ";
   public static final String ENTER_LAST_DATE_STRING = "Enter the last date(dd/mm/yyyy hh:mm): ";
-  public static final String HEADER = "HTTP/1.1 200 OK\r\n Content-Type: text/html\r\n\r\n";
+  public static final String HEADER_CORRECT = "HTTP/1.1 200 OK\r\n Content-Type: text/html\r\n\r\n";
+  public static final String HEADER_ERROR = "HTTP/1.1 404\r\n Content-Type: text/html\r\n\r\n";
   public static final String CLIENT_ACCEPTED = "Client accepted";
   public static final String PAGE_NOT_FOUND = "Page not found";
   public static final String SERVER_STARTED = "Server started";

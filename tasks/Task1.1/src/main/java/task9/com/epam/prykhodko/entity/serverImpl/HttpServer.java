@@ -1,6 +1,6 @@
 package task9.com.epam.prykhodko.entity.serverImpl;
 
-import static com.epam.prykhodko.constant.Constants.HEADER;
+import static com.epam.prykhodko.constant.Constants.HEADER_ERROR;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 import static com.epam.prykhodko.constant.Constants.PAGE_NOT_FOUND;
 
@@ -70,7 +70,7 @@ public class HttpServer implements Server {
       }
     }
     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os));
-    bufferedWriter.write(HEADER + PAGE_NOT_FOUND);
+    bufferedWriter.write(HEADER_ERROR + PAGE_NOT_FOUND);
     bufferedWriter.newLine();
     bufferedWriter.flush();
     bufferedWriter.close();
