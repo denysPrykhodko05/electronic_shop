@@ -1,50 +1,38 @@
 package task9.com.epam.prykhodko.command;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import com.epam.prykhodko.entity.products.Notebook;
+import com.epam.prykhodko.command.Command;
+import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.service.ProductService;
-import com.epam.prykhodko.service.impl.ProductServiceImpl;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import task9.com.epam.prykhodko.entity.WriteType;
 
 class GetByIdProductCommandTest {
 
   @Mock
-  BufferedWriter bufferedWriter = mock(BufferedWriter.class);
+  WriteType writeType = mock(WriteType.class);
   @Mock
-  ProductService productService = mock(ProductServiceImpl.class);
-  @Mock
-  StringBuilder stringBuilder = new StringBuilder();
-
+  ProductService productService = mock(ProductService.class);
   @Test
-  void executeShouldExecuteCodeWithIncorrectInput() throws IOException {
-    stringBuilder.append("get item=1");
-    GetByIdProductCommand command = new GetByIdProductCommand(bufferedWriter, productService, stringBuilder);
+  void executeWriteShouldExecuteOneTime() throws IOException {
+    ServerSocket serverSocket = new ServerSocket(3000);
+    StringBuilder request = new StringBuilder();
+    request.append("get item=1");
+    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new Socket("127.0.0.1", 3000).getOutputStream()));
+    Command command = new GetByIdProductCommand(bufferedWriter, productService, request, writeType);
     command.execute();
     verify(productService, times(1)).getById(anyInt());
-    verify(bufferedWriter, times(1)).write(anyString());
-    verify(bufferedWriter, times(1)).newLine();
-    verify(bufferedWriter, times(1)).flush();
-  }
-
-  @Test
-  void executeShouldFindPrintProduct() throws IOException {
-    stringBuilder.append("get item=1");
-    GetByIdProductCommand command = new GetByIdProductCommand(bufferedWriter, productService, stringBuilder);
-    when(productService.getById(anyInt())).thenReturn(new Notebook(1, new BigDecimal(1000), "asus", "asus"));
-    command.execute();
-    verify(productService, times(1)).getById(anyInt());
-    verify(bufferedWriter, times(1)).write(anyString());
-    verify(bufferedWriter, times(1)).newLine();
-    verify(bufferedWriter, times(1)).flush();
+    verify(writeType, times(1)).writeProduct(any(Product.class), any(BufferedWriter.class));
   }
 }

@@ -10,12 +10,14 @@ import java.net.Socket;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import task9.com.epam.prykhodko.entity.Handler;
+import task9.com.epam.prykhodko.entity.WriteType;
 import task9.com.epam.prykhodko.entity.serverImpl.HttpServer;
 
 public class HttpHandler implements Handler {
 
   private static final Logger LOGGER = Logger.getLogger(HttpHandler.class);
   private final ServerSocket serverSocket;
+  private WriteType writeType;
   private ProductService productService;
 
   public HttpHandler(ServerSocket serverSocket, ProductService productService) {
@@ -29,11 +31,15 @@ public class HttpHandler implements Handler {
       while (true) {
         Socket s = serverSocket.accept();
         LOGGER.info(CLIENT_ACCEPTED);
-        new Thread(new HttpServer(s, productService)).start();
+        new Thread(new HttpServer(s, productService, writeType)).start();
       }
     } catch (IOException e) {
       LOGGER.error(INCORRECT_INPUT);
     }
   }
 
+  @Override
+  public void setWriteType(WriteType writeType) {
+    this.writeType = writeType;
+  }
 }

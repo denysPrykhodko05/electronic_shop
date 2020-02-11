@@ -10,6 +10,7 @@ import java.net.Socket;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import task9.com.epam.prykhodko.entity.Handler;
+import task9.com.epam.prykhodko.entity.WriteType;
 import task9.com.epam.prykhodko.entity.serverImpl.TcpServer;
 
 public class TcpHandler implements Handler {
@@ -17,6 +18,7 @@ public class TcpHandler implements Handler {
   private static final Logger LOGGER = Logger.getLogger(TcpHandler.class);
   private final ServerSocket serverSocket;
   private final ProductService productService;
+  private WriteType writeType;
 
   public TcpHandler(ServerSocket serverSocket, ProductService productService) {
     this.serverSocket = serverSocket;
@@ -29,10 +31,15 @@ public class TcpHandler implements Handler {
       while (true) {
         Socket s = serverSocket.accept();
         LOGGER.info(CLIENT_ACCEPTED);
-        new Thread(new TcpServer(s,productService)).start();
+        new Thread(new TcpServer(s, productService, writeType)).start();
       }
     } catch (IOException e) {
       LOGGER.error(INCORRECT_INPUT);
     }
+  }
+
+  @Override
+  public void setWriteType(WriteType writeType) {
+    this.writeType = writeType;
   }
 }

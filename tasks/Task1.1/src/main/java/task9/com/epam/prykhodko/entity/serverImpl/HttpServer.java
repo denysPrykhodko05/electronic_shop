@@ -21,30 +21,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import task9.com.epam.prykhodko.entity.Server;
+import task9.com.epam.prykhodko.entity.WriteType;
 import task9.com.epam.prykhodko.util.ServerWriterUtil;
 
 public class HttpServer implements Server {
 
   private static final Logger LOGGER = Logger.getLogger(HttpServer.class);
   private final Map<String, Command> commands = new HashMap<>();
+  private final WriteType writeType;
   private StringBuilder request = new StringBuilder();
   private Socket socket;
   private InputStream is;
   private OutputStream os;
   private ProductService productService;
 
-  public HttpServer(Socket socket, ProductService productService) throws IOException {
+  public HttpServer(Socket socket, ProductService productService, WriteType writeType) throws IOException {
     this.socket = socket;
     this.is = socket.getInputStream();
     this.os = socket.getOutputStream();
     this.productService = productService;
+    this.writeType = writeType;
   }
 
-  @Override
-  public void createConnection() {
+  public void run() {
     try {
-      ServerWriterUtil serverWriterUtil = new ServerWriterUtil();
-      serverWriterUtil.writeByJson(commands, new BufferedWriter(new OutputStreamWriter(os)), request, productService);
+      ServerWriterUtil serverWriterUtil = new ServerWriterUtil(writeType);
+      serverWriterUtil.write(commands, new BufferedWriter(new OutputStreamWriter(os)), request, productService);
       readInputHeaders();
       writeResponse();
     } catch (IOException t) {
@@ -56,10 +58,6 @@ public class HttpServer implements Server {
         LOGGER.error(INCORRECT_INPUT);
       }
     }
-  }
-
-  public void run() {
-    createConnection();
   }
 
   private void writeResponse() throws IOException {

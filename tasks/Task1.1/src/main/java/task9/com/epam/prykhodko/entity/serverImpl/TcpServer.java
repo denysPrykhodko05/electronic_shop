@@ -16,27 +16,31 @@ import java.util.Map.Entry;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import task9.com.epam.prykhodko.entity.Server;
+import task9.com.epam.prykhodko.entity.WriteType;
 import task9.com.epam.prykhodko.util.ServerWriterUtil;
 
 public class TcpServer implements Server {
 
   private static final Logger LOGGER = Logger.getLogger(TcpServer.class);
   private final Map<String, Command> commands = new HashMap<>();
+  private final WriteType writeType;
   private StringBuilder request = new StringBuilder();
   private Socket socket;
   private ProductService productService;
 
-  public TcpServer(Socket socket, ProductService productService) {
+  public TcpServer(Socket socket, ProductService productService, WriteType writeType) {
     this.socket = socket;
     this.productService = productService;
+    this.writeType = writeType;
   }
 
-  public void createConnection() {
+  @Override
+  public void run() {
     BasicConfigurator.configure();
     try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));) {
-      ServerWriterUtil serverWriterUtil = new ServerWriterUtil();
-      serverWriterUtil.writeToTcp(commands, bufferedWriter, request, productService);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
+      ServerWriterUtil serverWriterUtil = new ServerWriterUtil(writeType);
+      serverWriterUtil.write(commands, bufferedWriter, request, productService);
       request.append(bufferedReader.readLine());
 
       for (Entry<String, Command> entry : commands.entrySet()) {
@@ -51,10 +55,5 @@ public class TcpServer implements Server {
     } catch (IOException e) {
       LOGGER.error(INCORRECT_INPUT);
     }
-  }
-
-  @Override
-  public void run() {
-    createConnection();
   }
 }
