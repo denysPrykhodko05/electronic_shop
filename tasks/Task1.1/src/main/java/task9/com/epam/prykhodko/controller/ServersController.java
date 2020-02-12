@@ -14,30 +14,31 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import task9.com.epam.prykhodko.entity.Handler;
 import task9.com.epam.prykhodko.entity.WriteType;
-import task9.com.epam.prykhodko.entity.handlerImpl.HttpHandler;
-import task9.com.epam.prykhodko.entity.handlerImpl.TcpHandler;
+import task9.com.epam.prykhodko.entity.handlerImpl.ServerHandler;
 import task9.com.epam.prykhodko.entity.writeImpl.JsonWrite;
 import task9.com.epam.prykhodko.entity.writeImpl.TcpWrite;
+import task9.com.epam.prykhodko.factory.ServerFactory;
+import task9.com.epam.prykhodko.factory.factoryImpl.HttpServerFactoryImpl;
+import task9.com.epam.prykhodko.factory.factoryImpl.TcpServerFactoryImpl;
 
-public class ServersView implements Runnable {
+public class ServersController implements Runnable {
 
-  private static final Logger LOGGER = Logger.getLogger(ServersView.class);
-  private final Map<String, Handler> handlers = new HashMap<>();
+  private static final Logger LOGGER = Logger.getLogger(ServersController.class);
+  private final Map<String, ServerFactory> factory = new HashMap<>();
   private final Map<String, WriteType> writers = new HashMap<>();
   private final Object monitor;
   private ProductService productService;
 
-  public ServersView(Object monitor, ProductService productService) {
+  public ServersController(Object monitor, ProductService productService) {
     this.monitor = monitor;
     this.productService = productService;
   }
 
-  private void handlerInit() throws IOException {
-    ServerSocket serverSocket = new ServerSocket(3000);
-    TcpHandler tcpHandler = new TcpHandler(serverSocket, productService);
-    HttpHandler httpHandler = new HttpHandler(serverSocket, productService);
-    handlers.put("1", tcpHandler);
-    handlers.put("2", httpHandler);
+  private void factoryMapInit() {
+    ServerFactory httpServerFactory = new HttpServerFactoryImpl();
+    ServerFactory tcpServerFactory = new TcpServerFactoryImpl();
+    factory.put("1", tcpServerFactory);
+    factory.put("2", httpServerFactory);
   }
 
   private void writeTypeInit() {
@@ -49,23 +50,26 @@ public class ServersView implements Runnable {
   public void run() {
     BasicConfigurator.configure();
     Handler handler;
-    try {
+    ServerFactory serverFactory;
+    try (ServerSocket serverSocket = new ServerSocket(3000)) {
       writeTypeInit();
-      handlerInit();
+      factoryMapInit();
       while (true) {
         String command;
         synchronized (monitor) {
           LOGGER.info("What do you want to start? 1-TCP 2-HTTP");
           command = ConsoleHelper.readLine();
           monitor.notify();
-          handler = handlers.get(command);
+          serverFactory = factory.get(command);
+          handler = new ServerHandler(serverSocket, productService);
         }
-        if (Objects.isNull(handler)) {
+        if (Objects.isNull(serverFactory)) {
           LOGGER.info(INCORRECT_INPUT);
           continue;
         }
         WriteType writeType = writers.get(command);
         handler.setWriteType(writeType);
+        handler.setServerFactory(serverFactory);
         LOGGER.info(SERVER_STARTED);
         handler.execute();
         return;

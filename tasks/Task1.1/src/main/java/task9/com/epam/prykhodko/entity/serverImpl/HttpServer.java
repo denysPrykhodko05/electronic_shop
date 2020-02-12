@@ -9,9 +9,7 @@ import com.epam.prykhodko.service.ProductService;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.HashMap;
@@ -20,25 +18,20 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
-import task9.com.epam.prykhodko.entity.Server;
 import task9.com.epam.prykhodko.entity.WriteType;
 import task9.com.epam.prykhodko.util.ServerWriterUtil;
 
-public class HttpServer implements Server {
+public class HttpServer implements Runnable {
 
   private static final Logger LOGGER = Logger.getLogger(HttpServer.class);
   private final Map<String, Command> commands = new HashMap<>();
   private final WriteType writeType;
   private StringBuilder request = new StringBuilder();
   private Socket socket;
-  private InputStream is;
-  private OutputStream os;
   private ProductService productService;
 
-  public HttpServer(Socket socket, ProductService productService, WriteType writeType) throws IOException {
+  public HttpServer(Socket socket, ProductService productService, WriteType writeType) {
     this.socket = socket;
-    this.is = socket.getInputStream();
-    this.os = socket.getOutputStream();
     this.productService = productService;
     this.writeType = writeType;
   }
@@ -46,7 +39,7 @@ public class HttpServer implements Server {
   public void run() {
     try {
       ServerWriterUtil serverWriterUtil = new ServerWriterUtil(writeType);
-      serverWriterUtil.write(commands, new BufferedWriter(new OutputStreamWriter(os)), request, productService);
+      serverWriterUtil.write(commands, new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), request, productService);
       readInputHeaders();
       writeResponse();
     } catch (IOException t) {
@@ -67,7 +60,7 @@ public class HttpServer implements Server {
         return;
       }
     }
-    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os));
+    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
     bufferedWriter.write(HEADER_ERROR + PAGE_NOT_FOUND);
     bufferedWriter.newLine();
     bufferedWriter.flush();
@@ -75,7 +68,7 @@ public class HttpServer implements Server {
   }
 
   private void readInputHeaders() throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+    BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     String buffer = br.readLine();
     Pattern pattern = Pattern.compile("=[\\w+1-9]");
     Matcher matcherWithEqual = pattern.matcher(buffer);

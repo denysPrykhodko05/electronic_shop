@@ -35,7 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import task9.com.epam.prykhodko.controller.ServersView;
+import task9.com.epam.prykhodko.controller.ServersController;
 
 public class ShopViewTask7 {
 
@@ -58,7 +58,7 @@ public class ShopViewTask7 {
     repositoryInit();
     commandInit();
     synchronized (monitor) {
-      Thread server = new Thread(new ServersView(monitor, productServiceImpl));
+      Thread server = new Thread(new ServersController(monitor, productServiceImpl));
       server.setDaemon(true);
       server.start();
       try {

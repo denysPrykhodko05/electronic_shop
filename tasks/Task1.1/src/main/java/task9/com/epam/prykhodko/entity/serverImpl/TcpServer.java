@@ -15,11 +15,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import task9.com.epam.prykhodko.entity.Server;
 import task9.com.epam.prykhodko.entity.WriteType;
 import task9.com.epam.prykhodko.util.ServerWriterUtil;
 
-public class TcpServer implements Server {
+public class TcpServer implements Runnable {
 
   private static final Logger LOGGER = Logger.getLogger(TcpServer.class);
   private final Map<String, Command> commands = new HashMap<>();
