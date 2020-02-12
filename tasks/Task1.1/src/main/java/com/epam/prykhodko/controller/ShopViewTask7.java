@@ -1,5 +1,6 @@
 package com.epam.prykhodko.controller;
 
+import static com.epam.prykhodko.constant.Constants.THREAD_INTERRUPTED;
 import static java.lang.System.lineSeparator;
 
 import com.epam.prykhodko.command.Command;
@@ -13,7 +14,7 @@ import com.epam.prykhodko.command.impl.GetAllProductsCommand;
 import com.epam.prykhodko.command.impl.GetLastFiveProductsCommand;
 import com.epam.prykhodko.command.impl.InavalidNumberCommand;
 import com.epam.prykhodko.command.impl.MakeOrderCommand;
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import com.epam.prykhodko.repository.BasketRepository;
 import com.epam.prykhodko.repository.CacheRepository;
 import com.epam.prykhodko.repository.ProductRepository;
@@ -33,13 +34,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+import task9.com.epam.prykhodko.controller.ServersController;
 
 public class ShopViewTask7 {
 
-  private static final Logger LOGGER = Logger.getLogger(ShopViewTask7.class);
+  private static final Logger LOGGER = Logger.getLogger("controller");
   private static final FileSerializationImpl serializer = new FileSerializationImpl(
       "container.txt");
-
+  private static final Object monitor = new Object();
   private static Command invalidCommandNumber;
   private static ProductRepository productRepositoryImpl;
   private static Map<Integer, Command> commandMap;
@@ -49,28 +52,40 @@ public class ShopViewTask7 {
   private static CacheServiceImpl cacheServiceImpl;
 
   public static void main(String[] args) {
+    DOMConfigurator.configure(
+        "resources\\log4j.xml");
     productRepositoryImpl = serializer.read();
     repositoryInit();
     commandInit();
-    int command = -1;
-    while (command != 0) {
-      LOGGER.info("Enter: " + lineSeparator()
-          + "0 - EXIT" + lineSeparator()
-          + "1 - Show all products" + lineSeparator()
-          + "2 - Add to basket" + lineSeparator()
-          + "3 - Show all from basket" + lineSeparator()
-          + "4 - Show least 5 products in basket" + lineSeparator()
-          + "5 - Make order" + lineSeparator()
-          + "6 - Get order for given period" + lineSeparator()
-          + "7 - Find order for nearest date" + lineSeparator()
-          + "8 - Add product to catalog");
+    synchronized (monitor) {
+      Thread server = new Thread(new ServersController(monitor, productServiceImpl));
+      server.setDaemon(true);
+      server.start();
       try {
-        command = ConsoleHelper.readInt();
-      } catch (IOException | NumberFormatException e) {
-        LOGGER.error("Incorrect input. Try again!!!");
-        continue;
+        monitor.wait();
+      } catch (InterruptedException e) {
+        LOGGER.error(THREAD_INTERRUPTED);
       }
-      commandMap.getOrDefault(command, invalidCommandNumber).execute();
+      int command = -1;
+      while (command != 0) {
+        LOGGER.info("Enter: " + lineSeparator()
+            + "0 - EXIT" + lineSeparator()
+            + "1 - Show all products" + lineSeparator()
+            + "2 - Add to basket" + lineSeparator()
+            + "3 - Show all from basket" + lineSeparator()
+            + "4 - Show least 5 products in basket" + lineSeparator()
+            + "5 - Make order" + lineSeparator()
+            + "6 - Get order for given period" + lineSeparator()
+            + "7 - Find order for nearest date" + lineSeparator()
+            + "8 - Add product to catalog");
+        try {
+          command = ConsoleHelper.readInt();
+        } catch (IOException | NumberFormatException e) {
+          LOGGER.error("Incorrect input. Try again!!!");
+          continue;
+        }
+        commandMap.getOrDefault(command, invalidCommandNumber).execute();
+      }
     }
     serializer.write(productRepositoryImpl);
   }

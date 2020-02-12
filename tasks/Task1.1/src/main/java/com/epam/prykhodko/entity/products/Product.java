@@ -1,6 +1,7 @@
 package com.epam.prykhodko.entity.products;
 
 import com.epam.prykhodko.annotation.Description;
+import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -9,10 +10,12 @@ public class Product implements Serializable {
 
   @Description(title = "id")
   private int id;
-  @Description(title = "price")
-  private BigDecimal price;
   @Description(title = "manufacturer")
+  @Expose
   private String manufacturer;
+  @Description(title = "price")
+  @Expose
+  private BigDecimal price;
 
   public Product() {
 
