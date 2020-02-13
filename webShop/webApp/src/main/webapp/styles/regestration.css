@@ -1,0 +1,53 @@
+.container {
+  width: 15%;
+  padding: 16px;
+}
+
+.commonContainer{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+}
+
+input[type=submit]{
+    position: relative;
+    padding:7px;
+    background:rgba(0, 0, 0, 0);
+    color:darkslategray; border:3px solid gainsboro;
+    border-radius:5px;
+    margin:auto;
+    left: 21%;
+    width:200px;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+#shopName a{
+    position: relative;
+    text-align: left;
+    font-size: 50px;
+    left: 2%;
+    width: 30%;
+    text-shadow: 10px 10px 10px black;
+    color: lime;
+}
+
+.valid{
+  border-color: green;
+}
+
+.invalid{
+  border-color: red;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="../styles/homePage.css" rel="stylesheet">
+  <link href="../styles/regestration.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+  <script src="..\javascript\PasswordValidation.js"></script>
+  <script src="..\javascript\LoginAndEmailValidation.js"></script>
+  <meta charset="UTF-8">
+  <title>Registration</title>
+</head>
+<body>
+  <div id="header">
+    <div id="shopName"> <a href="../index.html">Electronics store</a></div>
+    <div class="menu">
+      <a href="">Products</a>
+      <a href="">Something</a>
+      <a href="">Something more</a>
+    </div>
+    <div id="profile"><img src="../images/profile.png" alt="" width="50px" height="50px"><a href="">Log in</a></div>
+  </div>
+  <form method="POST" name="regFrom" action="../index.html" id="reg" onsubmit="return dataValidation(password, confirmPassword)"</form>
+  <div class="commonContainer">
+    <div class="container">
+      <input type="text" placeholder="Login" name="login" id="login"><br>
+      <input type="text" placeholder="Email" name="email" id="email"><br>
+      <input type="password" placeholder="Password" name="password" id="password"><br>
+      <input type="password" placeholder="Confirm password" name="confirmPassword" id="confirmPassword"><br>
+      <input type="submit" value="Ok"><br>
+    </div>
+  </div>
+  </form>
+</body>
+</html>
