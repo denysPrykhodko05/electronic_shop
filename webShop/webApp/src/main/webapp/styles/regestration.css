@@ -34,16 +34,6 @@ input[type=text]:focus, input[type=password]:focus {
   outline: none;
 }
 
-#shopName a{
-    position: relative;
-    text-align: left;
-    font-size: 50px;
-    left: 2%;
-    width: 30%;
-    text-shadow: 10px 10px 10px black;
-    color: lime;
-}
-
 .valid{
   border-color: green;
 }
