@@ -14,10 +14,17 @@ $(document).ready(function(){
         var form = $("#reg");
         var input=$(this);
         var is_name=input.val();
+        
+        if (is_name.match("")){
+          input.removeClass("invalid");
+          form.addClass("formInvalid");
+        }
+
         if(is_name.match(/^\w{3,16}$/)){
             input.removeClass("invalid").addClass("valid");
             form.removeClass("formInvalid");
         }
+
         else{
             input.removeClass("valid").addClass("invalid");
             form.addClass("formInvalid");
