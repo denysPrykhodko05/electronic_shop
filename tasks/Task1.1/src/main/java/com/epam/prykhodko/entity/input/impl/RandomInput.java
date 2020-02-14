@@ -1,6 +1,6 @@
-package com.epam.prykhodko.entity.invoke.input.impl;
+package com.epam.prykhodko.entity.input.impl;
 
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.SecureRandom;

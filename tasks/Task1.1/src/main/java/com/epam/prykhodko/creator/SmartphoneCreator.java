@@ -2,7 +2,7 @@ package com.epam.prykhodko.creator;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.entity.products.Smartphone;
 import com.epam.prykhodko.entity.products.Telephone;

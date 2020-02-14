@@ -29,6 +29,7 @@ import com.epam.prykhodko.util.LocaleUtil;
 import com.epam.prykhodko.util.files.FileSerializationImpl;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import com.epam.prykhodko.util.readers.InputUtil;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,7 +54,7 @@ public class ShopViewTask7 {
 
   public static void main(String[] args) {
     DOMConfigurator.configure(
-        "resources\\log4j.xml");
+        "resources" + File.separator + "log4j.xml");
     productRepositoryImpl = serializer.read();
     repositoryInit();
     commandInit();

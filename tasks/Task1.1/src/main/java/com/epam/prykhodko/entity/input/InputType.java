@@ -1,4 +1,4 @@
-package com.epam.prykhodko.entity.invoke.input;
+package com.epam.prykhodko.entity.input;
 
 import java.io.IOException;
 import java.math.BigDecimal;

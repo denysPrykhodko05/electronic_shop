@@ -7,7 +7,7 @@ import com.epam.prykhodko.command.Command;
 import com.epam.prykhodko.creator.reflect.NotebookCreator;
 import com.epam.prykhodko.creator.reflect.ProductCreator;
 import com.epam.prykhodko.creator.reflect.SmartphoneCreator;
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.service.ProductService;
 import com.epam.prykhodko.util.readers.ConsoleHelper;

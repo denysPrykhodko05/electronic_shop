@@ -2,9 +2,9 @@ package com.epam.prykhodko.util.readers;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
-import com.epam.prykhodko.entity.invoke.input.InputType;
-import com.epam.prykhodko.entity.invoke.input.impl.ConsoleInput;
-import com.epam.prykhodko.entity.invoke.input.impl.RandomInput;
+import com.epam.prykhodko.entity.input.InputType;
+import com.epam.prykhodko.entity.input.impl.ConsoleInput;
+import com.epam.prykhodko.entity.input.impl.RandomInput;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

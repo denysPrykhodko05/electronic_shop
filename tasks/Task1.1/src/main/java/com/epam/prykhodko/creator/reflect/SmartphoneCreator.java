@@ -1,6 +1,6 @@
 package com.epam.prykhodko.creator.reflect;
 
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import com.epam.prykhodko.entity.products.Smartphone;
 import java.util.Locale;
 

@@ -5,7 +5,7 @@ import static com.epam.prykhodko.constant.Constants.STRING_ZERO;
 import static java.lang.System.lineSeparator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.epam.prykhodko.entity.invoke.input.impl.RandomInput;
+import com.epam.prykhodko.entity.input.impl.RandomInput;
 import com.epam.prykhodko.repository.ProductRepository;
 import com.epam.prykhodko.repository.impl.ProductRepositoryImpl;
 import com.epam.prykhodko.service.ProductService;

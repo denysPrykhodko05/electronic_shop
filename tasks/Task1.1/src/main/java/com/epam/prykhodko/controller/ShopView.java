@@ -11,7 +11,7 @@ import com.epam.prykhodko.command.impl.GetAllProductsCommand;
 import com.epam.prykhodko.command.impl.GetLastFiveProductsCommand;
 import com.epam.prykhodko.command.impl.InavalidNumberCommand;
 import com.epam.prykhodko.command.impl.MakeOrderCommand;
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import com.epam.prykhodko.repository.BasketRepository;
 import com.epam.prykhodko.repository.CacheRepository;
 import com.epam.prykhodko.repository.ProductRepository;

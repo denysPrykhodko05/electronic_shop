@@ -1,5 +1,7 @@
 package com.epam.prykhodko.constant;
 
+import static java.lang.System.lineSeparator;
+
 public class Constants {
 
   public static final String REG_DOT = "\\.";
@@ -21,8 +23,10 @@ public class Constants {
   public static final String ENTER_MAX_SIZE_STRING = "Enter the max size in kilobytes: ";
   public static final String ENTER_FIRST_DATE_STRING = "Enter the first date(dd/mm/yyyy hh:mm): ";
   public static final String ENTER_LAST_DATE_STRING = "Enter the last date(dd/mm/yyyy hh:mm): ";
-  public static final String HEADER_CORRECT = "HTTP/1.1 200 OK\r\n Content-Type: text/html\r\n\r\n";
-  public static final String HEADER_ERROR = "HTTP/1.1 404\r\n Content-Type: text/html\r\n\r\n";
+  public static final String HEADER_CORRECT = "HTTP/1.1 200 OK" + lineSeparator() + "Content-Type: text/html" + lineSeparator() + lineSeparator();
+  public static final String HEADER_ERROR = "HTTP/1.1 404" + lineSeparator() + "Content-Type: text/html" + lineSeparator();
+  public static final String HEADER_ERROR_INCORRECT_ID = "HTTP/1.1 400" + lineSeparator() + "Content-Type: text/html" + lineSeparator();
+  public static final String BAD_REQUEST = "BAD_REQUEST";
   public static final String CLIENT_ACCEPTED = "Client accepted";
   public static final String PAGE_NOT_FOUND = "Page not found";
   public static final String SERVER_STARTED = "Server started";

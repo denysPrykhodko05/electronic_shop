@@ -3,7 +3,7 @@ package com.epam.prykhodko.creator.reflect;
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
 import com.epam.prykhodko.annotation.Description;
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.util.convert.TypesUtilImpl;
 import java.io.IOException;

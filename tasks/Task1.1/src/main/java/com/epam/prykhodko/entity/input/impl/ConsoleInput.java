@@ -1,8 +1,8 @@
-package com.epam.prykhodko.entity.invoke.input.impl;
+package com.epam.prykhodko.entity.input.impl;
 
 import static com.epam.prykhodko.constant.Constants.INCORRECT_INPUT;
 
-import com.epam.prykhodko.entity.invoke.input.InputType;
+import com.epam.prykhodko.entity.input.InputType;
 import com.epam.prykhodko.util.readers.ConsoleHelper;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 public class ConsoleInput implements InputType {
 
-  public static final  Logger LOGGER = Logger.getLogger(ConsoleInput.class);
+  public static final Logger LOGGER = Logger.getLogger(ConsoleInput.class);
 
   @Override
   public int readInt() {
