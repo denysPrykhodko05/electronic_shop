@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <link href="../styles/homePage.css" rel="stylesheet">
-  <link href="../styles/regestration.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-  <script src="..\javascript\PasswordValidation.js"></script>
-  <script src="..\javascript\LoginAndEmailValidation.js"></script>
-  <meta charset="UTF-8">
-  <title>Registration</title>
+    <link href="../styles/homePage.css" rel="stylesheet">
+    <link href="../styles/regestration.css" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="..\javascript\PasswordValidation.js"></script>
+    <script src="..\javascript\LoginAndEmailValidation.js"></script>
+    <meta charset="UTF-8">
+    <title>Registration</title>
 </head>
+
 <body>
-  <div id="header">
-    <div id="shopName"> <a href="../index.html">Electronics store</a></div>
-    <div class="menu">
-      <a href="products.html">Products</a>
-      <a href="">Something</a>
-      <a href="">Something more</a>
+    <div id="header">
+        <div id="shopName"> <a href="../index.html">Electronics store</a></div>
+        <div class="menu">
+            <a href="products.html">Products</a>
+            <a href="">Something</a>
+            <a href="">Something more</a>
+        </div>
+        <div id="profile"><img alt="" height="50px" src="../images/profile.png" width="50px"><a href="">Log in</a></div>
     </div>
-    <div id="profile"><img src="../images/profile.png" alt="" width="50px" height="50px"><a href="">Log in</a></div>
-  </div>
-  <form method="POST" name="regFrom" action="../index.html" id="reg" onsubmit="return dataValidation(password, confirmPassword)"</form>
-  <div class="commonContainer">
-    <div class="container">
-      <input type="text" placeholder="Login" name="login" id="login"><br>
-      <input type="text" placeholder="Email" name="email" id="email"><br>
-      <input type="password" placeholder="Password" name="password" id="password"><br>
-      <input type="password" placeholder="Confirm password" name="confirmPassword" id="confirmPassword"><br>
-      <input type="submit" value="Ok"><br>
-    </div>
-  </div>
-  </form>
+    <form action="../index.html" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password, confirmPassword)" </form>
+        <div class="commonContainer">
+            <div class="container">
+                <input id="login" name="login" placeholder="Login" type="text"><br>
+                <input id="email" name="email" placeholder="Email" type="text"><br>
+                <input id="password" name="password" placeholder="Password" type="password"><br>
+                <input id="confirmPassword" name="confirmPassword" placeholder="Confirm password" type="password"><br>
+                <input type="checkbox"> Agree with <a href="">User agreement</a><br><br>
+                <input type="submit" value="Ok"><br>
+            </div>
+        </div>
+    </form>
 </body>
+
 </html>
