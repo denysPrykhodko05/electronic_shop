@@ -5,8 +5,9 @@
     <link href="../styles/homePage.css" rel="stylesheet">
     <link href="../styles/regestration.css" rel="stylesheet">
     <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="..\javascript\PasswordValidation.js"></script>
-    <script src="..\javascript\LoginAndEmailValidation.js"></script>
+    <script src="..\javascript\constants\constants.js"></script>
+    <script src="..\javascript\validators\PasswordValidation.js"></script>
+    <script src="..\javascript\validators\LoginAndEmailValidation.js"></script>
     <meta charset="UTF-8">
     <title>Registration</title>
 </head>
@@ -28,7 +29,7 @@
                 <input id="email" name="email" placeholder="Email" type="text"><br>
                 <input id="password" name="password" placeholder="Password" type="password"><br>
                 <input id="confirmPassword" name="confirmPassword" placeholder="Confirm password" type="password"><br>
-                <input type="checkbox"> Agree with <a href="">User agreement</a><br><br>
+                <input id="privacy-policy" type="checkbox"> Agree with <a href="">User agreement</a><br><br>
                 <input type="submit" value="Ok"><br>
             </div>
         </div>
