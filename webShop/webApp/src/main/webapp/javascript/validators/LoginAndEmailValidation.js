@@ -1,73 +1,68 @@
 $(document).ready(function() {
 
-    loginRealTimeValidation();
-    emailRealTimeValidation();
+    realTimeValidation(LOGIN_ID, REGEX_LOGIN);
+    realTimeValidation(EMAIL_ID, REGEX_EMAIL);
 
-    $(REG_FORM).submit(function() {
-        loginValidation($(REG_LOGIN));
-        emailValidation($(REG_EMAIL));
-        submit($(REG_FORM));
+    $(FORM_ID).submit(function() {
+        var email = $(EMAIL_ID).length;
+        if (dataValidationOnSubmit($(LOGIN_ID), REGEX_LOGIN) && email > 0) {
+            dataValidationOnSubmit($(EMAIL_ID), REGEX_EMAIL);
+        };
+        if ($(PRIVACY_POLICY_ID).length != 0) {
+            policyValidation($(PRIVACY_POLICY_ID).prop(CHECKED_STRING));
+        }
+        submit($(FORM_ID));
     });
 
-    function loginRealTimeValidation() {
-        $(REG_LOGIN).on(REG_INPUT, function() {
-            var form = $(REG_FORM);
-            var input = $(REG_LOGIN);
-            var login = input.val();
-            if (login.match(REGEX_LOGIN)) {
-                input.removeClass(REG_INVALID).addClass(REG_VALID);
-                form.removeClass(REG_FORM_INVALID);
-            } else {
-                input.removeClass(REG_VALID).addClass(REG_INVALID);
-                form.addClass(REG_FORM_INVALID);
-            }
-        })
-    }
-
-
-    function emailRealTimeValidation() {
-        $(REG_EMAIL).on(REG_INPUT, function() {
-            var form = $(REG_FORM);
-            var input = $(REG_EMAIL);
+    function realTimeValidation(data, regex) {
+        $(data).on(INPUT_STRING, function() {
+            var form = $(FORM_ID);
+            var input = $(data);
             var email = input.val();
-            if (email.match(EMAIL_REG)) {
-                input.removeClass(REG_INVALID).addClass(REG_VALID);
-                form.removeClass(REG_FORM_INVALID);
-            } else {
-                input.removeClass(REG_VALID).addClass(REG_INVALID);
-                form.addClass(REG_FORM_INVALID);
-            }
+            addValidationClass(email, regex, input, form);
         })
     }
 
-    function loginValidation(login) {
-        var value = login.val();
-        if (!value.match(REGEX_LOGIN)) {
-            $(REG_FORM).addClass(REG_FORM_INVALID);
-            return;
+    function addValidationClass(input, REGEX, element, form) {
+        if (input.match(REGEX)) {
+            element.removeClass(INVALID_STRING).addClass(VALID_STRING);
+            form.removeClass(FORM_INVALID_STRING);
+        } else {
+            element.removeClass(VALID_STRING).addClass(INVALID_STRING);
+            form.addClass(FORM_INVALID_STRING);
         }
-        $(REG_FORM).removeClass(REG_FORM_INVALID);
     }
 
-    function emailValidation(email) {
-        var value = email.val();
-        if (!value.match(EMAIL_REG) || $(REG_FORM).hasClass(REG_FORM_INVALID)) {
-            $(REG_FORM).addClass(REG_FORM_INVALID);
+    function dataValidationOnSubmit(data, regex) {
+        var value = data.val();
+        if (!value.match(regex) || $(FORM_ID).hasClass(FORM_INVALID_STRING)) {
+            $(FORM_ID).addClass(FORM_INVALID_STRING);
+            if (data.hasClass(INVALID_STRING)) {
+                alert(INCORRECT_LOGIN + " or " + INCORRECT_EMAIL);
+                return false;
+            }
+        }
+        $(FORM_ID).removeClass(FORM_INVALID_STRING);
+        return true;
+    }
+
+    function policyValidation(policy) {
+        if ($(FORM_ID).hasClass(FORM_INVALID_STRING)) {
             return;
         }
-        $(REG_FORM).removeClass(REG_FORM_INVALID);
+
+        if (!policy) {
+            alert(AGREE_WITH_PRIVACY_POLICY_STRING);
+            $(FORM_ID).addClass(FORM_INVALID_STRING);
+            return;
+        }
+        $(FORM_ID).removeClass(FORM_INVALID_STRING);
     }
 
     function submit(form) {
-        var valid = form.hasClass(REG_FORM_INVALID);
-        var policy = $(REG_PRIVACY_POLICY).prop(REG_CHECKED);
+        var valid = form.hasClass(FORM_INVALID_STRING);
         if (valid) {
-            alert(REG_INCORRECT_INPUT)
             event.preventDefault();
-            return;
-        }
-        if (!policy) {
-            alert(REG_AGREE_WITH_PRIVACY_POLICY);
             return;
         }
         form.submit();
