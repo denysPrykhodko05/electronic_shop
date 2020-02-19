@@ -35,6 +35,11 @@
         border: 1px solid gainsboro;
     }
     
+    [div=profile] img {
+        height: 50px;
+        width: 50px;
+    }
+    
     div[class="content"] img {
         vertical-align: middle;
         margin-top: 30px;
