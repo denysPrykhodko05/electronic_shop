@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>2.0</jsp-version>
+  <short-name>CaptchaTag</short-name>
+
+  <tag>
+    <name>CaptchaTag</name>
+    <tag-class>com.epam.prykhodko.jsp_tag.CaptchaTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+
+    </attribute>
+
+  </tag>
+</taglib>

@@ -15,4 +15,5 @@ public class Constants {
     public static final String POLICY = "privacy-policy";
     public static final String MAILS = "mails";
     public static final String REG_CAPTCHA = "regCaptcha";
+    public static final String EMPTY_STRING = "";
 }

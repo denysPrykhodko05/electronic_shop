@@ -11,8 +11,7 @@ public class CaptchaImage {
 
     String captchaString = "";
 
-    // Function to generate random captcha image and returns the BufferedImage
-    public BufferedImage getCaptchaImage() {
+    public BufferedImage getCaptchaImage(String value) {
         try {
             Color backgroundColor = Color.white;
             Color borderColor = Color.black;
@@ -30,7 +29,6 @@ public class CaptchaImage {
             g.setColor(backgroundColor);
             g.fillRect(0, 0, width, height);
 
-            // lets make some noisey circles
             g.setColor(circleColor);
             for (int i = 0; i < circlesToDraw; i++) {
                 int L = (int) (Math.random() * height / 2.0);
@@ -44,24 +42,16 @@ public class CaptchaImage {
             int maxAdvance = fontMetrics.getMaxAdvance();
             int fontHeight = fontMetrics.getHeight();
 
-            // i removed 1 and l and i because there are confusing to users...
-            // Z, z, and N also get confusing when rotated
-            // this should ideally be done for every language...
-            // 0, O and o removed because there are confusing to users...
-            // i like controlling the characters though because it helps prevent confusion
-            String elegibleChars = "0123456789";
+            String elegibleChars = value;
+
             char[] chars = elegibleChars.toCharArray();
             float spaceForLetters = -horizMargin * 2 + width;
             float spacePerChar = spaceForLetters / (charsToPrint - 1.0f);
             StringBuffer finalString = new StringBuffer();
             for (int i = 0; i < charsToPrint; i++) {
-                double randomValue = Math.random();
-                int randomIndex = (int) Math.round(randomValue * (chars.length - 1));
-                char characterToShow = chars[randomIndex];
+                char characterToShow = chars[i];
                 finalString.append(characterToShow);
 
-                // this is a separate canvas used for the character so that
-                // we can rotate it independently
                 int charWidth = fontMetrics.charWidth(characterToShow);
                 int charDim = Math.max(maxAdvance, fontHeight);
                 int halfCharDim = (int) (charDim / 2);

@@ -7,7 +7,7 @@
 
   <context-param>
     <param-name>captcha</param-name>
-    <param-value>cookie</param-value>
+    <param-value>hiddenField</param-value>
   </context-param>
 
   <listener>
