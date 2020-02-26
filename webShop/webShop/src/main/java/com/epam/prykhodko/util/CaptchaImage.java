@@ -1,4 +1,4 @@
-package com.epam.prykhodko.entity;
+package com.epam.prykhodko.util;
 
 import java.awt.Color;
 import java.awt.Font;

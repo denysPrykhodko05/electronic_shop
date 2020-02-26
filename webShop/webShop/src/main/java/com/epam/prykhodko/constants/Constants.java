@@ -10,6 +10,7 @@ public class Constants {
     public static final String SURNAME = "surname";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+    public static final String CO_PASSWORD = "confirmPassword";
     public static final String LOGIN = "login";
     public static final String POLICY = "privacy-policy";
     public static final String MAILS = "mails";
