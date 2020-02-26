@@ -7,11 +7,13 @@ import static com.epam.prykhodko.constants.Constants.MAILS;
 import static com.epam.prykhodko.constants.Constants.NAME;
 import static com.epam.prykhodko.constants.Constants.PASSWORD;
 import static com.epam.prykhodko.constants.Constants.POLICY;
+import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.SURNAME;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class FormBean {
+public class RegFormBean {
 
     private final HttpServletRequest httpServletRequest;
     private String name;
@@ -22,8 +24,9 @@ public class FormBean {
     private String confirmPassword;
     private String policy;
     private String mails;
+    private String captcha;
 
-    public FormBean(HttpServletRequest httpServletRequest) {
+    public RegFormBean(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
         name = httpServletRequest.getParameter(NAME);
         surname = httpServletRequest.getParameter(SURNAME);
@@ -33,6 +36,7 @@ public class FormBean {
         confirmPassword = httpServletRequest.getParameter(CO_PASSWORD);
         policy = httpServletRequest.getParameter(POLICY);
         mails = httpServletRequest.getParameter(MAILS);
+        captcha = httpServletRequest.getParameter(REG_CAPTCHA);
     }
 
     public String getName() {
@@ -69,5 +73,9 @@ public class FormBean {
 
     public HttpServletRequest getHttpServletRequest() {
         return httpServletRequest;
+    }
+
+    public String getCaptcha() {
+        return captcha;
     }
 }

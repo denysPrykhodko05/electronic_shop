@@ -2,7 +2,7 @@ package com.epam.prykhodko.listener;
 
 import com.epam.prykhodko.entity.CaptchaKeeper;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.entity.captcha_keeper_impl.ContextKeeper;
+import com.epam.prykhodko.entity.captcha_keeper_impl.CookieKeeper;
 import com.epam.prykhodko.entity.captcha_keeper_impl.SessionKeeper;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class ContextListener implements ServletContextListener {
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
         Map<String, String> captchaKeys = new HashMap<>();
         keepers.put("session", new SessionKeeper());
-        keepers.put("context", new ContextKeeper());
+        keepers.put("cookie", new CookieKeeper());
         User user1 = new User("Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12");
         User user2 = new User("Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33");
         List<User> users = new ArrayList<>(Arrays.asList(user1, user2));

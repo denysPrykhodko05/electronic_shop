@@ -25,8 +25,8 @@ public class CaptchaServlet extends HttpServlet {
         Map<String, CaptchaKeeper> captchaKeeper = (Map<String, CaptchaKeeper>) servletContext.getAttribute("keepers");
         CaptchaImage obj = new CaptchaImage();
         BufferedImage ima = obj.getCaptchaImage();
-        ImageIO.write(ima, "jpg", httpServletResponse.getOutputStream());
         String captchaStr = obj.getCaptchaString();
-        captchaKeeper.get(keeper).save(httpServletRequest, UUID.randomUUID().toString(), captchaStr);
+        captchaKeeper.get(keeper).save(httpServletRequest, httpServletResponse, UUID.randomUUID().toString(), captchaStr);
+        ImageIO.write(ima, "jpg", httpServletResponse.getOutputStream());
     }
 }

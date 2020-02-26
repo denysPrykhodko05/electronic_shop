@@ -10,34 +10,42 @@ import static com.epam.prykhodko.constants.Constants.NAME;
 import static com.epam.prykhodko.constants.Constants.PASSWORD;
 import static com.epam.prykhodko.constants.Constants.PASSWORD_REGEX;
 import static com.epam.prykhodko.constants.Constants.POLICY;
+import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.SURNAME;
 import static com.epam.prykhodko.constants.Constants.USER_PERSONAL_DATA_REGEX;
 
-import com.epam.prykhodko.bean.FormBean;
+import com.epam.prykhodko.bean.RegFormBean;
+import com.epam.prykhodko.entity.CaptchaKeeper;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 public abstract class Validator {
 
-
-    public static boolean formIsValid(FormBean formBean) {
+    public static boolean regFormIsValid(RegFormBean formBean) {
         Map<String, String> errors = new LinkedHashMap<>();
         Map<String, String> userData = new LinkedHashMap<>();
+        HttpSession session = formBean.getHttpServletRequest().getSession();
+        ServletContext servletContext = formBean.getHttpServletRequest().getServletContext();
+        Map<String, String> captchaKeys = (Map<String, String>) servletContext.getAttribute("captchaKeys");
+        String keeper = servletContext.getInitParameter("captcha");
+        Map<String, CaptchaKeeper> keepers = (Map<String, CaptchaKeeper>) servletContext.getAttribute("keepers");
+        CaptchaKeeper captchaKeeper = keepers.get(keeper);
         checkField(NAME, formBean.getName(), USER_PERSONAL_DATA_REGEX, errors);
         checkField(SURNAME, formBean.getSurname(), USER_PERSONAL_DATA_REGEX, errors);
         checkField(LOGIN, formBean.getLogin(), LOGIN_REGEX, errors);
-        checkField(PASSWORD, formBean.getPassword(), PASSWORD_REGEX, errors);
-        if (!formBean.getPassword().equals(formBean.getConfirmPassword())) {
-            errors.put(CO_PASSWORD, "Incorrect confirm password");
-        }
         checkField(EMAIL, formBean.getEmail(), EMAIL_REGEX, errors);
+        checkField(PASSWORD, formBean.getPassword(), PASSWORD_REGEX, errors);
+        checkField(CO_PASSWORD, formBean.getPassword(), formBean.getConfirmPassword(), errors);
+        checkCaptcha(captchaKeys, captchaKeeper.get(formBean.getHttpServletRequest()), formBean.getCaptcha(), errors);
         checkCheckbox(POLICY, formBean.getPolicy(), errors);
         checkCheckbox(MAILS, formBean.getMails(), errors);
         if (!errors.isEmpty()) {
             fillUserData(formBean, userData);
-            HttpSession session = formBean.getHttpServletRequest().getSession();
             session.setAttribute("errors", errors);
             session.setAttribute("userData", userData);
             return false;
@@ -57,10 +65,25 @@ public abstract class Validator {
         }
     }
 
-    private static void fillUserData(FormBean formBean, Map<String, String> userData) {
+    private static void fillUserData(RegFormBean formBean, Map<String, String> userData) {
         userData.put(NAME, formBean.getName());
         userData.put(SURNAME, formBean.getSurname());
         userData.put(LOGIN, formBean.getLogin());
         userData.put(EMAIL, formBean.getEmail());
+    }
+
+    private static boolean checkCaptcha(Map<String, String> captchaKeys, String userKey, String captchaValue, Map<String, String> errors) {
+        Optional<Entry<String, String>> key = captchaKeys.entrySet().stream()
+            .filter(e -> e.getKey().equals(userKey)
+                && e.getValue().equals(captchaValue))
+            .findFirst();
+
+        if (key.isPresent()) {
+            captchaKeys.remove(key.get().getKey());
+            return true;
+        }
+        errors.put(REG_CAPTCHA, "Incorrect captcha");
+        captchaKeys.remove(userKey);
+        return false;
     }
 }

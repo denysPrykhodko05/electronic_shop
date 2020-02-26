@@ -1,7 +1,7 @@
 package com.epam.prykhodko.servlet;
 
 
-import com.epam.prykhodko.bean.FormBean;
+import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
@@ -25,8 +25,8 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        FormBean formBean = new FormBean(httpServletRequest);
-        if (!Validator.formIsValid(formBean)) {
+        RegFormBean formBean = new RegFormBean(httpServletRequest);
+        if (!Validator.regFormIsValid(formBean)) {
             redirect(httpServletRequest, httpServletResponse);
             return;
         }

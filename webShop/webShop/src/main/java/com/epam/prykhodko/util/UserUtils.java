@@ -5,7 +5,7 @@ import static com.epam.prykhodko.constants.Constants.LOGIN;
 import static com.epam.prykhodko.constants.Constants.NAME;
 import static com.epam.prykhodko.constants.Constants.SURNAME;
 
-import com.epam.prykhodko.bean.FormBean;
+import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.entity.User;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 
 public abstract class UserUtils {
 
-    private static void fillUserData(FormBean formBean, Map<String, String> userData) {
+    private static void fillUserData(RegFormBean formBean, Map<String, String> userData) {
         userData.put(NAME, formBean.getName());
         userData.put(SURNAME, formBean.getSurname());
         userData.put(LOGIN, formBean.getLogin());
         userData.put(EMAIL, formBean.getEmail());
     }
 
-    public static User createUser(FormBean formBean, HttpServletRequest httpServletRequest) {
+    public static User createUser(RegFormBean formBean, HttpServletRequest httpServletRequest) {
         ServletContext servletContext = httpServletRequest.getServletContext();
         List<User> users = (List<User>) servletContext.getAttribute("users");
         Map<String, String> userData = new LinkedHashMap<>();
