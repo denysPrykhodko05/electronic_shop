@@ -14,7 +14,7 @@
     <param name="append" value="false"/>
     <param name="maxFileSize" value="10MB"/>
     <param name="maxBackupIndex" value="10"/>
-    <param name="file" value="C:\task1\git pracrice I\webShop\webShop/loggerOutput.log"/>
+    <param name="file" value="C:/task1/git pracrice I/pre_prod_java_q4q1_2019/tasks/loggerOutput.log"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern"
         value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
@@ -22,18 +22,6 @@
   </appender>
 
   <logger name="com" additivity="false">
-    <level value="info"/>
-    <appender-ref ref="console"/>
-    <appender-ref ref="file"/>
-  </logger>
-
-  <logger name="task9" additivity="false">
-    <level value="info"/>
-    <appender-ref ref="console"/>
-    <appender-ref ref="file"/>
-  </logger>
-
-  <logger name="com.epam.prykhodko.controller.ShopViewTask7" additivity="false">
     <level value="info"/>
     <appender-ref ref="console"/>
     <appender-ref ref="file"/>

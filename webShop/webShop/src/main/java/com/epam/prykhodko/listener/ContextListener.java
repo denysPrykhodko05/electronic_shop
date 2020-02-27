@@ -1,6 +1,7 @@
 package com.epam.prykhodko.listener;
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
+import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
 import static com.epam.prykhodko.constants.Constants.COOKIE;
 import static com.epam.prykhodko.constants.Constants.HIDDEN_FIELD;
 import static com.epam.prykhodko.constants.Constants.KEEPERS;
@@ -42,7 +43,7 @@ public class ContextListener implements ServletContextListener {
         List<User> users = new ArrayList<>(Arrays.asList(user1, user2));
         servletContext.setAttribute(USERS, users);
         servletContext.setAttribute(KEEPERS, keepers);
-        servletContext.setAttribute(CAPTCHA_KEY, captchaKeys);
+        servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
     }
 
     @Override

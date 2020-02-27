@@ -32,8 +32,9 @@ public class CaptchaServlet extends HttpServlet {
         CaptchaImage obj = new CaptchaImage();
         BufferedImage ima = obj.getCaptchaImage(session.getAttribute(CAPTCHA_VALUE).toString());
         String captchaStr = obj.getCaptchaString();
-        CaptchaKeeper cK = captchaKeepers.getOrDefault(keeper, new SessionKeeper());
-        cK.save(httpServletRequest, httpServletResponse, session.getAttribute(CAPTCHA_KEY).toString(), captchaStr);
+        String ck= (String) session.getAttribute(CAPTCHA_KEY);
+        captchaKeepers.getOrDefault(keeper, new SessionKeeper())
+            .save(httpServletRequest, httpServletResponse, ck, captchaStr);
         ImageIO.write(ima, "jpg", httpServletResponse.getOutputStream());
     }
 }

@@ -1,6 +1,7 @@
 package com.epam.prykhodko.jsp_tag;
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
+import static com.epam.prykhodko.constants.Constants.CAPTCHA_TIME;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_VALUE;
 import static com.epam.prykhodko.constants.Constants.TIMER;
 import static com.epam.prykhodko.constants.Constants.USER_KEY;
@@ -46,7 +47,7 @@ public class CaptchaTag extends SimpleTagSupport {
     private void startTimer(HttpSession session, String key) {
         session.setAttribute(TIMER, true);
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.schedule(new TimerThread(session, key), 120, TimeUnit.SECONDS);
+        executorService.schedule(new TimerThread(session, key), CAPTCHA_TIME, TimeUnit.SECONDS);
         executorService.shutdown();
     }
 }

@@ -2,6 +2,7 @@ package com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
+import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
 import static com.epam.prykhodko.constants.Constants.CO_PASSWORD;
 import static com.epam.prykhodko.constants.Constants.EMAIL;
 import static com.epam.prykhodko.constants.Constants.EMAIL_REGEX;
@@ -46,7 +47,7 @@ public class Validator {
         Map<String, String> userData = new LinkedHashMap<>();
         HttpSession session = formBean.getHttpServletRequest().getSession();
         ServletContext servletContext = formBean.getHttpServletRequest().getServletContext();
-        Map<String, String> captchaKeys = (Map<String, String>) servletContext.getAttribute(CAPTCHA_KEY);
+        Map<String, String> captchaKeys = (Map<String, String>) servletContext.getAttribute(CAPTCHA_KEYS);
         String keeper = servletContext.getInitParameter(CAPTCHA);
         Map<String, CaptchaKeeper> keepers = (Map<String, CaptchaKeeper>) servletContext.getAttribute(KEEPERS);
         CaptchaKeeper captchaKeeper = keepers.get(keeper);
