@@ -1,6 +1,10 @@
 package com.epam.prykhodko.servlet;
 
 
+import static com.epam.prykhodko.constants.Constants.ERRORS;
+import static com.epam.prykhodko.constants.Constants.REGISTRATION_JSP_LINK;
+import static com.epam.prykhodko.constants.Constants.USER_DATA;
+
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.util.UserUtils;
@@ -19,9 +23,9 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        HttpSession session =httpServletRequest.getSession();
-        session.removeAttribute("errors");
-        session.removeAttribute("userData");
+        HttpSession session = httpServletRequest.getSession();
+        session.removeAttribute(ERRORS);
+        session.removeAttribute(USER_DATA);
         redirect(httpServletRequest, httpServletResponse);
     }
 
@@ -41,6 +45,6 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     private void redirect(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        httpServletRequest.getRequestDispatcher("jsp/registration.jsp").forward(httpServletRequest, httpServletResponse);
+        httpServletRequest.getRequestDispatcher(REGISTRATION_JSP_LINK).forward(httpServletRequest, httpServletResponse);
     }
 }

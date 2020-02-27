@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteByLogin(String login) {
-        List<User> users =userRepository.get();
+        List<User> users = userRepository.get();
         Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
         if (user.isPresent()) {
             return users.remove(user.get());
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByLogin(String login) {
-        List<User> users =userRepository.get();
+        List<User> users = userRepository.get();
         Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
         if (user.isPresent()) {
             return user.get();

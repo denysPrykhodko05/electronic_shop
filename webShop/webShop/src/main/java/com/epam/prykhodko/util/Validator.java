@@ -1,8 +1,14 @@
 package com.epam.prykhodko.util;
 
+import static com.epam.prykhodko.constants.Constants.CAPTCHA;
+import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
 import static com.epam.prykhodko.constants.Constants.CO_PASSWORD;
 import static com.epam.prykhodko.constants.Constants.EMAIL;
 import static com.epam.prykhodko.constants.Constants.EMAIL_REGEX;
+import static com.epam.prykhodko.constants.Constants.ERRORS;
+import static com.epam.prykhodko.constants.Constants.INCORRECT_CAPTCHA;
+import static com.epam.prykhodko.constants.Constants.INCORRECT_INPUT;
+import static com.epam.prykhodko.constants.Constants.KEEPERS;
 import static com.epam.prykhodko.constants.Constants.LOGIN;
 import static com.epam.prykhodko.constants.Constants.LOGIN_REGEX;
 import static com.epam.prykhodko.constants.Constants.MAILS;
@@ -12,7 +18,11 @@ import static com.epam.prykhodko.constants.Constants.PASSWORD_REGEX;
 import static com.epam.prykhodko.constants.Constants.POLICY;
 import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.SURNAME;
+import static com.epam.prykhodko.constants.Constants.TIMER;
+import static com.epam.prykhodko.constants.Constants.TIMES_UP;
+import static com.epam.prykhodko.constants.Constants.USER_DATA;
 import static com.epam.prykhodko.constants.Constants.USER_PERSONAL_DATA_REGEX;
+import static com.epam.prykhodko.constants.Constants.YOU_DONT_CHOOSE;
 
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
@@ -36,9 +46,9 @@ public class Validator {
         Map<String, String> userData = new LinkedHashMap<>();
         HttpSession session = formBean.getHttpServletRequest().getSession();
         ServletContext servletContext = formBean.getHttpServletRequest().getServletContext();
-        Map<String, String> captchaKeys = (Map<String, String>) servletContext.getAttribute("captchaKeys");
-        String keeper = servletContext.getInitParameter("captcha");
-        Map<String, CaptchaKeeper> keepers = (Map<String, CaptchaKeeper>) servletContext.getAttribute("keepers");
+        Map<String, String> captchaKeys = (Map<String, String>) servletContext.getAttribute(CAPTCHA_KEY);
+        String keeper = servletContext.getInitParameter(CAPTCHA);
+        Map<String, CaptchaKeeper> keepers = (Map<String, CaptchaKeeper>) servletContext.getAttribute(KEEPERS);
         CaptchaKeeper captchaKeeper = keepers.get(keeper);
         checkTimer(session, errors);
         checkField(NAME, formBean.getName(), USER_PERSONAL_DATA_REGEX, errors);
@@ -52,28 +62,28 @@ public class Validator {
         checkCheckbox(MAILS, formBean.getMails(), errors);
         if (!errors.isEmpty()) {
             fillUserData(formBean, userData);
-            session.setAttribute("errors", errors);
-            session.setAttribute("userData", userData);
+            session.setAttribute(ERRORS, errors);
+            session.setAttribute(USER_DATA, userData);
             return false;
         }
         return true;
     }
 
     private static void checkTimer(HttpSession session, Map<String, String> errors) {
-        if (!(boolean) session.getAttribute("timer")) {
-            errors.put("Timer", "Times up");
+        if (!(boolean) session.getAttribute(TIMER)) {
+            errors.put(TIMER, TIMES_UP);
         }
     }
 
     private static void checkField(String parameter, String data, String regex, Map<String, String> errors) {
         if (!data.matches(regex)) {
-            errors.put(parameter, "Incorrect input of " + parameter);
+            errors.put(parameter, INCORRECT_INPUT + parameter);
         }
     }
 
     private static void checkCheckbox(String parameter, String value, Map<String, String> errors) {
         if (Objects.isNull(value)) {
-            errors.put(parameter, "You don't choose " + parameter);
+            errors.put(parameter, YOU_DONT_CHOOSE + parameter);
         }
     }
 
@@ -94,7 +104,7 @@ public class Validator {
             captchaKeys.remove(key.get().getKey());
             return true;
         }
-        errors.put(REG_CAPTCHA, "Incorrect captcha");
+        errors.put(REG_CAPTCHA, INCORRECT_CAPTCHA);
         captchaKeys.remove(userKey);
         return false;
     }

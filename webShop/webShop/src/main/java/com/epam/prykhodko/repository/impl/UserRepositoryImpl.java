@@ -4,7 +4,6 @@ import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
 

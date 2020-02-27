@@ -1,5 +1,7 @@
 package com.epam.prykhodko.util;
 
+import static com.epam.prykhodko.constants.Constants.EMPTY_STRING;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -9,7 +11,7 @@ import java.awt.image.BufferedImage;
 
 public class CaptchaImage {
 
-    String captchaString = "";
+    private String captchaString = EMPTY_STRING;
 
     public BufferedImage getCaptchaImage(String value) {
         try {
