@@ -24,7 +24,11 @@ import java.util.Optional;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-public abstract class Validator {
+public class Validator {
+
+    private Validator() {
+
+    }
 
     @SuppressWarnings("unchecked")
     public static boolean regFormIsValid(RegFormBean formBean) {

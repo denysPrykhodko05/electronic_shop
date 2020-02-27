@@ -13,7 +13,11 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-public abstract class UserUtils {
+public class UserUtils {
+
+    private UserUtils(){
+
+    }
 
     private static void fillUserData(RegFormBean formBean, Map<String, String> userData) {
         userData.put(NAME, formBean.getName());

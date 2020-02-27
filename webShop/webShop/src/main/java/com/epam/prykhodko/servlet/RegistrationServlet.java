@@ -12,14 +12,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        httpServletRequest.getSession().removeAttribute("errors");
-        httpServletRequest.getSession().removeAttribute("userData");
+        HttpSession session =httpServletRequest.getSession();
+        session.removeAttribute("errors");
+        session.removeAttribute("userData");
         redirect(httpServletRequest, httpServletResponse);
     }
 
