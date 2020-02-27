@@ -1,6 +1,6 @@
-package com.epam.prykhodko.entity.captcha_keeper_impl;
+package com.epam.prykhodko.captcha_keepers.captcha_keeper_impl;
 
-import com.epam.prykhodko.entity.CaptchaKeeper;
+import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

@@ -11,7 +11,6 @@ import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.SURNAME;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class RegFormBean {
 

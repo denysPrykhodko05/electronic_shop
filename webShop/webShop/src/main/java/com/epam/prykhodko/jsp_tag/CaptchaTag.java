@@ -1,8 +1,12 @@
 package com.epam.prykhodko.jsp_tag;
 
+import com.epam.prykhodko.util.TimerThread;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -24,6 +28,7 @@ public class CaptchaTag extends SimpleTagSupport {
             sb.append(random.nextInt(9));
         }
         String key = UUID.randomUUID().toString();
+        startTimer(session, key);
         session.setAttribute("captchaKey", key);
         session.setAttribute("captchaValue", sb.toString());
         JspWriter jspWriter = getJspContext().getOut();
@@ -31,5 +36,12 @@ public class CaptchaTag extends SimpleTagSupport {
         jspWriter.print("<input type=\"text\" name=\"regCaptcha\"><br>");
         hiddenField = hiddenField.replace("userKey", key);
         jspWriter.print(hiddenField);
+    }
+
+    private void startTimer(HttpSession session, String key) {
+        session.setAttribute("timer", true);
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(new TimerThread(session, key), 120, TimeUnit.SECONDS);
+        executorService.shutdown();
     }
 }

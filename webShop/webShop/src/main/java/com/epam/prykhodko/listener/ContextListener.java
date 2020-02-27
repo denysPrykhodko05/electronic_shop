@@ -1,10 +1,10 @@
 package com.epam.prykhodko.listener;
 
-import com.epam.prykhodko.entity.CaptchaKeeper;
+import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.entity.captcha_keeper_impl.CookieKeeper;
-import com.epam.prykhodko.entity.captcha_keeper_impl.HiddenTagKeeper;
-import com.epam.prykhodko.entity.captcha_keeper_impl.SessionKeeper;
+import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.CookieKeeper;
+import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.HiddenTagKeeper;
+import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.SessionKeeper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

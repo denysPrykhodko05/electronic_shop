@@ -15,7 +15,7 @@ import static com.epam.prykhodko.constants.Constants.SURNAME;
 import static com.epam.prykhodko.constants.Constants.USER_PERSONAL_DATA_REGEX;
 
 import com.epam.prykhodko.bean.RegFormBean;
-import com.epam.prykhodko.entity.CaptchaKeeper;
+import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 
 public abstract class Validator {
 
+    @SuppressWarnings("unchecked")
     public static boolean regFormIsValid(RegFormBean formBean) {
         Map<String, String> errors = new LinkedHashMap<>();
         Map<String, String> userData = new LinkedHashMap<>();
@@ -35,6 +36,7 @@ public abstract class Validator {
         String keeper = servletContext.getInitParameter("captcha");
         Map<String, CaptchaKeeper> keepers = (Map<String, CaptchaKeeper>) servletContext.getAttribute("keepers");
         CaptchaKeeper captchaKeeper = keepers.get(keeper);
+        checkTimer(session, errors);
         checkField(NAME, formBean.getName(), USER_PERSONAL_DATA_REGEX, errors);
         checkField(SURNAME, formBean.getSurname(), USER_PERSONAL_DATA_REGEX, errors);
         checkField(LOGIN, formBean.getLogin(), LOGIN_REGEX, errors);
@@ -51,6 +53,12 @@ public abstract class Validator {
             return false;
         }
         return true;
+    }
+
+    private static void checkTimer(HttpSession session, Map<String, String> errors) {
+        if (!(boolean) session.getAttribute("timer")) {
+            errors.put("Timer", "Times up");
+        }
     }
 
     private static void checkField(String parameter, String data, String regex, Map<String, String> errors) {

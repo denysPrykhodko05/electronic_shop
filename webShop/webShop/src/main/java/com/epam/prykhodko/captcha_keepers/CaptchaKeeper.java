@@ -1,4 +1,4 @@
-package com.epam.prykhodko.entity;
+package com.epam.prykhodko.captcha_keepers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
