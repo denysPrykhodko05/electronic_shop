@@ -1,7 +1,6 @@
 package com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
 import static com.epam.prykhodko.constants.Constants.CO_PASSWORD;
 import static com.epam.prykhodko.constants.Constants.EMAIL;

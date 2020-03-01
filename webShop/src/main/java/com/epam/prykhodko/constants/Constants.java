@@ -23,7 +23,7 @@ public abstract class Constants {
     public static final String CAPTCHA_KEY = "captchaKey";
     public static final String CAPTCHA_KEYS = "captchaKeys";
     public static final String CAPTCHA_VALUE = "captchaValue";
-    public static final int CAPTCHA_TIME = 10;
+    public static final int CAPTCHA_TIME = 300;
 
     //User strings
     public static final String USER_KEY = "userKey";
