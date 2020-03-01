@@ -1,9 +1,12 @@
 package com.epam.prykhodko.util;
 
+import static com.epam.prykhodko.constants.Constants.TIMER;
+
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+@SuppressWarnings("unchecked")
 public class TimerThread implements Runnable {
 
     private final HttpSession session;
@@ -20,8 +23,8 @@ public class TimerThread implements Runnable {
         Map<String, String> captchaKeys = (Map<String, String>) servletContext.getAttribute("captchaKeys");
         captchaKeys.remove(key);
         session.removeAttribute(key);
-        if (session.getAttribute("timer") != null) {
-            session.setAttribute("timer", false);
+        if (session.getAttribute(TIMER) != null) {
+            session.setAttribute(TIMER, false);
         }
     }
 }
