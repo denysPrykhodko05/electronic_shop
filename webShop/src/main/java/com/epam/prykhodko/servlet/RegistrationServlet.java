@@ -26,25 +26,25 @@ public class RegistrationServlet extends HttpServlet {
         HttpSession session = httpServletRequest.getSession();
         session.removeAttribute(ERRORS);
         session.removeAttribute(USER_DATA);
-        redirect(httpServletRequest, httpServletResponse);
+        forward(httpServletRequest, httpServletResponse);
     }
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         RegFormBean formBean = new RegFormBean(httpServletRequest);
         if (!Validator.regFormIsValid(formBean)) {
-            redirect(httpServletRequest, httpServletResponse);
+            forward(httpServletRequest, httpServletResponse);
             return;
         }
         User user = UserUtils.createUser(formBean, httpServletRequest);
         if (Objects.isNull(user)) {
-            redirect(httpServletRequest, httpServletResponse);
+            forward(httpServletRequest, httpServletResponse);
             return;
         }
         httpServletResponse.sendRedirect("/");
     }
 
-    private void redirect(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+    private void forward(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         httpServletRequest.getRequestDispatcher(REGISTRATION_JSP_LINK).forward(httpServletRequest, httpServletResponse);
     }
 }

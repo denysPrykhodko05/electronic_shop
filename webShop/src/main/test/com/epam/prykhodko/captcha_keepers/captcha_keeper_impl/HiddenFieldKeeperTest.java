@@ -9,9 +9,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class HiddenTagKeeperTest {
+public class HiddenFieldKeeperTest {
 
-    private HiddenTagKeeper hiddenTagKeeper = new HiddenTagKeeper();
+    private HiddenFieldKeeper hiddenFieldKeeper = new HiddenFieldKeeper();
 
     @Mock
     private HttpServletRequest httpServletRequest;
@@ -24,6 +24,6 @@ public class HiddenTagKeeperTest {
     @Test
     public void getShouldAddDataToHiddenField() {
         when(httpServletRequest.getParameter("captchaKey")).thenReturn("1234");
-        assertEquals(hiddenTagKeeper.get(httpServletRequest), "1234");
+        assertEquals(hiddenFieldKeeper.get(httpServletRequest), "1234");
     }
 }

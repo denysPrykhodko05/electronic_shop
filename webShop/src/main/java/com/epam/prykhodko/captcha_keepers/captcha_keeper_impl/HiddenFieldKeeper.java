@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class HiddenTagKeeper implements CaptchaKeeper {
+public class HiddenFieldKeeper implements CaptchaKeeper {
 
     @Override
     public void save(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String key, String value) {

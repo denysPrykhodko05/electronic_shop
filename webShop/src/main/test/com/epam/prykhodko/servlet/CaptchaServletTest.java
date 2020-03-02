@@ -4,9 +4,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.CookieKeeper;
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.HiddenTagKeeper;
+import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.HiddenFieldKeeper;
 import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.SessionKeeper;
-import com.epam.prykhodko.servlet.CaptchaServlet;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +76,7 @@ public class CaptchaServletTest {
     @Test
     public void doGetForHiddenFieldKeeper() throws IOException {
         HashMap map = new HashMap();
-        map.put("hiddenField", new HiddenTagKeeper());
+        map.put("hiddenField", new HiddenFieldKeeper());
         when(httpServletRequest.getServletContext()).thenReturn(servletContext);
         when(servletContext.getInitParameter("captcha")).thenReturn("hiddenField");
         when(servletContext.getAttribute("keepers")).thenReturn(map);

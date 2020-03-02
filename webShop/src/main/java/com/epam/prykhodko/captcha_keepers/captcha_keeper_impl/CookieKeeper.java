@@ -2,6 +2,7 @@ package com.epam.prykhodko.captcha_keepers.captcha_keeper_impl;
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 
 public class CookieKeeper implements CaptchaKeeper {
 
@@ -27,12 +29,13 @@ public class CookieKeeper implements CaptchaKeeper {
     public String get(HttpServletRequest httpServletRequest) {
         List<Cookie> cookies = Arrays.asList(httpServletRequest.getCookies());
         Optional<Cookie> cookie = cookies.stream().filter(c -> CAPTCHA_KEY.equals(c.getName())).findFirst();
+
         if (cookie.isPresent()) {
             Cookie key = cookie.get();
             String value = key.getValue();
             key.setMaxAge(0);
             return value;
         }
-        return "";
+        return EMPTY;
     }
 }
