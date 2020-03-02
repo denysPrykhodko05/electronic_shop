@@ -27,7 +27,6 @@ import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,6 +39,8 @@ import org.apache.log4j.Logger;
 public class ContextListener implements ServletContextListener {
 
     private static final Logger LOGGER = Logger.getLogger(ContextListener.class);
+    Map<Long, String> captchaKeys = new HashMap<>();
+    ExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -52,16 +53,13 @@ public class ContextListener implements ServletContextListener {
         Validator validator = new Validator();
         UserUtils userUtils = new UserUtils();
         ServletContext servletContext = servletContextEvent.getServletContext();
+        servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
-        Map<Long, String> captchaKeys = new LinkedHashMap<>();
-        ExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.execute(new TimerThread(captchaKeys, captchaTime));
-        executorService.shutdown();
         keepers.put(SESSION, new SessionKeeper());
         keepers.put(COOKIE, new CookieKeeper());
         keepers.put(HIDDEN_FIELD, new HiddenFieldKeeper());
         servletContext.setAttribute(KEEPERS, keepers);
-        servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
         servletContext.setAttribute(VALIDATOR, validator);
         servletContext.setAttribute(USER_UTILS, userUtils);
         servletContext.setAttribute(CAPTCHA_KEEPER, captchaKeeper);
@@ -73,6 +71,7 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
+        executorService.shutdownNow();
         LOGGER.info("context destroyer");
     }
 

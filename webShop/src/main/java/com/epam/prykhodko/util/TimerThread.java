@@ -3,6 +3,7 @@ package com.epam.prykhodko.util;
 import static java.lang.System.currentTimeMillis;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class TimerThread implements Runnable {
 
@@ -19,10 +20,14 @@ public class TimerThread implements Runnable {
         Long previousTime = currentTimeMillis();
         while (true) {
             Long currentTime = currentTimeMillis();
-            if (currentTime - previousTime >= Long.valueOf(time)) {
+            if (currentTime - previousTime >= Long.valueOf(time) * 1000 && captchaKeys.size() > 0) {
                 previousTime = currentTime;
                 Long finalPreviousTime = previousTime;
-                captchaKeys.entrySet().stream().filter(e -> finalPreviousTime - e.getKey() > 0).forEach(captchaKeys::remove);
+                for (Entry<Long, String> e : captchaKeys.entrySet()) {
+                    if (finalPreviousTime - e.getKey() >= 0) {
+                        captchaKeys.remove(e.getKey());
+                    }
+                }
             }
         }
     }

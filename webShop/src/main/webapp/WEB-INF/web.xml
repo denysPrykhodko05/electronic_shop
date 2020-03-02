@@ -9,7 +9,7 @@
   </context-param>
   <context-param>
     <param-name>captchaTime</param-name>
-    <param-value>500</param-value>
+    <param-value>300</param-value>
   </context-param>
 
   <display-name>Archetype Created Web Application</display-name>

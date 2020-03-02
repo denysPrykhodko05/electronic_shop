@@ -83,7 +83,11 @@ public class RegistrationServlet extends HttpServlet {
         User user = userService.createUser(formBean);
         if (userService.isContains(user)) {
             userUtils.checkLoginAndEmail(user, userService, errors);
+            userUtils.fillUserData(formBean, userData);
+            httpServletRequest.setAttribute(USER_DATA, userData);
+            httpServletRequest.setAttribute(ERRORS, errors);
             forward(httpServletRequest, httpServletResponse);
+            return;
         }
         userService.add(formBean);
         httpServletResponse.sendRedirect("/");

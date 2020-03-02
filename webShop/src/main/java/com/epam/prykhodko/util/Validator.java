@@ -30,13 +30,6 @@ public class Validator {
         }
     }
 
-    public void fillUserData(RegFormBean formBean, Map<String, String> userData) {
-        userData.put(NAME, formBean.getName());
-        userData.put(SURNAME, formBean.getSurname());
-        userData.put(LOGIN, formBean.getLogin());
-        userData.put(EMAIL, formBean.getEmail());
-    }
-
     public boolean checkCaptcha(Map<Long, String> captchaKeys, Long userKey, String captchaValue, Map<String, String> errors) {
         Optional<Entry<Long, String>> key = captchaKeys.entrySet().stream()
             .filter(e -> e.getKey().equals(userKey)
