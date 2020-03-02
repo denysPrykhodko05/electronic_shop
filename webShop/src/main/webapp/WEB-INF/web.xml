@@ -1,0 +1,21 @@
+<!DOCTYPE web-app PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <context-param>
+    <param-name>captcha</param-name>
+    <param-value>cookie</param-value>
+  </context-param>
+
+  <display-name>Archetype Created Web Application</display-name>
+  <listener>
+    <listener-class>com.epam.prykhodko.listener.ContextListener</listener-class>
+  </listener>
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-auth>Container</res-auth>
+    <res-ref-name>electronic_store</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+  </resource-ref>
+</web-app>
