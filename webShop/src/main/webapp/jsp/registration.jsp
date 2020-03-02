@@ -15,8 +15,8 @@
     <form action="/registration" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password, confirmPassword)">
         <div class="commonContainer">
             <div class="container">
-             <c:if test="${not empty sessionScope.errors}">
-                <c:forEach var="entry" items="${sessionScope.errors}">
+             <c:if test="${not empty errors}">
+                <c:forEach var="entry" items="${errors}">
                        <p id="incorrectField">${entry.value}</p>
                 </c:forEach>
              </c:if>

@@ -1,30 +1,29 @@
 package com.epam.prykhodko.util;
 
-import static com.epam.prykhodko.constants.Constants.TIMER;
+import static java.lang.System.currentTimeMillis;
 
 import java.util.Map;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
-@SuppressWarnings("unchecked")
 public class TimerThread implements Runnable {
 
-    private final HttpSession session;
-    private final String key;
+    private Map<Long, String> captchaKeys;
+    private String time;
 
-    public TimerThread(HttpSession session, String key) {
-        this.session = session;
-        this.key = key;
+    public TimerThread(Map<Long, String> captchaKeys, String time) {
+        this.captchaKeys = captchaKeys;
+        this.time = time;
     }
 
     @Override
     public void run() {
-        ServletContext servletContext = session.getServletContext();
-        Map<String, String> captchaKeys = (Map<String, String>) servletContext.getAttribute("captchaKeys");
-        captchaKeys.remove(key);
-        session.removeAttribute(key);
-        if (session.getAttribute(TIMER) != null) {
-            session.setAttribute(TIMER, false);
+        Long previousTime = currentTimeMillis();
+        while (true) {
+            Long currentTime = currentTimeMillis();
+            if (currentTime - previousTime >= Long.valueOf(time)) {
+                previousTime = currentTime;
+                Long finalPreviousTime = previousTime;
+                captchaKeys.entrySet().stream().filter(e -> finalPreviousTime - e.getKey() > 0).forEach(captchaKeys::remove);
+            }
         }
     }
 }

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class RegFormBean {
 
-    private final HttpServletRequest httpServletRequest;
     private String name;
     private String surname;
     private String login;
@@ -25,8 +24,7 @@ public class RegFormBean {
     private String mails;
     private String captcha;
 
-    public RegFormBean(HttpServletRequest httpServletRequest) {
-        this.httpServletRequest = httpServletRequest;
+    public void setRegFormBean(HttpServletRequest httpServletRequest){
         name = httpServletRequest.getParameter(NAME);
         surname = httpServletRequest.getParameter(SURNAME);
         login = httpServletRequest.getParameter(LOGIN);
@@ -68,10 +66,6 @@ public class RegFormBean {
 
     public String getMails() {
         return mails;
-    }
-
-    public HttpServletRequest getHttpServletRequest() {
-        return httpServletRequest;
     }
 
     public String getCaptcha() {

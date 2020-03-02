@@ -16,14 +16,14 @@ public abstract class Constants {
     public static final String POLICY = "privacy-policy";
     public static final String MAILS = "mails";
     public static final String REG_CAPTCHA = "regCaptcha";
-    public static final String EMPTY_STRING = "";
 
     //Captcha strings
     public static final String CAPTCHA = "captcha";
     public static final String CAPTCHA_KEY = "captchaKey";
     public static final String CAPTCHA_KEYS = "captchaKeys";
     public static final String CAPTCHA_VALUE = "captchaValue";
-    public static final int CAPTCHA_TIME = 10;
+    public static final String CAPTCHA_TIME = "captchaTime";
+    public static final String CAPTCHA_KEEPER = "captcha keeper";
 
     //User strings
     public static final String USER_KEY = "userKey";
@@ -40,12 +40,14 @@ public abstract class Constants {
     public static final String INCORRECT_CAPTCHA = "Incorrect captcha";
 
     //Other strings
-    public static final String TIMER = "timer";
     public static final String SESSION = "session";
     public static final String COOKIE = "cookie";
     public static final String HIDDEN_FIELD = "hiddenField";
-    public static final String USERS = "users";
     public static final String KEEPERS = "keepers";
     public static final String ERRORS = "errors";
     public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
+    public static final String VALIDATOR = "validator";
+    public static final String USER_UTILS = "user utils";
+    public static final String REG_FORM = "regFormBean";
+    public static final String USER_SERVICE = "userService";
 }

@@ -2,11 +2,10 @@ package com.epam.prykhodko.servlet;
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_VALUE;
 import static com.epam.prykhodko.constants.Constants.KEEPERS;
 
 import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.SessionKeeper;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.util.CaptchaImage;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -30,11 +29,11 @@ public class CaptchaServlet extends HttpServlet {
         Map<String, CaptchaKeeper> captchaKeepers = (Map<String, CaptchaKeeper>) servletContext.getAttribute(KEEPERS);
         HttpSession session = httpServletRequest.getSession();
         CaptchaImage obj = new CaptchaImage();
-        BufferedImage ima = obj.getCaptchaImage(session.getAttribute(CAPTCHA_VALUE).toString());
+        BufferedImage ima = obj.getCaptchaImage();
         String captchaStr = obj.getCaptchaString();
-        String ck= (String) session.getAttribute(CAPTCHA_KEY);
+        Long captchaKey = Long.valueOf((String) session.getAttribute(CAPTCHA_KEY));
         captchaKeepers.getOrDefault(keeper, new SessionKeeper())
-            .save(httpServletRequest, httpServletResponse, ck, captchaStr);
+            .save(httpServletRequest, httpServletResponse, captchaKey, captchaStr);
         ImageIO.write(ima, "jpg", httpServletResponse.getOutputStream());
     }
 }

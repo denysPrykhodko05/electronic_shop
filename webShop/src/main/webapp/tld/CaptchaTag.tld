@@ -9,7 +9,7 @@
     </attribute>
     <body-content>scriptless</body-content>
     <name>CaptchaTag</name>
-    <tag-class>com.epam.prykhodko.jsp_tag.CaptchaTag</tag-class>
+    <tag-class>com.epam.prykhodko.jsptag.CaptchaTag</tag-class>
 
   </tag>
 

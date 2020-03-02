@@ -1,6 +1,6 @@
 package com.epam.prykhodko.util;
 
-import static com.epam.prykhodko.constants.Constants.EMPTY_STRING;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,9 +11,9 @@ import java.awt.image.BufferedImage;
 
 public class CaptchaImage {
 
-    private String captchaString = EMPTY_STRING;
+    private String captchaString = EMPTY;
 
-    public BufferedImage getCaptchaImage(String value) {
+    public BufferedImage getCaptchaImage() {
         try {
             Color backgroundColor = Color.white;
             Color borderColor = Color.black;
@@ -44,14 +44,15 @@ public class CaptchaImage {
             int maxAdvance = fontMetrics.getMaxAdvance();
             int fontHeight = fontMetrics.getHeight();
 
-            String elegibleChars = value;
-
+            String elegibleChars = "12345689";
             char[] chars = elegibleChars.toCharArray();
             float spaceForLetters = -horizMargin * 2 + width;
             float spacePerChar = spaceForLetters / (charsToPrint - 1.0f);
             StringBuffer finalString = new StringBuffer();
             for (int i = 0; i < charsToPrint; i++) {
-                char characterToShow = chars[i];
+                double randomValue = Math.random();
+                int randomIndex = (int) Math.round(randomValue * (chars.length - 1));
+                char characterToShow = chars[randomIndex];
                 finalString.append(characterToShow);
 
                 int charWidth = fontMetrics.charWidth(characterToShow);

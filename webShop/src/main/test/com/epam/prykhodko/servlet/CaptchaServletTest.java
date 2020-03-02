@@ -1,11 +1,12 @@
 package com.epam.prykhodko.servlet;
 
+import static java.lang.System.currentTimeMillis;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.CookieKeeper;
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.HiddenFieldKeeper;
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.SessionKeeper;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.CookieKeeper;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.HiddenFieldKeeper;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.SessionKeeper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class CaptchaServletTest {
         when(servletContext.getAttribute("keepers")).thenReturn(map);
         when(httpServletRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("captchaValue")).thenReturn("123456");
-        String uuid = UUID.randomUUID().toString();
+        String uuid = String.valueOf(currentTimeMillis());
         Map<String, String> keyMap = new HashMap<>();
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
@@ -64,7 +65,7 @@ public class CaptchaServletTest {
         when(servletContext.getAttribute("keepers")).thenReturn(map);
         when(httpServletRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("captchaValue")).thenReturn("123456");
-        String uuid = UUID.randomUUID().toString();
+        String uuid = String.valueOf(currentTimeMillis());
         Map<String, String> keyMap = new HashMap<>();
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
@@ -82,7 +83,7 @@ public class CaptchaServletTest {
         when(servletContext.getAttribute("keepers")).thenReturn(map);
         when(httpServletRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("captchaValue")).thenReturn("123456");
-        String uuid = UUID.randomUUID().toString();
+        String uuid = String.valueOf(currentTimeMillis());
         Map<String, String> keyMap = new HashMap<>();
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
