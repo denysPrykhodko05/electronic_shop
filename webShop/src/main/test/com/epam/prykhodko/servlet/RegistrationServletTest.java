@@ -72,8 +72,8 @@ public class RegistrationServletTest {
     }
 
     private void init(Map<String, String> captchaKeys, Map<String, CaptchaKeeper> keepers) {
-        User user1 = new User("Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12");
-        User user2 = new User("Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33");
+        User user1 = new User(1,"Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12",1);
+        User user2 = new User(2,"Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33",2);
         List<User> users = new ArrayList<>(Arrays.asList(user1, user2));
         when(servletContext.getAttribute(VALIDATOR)).thenReturn(validator);
         when(servletContext.getAttribute(CAPTCHA_KEEPER)).thenReturn(new SessionKeeper());
