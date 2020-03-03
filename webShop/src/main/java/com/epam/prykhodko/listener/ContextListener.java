@@ -28,8 +28,9 @@ import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -40,7 +41,7 @@ public class ContextListener implements ServletContextListener {
 
     private static final Logger LOGGER = Logger.getLogger(ContextListener.class);
     Map<Long, String> captchaKeys = new HashMap<>();
-    ExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -55,7 +56,7 @@ public class ContextListener implements ServletContextListener {
         ServletContext servletContext = servletContextEvent.getServletContext();
         servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
-        executorService.execute(new TimerThread(captchaKeys, captchaTime));
+        executorService.scheduleWithFixedDelay(new TimerThread(captchaKeys), 0, Long.parseLong(captchaTime), TimeUnit.SECONDS);
         keepers.put(SESSION, new SessionKeeper());
         keepers.put(COOKIE, new CookieKeeper());
         keepers.put(HIDDEN_FIELD, new HiddenFieldKeeper());
