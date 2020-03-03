@@ -47,7 +47,11 @@ public class UserServiceDAOImpl implements UserService {
 
     @Override
     public boolean isContains(User user) {
-        return Objects.nonNull(getByLogin(user.getLogin()));
+        List<User> users = userDAO.getAll();
+        Optional<User> userTemp = users.stream()
+            .filter(e -> (e.getLogin().equals(user.getLogin()) && e.getPassword().equals(user.getPassword())))
+            .findFirst();
+        return Objects.nonNull(userTemp.orElse(null));
     }
 
     @Override
