@@ -1,15 +1,10 @@
 package com.epam.prykhodko.util;
 
-import static com.epam.prykhodko.constants.Constants.EMAIL;
 import static com.epam.prykhodko.constants.Constants.INCORRECT_CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.INCORRECT_INPUT;
-import static com.epam.prykhodko.constants.Constants.LOGIN;
-import static com.epam.prykhodko.constants.Constants.NAME;
 import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.SURNAME;
 import static com.epam.prykhodko.constants.Constants.YOU_DONT_CHOOSE;
 
-import com.epam.prykhodko.bean.RegFormBean;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
