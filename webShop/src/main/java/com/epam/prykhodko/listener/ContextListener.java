@@ -1,17 +1,17 @@
 package com.epam.prykhodko.listener;
 
-import static com.epam.prykhodko.constants.Constants.CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEEPER;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_TIME;
-import static com.epam.prykhodko.constants.Constants.COOKIE;
-import static com.epam.prykhodko.constants.Constants.HIDDEN_FIELD;
-import static com.epam.prykhodko.constants.Constants.KEEPERS;
-import static com.epam.prykhodko.constants.Constants.REG_FORM;
-import static com.epam.prykhodko.constants.Constants.SESSION;
-import static com.epam.prykhodko.constants.Constants.USER_SERVICE;
-import static com.epam.prykhodko.constants.Constants.USER_UTILS;
-import static com.epam.prykhodko.constants.Constants.VALIDATOR;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_TIME;
+import static com.epam.prykhodko.constants.ApplicationConstants.COOKIE;
+import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
+import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
+import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
+import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
+import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
@@ -65,8 +65,8 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(USER_UTILS, userUtils);
         servletContext.setAttribute(CAPTCHA_KEEPER, captchaKeeper);
         servletContext.setAttribute(REG_FORM, new RegFormBean());
-        userService.add(new User("Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12"));
-        userService.add(new User("Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33"));
+        userService.add(new User(1,"Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12",1));
+        userService.add(new User(2,"Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33",1));
         servletContext.setAttribute(USER_SERVICE, userService);
     }
 

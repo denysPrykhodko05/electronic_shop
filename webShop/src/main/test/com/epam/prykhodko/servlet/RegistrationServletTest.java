@@ -1,11 +1,11 @@
 package com.epam.prykhodko.servlet;
 
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEEPER;
-import static com.epam.prykhodko.constants.Constants.EMAIL;
-import static com.epam.prykhodko.constants.Constants.REG_FORM;
-import static com.epam.prykhodko.constants.Constants.USER_SERVICE;
-import static com.epam.prykhodko.constants.Constants.USER_UTILS;
-import static com.epam.prykhodko.constants.Constants.VALIDATOR;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
+import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
+import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
+import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

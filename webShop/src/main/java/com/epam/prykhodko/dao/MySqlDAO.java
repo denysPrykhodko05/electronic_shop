@@ -1,13 +1,19 @@
 package com.epam.prykhodko.dao;
 
+import static com.epam.prykhodko.constants.DBConstants.DB_URL;
+import static com.epam.prykhodko.constants.DBConstants.USER_NAME;
+import static com.epam.prykhodko.constants.DBConstants.USER_PASSWORD;
+import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_CLOSE_CONNECTION;
+import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_CLOSE_RESULT_SET;
+import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_CLOSE_ROLLBACK;
+import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_CLOSE_STATEMENT;
+import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_OBTAIN_CONNECTION;
+
+import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 public class MySqlDAO {
@@ -17,19 +23,13 @@ public class MySqlDAO {
     public Connection getConnection() {
         Connection con = null;
         try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:comp/env");
-            DataSource ds = (DataSource) envContext.lookup("jdbc/electronic_store");
-            con = ds.getConnection();
-
-        } catch (NamingException ex) {
-            //TODO
-            LOGGER.info("naming exception");
+            MysqlDataSource mysqlDataSource = new MysqlDataSource();
+            mysqlDataSource.setURL(DB_URL);
+            mysqlDataSource.setUser(USER_NAME);
+            mysqlDataSource.setPassword(USER_PASSWORD);
+            con = mysqlDataSource.getConnection();
         } catch (SQLException e) {
-            //TODO
-            LOGGER.info("sql exception");
-        }catch (Exception e){
-            LOGGER.info("exe ");
+            LOGGER.error(ERR_CANNOT_OBTAIN_CONNECTION);
         }
         return con;
     }
@@ -39,8 +39,7 @@ public class MySqlDAO {
             try {
                 con.close();
             } catch (SQLException ex) {
-                //TODO
-                LOGGER.info("sql exception");
+                LOGGER.info(ERR_CANNOT_CLOSE_CONNECTION);
             }
         }
     }
@@ -53,8 +52,7 @@ public class MySqlDAO {
             try {
                 stmt.close();
             } catch (SQLException ex) {
-                //TODO
-                LOGGER.info("sql exception");
+                LOGGER.info(ERR_CANNOT_CLOSE_STATEMENT);
             }
         }
     }
@@ -67,8 +65,7 @@ public class MySqlDAO {
             try {
                 rs.close();
             } catch (SQLException ex) {
-                //TODO
-                LOGGER.info("sql exception");
+                LOGGER.info(ERR_CANNOT_CLOSE_RESULT_SET);
             }
         }
     }
@@ -92,8 +89,7 @@ public class MySqlDAO {
             try {
                 con.rollback();
             } catch (SQLException ex) {
-                //TODO
-                LOGGER.info("sql exception");
+                LOGGER.info(ERR_CANNOT_CLOSE_ROLLBACK);
             }
         }
     }

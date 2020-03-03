@@ -1,6 +1,6 @@
 package com.epam.prykhodko.constants;
 
-public abstract class Constants {
+public abstract class ApplicationConstants {
 
     //Form strings
     public static final String USER_PERSONAL_DATA_REGEX = "^\\w+";

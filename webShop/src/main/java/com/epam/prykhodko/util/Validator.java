@@ -1,9 +1,9 @@
 package com.epam.prykhodko.util;
 
-import static com.epam.prykhodko.constants.Constants.INCORRECT_CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.INCORRECT_INPUT;
-import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.YOU_DONT_CHOOSE;
+import static com.epam.prykhodko.constants.ApplicationConstants.INCORRECT_CAPTCHA;
+import static com.epam.prykhodko.constants.ApplicationConstants.INCORRECT_INPUT;
+import static com.epam.prykhodko.constants.ApplicationConstants.REG_CAPTCHA;
+import static com.epam.prykhodko.constants.ApplicationConstants.YOU_DONT_CHOOSE;
 
 import java.util.Map;
 import java.util.Map.Entry;

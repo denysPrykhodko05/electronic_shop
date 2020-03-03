@@ -1,7 +1,7 @@
 package com.epam.prykhodko.jsptag;
 
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
-import static com.epam.prykhodko.constants.Constants.USER_KEY;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEY;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_KEY;
 import static java.lang.System.currentTimeMillis;
 
 import java.io.IOException;
