@@ -4,8 +4,8 @@ import static com.epam.prykhodko.constants.Constants.CAPTCHA;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
 import static com.epam.prykhodko.constants.Constants.KEEPERS;
 
-import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
-import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.SessionKeeper;
+import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.util.CaptchaImage;
 import java.awt.image.BufferedImage;
 import java.io.IOException;

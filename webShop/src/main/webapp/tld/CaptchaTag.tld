@@ -3,15 +3,10 @@
 <taglib>
   <jsp-version>2.0</jsp-version>
   <short-name>CaptchaTag</short-name>
-  <tag>
-    <attribute>
-
-    </attribute>
-    <body-content>scriptless</body-content>
+  <tag-file>
     <name>CaptchaTag</name>
-    <tag-class>com.epam.prykhodko.jsptag.CaptchaTag</tag-class>
-
-  </tag>
+    <path>/WEB-INF/tags/captchatag/CaptchaTag.tag</path>
+  </tag-file>
 
   <tlib-version>1.0</tlib-version>
 </taglib>

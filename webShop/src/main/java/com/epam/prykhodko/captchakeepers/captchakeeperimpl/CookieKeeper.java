@@ -1,10 +1,10 @@
-package com.epam.prykhodko.captcha_keepers.captchakeeperimpl;
+package com.epam.prykhodko.captchakeepers.captchakeeperimpl;
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
+import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

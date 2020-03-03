@@ -2,6 +2,7 @@ package com.epam.prykhodko.servlet;
 
 
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEEPER;
+import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
 import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
 import static com.epam.prykhodko.constants.Constants.CO_PASSWORD;
 import static com.epam.prykhodko.constants.Constants.EMAIL;
@@ -22,9 +23,10 @@ import static com.epam.prykhodko.constants.Constants.USER_PERSONAL_DATA_REGEX;
 import static com.epam.prykhodko.constants.Constants.USER_SERVICE;
 import static com.epam.prykhodko.constants.Constants.USER_UTILS;
 import static com.epam.prykhodko.constants.Constants.VALIDATOR;
+import static java.lang.System.currentTimeMillis;
 
 import com.epam.prykhodko.bean.RegFormBean;
-import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
+import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.util.UserUtils;
@@ -47,6 +49,8 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         HttpSession session = httpServletRequest.getSession();
+        String key = String.valueOf(currentTimeMillis());
+        session.setAttribute(CAPTCHA_KEY, key);
         session.removeAttribute(ERRORS);
         session.removeAttribute(USER_DATA);
         forward(httpServletRequest, httpServletResponse);
