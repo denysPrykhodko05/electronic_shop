@@ -38,7 +38,7 @@
                 <div data-tip="Must be equal for password">
                     <input id="confirmPassword" name="confirmPassword" placeholder="Confirm password" type="password"><br>
                 </div>
-                <captcha:CaptchaTag/>
+                <captcha:CaptchaTag captchaKey="${captchaKey}" hidden="${hidden}"/>
                 <input id="privacy-policy" type="checkbox" name="privacy-policy"> Agree with <a href="#myModal" id="privacy-policy-ref">User agreement</a><br><br>
                 <input type="checkbox" name="mails"> Do you want receive mails?<br><br>
                 <input type="submit" value="Ok"/><br>

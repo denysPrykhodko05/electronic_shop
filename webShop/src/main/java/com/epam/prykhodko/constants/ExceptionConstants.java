@@ -13,4 +13,5 @@ public abstract class ExceptionConstants {
     public static final String ERR_CANNOT_ADD_USER = "Cannot add user";
     public static final String ERR_CANNOT_GET_ALL_USERS = "Cannot get all users";
     public static final String ERR_CANNOT_GET_USER_BY_ID = "Cannot get user by id";
+    public static final String ERR_CANNOT_DELETE_USER_BY_LOGIN = "Cannot delete user by login";
 }

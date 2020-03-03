@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form action="../index.html" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password,password)">
+    <form action="/login" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password,password)">
         <div class="commonContainer">
             <div class="container">
                 <div data-tip="Login must consist from 3 to 16 symbols">

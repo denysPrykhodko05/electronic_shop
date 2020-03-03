@@ -8,6 +8,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.CO_PASSWORD;
 import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
 import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.ERRORS;
+import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD_KEY;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.MAILS;

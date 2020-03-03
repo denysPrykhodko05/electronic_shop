@@ -1,11 +1,14 @@
 package com.epam.prykhodko.dao.impl;
 
 import static com.epam.prykhodko.constants.DBConstants.ADD_USER;
+import static com.epam.prykhodko.constants.DBConstants.DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_USERS;
 import static com.epam.prykhodko.constants.DBConstants.GET_USER_BY_ID;
 import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_ADD_USER;
+import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_GET_ALL_USERS;
 import static com.epam.prykhodko.constants.ExceptionConstants.ERR_CANNOT_GET_USER_BY_ID;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.dao.MySqlDAO;
@@ -72,8 +75,17 @@ public class UserDAO extends MySqlDAO implements DAO<User> {
     }
 
     @Override
-    public void delete(User user) {
-
+    public boolean delete(User user) {
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_BY_LOGIN)) {
+            preparedStatement.setString(1, user.getLogin());
+            if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
+        }
+        return false;
     }
 
     private void fillPreparedStatementByUserData(PreparedStatement pstmt, User user) throws SQLException {
