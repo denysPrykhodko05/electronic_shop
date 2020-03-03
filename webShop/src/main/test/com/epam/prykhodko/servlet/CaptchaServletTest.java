@@ -1,10 +1,12 @@
+package com.epam.prykhodko.servlet;
+
+import static java.lang.System.currentTimeMillis;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.CookieKeeper;
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.HiddenTagKeeper;
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.SessionKeeper;
-import com.epam.prykhodko.servlet.CaptchaServlet;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.CookieKeeper;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.HiddenFieldKeeper;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.SessionKeeper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +48,7 @@ public class CaptchaServletTest {
         when(servletContext.getAttribute("keepers")).thenReturn(map);
         when(httpServletRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("captchaValue")).thenReturn("123456");
-        String uuid = UUID.randomUUID().toString();
+        String uuid = String.valueOf(currentTimeMillis());
         Map<String, String> keyMap = new HashMap<>();
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
@@ -63,7 +65,7 @@ public class CaptchaServletTest {
         when(servletContext.getAttribute("keepers")).thenReturn(map);
         when(httpServletRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("captchaValue")).thenReturn("123456");
-        String uuid = UUID.randomUUID().toString();
+        String uuid = String.valueOf(currentTimeMillis());
         Map<String, String> keyMap = new HashMap<>();
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
@@ -75,13 +77,13 @@ public class CaptchaServletTest {
     @Test
     public void doGetForHiddenFieldKeeper() throws IOException {
         HashMap map = new HashMap();
-        map.put("hiddenField", new HiddenTagKeeper());
+        map.put("hiddenField", new HiddenFieldKeeper());
         when(httpServletRequest.getServletContext()).thenReturn(servletContext);
         when(servletContext.getInitParameter("captcha")).thenReturn("hiddenField");
         when(servletContext.getAttribute("keepers")).thenReturn(map);
         when(httpServletRequest.getSession()).thenReturn(httpSession);
         when(httpSession.getAttribute("captchaValue")).thenReturn("123456");
-        String uuid = UUID.randomUUID().toString();
+        String uuid = String.valueOf(currentTimeMillis());
         Map<String, String> keyMap = new HashMap<>();
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);

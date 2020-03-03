@@ -15,22 +15,22 @@
     <form action="/registration" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password, confirmPassword)">
         <div class="commonContainer">
             <div class="container">
-             <c:if test="${not empty sessionScope.errors}">
-                <c:forEach var="entry" items="${sessionScope.errors}">
+             <c:if test="${not empty errors}">
+                <c:forEach var="entry" items="${errors}">
                        <p id="incorrectField">${entry.value}</p>
                 </c:forEach>
              </c:if>
                 <div data-tip="Name must be longer or equal one character symbol">
-                    <input id="name" name="name" placeholder="Name" type="text" value="${sessionScope.userData["name"]}">
+                    <input id="name" name="name" placeholder="Name" type="text" value="${userData["name"]}">
                 </div>
                 <div data-tip="Surname must be longer or equal one character symbol">
-                    <input id="surname" name="surname" placeholder="Surname" type="text" value="${sessionScope.userData["surname"]}">
+                    <input id="surname" name="surname" placeholder="Surname" type="text" value="${userData["surname"]}">
                 </div>
                 <div data-tip="Login must consist from 3 to 16 symbols">
-                    <input id="login" name="login" placeholder="Login" type="text" value="${sessionScope.userData["login"]}">
+                    <input id="login" name="login" placeholder="Login" type="text" value="${userData["login"]}">
                 </div>
                 <div data-tip="Email should be like 'email@example.com'">
-                    <input id="email" name="email" placeholder="Email" type="text" value="${sessionScope.userData["email"]}"><br>
+                    <input id="email" name="email" placeholder="Email" type="text" value="${userData["email"]}"><br>
                 </div>
                 <div data-tip="Password should have length from 8 to 16 symbols. Contains uppercase letter, specifie symbol and digit">
                     <input id="password" name="password" placeholder="Password" type="password"><br>

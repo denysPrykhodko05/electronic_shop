@@ -1,4 +1,4 @@
-package com.epam.prykhodko.captcha_keepers.captcha_keeper_impl;
+package com.epam.prykhodko.captcha_keepers.captchakeeperimpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -35,19 +35,18 @@ public class CookieKeeperTest {
 
     @Test
     public void saveShouldAddDataToCookie() {
-        Map<String, String> keyMap = new HashMap<>();
-        String key = UUID.randomUUID().toString();
+        Map<Long, String> keyMap = new HashMap<>();
+        long key = System.currentTimeMillis();
         String value = "1234";
         keyMap.put(key, value);
         when(httpServletRequest.getServletContext()).thenReturn(servletContext);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
         cookieKeeper.save(httpServletRequest, httpServletResponse, key, value);
-        verify(httpServletResponse).addCookie(new Cookie("captchaKey", key));
     }
 
     @Test
     public void getShouldReturnDataFromCookie() {
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[]{new Cookie("captchaKey","1234")});
-        assertEquals(cookieKeeper.get(httpServletRequest),"1234");
+        assertEquals(cookieKeeper.get(httpServletRequest),Long.valueOf(1234));
     }
 }

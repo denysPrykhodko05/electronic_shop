@@ -1,4 +1,4 @@
-package com.epam.prykhodko.captcha_keepers.captcha_keeper_impl;
+package com.epam.prykhodko.captcha_keepers.captchakeeperimpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -29,6 +29,6 @@ public class SessionKeeperTest {
     public void getShouldReturnStringThatWasInSession() {
         when(httpServletRequest.getSession()).thenReturn(session);
         when(session.getAttribute("captchaKey")).thenReturn("1234");
-        assertEquals(sessionKeeper.get(httpServletRequest), "1234");
+        assertEquals(sessionKeeper.get(httpServletRequest), Long.valueOf(1234));
     }
 }

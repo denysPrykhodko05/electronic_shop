@@ -1,21 +1,21 @@
 package com.epam.prykhodko.servlet;
 
-import static com.epam.prykhodko.constants.Constants.CO_PASSWORD;
+import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEEPER;
 import static com.epam.prykhodko.constants.Constants.EMAIL;
-import static com.epam.prykhodko.constants.Constants.LOGIN;
-import static com.epam.prykhodko.constants.Constants.MAILS;
-import static com.epam.prykhodko.constants.Constants.NAME;
-import static com.epam.prykhodko.constants.Constants.PASSWORD;
-import static com.epam.prykhodko.constants.Constants.POLICY;
-import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.SURNAME;
+import static com.epam.prykhodko.constants.Constants.REG_FORM;
+import static com.epam.prykhodko.constants.Constants.USER_SERVICE;
+import static com.epam.prykhodko.constants.Constants.USER_UTILS;
+import static com.epam.prykhodko.constants.Constants.VALIDATOR;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
-import com.epam.prykhodko.captcha_keepers.captcha_keeper_impl.SessionKeeper;
+import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.entity.User;
+import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.util.UserUtils;
+import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +48,16 @@ public class RegistrationServletTest {
     private HttpServletResponse httpServletResponse;
     @Mock
     private ServletContext servletContext;
+    @Mock
+    private RegFormBean formBean;
+    @Mock
+    private Validator validator;
+    @Mock
+    private UserService userService;
+    @Mock
+    private User user;
+    @Mock
+    private UserUtils userUtils;
 
     @Before
     public void setUp() {
@@ -65,14 +75,19 @@ public class RegistrationServletTest {
         User user1 = new User("Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12");
         User user2 = new User("Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33");
         List<User> users = new ArrayList<>(Arrays.asList(user1, user2));
-        when(httpServletRequest.getParameter(NAME)).thenReturn("Peter");
-        when(httpServletRequest.getParameter(SURNAME)).thenReturn("Petrov");
-        when(httpServletRequest.getParameter(LOGIN)).thenReturn("peter1");
-        when(httpServletRequest.getParameter(PASSWORD)).thenReturn("Sadvds@1");
-        when(httpServletRequest.getParameter(CO_PASSWORD)).thenReturn("Sadvds@1");
-        when(httpServletRequest.getParameter(POLICY)).thenReturn("on");
-        when(httpServletRequest.getParameter(MAILS)).thenReturn("on");
-        when(httpServletRequest.getParameter(REG_CAPTCHA)).thenReturn("1234");
+        when(servletContext.getAttribute(VALIDATOR)).thenReturn(validator);
+        when(servletContext.getAttribute(CAPTCHA_KEEPER)).thenReturn(new SessionKeeper());
+        when(servletContext.getAttribute(USER_SERVICE)).thenReturn(userService);
+        when(servletContext.getAttribute(REG_FORM)).thenReturn(formBean);
+        when(servletContext.getAttribute(USER_UTILS)).thenReturn(userUtils);
+        when(formBean.getName()).thenReturn("Peter");
+        when(formBean.getSurname()).thenReturn("Petrov");
+        when(formBean.getLogin()).thenReturn("peter1");
+        when(formBean.getConfirmPassword()).thenReturn("Sadvds@1");
+        when(formBean.getPassword()).thenReturn("Sadvds@1");
+        when(formBean.getPolicy()).thenReturn("on");
+        when(formBean.getMails()).thenReturn("on");
+        when(formBean.getCaptcha()).thenReturn("1234");
         when(httpServletRequest.getServletContext()).thenReturn(servletContext);
         when(httpServletRequest.getSession()).thenReturn(session);
         when(session.getAttribute("timer")).thenReturn(true);
@@ -89,9 +104,11 @@ public class RegistrationServletTest {
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
         captchaKeys.put("1", "1234");
         keepers.put("session", new SessionKeeper());
-       init(captchaKeys,keepers);
+        init(captchaKeys, keepers);
+        when(userService.createUser(formBean)).thenReturn(user);
+        when(userService.isContains(user)).thenReturn(false);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter1@asd.com");
-       registrationServlet.doPost(httpServletRequest, httpServletResponse);
+        registrationServlet.doPost(httpServletRequest, httpServletResponse);
     }
 
     @Test
@@ -100,7 +117,7 @@ public class RegistrationServletTest {
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
         captchaKeys.put("1", "234");
         keepers.put("session", new SessionKeeper());
-        init(captchaKeys,keepers);
+        init(captchaKeys, keepers);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter1@asd.com");
         when(httpServletRequest.getRequestDispatcher("jsp/registration.jsp")).thenReturn(dispatcher);
         registrationServlet.doPost(httpServletRequest, httpServletResponse);
@@ -112,11 +129,12 @@ public class RegistrationServletTest {
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
         captchaKeys.put("1", "1234");
         keepers.put("session", new SessionKeeper());
-        init(captchaKeys,keepers);
+        init(captchaKeys, keepers);
+        when(userService.createUser(formBean)).thenReturn(user);
+        when(userService.isContains(user)).thenReturn(true);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter@gmail.com");
         when(httpServletRequest.getRequestDispatcher("jsp/registration.jsp")).thenReturn(dispatcher);
         registrationServlet.doPost(httpServletRequest, httpServletResponse);
     }
-
 
 }
