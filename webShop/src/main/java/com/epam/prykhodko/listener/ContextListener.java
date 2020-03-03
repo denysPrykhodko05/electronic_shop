@@ -14,10 +14,10 @@ import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 
 import com.epam.prykhodko.bean.RegFormBean;
-import com.epam.prykhodko.captcha_keepers.CaptchaKeeper;
-import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.CookieKeeper;
-import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.HiddenFieldKeeper;
-import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.SessionKeeper;
+import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.repository.UserRepository;
 import com.epam.prykhodko.repository.impl.UserRepositoryImpl;

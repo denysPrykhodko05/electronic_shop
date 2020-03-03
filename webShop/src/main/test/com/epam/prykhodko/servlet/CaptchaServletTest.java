@@ -4,13 +4,12 @@ import static java.lang.System.currentTimeMillis;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.CookieKeeper;
-import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.HiddenFieldKeeper;
-import com.epam.prykhodko.captcha_keepers.captchakeeperimpl.SessionKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;

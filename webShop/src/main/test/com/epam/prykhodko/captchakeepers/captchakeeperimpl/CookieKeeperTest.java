@@ -1,4 +1,4 @@
-package com.epam.prykhodko.captcha_keepers.captchakeeperimpl;
+package com.epam.prykhodko.captchakeepers.captchakeeperimpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
