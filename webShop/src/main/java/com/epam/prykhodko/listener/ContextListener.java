@@ -6,7 +6,9 @@ import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_TIME;
 import static com.epam.prykhodko.constants.ApplicationConstants.COOKIE;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
+import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
+import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
@@ -16,11 +18,9 @@ import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
-import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.repository.UserRepository;
-import com.epam.prykhodko.repository.impl.UserRepositoryImpl;
+import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.service.UserService;
-import com.epam.prykhodko.service.impl.UserServiceImpl;
+import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
@@ -38,31 +38,33 @@ import org.apache.log4j.Logger;
 public class ContextListener implements ServletContextListener {
 
     private static final Logger LOGGER = Logger.getLogger(ContextListener.class);
-    Map<Long, String> captchaKeys = new HashMap<>();
-    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private final Map<Long, String> captchaKeys = new HashMap<>();
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private final UserDAO userDAO = new UserDAO();
+    private final UserService userService = new UserServiceDAOImpl(userDAO);
+    private final Validator validator = new Validator();
+    private final UserUtils userUtils = new UserUtils();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         BasicConfigurator.configure();
-        UserRepository userRepository = new UserRepositoryImpl();
-        UserService userService = new UserServiceImpl(userRepository);
         String capthaKeeper = servletContextEvent.getServletContext().getInitParameter(CAPTCHA);
         String captchaTime = servletContextEvent.getServletContext().getInitParameter(CAPTCHA_TIME);
         CaptchaKeeper captchaKeeper = createKeeper(capthaKeeper, servletContextEvent.getServletContext());
-        Validator validator = new Validator();
-        UserUtils userUtils = new UserUtils();
         ServletContext servletContext = servletContextEvent.getServletContext();
         servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
+        Map<String, CaptchaKeeper> keepers = new HashMap<>();
         executorService.scheduleWithFixedDelay(new TimerThread(captchaKeys), 0, Long.parseLong(captchaTime), TimeUnit.SECONDS);
+        keepers.put(SESSION, new SessionKeeper());
+        keepers.put(COOKIE, new CookieKeeper());
+        keepers.put(HIDDEN_FIELD, new HiddenFieldKeeper());
+        servletContext.setAttribute(KEEPERS, keepers);
         servletContext.setAttribute(VALIDATOR, validator);
         servletContext.setAttribute(USER_UTILS, userUtils);
         servletContext.setAttribute(CAPTCHA_KEEPER, captchaKeeper);
         servletContext.setAttribute(REG_FORM, new RegFormBean());
-        userService.add(new User(1, "Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12", 1));
-        userService.add(new User(1, "Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33", 1));
         servletContext.setAttribute(USER_SERVICE, userService);
     }
-
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
@@ -71,7 +73,7 @@ public class ContextListener implements ServletContextListener {
     }
 
     private CaptchaKeeper createKeeper(String keeper, ServletContext servletContext) {
-        servletContext.setAttribute("hidden", false);
+        servletContext.setAttribute("hidden",false);
         if (COOKIE.equals(keeper)) {
             return new CookieKeeper();
         }

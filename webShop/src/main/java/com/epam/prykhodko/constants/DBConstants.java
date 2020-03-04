@@ -3,7 +3,7 @@ package com.epam.prykhodko.constants;
 public abstract class DBConstants {
 
     //User credential
-    public static final String DB_URL = "jdbc:mysql://localhost:3306/electronic_store";
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/electronic_store?useSSL=false";
     public static final String USER_NAME = "root";
     public static final String USER_PASSWORD = "root";
 
