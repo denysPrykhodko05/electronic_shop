@@ -1,6 +1,6 @@
 package com.epam.prykhodko.constants;
 
-public abstract class ExceptionConstants {
+public abstract class LoggerMessagesConstants {
 
     //Connection constants
     public static final String ERR_CANNOT_OBTAIN_CONNECTION = "Cannot obtain a connection from the pool";
@@ -14,4 +14,8 @@ public abstract class ExceptionConstants {
     public static final String ERR_CANNOT_GET_ALL_USERS = "Cannot get all users";
     public static final String ERR_CANNOT_GET_USER_BY_ID = "Cannot get user by id";
     public static final String ERR_CANNOT_DELETE_USER_BY_LOGIN = "Cannot delete user by login";
+
+    //Filter messages
+    public static final String INFO_LOGOUT_FILTER_INIT = "Log out filter init";
+    public static final String INFO_LOGOUT_FILTER_DESTROY = "Log out filter destroy";
 }

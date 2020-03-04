@@ -13,6 +13,7 @@ public abstract class ApplicationConstants {
     public static final String PASSWORD = "password";
     public static final String CO_PASSWORD = "confirmPassword";
     public static final String LOGIN = "login";
+    public static final String USER_LOGIN = "userLogin";
     public static final String POLICY = "privacy-policy";
     public static final String MAILS = "mails";
     public static final String REG_CAPTCHA = "regCaptcha";
