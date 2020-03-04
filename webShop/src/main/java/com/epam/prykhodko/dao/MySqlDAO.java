@@ -1,19 +1,19 @@
 package com.epam.prykhodko.dao;
 
-import static com.epam.prykhodko.constants.DBConstants.DB_URL;
-import static com.epam.prykhodko.constants.DBConstants.USER_NAME;
-import static com.epam.prykhodko.constants.DBConstants.USER_PASSWORD;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_CONNECTION;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_RESULT_SET;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_ROLLBACK;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_STATEMENT;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_OBTAIN_CONNECTION;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 public class MySqlDAO {
@@ -23,12 +23,10 @@ public class MySqlDAO {
     public Connection getConnection() {
         Connection con = null;
         try {
-            MysqlDataSource mysqlDataSource = new MysqlDataSource();
-            mysqlDataSource.setURL(DB_URL);
-            mysqlDataSource.setUser(USER_NAME);
-            mysqlDataSource.setPassword(USER_PASSWORD);
-            con = mysqlDataSource.getConnection();
-        } catch (SQLException e) {
+            Context context = new InitialContext();
+            DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/electronic_store");
+            con = dataSource.getConnection();
+        } catch (SQLException | NamingException e) {
             LOGGER.error(ERR_CANNOT_OBTAIN_CONNECTION);
         }
         return con;

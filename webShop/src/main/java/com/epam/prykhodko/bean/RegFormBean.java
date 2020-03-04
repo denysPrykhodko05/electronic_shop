@@ -10,7 +10,18 @@ import static com.epam.prykhodko.constants.ApplicationConstants.POLICY;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_CAPTCHA;
 import static com.epam.prykhodko.constants.ApplicationConstants.SURNAME;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Iterator;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class RegFormBean {
 
@@ -24,16 +35,44 @@ public class RegFormBean {
     private String mails;
     private String captcha;
 
-    public void setRegFormBean(HttpServletRequest httpServletRequest){
-        name = httpServletRequest.getParameter(NAME);
-        surname = httpServletRequest.getParameter(SURNAME);
-        login = httpServletRequest.getParameter(LOGIN);
-        email = httpServletRequest.getParameter(EMAIL);
-        password = httpServletRequest.getParameter(PASSWORD);
-        confirmPassword = httpServletRequest.getParameter(CO_PASSWORD);
-        policy = httpServletRequest.getParameter(POLICY);
-        mails = httpServletRequest.getParameter(MAILS);
-        captcha = httpServletRequest.getParameter(REG_CAPTCHA);
+    public static RegFormBean setRegFormBean(HttpServletRequest httpServletRequest) {
+        //TODO remove bean
+        RegFormBean regFormBean = new RegFormBean();
+        Object avatar = httpServletRequest.getParameter("avatar");
+        regFormBean.name = httpServletRequest.getParameter(NAME);
+        regFormBean.surname = httpServletRequest.getParameter(SURNAME);
+        regFormBean.login = httpServletRequest.getParameter(LOGIN);
+        regFormBean.email = httpServletRequest.getParameter(EMAIL);
+        regFormBean.password = httpServletRequest.getParameter(PASSWORD);
+        regFormBean.confirmPassword = httpServletRequest.getParameter(CO_PASSWORD);
+        regFormBean.policy = httpServletRequest.getParameter(POLICY);
+        regFormBean.mails = httpServletRequest.getParameter(MAILS);
+        regFormBean.captcha = httpServletRequest.getParameter(REG_CAPTCHA);
+        return regFormBean;
+    }
+
+    //TODO create upload captcha
+    public void upload(HttpServletRequest httpServletRequest) throws FileUploadException, FileNotFoundException {
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        FileOutputStream fos;
+        ServletContext servletContext = httpServletRequest.getServletContext();
+        File repository = new File("C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\avatars");
+        factory.setRepository(repository);
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        List<FileItem> items = upload.parseRequest(httpServletRequest);
+        Iterator<FileItem> iter = items.iterator();
+        while (iter.hasNext()) {
+            FileItem item = iter.next();
+
+            if (item.isFormField()) {
+                // Достаём поле формы
+                System.out.println(item);
+            } else {
+                // Достаём файл
+                fos = new FileOutputStream(repository);
+                System.out.println(item);
+            }
+        }
     }
 
     public String getName() {

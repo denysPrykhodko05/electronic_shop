@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileUploadException;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -65,7 +66,12 @@ public class RegistrationServlet extends HttpServlet {
         Validator validator = (Validator) servletContext.getAttribute(VALIDATOR);
         CaptchaKeeper captchaKeeper = (CaptchaKeeper) servletContext.getAttribute(CAPTCHA_KEEPER);
         Map<Long, String> captchaKeys = (Map<Long, String>) servletContext.getAttribute(CAPTCHA_KEYS);
-        formBean.setRegFormBean(httpServletRequest);
+        //formBean.setRegFormBean(httpServletRequest);
+        try {
+            formBean.upload(httpServletRequest);
+        } catch (FileUploadException e) {
+            //TODO
+        }
         validator.checkField(NAME, formBean.getName(), USER_PERSONAL_DATA_REGEX, errors);
         validator.checkField(SURNAME, formBean.getSurname(), USER_PERSONAL_DATA_REGEX, errors);
         validator.checkField(LOGIN, formBean.getLogin(), LOGIN_REGEX, errors);

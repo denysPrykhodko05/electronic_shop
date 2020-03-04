@@ -6,6 +6,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_VALUE;
 
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import java.util.Map;
+import java.util.Objects;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,10 @@ public class HiddenFieldKeeper implements CaptchaKeeper {
 
     @Override
     public Long get(HttpServletRequest httpServletRequest) {
-        return Long.valueOf(httpServletRequest.getParameter("hiddenField"));
+        String value = httpServletRequest.getParameter("hiddenField");
+        if (Objects.isNull(value)) {
+            return 0L;
+        }
+        return Long.valueOf(value);
     }
 }

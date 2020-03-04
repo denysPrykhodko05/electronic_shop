@@ -14,7 +14,7 @@ public class Validator {
 
 
     public void checkField(String parameter, String data, String regex, Map<String, String> errors) {
-        if (!data.matches(regex)) {
+        if (Objects.isNull(data) || !data.matches(regex)) {
             errors.put(parameter, INCORRECT_INPUT + parameter);
         }
     }
