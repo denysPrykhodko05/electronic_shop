@@ -49,8 +49,6 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         HttpSession session = httpServletRequest.getSession();
-        String key = String.valueOf(currentTimeMillis());
-        session.setAttribute(CAPTCHA_KEY, key);
         session.removeAttribute(ERRORS);
         session.removeAttribute(USER_DATA);
         forward(httpServletRequest, httpServletResponse);
@@ -98,6 +96,8 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     private void forward(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        String key = String.valueOf(currentTimeMillis());
+        httpServletRequest.getSession().setAttribute(CAPTCHA_KEY, key);
         httpServletRequest.getRequestDispatcher(REGISTRATION_JSP_LINK).forward(httpServletRequest, httpServletResponse);
     }
 }

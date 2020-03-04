@@ -1,16 +1,13 @@
 package com.epam.prykhodko.servlet;
 
-import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEY;
-import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
+import static java.lang.System.currentTimeMillis;
 
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
-import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
-import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.util.CaptchaImage;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
@@ -20,21 +17,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/captcha")
-@SuppressWarnings("unchecked")
 public class CaptchaServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         ServletContext servletContext = httpServletRequest.getServletContext();
-        String keeper = servletContext.getInitParameter(CAPTCHA);
-        Map<String, CaptchaKeeper> captchaKeepers = (Map<String, CaptchaKeeper>) servletContext.getAttribute(KEEPERS);
+        CaptchaKeeper captchaKeepers = (CaptchaKeeper) servletContext.getAttribute(CAPTCHA_KEEPER);
         HttpSession session = httpServletRequest.getSession();
+        String key = String.valueOf(currentTimeMillis());
+        session.setAttribute(CAPTCHA_KEY, key);
         CaptchaImage obj = new CaptchaImage();
         BufferedImage ima = obj.getCaptchaImage();
         String captchaStr = obj.getCaptchaString();
         Long captchaKey = Long.valueOf((String) session.getAttribute(CAPTCHA_KEY));
-        captchaKeepers.getOrDefault(keeper, new SessionKeeper())
-            .save(httpServletRequest, httpServletResponse, captchaKey, captchaStr);
+        captchaKeepers.save(httpServletRequest, httpServletResponse, captchaKey, captchaStr);
         ImageIO.write(ima, "jpg", httpServletResponse.getOutputStream());
     }
 }
