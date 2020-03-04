@@ -71,7 +71,7 @@ public class RegistrationServletTest {
         registrationServlet.doGet(httpServletRequest, httpServletResponse);
     }
 
-    private void init(Map<String, String> captchaKeys, Map<String, CaptchaKeeper> keepers) {
+    private void init(Map<Long, String> captchaKeys, Map<String, CaptchaKeeper> keepers) {
         User user1 = new User(1,"Ivan", "Ivanov", "ivan@gmail.com", "login", "Aadaf@12",1);
         User user2 = new User(2,"Peter", "Petrov", "peter@gmail.com", "peterPeter", "Asaba_33",2);
         List<User> users = new ArrayList<>(Arrays.asList(user1, user2));
@@ -91,7 +91,7 @@ public class RegistrationServletTest {
         when(httpServletRequest.getServletContext()).thenReturn(servletContext);
         when(httpServletRequest.getSession()).thenReturn(session);
         when(session.getAttribute("timer")).thenReturn(true);
-        when(httpServletRequest.getSession().getAttribute("captchaKey")).thenReturn("1");
+        when(httpServletRequest.getSession().getAttribute("captchaKey")).thenReturn(1L);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(captchaKeys);
         when(servletContext.getAttribute("keepers")).thenReturn(keepers);
         when(servletContext.getInitParameter("captcha")).thenReturn("session");
@@ -100,9 +100,9 @@ public class RegistrationServletTest {
 
     @Test
     public void doPostRegistrationFormShouldBeValid() throws ServletException, IOException {
-        Map<String, String> captchaKeys = new HashMap<>();
+        Map<Long, String> captchaKeys = new HashMap<>();
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
-        captchaKeys.put("1", "1234");
+        captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
         when(userService.createUser(formBean)).thenReturn(user);
@@ -113,9 +113,9 @@ public class RegistrationServletTest {
 
     @Test
     public void doPostRegistrationFormShouldBeInvalid() throws ServletException, IOException {
-        Map<String, String> captchaKeys = new HashMap<>();
+        Map<Long, String> captchaKeys = new HashMap<>();
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
-        captchaKeys.put("1", "234");
+        captchaKeys.put(1L, "234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter1@asd.com");
@@ -125,9 +125,9 @@ public class RegistrationServletTest {
 
     @Test
     public void doPostUserShouldBeExists() throws ServletException, IOException {
-        Map<String, String> captchaKeys = new HashMap<>();
+        Map<Long, String> captchaKeys = new HashMap<>();
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
-        captchaKeys.put("1", "1234");
+        captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
         when(userService.createUser(formBean)).thenReturn(user);

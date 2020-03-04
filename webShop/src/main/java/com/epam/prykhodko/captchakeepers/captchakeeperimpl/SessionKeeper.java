@@ -23,6 +23,7 @@ public class SessionKeeper implements CaptchaKeeper {
 
     @Override
     public Long get(HttpServletRequest httpServletRequest) {
-        return (Long) httpServletRequest.getSession().getAttribute("captchaKey");
+        HttpSession session = httpServletRequest.getSession();
+        return (Long) session.getAttribute(CAPTCHA_KEY);
     }
 }

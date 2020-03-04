@@ -23,7 +23,7 @@ public class HiddenFieldKeeperTest {
 
     @Test
     public void getShouldAddDataToHiddenField() {
-        when(httpServletRequest.getParameter("captchaKey")).thenReturn("1234");
+        when(httpServletRequest.getParameter("hiddenField")).thenReturn("1234");
         assertEquals(hiddenFieldKeeper.get(httpServletRequest), Long.valueOf(1234));
     }
 }

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <form action="/registration" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password, confirmPassword)">
+    <form action="/registration" id="reg" enctype="multipart/form-data" method="POST" name="regFrom" onsubmit="return dataValidation(password, confirmPassword)">
         <div class="commonContainer">
             <div class="container">
              <c:if test="${not empty errors}">
@@ -20,6 +20,9 @@
                        <p id="incorrectField">${entry.value}</p>
                 </c:forEach>
              </c:if>
+                <div data-tip="Upload your avatar">
+                    <input type="file" name="avatar" accept="image/*"><br>
+                </div>
                 <div data-tip="Name must be longer or equal one character symbol">
                     <input id="name" name="name" placeholder="Name" type="text" value="${userData["name"]}">
                 </div>
