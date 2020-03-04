@@ -100,7 +100,6 @@
       <groupId>org.apache.commons</groupId>
       <version>3.9</version>
     </dependency>
-
   </dependencies>
   <groupId>com.epam</groupId>
   <modelVersion>4.0.0</modelVersion>

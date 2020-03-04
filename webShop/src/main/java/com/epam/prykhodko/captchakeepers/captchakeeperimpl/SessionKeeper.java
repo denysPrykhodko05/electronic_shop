@@ -1,7 +1,7 @@
 package com.epam.prykhodko.captchakeepers.captchakeeperimpl;
 
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEY;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
 
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import java.util.Map;

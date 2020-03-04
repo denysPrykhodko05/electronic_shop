@@ -1,11 +1,11 @@
 package com.epam.prykhodko.util;
 
-import static com.epam.prykhodko.constants.Constants.EMAIL;
-import static com.epam.prykhodko.constants.Constants.LOGIN;
-import static com.epam.prykhodko.constants.Constants.NAME;
-import static com.epam.prykhodko.constants.Constants.SURNAME;
-import static com.epam.prykhodko.constants.Constants.USER_EMAIL_EXISTS;
-import static com.epam.prykhodko.constants.Constants.USER_LOGIN_EXISTS;
+import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
+import static com.epam.prykhodko.constants.ApplicationConstants.NAME;
+import static com.epam.prykhodko.constants.ApplicationConstants.SURNAME;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_EMAIL_EXISTS;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN_EXISTS;
 
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.entity.User;

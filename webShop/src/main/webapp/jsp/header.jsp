@@ -15,7 +15,7 @@
     <a href="">Something</a>
     <a href="">Something more</a>
   </div>
-  <div id="profile"><img src="images/profile.png" alt="" width="50px" height="50px"><a href="jsp/logIn.jsp">Log in<br></a><a href="/registration">Registration</a>
+  <div id="profile"><img src="images/profile.png" alt="" width="50px" height="50px"><a href="/login">Log in<br></a><a href="/registration">Registration</a>
   </div>
 </div>
 </html>

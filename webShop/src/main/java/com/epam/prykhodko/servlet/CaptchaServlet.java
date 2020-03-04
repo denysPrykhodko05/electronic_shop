@@ -1,10 +1,11 @@
 package com.epam.prykhodko.servlet;
 
-import static com.epam.prykhodko.constants.Constants.CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
-import static com.epam.prykhodko.constants.Constants.KEEPERS;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEY;
+import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
 
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
+import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.util.CaptchaImage;
 import java.awt.image.BufferedImage;

@@ -1,6 +1,6 @@
 package com.epam.prykhodko.constants;
 
-public abstract class Constants {
+public abstract class ApplicationConstants {
 
     //Form strings
     public static final String USER_PERSONAL_DATA_REGEX = "^\\w+";
@@ -20,6 +20,7 @@ public abstract class Constants {
     //Captcha strings
     public static final String CAPTCHA = "captcha";
     public static final String CAPTCHA_KEY = "captchaKey";
+    public static final String HIDDEN_FIELD_KEY = "hiddenFieldKey";
     public static final String CAPTCHA_KEYS = "captchaKeys";
     public static final String CAPTCHA_VALUE = "captchaValue";
     public static final String CAPTCHA_TIME = "captchaTime";
@@ -46,6 +47,7 @@ public abstract class Constants {
     public static final String KEEPERS = "keepers";
     public static final String ERRORS = "errors";
     public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
+    public static final String LOGIN_JSP_LINK = "jsp/logIn.jsp";
     public static final String VALIDATOR = "validator";
     public static final String USER_UTILS = "user utils";
     public static final String REG_FORM = "regFormBean";

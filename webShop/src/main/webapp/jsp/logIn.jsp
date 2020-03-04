@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file = "header.jsp"%>
 <html lang="en">
 
@@ -11,11 +13,16 @@
 </head>
 
 <body>
-    <form action="../index.html" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password,password)">
+    <form action="/login" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password,password)">
         <div class="commonContainer">
             <div class="container">
+            <c:if test="${not empty errors}">
+                <c:forEach var="entry" items="${errors}">
+                    <p id="incorrectField">${entry.value}</p>
+                </c:forEach>
+             </c:if>
                 <div data-tip="Login must consist from 3 to 16 symbols">
-                    <input id="login" name="login" placeholder="Login" type="text">
+                    <input id="login" name="login" placeholder="Login" type="text" value="${login}">
                 </div>
                 <div data-tip="Password should have length from 8 to 16 symbols. Contains uppercase letter, specifie symbol and digit">
                     <input id="password" class="logIn-pass" name="password" placeholder="Password" type="password"><br>

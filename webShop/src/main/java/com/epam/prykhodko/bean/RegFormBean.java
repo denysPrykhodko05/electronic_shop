@@ -1,14 +1,14 @@
 package com.epam.prykhodko.bean;
 
-import static com.epam.prykhodko.constants.Constants.CO_PASSWORD;
-import static com.epam.prykhodko.constants.Constants.EMAIL;
-import static com.epam.prykhodko.constants.Constants.LOGIN;
-import static com.epam.prykhodko.constants.Constants.MAILS;
-import static com.epam.prykhodko.constants.Constants.NAME;
-import static com.epam.prykhodko.constants.Constants.PASSWORD;
-import static com.epam.prykhodko.constants.Constants.POLICY;
-import static com.epam.prykhodko.constants.Constants.REG_CAPTCHA;
-import static com.epam.prykhodko.constants.Constants.SURNAME;
+import static com.epam.prykhodko.constants.ApplicationConstants.CO_PASSWORD;
+import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
+import static com.epam.prykhodko.constants.ApplicationConstants.MAILS;
+import static com.epam.prykhodko.constants.ApplicationConstants.NAME;
+import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD;
+import static com.epam.prykhodko.constants.ApplicationConstants.POLICY;
+import static com.epam.prykhodko.constants.ApplicationConstants.REG_CAPTCHA;
+import static com.epam.prykhodko.constants.ApplicationConstants.SURNAME;
 
 import javax.servlet.http.HttpServletRequest;
 

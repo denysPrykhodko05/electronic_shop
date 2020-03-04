@@ -1,8 +1,8 @@
 package com.epam.prykhodko.captchakeepers.captchakeeperimpl;
 
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEY;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_KEYS;
-import static com.epam.prykhodko.constants.Constants.CAPTCHA_VALUE;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEY;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_VALUE;
 
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import java.util.Map;
@@ -17,7 +17,6 @@ public class HiddenFieldKeeper implements CaptchaKeeper {
     public void save(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Long key, String value) {
         ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
-        httpServletRequest.setAttribute("hiddenFieldValue",key);
         session.removeAttribute(CAPTCHA_KEY);
         session.removeAttribute(CAPTCHA_VALUE);
         Map<Long, String> captchaKeys = (Map<Long, String>) servletContext.getAttribute(CAPTCHA_KEYS);
@@ -26,6 +25,6 @@ public class HiddenFieldKeeper implements CaptchaKeeper {
 
     @Override
     public Long get(HttpServletRequest httpServletRequest) {
-        return Long.valueOf(httpServletRequest.getParameter(CAPTCHA_KEY));
+        return Long.valueOf(httpServletRequest.getParameter("hiddenField"));
     }
 }
