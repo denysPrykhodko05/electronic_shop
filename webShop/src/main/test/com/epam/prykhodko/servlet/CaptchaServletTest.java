@@ -1,5 +1,6 @@
 package com.epam.prykhodko.servlet;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
 import static java.lang.System.currentTimeMillis;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -52,6 +53,7 @@ public class CaptchaServletTest {
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
         when(httpServletResponse.getOutputStream()).thenReturn(outputStream);
+        when(servletContext.getAttribute(CAPTCHA_KEEPER)).thenReturn(new SessionKeeper());
         CaptchaServlet captchaServlet = new CaptchaServlet();
         captchaServlet.doGet(httpServletRequest, httpServletResponse);
     }
@@ -69,6 +71,7 @@ public class CaptchaServletTest {
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
         when(httpServletResponse.getOutputStream()).thenReturn(outputStream);
+        when(servletContext.getAttribute(CAPTCHA_KEEPER)).thenReturn(new SessionKeeper());
         CaptchaServlet captchaServlet = new CaptchaServlet();
         captchaServlet.doGet(httpServletRequest, httpServletResponse);
     }
@@ -87,6 +90,7 @@ public class CaptchaServletTest {
         when(httpSession.getAttribute("captchaKey")).thenReturn(uuid);
         when(servletContext.getAttribute("captchaKeys")).thenReturn(keyMap);
         when(httpServletResponse.getOutputStream()).thenReturn(outputStream);
+        when(servletContext.getAttribute(CAPTCHA_KEEPER)).thenReturn(new SessionKeeper());
         CaptchaServlet captchaServlet = new CaptchaServlet();
         captchaServlet.doGet(httpServletRequest, httpServletResponse);
     }

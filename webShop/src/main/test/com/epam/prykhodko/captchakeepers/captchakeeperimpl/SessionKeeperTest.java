@@ -28,7 +28,7 @@ public class SessionKeeperTest {
     @Test
     public void getShouldReturnStringThatWasInSession() {
         when(httpServletRequest.getSession()).thenReturn(session);
-        when(session.getAttribute("captchaKey")).thenReturn("1234");
+        when(session.getAttribute("captchaKey")).thenReturn(1234L);
         assertEquals(sessionKeeper.get(httpServletRequest), Long.valueOf(1234));
     }
 }
