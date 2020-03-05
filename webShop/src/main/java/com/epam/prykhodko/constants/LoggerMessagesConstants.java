@@ -1,7 +1,5 @@
 package com.epam.prykhodko.constants;
 
-import org.apache.commons.fileupload.FileUploadException;
-
 public abstract class LoggerMessagesConstants {
 
     //Connection constants
@@ -16,6 +14,7 @@ public abstract class LoggerMessagesConstants {
     public static final String ERR_CANNOT_GET_ALL_USERS = "Cannot get all users";
     public static final String ERR_CANNOT_GET_USER_BY_ID = "Cannot get user by id";
     public static final String ERR_CANNOT_DELETE_USER_BY_LOGIN = "Cannot delete user by login";
+    public static final String ERR_CANNOT_CREATE_SAVEPOINT = "Cannot ceate savepoint";
 
     //Filter messages
     public static final String INFO_LOGOUT_FILTER_INIT = "Log out filter init";

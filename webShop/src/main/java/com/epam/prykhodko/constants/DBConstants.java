@@ -10,4 +10,7 @@ public abstract class DBConstants {
     public static final String GET_ALL_USERS = "SELECT id, name, surname, login, email, password, role_id FROM user";
     public static final String GET_USER_BY_ID = "SELECT id, name, surname, login, email, password, role_id FROM user WHERE id =?";
     public static final String DELETE_USER_BY_LOGIN = "DELETE FROM user WHERE login=?";
+
+    //Connection constants
+    public static final String SAVEPOINT_NAME = "Savepoint";
 }

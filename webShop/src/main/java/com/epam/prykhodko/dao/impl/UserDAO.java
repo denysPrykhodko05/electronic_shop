@@ -18,7 +18,7 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GE
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.DAO;
-import com.epam.prykhodko.dao.MySqlDAO;
+import com.epam.prykhodko.dao.TransactionMananger;
 import com.epam.prykhodko.entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class UserDAO extends MySqlDAO implements DAO<User> {
+public class UserDAO extends TransactionMananger implements DAO<User> {
 
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class);
 
@@ -69,12 +69,21 @@ public class UserDAO extends MySqlDAO implements DAO<User> {
 
     @Override
     public void add(User user) {
-        try (Connection connection = getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(ADD_USER)) {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = getConnection();
+            savepoint(connection);
+            pstmt = connection.prepareStatement(ADD_USER);
             fillPreparedStatementByUserData(pstmt, user);
-            pstmt.executeUpdate();
+            if (pstmt.executeUpdate() > INTEGER_ZERO) {
+                commit(connection);
+            }
         } catch (SQLException ex) {
+            rollBack(connection);
             LOGGER.error(ERR_CANNOT_ADD_USER);
+        } finally {
+            close(connection);
         }
     }
 
@@ -85,14 +94,22 @@ public class UserDAO extends MySqlDAO implements DAO<User> {
 
     @Override
     public boolean delete(User user) {
-        try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_BY_LOGIN)) {
+        Connection connection = null;
+        PreparedStatement preparedStatement;
+        try {
+            connection = getConnection();
+            savepoint(connection);
+            preparedStatement = connection.prepareStatement(DELETE_USER_BY_LOGIN);
             preparedStatement.setString(1, user.getLogin());
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
+                commit(connection);
                 return true;
             }
         } catch (SQLException ex) {
+            rollBack(connection);
             LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
+        } finally {
+            close(connection);
         }
         return false;
     }
