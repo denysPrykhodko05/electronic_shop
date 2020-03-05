@@ -1,5 +1,7 @@
 package com.epam.prykhodko.constants;
 
+import org.apache.commons.fileupload.FileUploadException;
+
 public abstract class LoggerMessagesConstants {
 
     //Connection constants
@@ -18,4 +20,10 @@ public abstract class LoggerMessagesConstants {
     //Filter messages
     public static final String INFO_LOGOUT_FILTER_INIT = "Log out filter init";
     public static final String INFO_LOGOUT_FILTER_DESTROY = "Log out filter destroy";
+
+    //ImageDraw exception
+    public static final String ERR_CANNOT_DRAW_AVATAR = "Cannot draw avatar";
+
+    //File exception
+    public static final String ERR_CANNOT_LOAD_FILE = "Cannot load file";
 }

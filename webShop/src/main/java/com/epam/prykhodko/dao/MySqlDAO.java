@@ -1,5 +1,6 @@
 package com.epam.prykhodko.dao;
 
+import static com.epam.prykhodko.constants.DBConstants.DB_URL;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_CONNECTION;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_RESULT_SET;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_ROLLBACK;
@@ -24,7 +25,7 @@ public class MySqlDAO {
         Connection con = null;
         try {
             Context context = new InitialContext();
-            DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/electronic_store");
+            DataSource dataSource = (DataSource) context.lookup(DB_URL);
             con = dataSource.getConnection();
         } catch (SQLException | NamingException e) {
             LOGGER.error(ERR_CANNOT_OBTAIN_CONNECTION);

@@ -16,7 +16,7 @@
     <a href="products.jsp">Products</a>
     <a href="">Something</a>
     <a href="">Something more</a>
-  </div>
+  </div id="loginTag">
      <login:LoginTag userLogin="${userLogin}"/>
   </div>
 </div>

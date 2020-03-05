@@ -1,5 +1,6 @@
 package com.epam.prykhodko.util;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR;
 import static com.epam.prykhodko.constants.ApplicationConstants.INCORRECT_CAPTCHA;
 import static com.epam.prykhodko.constants.ApplicationConstants.INCORRECT_INPUT;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_CAPTCHA;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.commons.fileupload.FileItem;
 
 public class Validator {
 
@@ -22,6 +24,12 @@ public class Validator {
     public void checkCheckbox(String parameter, String value, Map<String, String> errors) {
         if (Objects.isNull(value)) {
             errors.put(parameter, YOU_DONT_CHOOSE + parameter);
+        }
+    }
+
+    public void checkAvatar(FileItem fileItem, Map<String, String> errors) {
+        if (Objects.isNull(fileItem)) {
+            errors.put(AVATAR, YOU_DONT_CHOOSE + AVATAR);
         }
     }
 

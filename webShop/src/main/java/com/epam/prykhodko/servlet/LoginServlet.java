@@ -1,6 +1,7 @@
 package com.epam.prykhodko.servlet;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.ERRORS;
+import static com.epam.prykhodko.constants.ApplicationConstants.HOME_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.INCORRECT_INPUT;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN_JSP_LINK;
@@ -35,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     private UserService userService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         ServletContext servletContext = config.getServletContext();
         validator = (Validator) servletContext.getAttribute(VALIDATOR);
         userService = (UserService) servletContext.getAttribute(USER_SERVICE);
@@ -50,7 +51,6 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LogInBean logInBean = new LogInBean();
         Map<String, String> errors = new LinkedHashMap<>();
-        HttpSession session = req.getSession();
         logInBean.setLoginForm(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
         validator.checkField(PASSWORD, logInBean.getPassword(), PASSWORD_REGEX, errors);
@@ -71,8 +71,9 @@ public class LoginServlet extends HttpServlet {
             forward(req, resp);
             return;
         }
+        HttpSession session = req.getSession();
         session.setAttribute(USER_LOGIN, user.getLogin());
-        resp.sendRedirect("/");
+        resp.sendRedirect(HOME_URL);
     }
 
     private void forward(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {

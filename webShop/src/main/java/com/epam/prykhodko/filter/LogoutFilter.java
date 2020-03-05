@@ -1,5 +1,6 @@
 package com.epam.prykhodko.filter;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.HOME_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_LOGOUT_FILTER_DESTROY;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_LOGOUT_FILTER_INIT;
@@ -20,11 +21,11 @@ public class LogoutFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(LogoutFilter.class);
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletRequest.getSession().removeAttribute(USER_LOGIN);
-        httpServletResponse.sendRedirect("/");
+        httpServletResponse.sendRedirect(HOME_URL);
     }
 
     @Override

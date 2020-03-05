@@ -1,5 +1,12 @@
 package com.epam.prykhodko.dao.impl;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
+import static com.epam.prykhodko.constants.ApplicationConstants.ID;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
+import static com.epam.prykhodko.constants.ApplicationConstants.NAME;
+import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD;
+import static com.epam.prykhodko.constants.ApplicationConstants.ROLE_ID;
+import static com.epam.prykhodko.constants.ApplicationConstants.SURNAME;
 import static com.epam.prykhodko.constants.DBConstants.ADD_USER;
 import static com.epam.prykhodko.constants.DBConstants.DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_USERS;
@@ -38,6 +45,8 @@ public class UserDAO extends MySqlDAO implements DAO<User> {
             }
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_GET_USER_BY_ID);
+        } finally {
+            close(resultSet);
         }
         return null;
     }
@@ -71,7 +80,7 @@ public class UserDAO extends MySqlDAO implements DAO<User> {
 
     @Override
     public void update(User user, String[] params) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -98,13 +107,13 @@ public class UserDAO extends MySqlDAO implements DAO<User> {
     }
 
     private User parseResultSetToUser(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        String name = resultSet.getString("name");
-        String surName = resultSet.getString("surname");
-        String login = resultSet.getString("login");
-        String email = resultSet.getString("email");
-        String password = resultSet.getString("password");
-        int roleId = resultSet.getInt("role_id");
+        int id = resultSet.getInt(ID);
+        String name = resultSet.getString(NAME);
+        String surName = resultSet.getString(SURNAME);
+        String login = resultSet.getString(LOGIN);
+        String email = resultSet.getString(EMAIL);
+        String password = resultSet.getString(PASSWORD);
+        int roleId = resultSet.getInt(ROLE_ID);
         return new User(id, name, surName, email, login, password, roleId);
     }
 }

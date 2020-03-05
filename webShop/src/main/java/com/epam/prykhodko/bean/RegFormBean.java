@@ -1,5 +1,6 @@
 package com.epam.prykhodko.bean;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR;
 import static com.epam.prykhodko.constants.ApplicationConstants.CO_PASSWORD;
 import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
@@ -9,14 +10,11 @@ import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD;
 import static com.epam.prykhodko.constants.ApplicationConstants.POLICY;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_CAPTCHA;
 import static com.epam.prykhodko.constants.ApplicationConstants.SURNAME;
+import static com.epam.prykhodko.constants.ApplicationConstants.TEMPORARY_STORAGE;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.Iterator;
 import java.util.List;
-import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -34,45 +32,48 @@ public class RegFormBean {
     private String policy;
     private String mails;
     private String captcha;
+    private FileItem avatar;
 
-    public static RegFormBean setRegFormBean(HttpServletRequest httpServletRequest) {
-        //TODO remove bean
+    private static RegFormBean setRegFormBean(List<FileItem> items) {
         RegFormBean regFormBean = new RegFormBean();
-        Object avatar = httpServletRequest.getParameter("avatar");
-        regFormBean.name = httpServletRequest.getParameter(NAME);
-        regFormBean.surname = httpServletRequest.getParameter(SURNAME);
-        regFormBean.login = httpServletRequest.getParameter(LOGIN);
-        regFormBean.email = httpServletRequest.getParameter(EMAIL);
-        regFormBean.password = httpServletRequest.getParameter(PASSWORD);
-        regFormBean.confirmPassword = httpServletRequest.getParameter(CO_PASSWORD);
-        regFormBean.policy = httpServletRequest.getParameter(POLICY);
-        regFormBean.mails = httpServletRequest.getParameter(MAILS);
-        regFormBean.captcha = httpServletRequest.getParameter(REG_CAPTCHA);
+        regFormBean.name = parseItemsList(items, NAME);
+        regFormBean.surname = parseItemsList(items, SURNAME);
+        regFormBean.login = parseItemsList(items, LOGIN);
+        regFormBean.email = parseItemsList(items, EMAIL);
+        regFormBean.password = parseItemsList(items, PASSWORD);
+        regFormBean.confirmPassword = parseItemsList(items, CO_PASSWORD);
+        regFormBean.policy = parseItemsList(items, POLICY);
+        regFormBean.mails = parseItemsList(items, MAILS);
+        regFormBean.captcha = parseItemsList(items, REG_CAPTCHA);
         return regFormBean;
     }
 
-    //TODO create upload captcha
-    public void upload(HttpServletRequest httpServletRequest) throws FileUploadException, FileNotFoundException {
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        FileOutputStream fos;
-        ServletContext servletContext = httpServletRequest.getServletContext();
-        File repository = new File("C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\avatars");
-        factory.setRepository(repository);
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        List<FileItem> items = upload.parseRequest(httpServletRequest);
-        Iterator<FileItem> iter = items.iterator();
-        while (iter.hasNext()) {
-            FileItem item = iter.next();
-
-            if (item.isFormField()) {
-                // Достаём поле формы
-                System.out.println(item);
-            } else {
-                // Достаём файл
-                fos = new FileOutputStream(repository);
-                System.out.println(item);
+    private static String parseItemsList(List<FileItem> items, String parameter) {
+        for (FileItem e : items) {
+            if (Objects.equals(e.getFieldName().toLowerCase(), parameter.toLowerCase())) {
+                return e.getString();
             }
         }
+        return null;
+    }
+
+    private static FileItem getAvatarFromRequest(List<FileItem> items) {
+        return items.stream().filter(e -> e.getFieldName().equals(AVATAR)).findFirst().orElse(null);
+    }
+
+    public static RegFormBean fromRequestToRegFormBean(HttpServletRequest httpServletRequest) throws FileUploadException {
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        factory.setSizeThreshold(1024 * 1024);
+        File tempDir = (File) httpServletRequest.getServletContext().getAttribute(TEMPORARY_STORAGE);
+        factory.setRepository(tempDir);
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        upload.setSizeMax(1024 * 1024 * 10);
+        List<FileItem> items = upload.parseRequest(httpServletRequest);
+        RegFormBean regFormBean;
+        regFormBean = setRegFormBean(items);
+        regFormBean.avatar = getAvatarFromRequest(items);
+
+        return regFormBean;
     }
 
     public String getName() {
@@ -109,5 +110,13 @@ public class RegFormBean {
 
     public String getCaptcha() {
         return captcha;
+    }
+
+    public FileItem getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(FileItem avatar) {
+        this.avatar = avatar;
     }
 }

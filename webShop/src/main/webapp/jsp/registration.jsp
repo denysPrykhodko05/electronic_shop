@@ -21,7 +21,7 @@
                 </c:forEach>
              </c:if>
                 <div data-tip="Upload your avatar">
-                    <input type="file" name="avatar" multiple accept="image/*,image/jpeg">
+                    <input type="file" name="avatar" multiple accept="image/jpeg">
                 </div>
                 <div data-tip="Name must be longer or equal one character symbol">
                     <input id="name" name="name" placeholder="Name" type="text" value="${userData["name"]}">
