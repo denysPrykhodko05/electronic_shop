@@ -18,9 +18,8 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GE
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.DAO;
-import com.epam.prykhodko.dao.TransactionMananger;
 import com.epam.prykhodko.entity.User;
-import java.sql.Connection;
+import com.epam.prykhodko.handler.ConnectionHandler;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,25 +27,20 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class UserDAO extends TransactionMananger implements DAO<User> {
+public class UserDAO implements DAO<User> {
 
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class);
 
     @Override
     public User get(int id) {
-        ResultSet resultSet = null;
-        try (Connection connection = getConnection();
-            PreparedStatement pstm = connection.prepareStatement(GET_USER_BY_ID);
-        ) {
+        try (PreparedStatement pstm = ConnectionHandler.getConnection().prepareStatement(GET_USER_BY_ID);
+            ResultSet resultSet = pstm.executeQuery()) {
             pstm.setInt(1, id);
-            resultSet = pstm.executeQuery();
             if (resultSet.next()) {
                 return parseResultSetToUser(resultSet);
             }
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_GET_USER_BY_ID);
-        } finally {
-            close(resultSet);
         }
         return null;
     }
@@ -54,8 +48,7 @@ public class UserDAO extends TransactionMananger implements DAO<User> {
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
-        try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_USERS);
+        try (PreparedStatement preparedStatement = ConnectionHandler.getConnection().prepareStatement(GET_ALL_USERS);
             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 users.add(parseResultSetToUser(resultSet));
@@ -68,23 +61,18 @@ public class UserDAO extends TransactionMananger implements DAO<User> {
     }
 
     @Override
-    public void add(User user) {
-        Connection connection = null;
+    public boolean add(User user) {
         PreparedStatement pstmt = null;
         try {
-            connection = getConnection();
-            savepoint(connection);
-            pstmt = connection.prepareStatement(ADD_USER);
+            pstmt = ConnectionHandler.getConnection().prepareStatement(ADD_USER);
             fillPreparedStatementByUserData(pstmt, user);
             if (pstmt.executeUpdate() > INTEGER_ZERO) {
-                commit(connection);
+                return true;
             }
         } catch (SQLException ex) {
-            rollBack(connection);
             LOGGER.error(ERR_CANNOT_ADD_USER);
-        } finally {
-            close(connection);
         }
+        return false;
     }
 
     @Override
@@ -94,22 +82,15 @@ public class UserDAO extends TransactionMananger implements DAO<User> {
 
     @Override
     public boolean delete(User user) {
-        Connection connection = null;
         PreparedStatement preparedStatement;
         try {
-            connection = getConnection();
-            savepoint(connection);
-            preparedStatement = connection.prepareStatement(DELETE_USER_BY_LOGIN);
+            preparedStatement = ConnectionHandler.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);
             preparedStatement.setString(1, user.getLogin());
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
-                commit(connection);
                 return true;
             }
         } catch (SQLException ex) {
-            rollBack(connection);
             LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
-        } finally {
-            close(connection);
         }
         return false;
     }

@@ -13,4 +13,5 @@ public abstract class DBConstants {
 
     //Connection constants
     public static final String SAVEPOINT_NAME = "Savepoint";
+    public static final String SQL_CONTEXT = "sqlContext";
 }

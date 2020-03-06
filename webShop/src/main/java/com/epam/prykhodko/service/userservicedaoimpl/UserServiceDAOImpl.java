@@ -3,6 +3,7 @@ package com.epam.prykhodko.service.userservicedaoimpl;
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
+import com.epam.prykhodko.handler.ConnectionHandler;
 import com.epam.prykhodko.service.UserService;
 import java.util.List;
 import java.util.Objects;

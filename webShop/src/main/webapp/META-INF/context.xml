@@ -27,7 +27,7 @@
 
   <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxIdle="30"
     maxTotal="100" maxWaitMillis="10000" name="jdbc/electronic_store"
-    password="root" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/electronic_store"
+    password="root" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/electronic_store?useSSL=false"
     username="root"/>
 
 </Context>

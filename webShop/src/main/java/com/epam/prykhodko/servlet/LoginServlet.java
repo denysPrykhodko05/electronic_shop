@@ -14,6 +14,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 
 import com.epam.prykhodko.bean.LogInBean;
 import com.epam.prykhodko.entity.User;
+import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
@@ -44,6 +45,13 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        TransactionHandler transactionHandler = new TransactionHandler();
+        transactionHandler.invokeTransaction(() -> {
+            userService.add(new User(1, "Ivan", "Ivanov", "ivan1", "ivan1@gmail.com", "IvanIvanov@12", 1));
+            return true;
+        });
+        User user;
+        user = transactionHandler.invokeWithoutTransaction(() -> userService.getByLogin("ivan"));
         forward(req, resp);
     }
 
