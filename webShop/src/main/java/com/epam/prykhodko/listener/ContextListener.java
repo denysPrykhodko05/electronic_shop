@@ -4,6 +4,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_TIME;
+import static com.epam.prykhodko.constants.ApplicationConstants.CONNECTION_MANAGER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CONTEXT_DESTROYER;
 import static com.epam.prykhodko.constants.ApplicationConstants.COOKIE;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN;
@@ -22,6 +23,7 @@ import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.dao.impl.UserDAO;
+import com.epam.prykhodko.mananger.ConnectionManager;
 import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.ImageDraw;
@@ -45,10 +47,10 @@ public class ContextListener implements ServletContextListener {
     private final Map<Long, String> captchaKeys = new HashMap<>();
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final UserDAO userDAO = new UserDAO();
-    private final UserService userService = new UserServiceDAOImpl(userDAO);
     private final Validator validator = new Validator();
     private final UserUtils userUtils = new UserUtils();
     private final ImageDraw imageDraw = new ImageDraw();
+    private final ConnectionManager connectionManager = new ConnectionManager();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -68,8 +70,8 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(USER_UTILS, userUtils);
         servletContext.setAttribute(CAPTCHA_KEEPER, captchaKeeper);
         servletContext.setAttribute(REG_FORM, new RegFormBean());
-        servletContext.setAttribute(USER_SERVICE, userService);
         servletContext.setAttribute(IMAGE_DRAW, imageDraw);
+        servletContext.setAttribute(CONNECTION_MANAGER, connectionManager);
     }
 
     @Override

@@ -19,7 +19,7 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.handler.ConnectionHandler;
+import com.epam.prykhodko.handler.ConnectionHolder;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +33,7 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public User get(int id) {
-        try (PreparedStatement pstm = ConnectionHandler.getConnection().prepareStatement(GET_USER_BY_ID);
+        try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_ID);
             ResultSet resultSet = pstm.executeQuery()) {
             pstm.setInt(1, id);
             if (resultSet.next()) {
@@ -48,7 +48,7 @@ public class UserDAO implements DAO<User> {
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHandler.getConnection().prepareStatement(GET_ALL_USERS);
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_USERS);
             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 users.add(parseResultSetToUser(resultSet));
@@ -64,7 +64,7 @@ public class UserDAO implements DAO<User> {
     public boolean add(User user) {
         PreparedStatement pstmt = null;
         try {
-            pstmt = ConnectionHandler.getConnection().prepareStatement(ADD_USER);
+            pstmt = ConnectionHolder.getConnection().prepareStatement(ADD_USER);
             fillPreparedStatementByUserData(pstmt, user);
             if (pstmt.executeUpdate() > INTEGER_ZERO) {
                 return true;
@@ -84,7 +84,7 @@ public class UserDAO implements DAO<User> {
     public boolean delete(User user) {
         PreparedStatement preparedStatement;
         try {
-            preparedStatement = ConnectionHandler.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);
+            preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);
             preparedStatement.setString(1, user.getLogin());
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
                 return true;

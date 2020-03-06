@@ -1,9 +1,11 @@
 package com.epam.prykhodko.service.userservicedaoimpl;
 
 import com.epam.prykhodko.bean.RegFormBean;
+import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.handler.ConnectionHandler;
+import com.epam.prykhodko.handler.TransactionHandler;
+import com.epam.prykhodko.mananger.ConnectionManager;
 import com.epam.prykhodko.service.UserService;
 import java.util.List;
 import java.util.Objects;
@@ -11,9 +13,10 @@ import java.util.Optional;
 
 public class UserServiceDAOImpl implements UserService {
 
-    private final UserDAO userDAO;
+    private final DAO<User> userDAO;
+    private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
 
-    public UserServiceDAOImpl(UserDAO userDAO) {
+    public UserServiceDAOImpl(DAO<User> userDAO) {
         this.userDAO = userDAO;
     }
 
@@ -25,13 +28,19 @@ public class UserServiceDAOImpl implements UserService {
 
     @Override
     public void add(User user) {
-        userDAO.add(user);
+        transactionHandler.invokeTransaction(() -> {
+            userDAO.add(user);
+            return null;
+        });
+
     }
 
     @Override
     public boolean deleteByLogin(String login) {
-        User user = getByLogin(login);
-        return userDAO.delete(user);
+        return transactionHandler.invokeWithoutTransaction(() -> {
+            User user = getByLogin(login);
+            return userDAO.delete(user);
+        });
     }
 
     @Override

@@ -8,6 +8,7 @@ public abstract class LoggerMessagesConstants {
     public static final String ERR_CANNOT_CLOSE_STATEMENT = "Cannot close a statement";
     public static final String ERR_CANNOT_CLOSE_RESULT_SET = "Cannot close a result set";
     public static final String ERR_CANNOT_CLOSE_ROLLBACK = "Cannot rollback";
+    public static final String ERR_CANNOT_CREATE_DATASOURCE = "Cannot create data source";
 
     //DAO exceptions
     public static final String ERR_CANNOT_ADD_USER = "Cannot add user";

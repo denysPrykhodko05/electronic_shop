@@ -62,6 +62,7 @@ public abstract class ApplicationConstants {
     public static final String TEMPORARY_STORAGE = "javax.servlet.context.tempdir";
     public static final String CONTEXT_DESTROYER = "context destroyer";
     public static final String HIDDEN = "hidden";
+    public static final String CONNECTION_MANAGER = "connection manager";
     //URL path
     public static final String HOME_URL = "/";
 }
