@@ -46,8 +46,6 @@ public abstract class ApplicationConstants {
     public static final String HIDDEN_FIELD = "hiddenField";
     public static final String KEEPERS = "keepers";
     public static final String ERRORS = "errors";
-    public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
-    public static final String LOGIN_JSP_LINK = "jsp/logIn.jsp";
     public static final String VALIDATOR = "validator";
     public static final String USER_UTILS = "user utils";
     public static final String REG_FORM = "regFormBean";
@@ -63,4 +61,14 @@ public abstract class ApplicationConstants {
 
     //URL path
     public static final String HOME_URL = "/";
+
+    //JSP link
+    public static final String PRODUCT_JSP = "jsp/products.jsp";
+    public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
+    public static final String LOGIN_JSP_LINK = "jsp/logIn.jsp";
+
+    //Product parameters
+    public static final String MANUFACTURE = "manufacture";
+    public static final String CATEGORY = "category";
+    public static final String PRICE = "price";
 }

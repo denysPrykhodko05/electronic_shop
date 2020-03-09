@@ -92,7 +92,7 @@
 
                 <div class="content">
 
-                    <img src="../images/products/notebook/msi.jpg">
+                    <img src="../images/products/notebook/MSI.jpg">
 
                     <div class="product-name">
                         Notebook Acer

@@ -13,7 +13,7 @@ import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.DAOService;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class RegistrationServletTest {
     @Mock
     private Validator validator;
     @Mock
-    private UserService userService;
+    private DAOService DAOService;
     @Mock
     private User user;
     @Mock
@@ -78,7 +78,7 @@ public class RegistrationServletTest {
         List<User> users = new ArrayList<>(Arrays.asList(user1, user2));
         when(servletContext.getAttribute(VALIDATOR)).thenReturn(validator);
         when(servletContext.getAttribute(CAPTCHA_KEEPER)).thenReturn(new SessionKeeper());
-        when(servletContext.getAttribute(USER_SERVICE)).thenReturn(userService);
+        when(servletContext.getAttribute(USER_SERVICE)).thenReturn(DAOService);
         when(servletContext.getAttribute(REG_FORM)).thenReturn(formBean);
         when(servletContext.getAttribute(USER_UTILS)).thenReturn(userUtils);
         when(formBean.getName()).thenReturn("Peter");
@@ -107,8 +107,8 @@ public class RegistrationServletTest {
         captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
-        when(userService.createUser(formBean)).thenReturn(user);
-        when(userService.isContains(user)).thenReturn(false);
+        when(DAOService.createUser(formBean)).thenReturn(user);
+        when(DAOService.isContains(user)).thenReturn(false);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter1@asd.com");
         registrationServlet.doPost(httpServletRequest, httpServletResponse);
     }
@@ -132,8 +132,8 @@ public class RegistrationServletTest {
         captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
-        when(userService.createUser(formBean)).thenReturn(user);
-        when(userService.isContains(user)).thenReturn(true);
+        when(DAOService.createUser(formBean)).thenReturn(user);
+        when(DAOService.isContains(user)).thenReturn(true);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter@gmail.com");
         when(httpServletRequest.getRequestDispatcher("jsp/registration.jsp")).thenReturn(dispatcher);
         registrationServlet.doPost(httpServletRequest, httpServletResponse);

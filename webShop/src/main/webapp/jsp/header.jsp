@@ -13,7 +13,7 @@
 <div id="header">
   <div id="shopName"><a href="/">Electronics store</a></div>
   <div class="menu">
-    <a href="products.jsp">Products</a>
+    <a href="/products">Products</a>
     <a href="">Something</a>
     <a href="">Something more</a>
   </div id="loginTag">

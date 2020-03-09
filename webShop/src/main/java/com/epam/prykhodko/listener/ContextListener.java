@@ -13,7 +13,6 @@ import static com.epam.prykhodko.constants.ApplicationConstants.IMAGE_DRAW;
 import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
 import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
-import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 
@@ -24,8 +23,6 @@ import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.mananger.ConnectionManager;
-import com.epam.prykhodko.service.UserService;
-import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;

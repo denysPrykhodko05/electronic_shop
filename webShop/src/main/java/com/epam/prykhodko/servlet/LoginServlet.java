@@ -15,7 +15,7 @@ import com.epam.prykhodko.bean.LogInBean;
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.DAOService;
 import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     private Validator validator;
-    private UserService userService;
+    private DAOService DAOService;
     private DAO<User> userRepository;
 
     @Override
@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
         LogInBean logInBean = new LogInBean();
         Map<String, String> errors = new LinkedHashMap<>();
         userRepository = new UserDAO();
-        userService = new UserServiceDAOImpl(userRepository);
+        DAOService = new UserServiceDAOImpl(userRepository);
         logInBean.setLoginForm(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
         validator.checkField(PASSWORD, logInBean.getPassword(), PASSWORD_REGEX, errors);
@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
         User user = new User();
         user.setLogin(logInBean.getLogin());
         user.setPassword(logInBean.getPassword());
-        if (Objects.isNull(userService.getByLogin(user.getLogin()))) {
+        if (Objects.isNull(DAOService.getByLogin(user.getLogin()))) {
             errors.put(LOGIN, INCORRECT_INPUT + LOGIN);
             errors.put(PASSWORD, INCORRECT_INPUT + PASSWORD);
             req.setAttribute(LOGIN, logInBean.getLogin());

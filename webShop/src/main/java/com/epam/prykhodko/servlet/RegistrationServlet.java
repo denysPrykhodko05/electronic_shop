@@ -33,7 +33,7 @@ import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.DAOService;
 import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.UserUtils;
@@ -57,7 +57,7 @@ public class RegistrationServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(RegistrationServlet.class);
     private static final String FILE = "FILE";
     private DAO<User> userRepository;
-    private UserService userService;
+    private DAOService DAOService;
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -72,7 +72,7 @@ public class RegistrationServlet extends HttpServlet {
         Map<String, String> errors = new LinkedHashMap<>();
         Map<String, String> userData = new LinkedHashMap<>();
         userRepository = new UserDAO();
-        userService = new UserServiceDAOImpl(userRepository);
+        DAOService = new UserServiceDAOImpl(userRepository);
         ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
         RegFormBean formBean = null;
@@ -106,9 +106,9 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
-        User user = userService.createUser(formBean);
-        if (userService.isContains(user)) {
-            userUtils.checkLoginAndEmail(user, userService, errors);
+        User user = DAOService.createUser(formBean);
+        if (DAOService.isContains(user)) {
+            userUtils.checkLoginAndEmail(user, DAOService, errors);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);
             httpServletRequest.setAttribute(ERRORS, errors);
@@ -117,7 +117,7 @@ public class RegistrationServlet extends HttpServlet {
         }
         String path = imageDraw.saveUploadedFile(formBean.getAvatar(), formBean.getLogin());
         formBean.setAvatarPath(path);
-        if (userService.add(formBean) == null) {
+        if (DAOService.add(formBean) == null) {
             errors.put(NOT_USER_ERROR, NOT_USER_ERROR);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);
