@@ -2,7 +2,6 @@ package com.epam.prykhodko.service.userservicedaoimpl;
 
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.dao.DAO;
-import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
@@ -21,18 +20,14 @@ public class UserServiceDAOImpl implements UserService {
     }
 
     @Override
-    public void add(RegFormBean formBean) {
+    public User add(RegFormBean formBean) {
         User user = createUser(formBean);
-        add(user);
+        return add(user);
     }
 
     @Override
-    public void add(User user) {
-        transactionHandler.invokeTransaction(() -> {
-            userDAO.add(user);
-            return null;
-        });
-
+    public User add(User user) {
+        return transactionHandler.invokeTransaction(() -> userDAO.add(user));
     }
 
     @Override
@@ -66,6 +61,7 @@ public class UserServiceDAOImpl implements UserService {
 
     @Override
     public User createUser(RegFormBean regFormBean) {
-        return new User(1, regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword(), 1);
+        return new User(1, regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword(), 1,
+            regFormBean.getAvatarPath());
     }
 }

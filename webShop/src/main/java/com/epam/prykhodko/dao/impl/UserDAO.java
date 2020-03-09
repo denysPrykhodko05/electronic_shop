@@ -1,5 +1,6 @@
 package com.epam.prykhodko.dao.impl;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR_PATH;
 import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
 import static com.epam.prykhodko.constants.ApplicationConstants.ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
@@ -61,18 +62,18 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public boolean add(User user) {
+    public User add(User user) {
         PreparedStatement pstmt = null;
         try {
             pstmt = ConnectionHolder.getConnection().prepareStatement(ADD_USER);
             fillPreparedStatementByUserData(pstmt, user);
             if (pstmt.executeUpdate() > INTEGER_ZERO) {
-                return true;
+                return user;
             }
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_ADD_USER);
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -82,9 +83,7 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public boolean delete(User user) {
-        PreparedStatement preparedStatement;
-        try {
-            preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);) {
             preparedStatement.setString(1, user.getLogin());
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
                 return true;
@@ -102,6 +101,7 @@ public class UserDAO implements DAO<User> {
         pstmt.setString(4, user.getEmail());
         pstmt.setString(5, user.getPassword());
         pstmt.setInt(6, 1);
+        pstmt.setString(7, user.getAvatarPath());
     }
 
     private User parseResultSetToUser(ResultSet resultSet) throws SQLException {
@@ -112,6 +112,7 @@ public class UserDAO implements DAO<User> {
         String email = resultSet.getString(EMAIL);
         String password = resultSet.getString(PASSWORD);
         int roleId = resultSet.getInt(ROLE_ID);
-        return new User(id, name, surName, email, login, password, roleId);
+        String avatarPath = resultSet.getString(AVATAR_PATH);
+        return new User(id, name, surName, email, login, password, roleId, avatarPath);
     }
 }

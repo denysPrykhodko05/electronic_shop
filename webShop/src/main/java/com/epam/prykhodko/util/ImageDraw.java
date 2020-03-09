@@ -12,11 +12,10 @@ public class ImageDraw {
 
     private static final Logger LOGGER = Logger.getLogger(ImageDraw.class);
 
-    public void saveUploadedFile(FileItem item, String fileName) {
+    public String saveUploadedFile(FileItem item, String fileName) {
         File uploadedFile;
-
+        String path = AVATARS_PATH + fileName + AVATAR_FORMAT;
         try {
-            String path = AVATARS_PATH + fileName + AVATAR_FORMAT;
             uploadedFile = new File(path);
             if (uploadedFile.exists()) {
                 uploadedFile.delete();
@@ -26,5 +25,6 @@ public class ImageDraw {
         } catch (Exception e) {
             LOGGER.error(ERR_CANNOT_DRAW_AVATAR);
         }
+        return path;
     }
 }

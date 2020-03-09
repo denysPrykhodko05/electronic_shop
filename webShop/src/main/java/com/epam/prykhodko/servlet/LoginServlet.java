@@ -15,10 +15,7 @@ import com.epam.prykhodko.bean.LogInBean;
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.repository.UserRepository;
-import com.epam.prykhodko.repository.impl.UserRepositoryImpl;
 import com.epam.prykhodko.service.UserService;
-import com.epam.prykhodko.service.impl.UserServiceImpl;
 import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
@@ -49,9 +46,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userRepository = new UserDAO();
-        userService = new UserServiceDAOImpl(userRepository);
-        userService.add(new User());
         forward(req, resp);
     }
 
@@ -59,6 +53,8 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LogInBean logInBean = new LogInBean();
         Map<String, String> errors = new LinkedHashMap<>();
+        userRepository = new UserDAO();
+        userService = new UserServiceDAOImpl(userRepository);
         logInBean.setLoginForm(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
         validator.checkField(PASSWORD, logInBean.getPassword(), PASSWORD_REGEX, errors);
