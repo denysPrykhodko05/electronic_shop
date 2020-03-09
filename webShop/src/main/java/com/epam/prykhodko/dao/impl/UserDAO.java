@@ -1,5 +1,6 @@
 package com.epam.prykhodko.dao.impl;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR_PATH;
 import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
 import static com.epam.prykhodko.constants.ApplicationConstants.ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
@@ -19,7 +20,7 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.handler.ConnectionHandler;
+import com.epam.prykhodko.handler.ConnectionHolder;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +34,7 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public User get(int id) {
-        try (PreparedStatement pstm = ConnectionHandler.getConnection().prepareStatement(GET_USER_BY_ID);
+        try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_ID);
             ResultSet resultSet = pstm.executeQuery()) {
             pstm.setInt(1, id);
             if (resultSet.next()) {
@@ -48,7 +49,7 @@ public class UserDAO implements DAO<User> {
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHandler.getConnection().prepareStatement(GET_ALL_USERS);
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_USERS);
             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 users.add(parseResultSetToUser(resultSet));
@@ -61,18 +62,18 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public boolean add(User user) {
+    public User add(User user) {
         PreparedStatement pstmt = null;
         try {
-            pstmt = ConnectionHandler.getConnection().prepareStatement(ADD_USER);
+            pstmt = ConnectionHolder.getConnection().prepareStatement(ADD_USER);
             fillPreparedStatementByUserData(pstmt, user);
             if (pstmt.executeUpdate() > INTEGER_ZERO) {
-                return true;
+                return user;
             }
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_ADD_USER);
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -82,9 +83,7 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public boolean delete(User user) {
-        PreparedStatement preparedStatement;
-        try {
-            preparedStatement = ConnectionHandler.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);) {
             preparedStatement.setString(1, user.getLogin());
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
                 return true;
@@ -102,6 +101,7 @@ public class UserDAO implements DAO<User> {
         pstmt.setString(4, user.getEmail());
         pstmt.setString(5, user.getPassword());
         pstmt.setInt(6, 1);
+        pstmt.setString(7, user.getAvatarPath());
     }
 
     private User parseResultSetToUser(ResultSet resultSet) throws SQLException {
@@ -112,6 +112,7 @@ public class UserDAO implements DAO<User> {
         String email = resultSet.getString(EMAIL);
         String password = resultSet.getString(PASSWORD);
         int roleId = resultSet.getInt(ROLE_ID);
-        return new User(id, name, surName, email, login, password, roleId);
+        String avatarPath = resultSet.getString(AVATAR_PATH);
+        return new User(id, name, surName, email, login, password, roleId, avatarPath);
     }
 }

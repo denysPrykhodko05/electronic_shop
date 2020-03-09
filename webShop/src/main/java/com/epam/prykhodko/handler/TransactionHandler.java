@@ -1,64 +1,54 @@
 package com.epam.prykhodko.handler;
 
+import static com.epam.prykhodko.constants.DBConstants.SAVEPOINT_INVOKE_TRANSACTION;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_PERFORM_OPERATION;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CAN_NOT_TO_PERFORM_TRANSACTION;
+
 import com.epam.prykhodko.functioninterface.DAOInterface;
+import com.epam.prykhodko.mananger.ConnectionManager;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import org.apache.log4j.Logger;
 
 public class TransactionHandler {
 
     private static final Logger LOGGER = Logger.getLogger(TransactionHandler.class);
 
-    public void invokeTransaction(DAOInterface method) {
-        ConnectionHandler.setConnection();
-        Connection connection = ConnectionHandler.getConnection();
-        try {
-            method.exec();
-            commit(connection);
-        } catch (SQLException e) {
-            //TODO
-            rollback(connection);
-        } finally {
-            close(connection);
-        }
-
+    public TransactionHandler(ConnectionManager connectionManager) {
+        ConnectionHolder.setConnection(connectionManager.getConnection());
     }
 
-    public <T> T invokeWithoutTransaction(DAOInterface<T> method) {
-        ConnectionHandler.setConnection();
-        Connection connection = ConnectionHandler.getConnection();
+    public <T> T invokeTransaction(DAOInterface<T> method) {
+        TransactionManager transactionManager = new TransactionManager();
+        Connection connection = ConnectionHolder.getConnection();
+        String savepointInvokeTransaction = SAVEPOINT_INVOKE_TRANSACTION;
         try {
-            return method.exec();
+            Savepoint savepoint = connection.setSavepoint(savepointInvokeTransaction);
+            connection.setAutoCommit(false);
+            T t = method.exec();
+            connection.commit();
+            return t;
         } catch (SQLException e) {
-            //TODO
+            transactionManager.rollback(connection);
+            LOGGER.error(ERR_CAN_NOT_TO_PERFORM_TRANSACTION);
         } finally {
-            close(connection);
+            transactionManager.closeConnection(connection);
         }
         return null;
     }
 
-    private void commit(Connection connection) {
+    public <T> T invokeWithoutTransaction(DAOInterface<T> method) {
+        TransactionManager transactionManager = new TransactionManager();
+        Connection connection = ConnectionHolder.getConnection();
         try {
-            connection.commit();
+            return method.exec();
         } catch (SQLException e) {
-            //TODO
+            LOGGER.error(ERR_CANNOT_PERFORM_OPERATION);
+        } finally {
+            transactionManager.closeConnection(connection);
         }
+        return null;
     }
 
-    private void rollback(Connection connection) {
-        try {
-            connection.rollback();
-        } catch (SQLException e) {
-            //TODO
-        }
-    }
-
-    private void close(Connection connection) {
-        try {
-            connection.close();
-            ConnectionHandler.removeConnection();
-        } catch (SQLException e) {
-            //TODO
-        }
-    }
 }

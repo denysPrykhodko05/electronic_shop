@@ -10,7 +10,7 @@ public interface DAO<T> {
 
     List<T> getAll();
 
-    boolean add(T t);
+    User add(T t);
 
     void update(T t, String[] params);
 

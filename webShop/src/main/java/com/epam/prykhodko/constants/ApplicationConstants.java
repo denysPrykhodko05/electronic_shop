@@ -20,26 +20,22 @@ public abstract class ApplicationConstants {
     public static final String REG_CAPTCHA = "regCaptcha";
     public static final String ROLE_ID = "role_id";
     public static final String AVATAR = "avatar";
+    public static final String AVATAR_PATH = "avatar_path";
 
     //Captcha strings
     public static final String CAPTCHA = "captcha";
     public static final String CAPTCHA_KEY = "captchaKey";
-    public static final String HIDDEN_FIELD_KEY = "hiddenFieldKey";
     public static final String CAPTCHA_KEYS = "captchaKeys";
     public static final String CAPTCHA_VALUE = "captchaValue";
     public static final String CAPTCHA_TIME = "captchaTime";
     public static final String CAPTCHA_KEEPER = "captcha keeper";
 
     //User strings
-    public static final String USER_KEY = "userKey";
     public static final String USER_DATA = "userData";
 
     //Erorrs strings
-    public static final String CONTAINS_LOGIN = "contains-login";
-    public static final String CONTAINS_EMAIL = "contains-email";
     public static final String USER_LOGIN_EXISTS = "User with this login is exists";
     public static final String USER_EMAIL_EXISTS = "User with this email is exists";
-    public static final String TIMES_UP = "Times up";
     public static final String INCORRECT_INPUT = "Incorrect input of ";
     public static final String YOU_DONT_CHOOSE = "You don't choose ";
     public static final String INCORRECT_CAPTCHA = "Incorrect captcha";
@@ -62,6 +58,9 @@ public abstract class ApplicationConstants {
     public static final String TEMPORARY_STORAGE = "javax.servlet.context.tempdir";
     public static final String CONTEXT_DESTROYER = "context destroyer";
     public static final String HIDDEN = "hidden";
+    public static final String CONNECTION_MANAGER = "connection manager";
+    public static final String NOT_USER_ERROR = "Try again";
+
     //URL path
     public static final String HOME_URL = "/";
 }

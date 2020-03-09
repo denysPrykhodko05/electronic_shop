@@ -29,7 +29,7 @@ public class LogoutFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         LOGGER.info(INFO_LOGOUT_FILTER_INIT);
     }
 

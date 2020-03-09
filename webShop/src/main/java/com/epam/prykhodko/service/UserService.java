@@ -5,9 +5,9 @@ import com.epam.prykhodko.entity.User;
 
 public interface UserService {
 
-    void add(RegFormBean formBean);
+    User add(RegFormBean formBean);
 
-    void add(User user);
+    User add(User user);
 
     boolean deleteByLogin(String login);
 

@@ -33,6 +33,7 @@ public class RegFormBean {
     private String mails;
     private String captcha;
     private FileItem avatar;
+    private String avatarPath;
 
     private static RegFormBean setRegFormBean(List<FileItem> items) {
         RegFormBean regFormBean = new RegFormBean();
@@ -118,5 +119,13 @@ public class RegFormBean {
 
     public void setAvatar(FileItem avatar) {
         this.avatar = avatar;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }

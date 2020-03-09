@@ -9,13 +9,14 @@ import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD;
 import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
-import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 
 import com.epam.prykhodko.bean.LogInBean;
+import com.epam.prykhodko.dao.DAO;
+import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -35,23 +36,16 @@ public class LoginServlet extends HttpServlet {
 
     private Validator validator;
     private UserService userService;
+    private DAO<User> userRepository;
 
     @Override
     public void init(ServletConfig config) {
         ServletContext servletContext = config.getServletContext();
         validator = (Validator) servletContext.getAttribute(VALIDATOR);
-        userService = (UserService) servletContext.getAttribute(USER_SERVICE);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TransactionHandler transactionHandler = new TransactionHandler();
-        transactionHandler.invokeTransaction(() -> {
-            userService.add(new User(1, "Ivan", "Ivanov", "ivan1", "ivan1@gmail.com", "IvanIvanov@12", 1));
-            return true;
-        });
-        User user;
-        user = transactionHandler.invokeWithoutTransaction(() -> userService.getByLogin("ivan"));
         forward(req, resp);
     }
 
@@ -59,6 +53,8 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LogInBean logInBean = new LogInBean();
         Map<String, String> errors = new LinkedHashMap<>();
+        userRepository = new UserDAO();
+        userService = new UserServiceDAOImpl(userRepository);
         logInBean.setLoginForm(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
         validator.checkField(PASSWORD, logInBean.getPassword(), PASSWORD_REGEX, errors);
