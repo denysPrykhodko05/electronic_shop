@@ -5,6 +5,7 @@ import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.repository.UserRepository;
 import com.epam.prykhodko.service.UserService;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -22,7 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        userRepository.add(user);
+        if (Objects.nonNull(userRepository.add(user))) {
+            return user;
+        }
         return null;
     }
 
@@ -48,6 +51,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isContains(User newUser) {
         List<User> users = userRepository.get();
+
         if (users.contains(newUser)) {
             return true;
         }

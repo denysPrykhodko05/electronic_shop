@@ -42,7 +42,6 @@ public class UserDAO implements DAO<User> {
             if (resultSet.next()) {
                 return parseResultSetToUser(resultSet);
             }
-
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_GET_USER_BY_ID);
         }
@@ -61,7 +60,6 @@ public class UserDAO implements DAO<User> {
             }
 
             return users;
-
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_GET_ALL_USERS);
         }
@@ -79,7 +77,6 @@ public class UserDAO implements DAO<User> {
             if (pstmt.executeUpdate() > INTEGER_ZERO) {
                 return user;
             }
-
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_ADD_USER);
         }
@@ -99,7 +96,6 @@ public class UserDAO implements DAO<User> {
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
                 return true;
             }
-
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
         }
@@ -116,7 +112,6 @@ public class UserDAO implements DAO<User> {
             if (resultSet.next()) {
                 return parseResultSetToUser(resultSet);
             }
-
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
         }

@@ -1,9 +1,3 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: electronic_store
--- ------------------------------------------------------
--- Server version	8.0.18
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -14,10 +8,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `role`
---
 
 DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -30,17 +20,9 @@ CREATE TABLE `role` (
 );
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `role`
---
-
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role` VALUES (2,'admin'),(1,'user');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
-
---
--- Table structure for table `user`
---
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -61,10 +43,6 @@ CREATE TABLE `user` (
 );
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `user`
---
-
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES (1,'Ivan','Ivanov','ivan','ivan@gmail.ocm','IvanIvanov@12',1),(24,'Ivan','Ivanov','ivan1@gmail.com','ivan1','IvanIvanov@12',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
@@ -77,5 +55,3 @@ INSERT INTO `user` VALUES (1,'Ivan','Ivanov','ivan','ivan@gmail.ocm','IvanIvanov
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2020-03-06 14:18:24

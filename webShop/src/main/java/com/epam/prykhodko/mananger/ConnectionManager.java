@@ -19,6 +19,7 @@ public class ConnectionManager {
 
     public ConnectionManager() {
         Context context = null;
+
         try {
             context = new InitialContext();
             dataSource = (DataSource) context.lookup(DB_URL);
@@ -29,9 +30,9 @@ public class ConnectionManager {
 
     public Connection getConnection() {
         Connection con = null;
+
         try {
             con = dataSource.getConnection();
-            con.setAutoCommit(false);
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_OBTAIN_CONNECTION);
         }

@@ -47,7 +47,7 @@ public class TransactionHandler {
     public <T> T invokeWithoutTransaction(DAOInterface<T> method) {
         TransactionManager transactionManager = new TransactionManager();
         Connection connection = ConnectionHolder.getConnection();
-
+        checkConnection(connection);
         try {
             return method.exec();
         } catch (SQLException e) {

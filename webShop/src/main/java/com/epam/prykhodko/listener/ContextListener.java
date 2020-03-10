@@ -47,6 +47,7 @@ public class ContextListener implements ServletContextListener {
     private final Map<Long, String> captchaKeys = new HashMap<>();
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final UserDAO userDAO = new UserDAO();
+    private final UserService userService = new UserServiceDAOImpl(userDAO);
     private final Validator validator = new Validator();
     private final UserUtils userUtils = new UserUtils();
     private final ImageDraw imageDraw = new ImageDraw();
@@ -72,6 +73,7 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(REG_FORM, new RegFormBean());
         servletContext.setAttribute(IMAGE_DRAW, imageDraw);
         servletContext.setAttribute(CONNECTION_MANAGER, connectionManager);
+        servletContext.setAttribute(USER_SERVICE, userService);
     }
 
     @Override
