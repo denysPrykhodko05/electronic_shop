@@ -9,16 +9,15 @@ import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD;
 import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 
 import com.epam.prykhodko.bean.LogInBean;
-import com.epam.prykhodko.dao.DAO;
-import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.DAOService;
-import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
+import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,8 +34,7 @@ import javax.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     private Validator validator;
-    private DAOService DAOService;
-    private DAO<User> userRepository;
+    private UserService userService;
 
     @Override
     public void init(ServletConfig config) {
@@ -53,21 +51,26 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LogInBean logInBean = new LogInBean();
         Map<String, String> errors = new LinkedHashMap<>();
-        userRepository = new UserDAO();
-        DAOService = new UserServiceDAOImpl(userRepository);
+        ServletContext servletContext = req.getServletContext();
+        userService = (UserService) servletContext.getAttribute(USER_SERVICE);
         logInBean.setLoginForm(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
         validator.checkField(PASSWORD, logInBean.getPassword(), PASSWORD_REGEX, errors);
+
         if (!errors.isEmpty()) {
             req.setAttribute(LOGIN, logInBean.getLogin());
             req.setAttribute(ERRORS, errors);
             forward(req, resp);
             return;
         }
+
         User user = new User();
         user.setLogin(logInBean.getLogin());
         user.setPassword(logInBean.getPassword());
-        if (Objects.isNull(DAOService.getByName(user.getLogin()))) {
+
+        User foundUser = userService.getByLogin(user.getLogin());
+        byte[] decodePass = Base64.getDecoder().decode(foundUser.getPassword());
+        if (Objects.isNull(foundUser) || !user.getPassword().equals(new String(decodePass))) {
             errors.put(LOGIN, INCORRECT_INPUT + LOGIN);
             errors.put(PASSWORD, INCORRECT_INPUT + PASSWORD);
             req.setAttribute(LOGIN, logInBean.getLogin());
@@ -75,6 +78,7 @@ public class LoginServlet extends HttpServlet {
             forward(req, resp);
             return;
         }
+
         HttpSession session = req.getSession();
         session.setAttribute(USER_LOGIN, user.getLogin());
         resp.sendRedirect(HOME_URL);

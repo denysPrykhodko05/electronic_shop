@@ -11,17 +11,13 @@ public class User {
     private String password;
     private String email;
     private int roleId;
-    private String avatarPath;
 
-    public User(int id, String name, String surname, String email, String login, String password, int roleId, String avatarPath) {
-        this.id = id;
+    public User(String name, String surname, String email, String login, String password) {
         this.name = name;
         this.surname = surname;
+        this.email = email;
         this.login = login;
         this.password = password;
-        this.email = email;
-        this.roleId = roleId;
-        this.avatarPath = avatarPath;
     }
 
     public User(int id, String name, String surname, String email, String login, String password, int roleId) {
@@ -92,14 +88,6 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
-    }
-
-    public String getAvatarPath() {
-        return avatarPath;
-    }
-
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
     }
 
     @Override

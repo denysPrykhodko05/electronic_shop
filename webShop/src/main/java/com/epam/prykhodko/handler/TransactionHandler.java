@@ -6,9 +6,11 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CAN_NOT_T
 
 import com.epam.prykhodko.functioninterface.DAOInterface;
 import com.epam.prykhodko.mananger.ConnectionManager;
+import com.epam.prykhodko.mananger.TransactionManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.util.Objects;
 import org.apache.log4j.Logger;
 
 public class TransactionHandler {
@@ -23,24 +25,29 @@ public class TransactionHandler {
         TransactionManager transactionManager = new TransactionManager();
         Connection connection = ConnectionHolder.getConnection();
         String savepointInvokeTransaction = SAVEPOINT_INVOKE_TRANSACTION;
+        connection = checkConnection(connection);
+
         try {
             Savepoint savepoint = connection.setSavepoint(savepointInvokeTransaction);
             connection.setAutoCommit(false);
             T t = method.exec();
             connection.commit();
             return t;
+
         } catch (SQLException e) {
             transactionManager.rollback(connection);
             LOGGER.error(ERR_CAN_NOT_TO_PERFORM_TRANSACTION);
         } finally {
             transactionManager.closeConnection(connection);
         }
+
         return null;
     }
 
     public <T> T invokeWithoutTransaction(DAOInterface<T> method) {
         TransactionManager transactionManager = new TransactionManager();
         Connection connection = ConnectionHolder.getConnection();
+        checkConnection(connection);
         try {
             return method.exec();
         } catch (SQLException e) {
@@ -48,7 +55,16 @@ public class TransactionHandler {
         } finally {
             transactionManager.closeConnection(connection);
         }
+
         return null;
+    }
+
+    private Connection checkConnection(Connection connection) {
+        if (Objects.isNull(connection)) {
+            ConnectionHolder.setConnection(new ConnectionManager().getConnection());
+            return ConnectionHolder.getConnection();
+        }
+        return connection;
     }
 
 }

@@ -27,9 +27,11 @@ public class HiddenFieldKeeper implements CaptchaKeeper {
     @Override
     public Long get(HttpServletRequest httpServletRequest) {
         String value = httpServletRequest.getParameter("hiddenField");
+
         if (Objects.isNull(value)) {
             return 0L;
         }
+
         return Long.valueOf(value);
     }
 }

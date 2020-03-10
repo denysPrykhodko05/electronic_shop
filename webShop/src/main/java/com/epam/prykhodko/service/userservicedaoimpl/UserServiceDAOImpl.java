@@ -5,12 +5,11 @@ import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
-import com.epam.prykhodko.service.DAOService;
-import java.util.List;
+import com.epam.prykhodko.service.UserService;
+import java.util.Base64;
 import java.util.Objects;
-import java.util.Optional;
 
-public class UserServiceDAOImpl implements DAOService<User> {
+public class UserServiceDAOImpl implements UserService {
 
     private final DAO<User> userDAO;
     private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
@@ -19,52 +18,44 @@ public class UserServiceDAOImpl implements DAOService<User> {
         this.userDAO = userDAO;
     }
 
+    @Override
     public User add(RegFormBean formBean) {
         User user = createUser(formBean);
         return add(user);
     }
 
     @Override
-    public User add(User entity) {
-        return transactionHandler.invokeTransaction(() -> userDAO.add(entity));
+    public User add(User user) {
+        return transactionHandler.invokeTransaction(
+            () -> userDAO.add(user));
     }
 
     @Override
-    public boolean deleteByName(String login) {
+    public boolean deleteByLogin(String login) {
         return transactionHandler.invokeWithoutTransaction(() -> {
-            User user = getByName(login);
+            User user = getByLogin(login);
             return userDAO.delete(user);
         });
     }
 
     @Override
     public boolean delete(User user) {
-        return userDAO.delete(user);
+        return transactionHandler.invokeTransaction(() -> userDAO.delete(user));
     }
 
     @Override
-    public User getByName(String login) {
-        List<User> users = userDAO.getAll();
-        Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
-        return user.orElse(null);
+    public User getByLogin(String login) {
+        return transactionHandler.invokeWithoutTransaction(() -> userDAO.getByLogin(login));
     }
 
     @Override
     public boolean isContains(User user) {
-        List<User> users = userDAO.getAll();
-        Optional<User> userTemp = users.stream()
-            .filter(e -> (e.getLogin().equals(user.getLogin()) && e.getPassword().equals(user.getPassword())))
-            .findFirst();
-        return Objects.nonNull(userTemp.orElse(null));
+        return Objects.nonNull(getByLogin(user.getLogin()));
     }
 
     @Override
-    public List<User> getAll() {
-        return userDAO.getAll();
-    }
-
     public User createUser(RegFormBean regFormBean) {
-        return new User(1, regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword(), 1,
-            regFormBean.getAvatarPath());
+        String password = Base64.getEncoder().encodeToString(regFormBean.getPassword().getBytes());
+        return new User(regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), password);
     }
 }

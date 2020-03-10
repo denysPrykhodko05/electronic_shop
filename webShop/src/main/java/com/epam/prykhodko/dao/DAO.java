@@ -2,17 +2,18 @@ package com.epam.prykhodko.dao;
 
 import com.epam.prykhodko.entity.User;
 import java.util.List;
-import java.util.Optional;
 
-public interface DAO<T> {
+public interface DAO<E> {
 
-    T get(int id);
+    E get(int id);
 
-    List<T> getAll();
+    List<E> getAll();
 
-    T add(T t);
+    User add(E e);
 
-    void update(T t, String[] params);
+    void update(E e, String[] params);
 
-    boolean delete(T t);
+    boolean delete(E e);
+
+    E getByLogin(String name);
 }

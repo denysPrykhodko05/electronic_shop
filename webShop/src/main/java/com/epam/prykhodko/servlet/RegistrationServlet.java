@@ -23,6 +23,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.SURNAME;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_DATA;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_PERSONAL_DATA_REGEX;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_LOAD_FILE;
@@ -30,11 +31,8 @@ import static java.lang.System.currentTimeMillis;
 
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
-import com.epam.prykhodko.dao.DAO;
-import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.DAOService;
-import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
+import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
@@ -56,8 +54,7 @@ public class RegistrationServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(RegistrationServlet.class);
     private static final String FILE = "FILE";
-    private DAO<User> userRepository;
-    private DAOService userService;
+    private UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -71,16 +68,16 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         Map<String, String> errors = new LinkedHashMap<>();
         Map<String, String> userData = new LinkedHashMap<>();
-        userRepository = new UserDAO();
-        userService = new UserServiceDAOImpl(userRepository);
         ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
         RegFormBean formBean = null;
+        userService = (UserService) servletContext.getAttribute(USER_SERVICE);
         UserUtils userUtils = (UserUtils) servletContext.getAttribute(USER_UTILS);
         Validator validator = (Validator) servletContext.getAttribute(VALIDATOR);
         ImageDraw imageDraw = (ImageDraw) servletContext.getAttribute(IMAGE_DRAW);
         CaptchaKeeper captchaKeeper = (CaptchaKeeper) servletContext.getAttribute(CAPTCHA_KEEPER);
         Map<Long, String> captchaKeys = (Map<Long, String>) servletContext.getAttribute(CAPTCHA_KEYS);
+
         try {
             formBean = fromRequestToRegFormBean(httpServletRequest);
         } catch (FileUploadException e) {
@@ -89,6 +86,7 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
+
         validator.checkField(NAME, formBean.getName(), USER_PERSONAL_DATA_REGEX, errors);
         validator.checkField(SURNAME, formBean.getSurname(), USER_PERSONAL_DATA_REGEX, errors);
         validator.checkField(LOGIN, formBean.getLogin(), LOGIN_REGEX, errors);
@@ -99,6 +97,7 @@ public class RegistrationServlet extends HttpServlet {
         validator.checkCheckbox(POLICY, formBean.getPolicy(), errors);
         validator.checkCheckbox(MAILS, formBean.getMails(), errors);
         validator.checkAvatar(formBean.getAvatar(), errors);
+
         if (!errors.isEmpty()) {
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);
@@ -106,7 +105,9 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
-        User user = new User(1, formBean.getName(), formBean.getSurname(), formBean.getEmail(), formBean.getLogin(), formBean.getPassword(), 1);
+
+        User user = userService.createUser(formBean);
+
         if (userService.isContains(user)) {
             userUtils.checkLoginAndEmail(user, userService, errors);
             userUtils.fillUserData(formBean, userData);
@@ -115,8 +116,10 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
+
         String path = imageDraw.saveUploadedFile(formBean.getAvatar(), formBean.getLogin());
         formBean.setAvatarPath(path);
+
         if (userService.add(formBean) == null) {
             errors.put(NOT_USER_ERROR, NOT_USER_ERROR);
             userUtils.fillUserData(formBean, userData);
@@ -125,6 +128,7 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
+
         session.setAttribute(USER_LOGIN, formBean.getLogin());
         httpServletResponse.sendRedirect("/");
     }
