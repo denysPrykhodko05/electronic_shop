@@ -1,8 +1,9 @@
 package com.epam.prykhodko.filter;
 
-import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
-import static com.epam.prykhodko.constants.LoggerMessageConstants.INFO_LOG_OUT_FILTER_DESTROY;
-import static com.epam.prykhodko.constants.LoggerMessageConstants.INFO_LOG_OUT_FILTER_START;
+import static com.epam.prykhodko.constants.ApplicationConstants.HOME_URL;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_LOGOUT_FILTER_DESTROY;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_LOGOUT_FILTER_INIT;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -13,29 +14,27 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 public class LogoutFilter implements Filter {
 
-    private final Logger LOGGER = Logger.getLogger(LogoutFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(LogoutFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        LOGGER.info(INFO_LOG_OUT_FILTER_START);
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletRequest.getSession().removeAttribute(USER_LOGIN);
+        httpServletResponse.sendRedirect(HOME_URL);
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        LOGGER.info(INFO_LOGOUT_FILTER_INIT);
     }
 
     @Override
     public void destroy() {
-        LOGGER.info(INFO_LOG_OUT_FILTER_DESTROY);
-    }
-
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession();
-        session.removeAttribute(LOGIN);
-        httpServletResponse.sendRedirect("/");
+        LOGGER.info(INFO_LOGOUT_FILTER_DESTROY);
     }
 }

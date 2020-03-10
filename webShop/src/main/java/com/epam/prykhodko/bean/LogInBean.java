@@ -1,5 +1,8 @@
 package com.epam.prykhodko.bean;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
+import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class LogInBean {
@@ -8,8 +11,8 @@ public class LogInBean {
     private String password;
 
     public void setLoginForm(HttpServletRequest httpServletRequest) {
-        login = httpServletRequest.getParameter("login");
-        password = httpServletRequest.getParameter("password");
+        login = httpServletRequest.getParameter(LOGIN);
+        password = httpServletRequest.getParameter(PASSWORD);
     }
 
     public String getLogin() {

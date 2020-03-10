@@ -3,10 +3,6 @@ body {
     padding: 0;
 }
 
-#userName{
-
-}
-
 #shopName {
     position: relative;
     text-align: left;
@@ -48,7 +44,6 @@ body {
 }
 
 #profile img {
-    display: none;
     position: relative;
     right: 24%;
     top: 16%;
