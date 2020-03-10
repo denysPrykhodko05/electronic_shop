@@ -23,7 +23,7 @@ public class UserUtils {
     }
 
     public void checkLoginAndEmail(User user, DAOService DAOService, Map<String, String> errors) {
-        if (Objects.nonNull(DAOService.getByLogin(user.getLogin()))) {
+        if (Objects.nonNull(DAOService.getByName(user.getLogin()))) {
             errors.put(LOGIN, USER_LOGIN_EXISTS);
             return;
         }

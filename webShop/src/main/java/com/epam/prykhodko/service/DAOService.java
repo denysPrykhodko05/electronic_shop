@@ -1,5 +1,7 @@
 package com.epam.prykhodko.service;
 
+import java.util.List;
+
 public interface DAOService<E> {
 
 
@@ -12,4 +14,6 @@ public interface DAOService<E> {
     E getByName(String name);
 
     boolean isContains(E entity);
+
+    List<E> getAll();
 }

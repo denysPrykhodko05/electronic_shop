@@ -51,4 +51,9 @@ public class ProductServiceDAOImpl implements DAOService<Product> {
             .findFirst();
         return Objects.nonNull(userTemp.orElse(null));
     }
+
+    @Override
+    public List<Product> getAll() {
+        return productDAO.getAll();
+    }
 }

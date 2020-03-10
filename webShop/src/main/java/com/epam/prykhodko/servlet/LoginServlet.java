@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
         User user = new User();
         user.setLogin(logInBean.getLogin());
         user.setPassword(logInBean.getPassword());
-        if (Objects.isNull(DAOService.getByLogin(user.getLogin()))) {
+        if (Objects.isNull(DAOService.getByName(user.getLogin()))) {
             errors.put(LOGIN, INCORRECT_INPUT + LOGIN);
             errors.put(PASSWORD, INCORRECT_INPUT + PASSWORD);
             req.setAttribute(LOGIN, logInBean.getLogin());

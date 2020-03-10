@@ -58,6 +58,11 @@ public class UserServiceDAOImpl implements DAOService<User> {
         return Objects.nonNull(userTemp.orElse(null));
     }
 
+    @Override
+    public List<User> getAll() {
+        return userDAO.getAll();
+    }
+
     public User createUser(RegFormBean regFormBean) {
         return new User(1, regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword(), 1,
             regFormBean.getAvatarPath());

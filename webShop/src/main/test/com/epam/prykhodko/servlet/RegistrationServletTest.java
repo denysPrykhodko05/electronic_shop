@@ -107,7 +107,6 @@ public class RegistrationServletTest {
         captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
-        when(DAOService.createUser(formBean)).thenReturn(user);
         when(DAOService.isContains(user)).thenReturn(false);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter1@asd.com");
         registrationServlet.doPost(httpServletRequest, httpServletResponse);
@@ -132,7 +131,6 @@ public class RegistrationServletTest {
         captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
-        when(DAOService.createUser(formBean)).thenReturn(user);
         when(DAOService.isContains(user)).thenReturn(true);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter@gmail.com");
         when(httpServletRequest.getRequestDispatcher("jsp/registration.jsp")).thenReturn(dispatcher);

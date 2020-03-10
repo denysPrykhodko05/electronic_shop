@@ -57,7 +57,7 @@ public class RegistrationServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(RegistrationServlet.class);
     private static final String FILE = "FILE";
     private DAO<User> userRepository;
-    private DAOService DAOService;
+    private DAOService userService;
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -72,7 +72,7 @@ public class RegistrationServlet extends HttpServlet {
         Map<String, String> errors = new LinkedHashMap<>();
         Map<String, String> userData = new LinkedHashMap<>();
         userRepository = new UserDAO();
-        DAOService = new UserServiceDAOImpl(userRepository);
+        userService = new UserServiceDAOImpl(userRepository);
         ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
         RegFormBean formBean = null;
@@ -106,9 +106,9 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
-        User user = DAOService.createUser(formBean);
-        if (DAOService.isContains(user)) {
-            userUtils.checkLoginAndEmail(user, DAOService, errors);
+        User user = new User(1, formBean.getName(), formBean.getSurname(), formBean.getEmail(), formBean.getLogin(), formBean.getPassword(), 1);
+        if (userService.isContains(user)) {
+            userUtils.checkLoginAndEmail(user, userService, errors);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);
             httpServletRequest.setAttribute(ERRORS, errors);
@@ -117,7 +117,7 @@ public class RegistrationServlet extends HttpServlet {
         }
         String path = imageDraw.saveUploadedFile(formBean.getAvatar(), formBean.getLogin());
         formBean.setAvatarPath(path);
-        if (DAOService.add(formBean) == null) {
+        if (userService.add(formBean) == null) {
             errors.put(NOT_USER_ERROR, NOT_USER_ERROR);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);
