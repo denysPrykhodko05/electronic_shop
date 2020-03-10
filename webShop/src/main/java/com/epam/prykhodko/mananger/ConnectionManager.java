@@ -1,12 +1,9 @@
 package com.epam.prykhodko.mananger;
 
 import static com.epam.prykhodko.constants.DBConstants.DB_URL;
-import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_CONNECTION;
-import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CLOSE_ROLLBACK;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_CREATE_DATASOURCE;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_OBTAIN_CONNECTION;
 
-import com.epam.prykhodko.handler.ConnectionHolder;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.naming.Context;
@@ -41,28 +38,4 @@ public class ConnectionManager {
         return con;
     }
 
-    private void commit(Connection connection) {
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            //TODO
-        }
-    }
-
-    private void rollback(Connection connection) {
-        try {
-            connection.rollback();
-        } catch (SQLException e) {
-            LOGGER.error(ERR_CANNOT_CLOSE_ROLLBACK);
-        }
-    }
-
-    private void close(Connection connection) {
-        try {
-            connection.close();
-            ConnectionHolder.removeConnection();
-        } catch (SQLException e) {
-            LOGGER.error(ERR_CANNOT_CLOSE_CONNECTION);
-        }
-    }
 }

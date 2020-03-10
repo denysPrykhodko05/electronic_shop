@@ -12,6 +12,7 @@ import static com.epam.prykhodko.constants.DBConstants.ADD_USER;
 import static com.epam.prykhodko.constants.DBConstants.DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_USERS;
 import static com.epam.prykhodko.constants.DBConstants.GET_USER_BY_ID;
+import static com.epam.prykhodko.constants.DBConstants.GET_USER_BY_NAME;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_ADD_USER;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_ALL_USERS;
@@ -37,9 +38,11 @@ public class UserDAO implements DAO<User> {
         try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_ID);
             ResultSet resultSet = pstm.executeQuery()) {
             pstm.setInt(1, id);
+
             if (resultSet.next()) {
                 return parseResultSetToUser(resultSet);
             }
+
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_GET_USER_BY_ID);
         }
@@ -49,12 +52,16 @@ public class UserDAO implements DAO<User> {
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
+
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_USERS);
             ResultSet resultSet = preparedStatement.executeQuery()) {
+
             while (resultSet.next()) {
                 users.add(parseResultSetToUser(resultSet));
             }
+
             return users;
+
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_GET_ALL_USERS);
         }
@@ -64,12 +71,15 @@ public class UserDAO implements DAO<User> {
     @Override
     public User add(User user) {
         PreparedStatement pstmt = null;
+
         try {
             pstmt = ConnectionHolder.getConnection().prepareStatement(ADD_USER);
             fillPreparedStatementByUserData(pstmt, user);
+
             if (pstmt.executeUpdate() > INTEGER_ZERO) {
                 return user;
             }
+
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_ADD_USER);
         }
@@ -85,13 +95,32 @@ public class UserDAO implements DAO<User> {
     public boolean delete(User user) {
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);) {
             preparedStatement.setString(1, user.getLogin());
+
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
                 return true;
             }
+
         } catch (SQLException ex) {
             LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
         }
         return false;
+    }
+
+    @Override
+    public User getByLogin(String login) {
+        ResultSet resultSet;
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_NAME)) {
+            preparedStatement.setString(1, login);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return parseResultSetToUser(resultSet);
+            }
+
+        } catch (SQLException ex) {
+            LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
+        }
+        return null;
     }
 
     private void fillPreparedStatementByUserData(PreparedStatement pstmt, User user) throws SQLException {

@@ -13,15 +13,12 @@ public class User {
     private int roleId;
     private String avatarPath;
 
-    public User(int id, String name, String surname, String email, String login, String password, int roleId, String avatarPath) {
-        this.id = id;
+    public User(String name, String surname, String email, String login, String password) {
         this.name = name;
         this.surname = surname;
+        this.email = email;
         this.login = login;
         this.password = password;
-        this.email = email;
-        this.roleId = roleId;
-        this.avatarPath = avatarPath;
     }
 
     public User(int id, String name, String surname, String email, String login, String password, int roleId) {
@@ -32,6 +29,17 @@ public class User {
         this.password = password;
         this.email = email;
         this.roleId = roleId;
+    }
+
+    public User(int id, String name, String surname, String email, String login, String password, int roleId, String avatarPath) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.roleId = roleId;
+        this.avatarPath = avatarPath;
     }
 
     public User() {

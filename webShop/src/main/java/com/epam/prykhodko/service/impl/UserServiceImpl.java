@@ -16,8 +16,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User add(RegFormBean formBean) {
-        add(new User(99, formBean.getName(), formBean.getSurname(), formBean.getEmail(), formBean.getLogin(), formBean.getPassword(), 1,
-            formBean.getAvatarPath()));
+        add(new User(formBean.getName(), formBean.getSurname(), formBean.getEmail(), formBean.getLogin(), formBean.getPassword()));
         return null;
     }
 
@@ -57,7 +56,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(RegFormBean regFormBean) {
-        return new User(1, regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword(), 1,
-            regFormBean.getAvatarPath());
+        return new User(regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword());
     }
 }

@@ -58,15 +58,18 @@ public class LoginServlet extends HttpServlet {
         logInBean.setLoginForm(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
         validator.checkField(PASSWORD, logInBean.getPassword(), PASSWORD_REGEX, errors);
+
         if (!errors.isEmpty()) {
             req.setAttribute(LOGIN, logInBean.getLogin());
             req.setAttribute(ERRORS, errors);
             forward(req, resp);
             return;
         }
+
         User user = new User();
         user.setLogin(logInBean.getLogin());
         user.setPassword(logInBean.getPassword());
+
         if (Objects.isNull(userService.getByLogin(user.getLogin()))) {
             errors.put(LOGIN, INCORRECT_INPUT + LOGIN);
             errors.put(PASSWORD, INCORRECT_INPUT + PASSWORD);
@@ -75,6 +78,7 @@ public class LoginServlet extends HttpServlet {
             forward(req, resp);
             return;
         }
+
         HttpSession session = req.getSession();
         session.setAttribute(USER_LOGIN, user.getLogin());
         resp.sendRedirect(HOME_URL);

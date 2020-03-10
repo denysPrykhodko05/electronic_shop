@@ -99,6 +99,7 @@ public class RegistrationServlet extends HttpServlet {
         validator.checkCheckbox(POLICY, formBean.getPolicy(), errors);
         validator.checkCheckbox(MAILS, formBean.getMails(), errors);
         validator.checkAvatar(formBean.getAvatar(), errors);
+
         if (!errors.isEmpty()) {
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);
@@ -106,7 +107,9 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
+
         User user = userService.createUser(formBean);
+
         if (userService.isContains(user)) {
             userUtils.checkLoginAndEmail(user, userService, errors);
             userUtils.fillUserData(formBean, userData);
@@ -115,8 +118,10 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
+
         String path = imageDraw.saveUploadedFile(formBean.getAvatar(), formBean.getLogin());
         formBean.setAvatarPath(path);
+
         if (userService.add(formBean) == null) {
             errors.put(NOT_USER_ERROR, NOT_USER_ERROR);
             userUtils.fillUserData(formBean, userData);
@@ -125,6 +130,7 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
+
         session.setAttribute(USER_LOGIN, formBean.getLogin());
         httpServletResponse.sendRedirect("/");
     }
