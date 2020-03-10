@@ -125,7 +125,6 @@ public class UserDAO implements DAO<User> {
         pstmt.setString(4, user.getEmail());
         pstmt.setString(5, user.getPassword());
         pstmt.setInt(6, 1);
-        pstmt.setString(7, user.getAvatarPath());
     }
 
     private User parseResultSetToUser(ResultSet resultSet) throws SQLException {
@@ -136,7 +135,6 @@ public class UserDAO implements DAO<User> {
         String email = resultSet.getString(EMAIL);
         String password = resultSet.getString(PASSWORD);
         int roleId = resultSet.getInt(ROLE_ID);
-        String avatarPath = resultSet.getString(AVATAR_PATH);
-        return new User(id, name, surName, email, login, password, roleId, avatarPath);
+        return new User(id, name, surName, email, login, password, roleId);
     }
 }

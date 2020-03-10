@@ -6,6 +6,7 @@ import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
 import com.epam.prykhodko.service.UserService;
+import java.util.Base64;
 import java.util.Objects;
 
 public class UserServiceDAOImpl implements UserService {
@@ -54,7 +55,7 @@ public class UserServiceDAOImpl implements UserService {
 
     @Override
     public User createUser(RegFormBean regFormBean) {
-        return new User(1, regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword(), 1,
-            regFormBean.getAvatarPath());
+        String password = Base64.getEncoder().encodeToString(regFormBean.getPassword().getBytes());
+        return new User(regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), password);
     }
 }

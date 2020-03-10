@@ -86,7 +86,7 @@ public class RegistrationServlet extends HttpServlet {
             forward(httpServletRequest, httpServletResponse);
             return;
         }
-        
+
         validator.checkField(NAME, formBean.getName(), USER_PERSONAL_DATA_REGEX, errors);
         validator.checkField(SURNAME, formBean.getSurname(), USER_PERSONAL_DATA_REGEX, errors);
         validator.checkField(LOGIN, formBean.getLogin(), LOGIN_REGEX, errors);

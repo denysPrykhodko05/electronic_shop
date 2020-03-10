@@ -17,6 +17,7 @@ import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -67,7 +68,9 @@ public class LoginServlet extends HttpServlet {
         user.setLogin(logInBean.getLogin());
         user.setPassword(logInBean.getPassword());
 
-        if (Objects.isNull(userService.getByLogin(user.getLogin()))) {
+        User foundUser = userService.getByLogin(user.getLogin());
+        byte[] decodePass = Base64.getDecoder().decode(foundUser.getPassword());
+        if (Objects.isNull(foundUser) || !user.getPassword().equals(new String(decodePass))) {
             errors.put(LOGIN, INCORRECT_INPUT + LOGIN);
             errors.put(PASSWORD, INCORRECT_INPUT + PASSWORD);
             req.setAttribute(LOGIN, logInBean.getLogin());
