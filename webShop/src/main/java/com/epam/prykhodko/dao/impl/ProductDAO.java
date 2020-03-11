@@ -1,6 +1,7 @@
 package com.epam.prykhodko.dao.impl;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.CATEGORY;
+import static com.epam.prykhodko.constants.ApplicationConstants.DESCRIPTION;
 import static com.epam.prykhodko.constants.ApplicationConstants.ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.MANUFACTURE;
 import static com.epam.prykhodko.constants.ApplicationConstants.NAME;
@@ -11,6 +12,7 @@ import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS;
 import static com.epam.prykhodko.constants.DBConstants.GET_PRODUCT_BY_ID;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_ADD_USER;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_DELETE_USER_BY_LOGIN;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_ALL_PRODUCTS;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.DAO;
@@ -27,6 +29,11 @@ import org.apache.log4j.Logger;
 public class ProductDAO implements DAO<Product> {
 
     private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
+
+    @Override
+    public Product getByName(String name) {
+        return null;
+    }
 
     @Override
     public Product get(int id) {
@@ -52,7 +59,7 @@ public class ProductDAO implements DAO<Product> {
             }
             return products;
         } catch (SQLException ex) {
-            //TODO
+            LOGGER.error(ERR_CANNOT_GET_ALL_PRODUCTS);
         }
         return products;
     }
@@ -90,6 +97,20 @@ public class ProductDAO implements DAO<Product> {
         return false;
     }
 
+    @Override
+    public List<String> getDefineParameter(String query) {
+        List<String> parameters = new ArrayList<>();
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                parameters.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            //TODO
+        }
+        return parameters;
+    }
+
     private void fillPreparedStatementByProductData(PreparedStatement pstmt, Product product) throws SQLException {
         pstmt.setString(1, product.getName());
         pstmt.setInt(2, Integer.parseInt(product.getPrice().toString()));
@@ -103,6 +124,7 @@ public class ProductDAO implements DAO<Product> {
         String name = resultSet.getString(NAME);
         String manufacture = resultSet.getString(MANUFACTURE);
         String category = resultSet.getString(CATEGORY);
-        return new Product(id, name, price, manufacture, category);
+        String description = resultSet.getString(DESCRIPTION);
+        return new Product(id, name, price, manufacture, category, description);
     }
 }

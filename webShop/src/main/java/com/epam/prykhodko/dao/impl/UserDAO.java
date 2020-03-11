@@ -1,6 +1,5 @@
 package com.epam.prykhodko.dao.impl;
 
-import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR_PATH;
 import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
 import static com.epam.prykhodko.constants.ApplicationConstants.ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
@@ -103,7 +102,7 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public User getByLogin(String login) {
+    public User getByName(String login) {
         ResultSet resultSet;
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_NAME)) {
             preparedStatement.setString(1, login);
@@ -116,6 +115,11 @@ public class UserDAO implements DAO<User> {
             LOGGER.error(ERR_CANNOT_DELETE_USER_BY_LOGIN);
         }
         return null;
+    }
+
+    @Override
+    public List<String> getDefineParameter(String query) {
+        throw new UnsupportedOperationException();
     }
 
     private void fillPreparedStatementByUserData(PreparedStatement pstmt, User user) throws SQLException {

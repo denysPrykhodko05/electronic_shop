@@ -12,6 +12,10 @@
     <param-name>captchaTime</param-name>
     <param-value>300</param-value>
   </context-param>
+  <context-param>
+    <param-name>defaultProductsOnPage</param-name>
+    <param-value>12</param-value>
+  </context-param>
 
   <display-name>Archetype Created Web Application</display-name>
   <listener>

@@ -5,11 +5,12 @@ import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
-import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.DAOService;
 import java.util.Base64;
+import java.util.List;
 import java.util.Objects;
 
-public class UserServiceDAOImpl implements UserService {
+public class UserServiceDAOImpl implements DAOService<User, RegFormBean> {
 
     private final DAO<User> userDAO;
     private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
@@ -19,8 +20,8 @@ public class UserServiceDAOImpl implements UserService {
     }
 
     @Override
-    public User add(RegFormBean formBean) {
-        User user = createUser(formBean);
+    public User addByForm(RegFormBean formBean) {
+        User user = createEntity(formBean);
         return add(user);
     }
 
@@ -31,9 +32,9 @@ public class UserServiceDAOImpl implements UserService {
     }
 
     @Override
-    public boolean deleteByLogin(String login) {
+    public boolean deleteByName(String login) {
         return transactionHandler.invokeWithoutTransaction(() -> {
-            User user = getByLogin(login);
+            User user = getByName(login);
             return userDAO.delete(user);
         });
     }
@@ -44,18 +45,24 @@ public class UserServiceDAOImpl implements UserService {
     }
 
     @Override
-    public User getByLogin(String login) {
-        return transactionHandler.invokeWithoutTransaction(() -> userDAO.getByLogin(login));
+    public User getByName(String login) {
+        return transactionHandler.invokeWithoutTransaction(() -> userDAO.getByName(login));
     }
 
     @Override
     public boolean isContains(User user) {
-        return Objects.nonNull(getByLogin(user.getLogin()));
+        return Objects.nonNull(getByName(user.getLogin()));
     }
 
     @Override
-    public User createUser(RegFormBean regFormBean) {
-        String password = Base64.getEncoder().encodeToString(regFormBean.getPassword().getBytes());
-        return new User(regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), password);
+    public List<User> getAll() {
+        return transactionHandler.invokeWithoutTransaction(userDAO::getAll);
     }
+
+    @Override
+    public User createEntity(RegFormBean form) {
+        String password = Base64.getEncoder().encodeToString(form.getPassword().getBytes());
+        return new User(form.getName(), form.getSurname(), form.getEmail(), form.getLogin(), password);
+    }
+
 }

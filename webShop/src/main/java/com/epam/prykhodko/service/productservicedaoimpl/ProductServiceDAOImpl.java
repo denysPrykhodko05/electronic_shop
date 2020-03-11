@@ -1,21 +1,33 @@
 package com.epam.prykhodko.service.productservicedaoimpl;
 
+import static com.epam.prykhodko.constants.DBConstants.GET_ALL_MANUFACTURES;
+
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
-import com.epam.prykhodko.service.DAOService;
+import com.epam.prykhodko.service.DAOServiceProduct;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ProductServiceDAOImpl implements DAOService<Product> {
+public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object> {
 
     private final DAO<Product> productDAO;
     private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
 
     public ProductServiceDAOImpl(DAO<Product> productDAO) {
         this.productDAO = productDAO;
+    }
+
+    @Override
+    public Product addByForm(Object form) {
+        return null;
+    }
+
+    @Override
+    public Product createEntity(Object form) {
+        return null;
     }
 
     @Override
@@ -54,6 +66,11 @@ public class ProductServiceDAOImpl implements DAOService<Product> {
 
     @Override
     public List<Product> getAll() {
-        return productDAO.getAll();
+        return transactionHandler.invokeWithoutTransaction(productDAO::getAll);
+    }
+
+    @Override
+    public List<String> getAllManufactures() {
+        return transactionHandler.invokeWithoutTransaction(() -> productDAO.getDefineParameter(GET_ALL_MANUFACTURES));
     }
 }

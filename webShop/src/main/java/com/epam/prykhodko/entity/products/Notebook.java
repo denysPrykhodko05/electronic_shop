@@ -14,8 +14,8 @@ public class Notebook extends Product {
         super(notebook);
     }
 
-    public Notebook(int id, String name, BigDecimal price, String manufacturer, String modelOfTouchpad) {
-        super(id, name, price, manufacturer, "notebook");
+    public Notebook(int id, String name, BigDecimal price, String manufacturer, String modelOfTouchpad, String description) {
+        super(id, name, price, manufacturer, "notebook", description);
         this.modelOfTouchpad = modelOfTouchpad;
     }
 

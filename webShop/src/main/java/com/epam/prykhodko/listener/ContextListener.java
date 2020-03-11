@@ -11,8 +11,10 @@ import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
 import static com.epam.prykhodko.constants.ApplicationConstants.IMAGE_DRAW;
 import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
+import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
 import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
+import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
 
@@ -21,8 +23,15 @@ import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
+import com.epam.prykhodko.dao.DAO;
+import com.epam.prykhodko.dao.impl.ProductDAO;
 import com.epam.prykhodko.dao.impl.UserDAO;
+import com.epam.prykhodko.entity.User;
+import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.mananger.ConnectionManager;
+import com.epam.prykhodko.service.DAOService;
+import com.epam.prykhodko.service.productservicedaoimpl.ProductServiceDAOImpl;
+import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
@@ -44,7 +53,9 @@ public class ContextListener implements ServletContextListener {
     private final Map<Long, String> captchaKeys = new HashMap<>();
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final UserDAO userDAO = new UserDAO();
-    private final UserService userService = new UserServiceDAOImpl(userDAO);
+    private final DAOService<User, RegFormBean> userService = new UserServiceDAOImpl(userDAO);
+    private final DAO<Product> productDAO = new ProductDAO();
+    private final DAOService<Product, Object> productService = new ProductServiceDAOImpl(productDAO);
     private final Validator validator = new Validator();
     private final UserUtils userUtils = new UserUtils();
     private final ImageDraw imageDraw = new ImageDraw();
@@ -71,6 +82,8 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(IMAGE_DRAW, imageDraw);
         servletContext.setAttribute(CONNECTION_MANAGER, connectionManager);
         servletContext.setAttribute(USER_SERVICE, userService);
+        servletContext.setAttribute(PRODUCT_SERVICE, productService);
+
     }
 
     @Override

@@ -16,8 +16,8 @@ public class Smartphone extends Product {
     }
 
     public Smartphone(int id, String name, BigDecimal price, String manufacturer, String communicationStandard,
-        String modelOfTouchScreen) {
-        super(id, name, price, manufacturer, "smartphone");
+        String modelOfTouchScreen, String description) {
+        super(id, name, price, manufacturer, "smartphone", description);
         this.modelOfTouchScreen = modelOfTouchScreen;
         this.communicationStandard = communicationStandard;
     }

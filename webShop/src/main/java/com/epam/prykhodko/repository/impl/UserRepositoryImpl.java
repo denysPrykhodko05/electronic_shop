@@ -26,4 +26,9 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean delete(User user) {
         return users.remove(user);
     }
+
+    @Override
+    public List<User> getAll() {
+        return users;
+    }
 }

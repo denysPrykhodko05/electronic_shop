@@ -14,9 +14,10 @@ public abstract class DBConstants {
 
     //PRODUCTDAO QUERIES
     public static final String ADD_PRODUCT = "INSERT INTO product(name, price, manufacture, category) VALUES(?,?,?,?)";
-    public static final String GET_ALL_PRODUCTS = "SELECT id, name, manufacture FROM product";
-    public static final String GET_PRODUCT_BY_ID = "SELECT id, name, manufacture, category FROM product WHERE id = ?";
+    public static final String GET_ALL_PRODUCTS = "SELECT product.id, product.name, product.price, product.manufacture, product.description, product_category.name as category FROM product inner join product_category on product.category = product_category.id;";
+    public static final String GET_PRODUCT_BY_ID = "SELECT * FROM product WHERE id = ?";
     public static final String DELETE_PRODUCT_BY_NAME = "DELETE FROM product WHERE name = ?";
+    public static final String GET_ALL_MANUFACTURES = "SELECT DISTINCT(manufacture) FROM product";
 
 
     //Other db constants

@@ -11,6 +11,7 @@ public class Product implements Serializable {
     private String manufacturer;
     private BigDecimal price;
     private String category;
+    private String description;
 
     public Product() {
 
@@ -24,12 +25,13 @@ public class Product implements Serializable {
         this.category = product.category;
     }
 
-    public Product(int id, String name, BigDecimal price, String manufacturer, String category) {
+    public Product(int id, String name, BigDecimal price, String manufacturer, String category, String description) {
         this.id = id;
         this.price = price;
         this.manufacturer = manufacturer;
         this.name = name;
         this.category = category;
+        this.description = description;
     }
 
     public int getId() {
@@ -70,6 +72,14 @@ public class Product implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

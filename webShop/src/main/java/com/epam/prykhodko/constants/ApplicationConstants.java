@@ -50,9 +50,13 @@ public abstract class ApplicationConstants {
     public static final String USER_UTILS = "user utils";
     public static final String REG_FORM = "regFormBean";
     public static final String USER_SERVICE = "userService";
+    public static final String PRODUCT_SERVICE = "productService";
+    public static final String ALL_PRODUCT_LIST = "all_product_list";
+    public static final String AMOUNT_OF_PRODUCTS = "amountOfProducts";
     public static final String IMAGE_DRAW = "imageDraw";
     public static final String AVATARS_PATH = "C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\avatars\\";
-    public static final String AVATAR_FORMAT = ".jpg";
+    public static final String PRODUCTS_PATH = "C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\products\\";
+    public static final String JPG_FORMAT = ".jpg";
     public static final String TEMPORARY_STORAGE = "javax.servlet.context.tempdir";
     public static final String CONTEXT_DESTROYER = "context destroyer";
     public static final String HIDDEN = "hidden";
@@ -71,4 +75,5 @@ public abstract class ApplicationConstants {
     public static final String MANUFACTURE = "manufacture";
     public static final String CATEGORY = "category";
     public static final String PRICE = "price";
+    public static final String DESCRIPTION = "description";
 }

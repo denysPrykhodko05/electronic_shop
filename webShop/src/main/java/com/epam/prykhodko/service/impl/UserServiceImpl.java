@@ -3,11 +3,11 @@ package com.epam.prykhodko.service.impl;
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.repository.UserRepository;
-import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.DAOService;
 import java.util.List;
 import java.util.Optional;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements DAOService<User, Object> {
 
     private final UserRepository userRepository;
 
@@ -21,12 +21,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User addByForm(Object form) {
+        return null;
+    }
+
+    @Override
+    public User createEntity(Object form) {
+        return null;
+    }
+
+    @Override
     public User add(User user) {
         return userRepository.add(user);
     }
 
     @Override
-    public boolean deleteByLogin(String login) {
+    public boolean deleteByName(String login) {
         List<User> users = userRepository.get();
         Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
         return user.map(users::remove).orElse(false);
@@ -38,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByLogin(String login) {
+    public User getByName(String login) {
         List<User> users = userRepository.get();
         Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
         return user.orElse(null);
@@ -55,6 +65,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAll() {
+        return userRepository.getAll();
+    }
+
     public User createUser(RegFormBean regFormBean) {
         return new User(regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword());
     }
