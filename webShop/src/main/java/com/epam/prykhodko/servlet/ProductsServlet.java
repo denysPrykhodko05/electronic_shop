@@ -5,7 +5,6 @@ import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_JSP;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 
 import com.epam.prykhodko.entity.products.Product;
-import com.epam.prykhodko.service.DAOService;
 import com.epam.prykhodko.service.DAOServiceProduct;
 import com.epam.prykhodko.util.ProductViewUtil;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/products")
 public class ProductsServlet extends HttpServlet {
@@ -25,14 +25,18 @@ public class ProductsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = req.getServletContext();
+        HttpSession session = req.getSession();
         ProductViewUtil productViewUtil = new ProductViewUtil();
+        String queryForFilter = (String) req.getAttribute("productQuery");
         String amountFromForm = req.getParameter("amountOfProductsFromForm");
         productDAOService = (DAOServiceProduct<Product, Object>) servletContext.getAttribute(PRODUCT_SERVICE);
-        List<Product> products = productDAOService.getAll();
+        List<Product> products = productDAOService.getFilteredProducts(queryForFilter);
         List<String> manufactures = productDAOService.getAllManufactures();
-        req.setAttribute("manufactures",manufactures);
+        List<String> categories = productDAOService.getAllCategories();
+        req.setAttribute("manufactures", manufactures);
+        req.setAttribute("categories", categories);
         req.setAttribute(ALL_PRODUCT_LIST, products);
-        productViewUtil.setAmountOfProducts(req, amountFromForm);
+        productViewUtil.setAmountOfProducts(session, amountFromForm);
         req.getRequestDispatcher(PRODUCT_JSP).forward(req, resp);
     }
 

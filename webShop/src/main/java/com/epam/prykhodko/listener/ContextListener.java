@@ -24,6 +24,7 @@ import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.dao.DAO;
+import com.epam.prykhodko.dao.DAOProduct;
 import com.epam.prykhodko.dao.impl.ProductDAO;
 import com.epam.prykhodko.dao.impl.UserDAO;
 import com.epam.prykhodko.entity.User;
@@ -54,7 +55,7 @@ public class ContextListener implements ServletContextListener {
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final UserDAO userDAO = new UserDAO();
     private final DAOService<User, RegFormBean> userService = new UserServiceDAOImpl(userDAO);
-    private final DAO<Product> productDAO = new ProductDAO();
+    private final DAOProduct productDAO = new ProductDAO();
     private final DAOService<Product, Object> productService = new ProductServiceDAOImpl(productDAO);
     private final Validator validator = new Validator();
     private final UserUtils userUtils = new UserUtils();

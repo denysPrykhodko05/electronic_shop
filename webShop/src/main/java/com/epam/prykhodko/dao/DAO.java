@@ -16,5 +16,4 @@ public interface DAO<E> {
 
     E getByName(String name);
 
-    List<String> getDefineParameter(String query);
 }

@@ -15,7 +15,7 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_DE
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_ALL_PRODUCTS;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-import com.epam.prykhodko.dao.DAO;
+import com.epam.prykhodko.dao.DAOProduct;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.ConnectionHolder;
 import java.math.BigDecimal;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class ProductDAO implements DAO<Product> {
+public class ProductDAO implements DAOProduct {
 
     private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
 
@@ -109,6 +109,21 @@ public class ProductDAO implements DAO<Product> {
             //TODO
         }
         return parameters;
+    }
+
+    @Override
+    public List<Product> getFilteredEntity(String query) {
+        List<Product> products = new ArrayList<>();
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                products.add(parseResultSetToProduct(resultSet));
+            }
+            return products;
+        } catch (SQLException e) {
+            //TODO
+        }
+        return products;
     }
 
     private void fillPreparedStatementByProductData(PreparedStatement pstmt, Product product) throws SQLException {

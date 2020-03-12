@@ -117,11 +117,6 @@ public class UserDAO implements DAO<User> {
         return null;
     }
 
-    @Override
-    public List<String> getDefineParameter(String query) {
-        throw new UnsupportedOperationException();
-    }
-
     private void fillPreparedStatementByUserData(PreparedStatement pstmt, User user) throws SQLException {
         pstmt.setString(1, user.getName());
         pstmt.setString(2, user.getSurname());

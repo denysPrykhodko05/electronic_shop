@@ -1,8 +1,9 @@
 package com.epam.prykhodko.service.productservicedaoimpl;
 
+import static com.epam.prykhodko.constants.DBConstants.GET_ALL_CATEGORIES;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_MANUFACTURES;
 
-import com.epam.prykhodko.dao.DAO;
+import com.epam.prykhodko.dao.DAOProduct;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
@@ -13,10 +14,10 @@ import java.util.Optional;
 
 public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object> {
 
-    private final DAO<Product> productDAO;
+    private final DAOProduct productDAO;
     private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
 
-    public ProductServiceDAOImpl(DAO<Product> productDAO) {
+    public ProductServiceDAOImpl(DAOProduct productDAO) {
         this.productDAO = productDAO;
     }
 
@@ -72,5 +73,15 @@ public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object>
     @Override
     public List<String> getAllManufactures() {
         return transactionHandler.invokeWithoutTransaction(() -> productDAO.getDefineParameter(GET_ALL_MANUFACTURES));
+    }
+
+    @Override
+    public List<String> getAllCategories() {
+        return transactionHandler.invokeWithoutTransaction(() -> productDAO.getDefineParameter(GET_ALL_CATEGORIES));
+    }
+
+    @Override
+    public List<Product> getFilteredProducts(String query) {
+        return transactionHandler.invokeWithoutTransaction(() -> productDAO.getFilteredEntity(query));
     }
 }

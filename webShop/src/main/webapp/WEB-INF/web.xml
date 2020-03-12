@@ -21,14 +21,25 @@
   <listener>
     <listener-class>com.epam.prykhodko.listener.ContextListener</listener-class>
   </listener>
+
+  <!-- fileter for logout-->
   <filter>
     <filter-class>com.epam.prykhodko.filter.LogoutFilter</filter-class>
     <filter-name>logoutFilter</filter-name>
   </filter>
-
   <filter-mapping>
     <filter-name>logoutFilter</filter-name>
     <url-pattern>/logout</url-pattern>
+  </filter-mapping>
+
+  <!-- filter for product filtering-->
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.ProductFilter</filter-class>
+    <filter-name>productFilter</filter-name>
+  </filter>
+  <filter-mapping>
+    <filter-name>productFilter</filter-name>
+    <url-pattern>/products</url-pattern>
   </filter-mapping>
   <resource-ref>
     <description>DB Connection</description>

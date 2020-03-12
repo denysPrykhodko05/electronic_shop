@@ -2,6 +2,7 @@
 <%@include file = "header.jsp"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="productTag" uri="/tld/ProductViewTag.tld"%>
 <html lang="en">
 
@@ -21,25 +22,60 @@
     </form>
     <div id="common">
         <div id="left-column">
-        <form method="" action="">
-            <div id="filter-manufacture">
-                Manufacture<br>
-                <c:forEach var="manufacture" items="${manufactures}">
-                     <input type="checkbox" name="manufactureCheckBox" value="${manufacture}"> ${manufacture}<br>
-                </c:forEach>
-                <br>
-            </div>
-            <div id="price-filter">
-                Price<br>
-                Min: <input type="number" name="minPrice"><br>Max: <input type="number" name="maxPrice"><br><br>
-            </div>
-            <div id="category-filter">
-                Category<br>
-                <input type="checkbox" name="category" value="notebook">Notebook<br>
-                <input type="checkbox" name="category" value="smartphone">Smartphone<br><br>
-            </div>
-            <input type="submit" value=ok><br>
-         </form>
+          <!-- form for filters-->
+          <form method="GET" action="/products">
+              <div id="filter-manufacture">
+                  Manufacture<br>
+                        <c:choose>
+                            <c:when test="${not empty manufactureCheck}">
+                                <c:forEach var="manufacture" items="${manufactures}">
+                                      <c:choose>
+                                        <c:when test="${fn:contains(manufactureCheck, manufacture)}">
+                                          <input type="checkbox" name="manufacture" value="${manufacture}" checked="checked"> ${manufacture}<br>
+                                        </c:when>
+                                        <c:otherwise>
+                                             <input type="checkbox" name="manufacture" value="${manufacture}" > ${manufacture}<br>
+                                        </c:otherwise>
+                                      </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                               <c:forEach var="manufacture" items="${manufactures}">
+                                 <input type="checkbox" name="manufacture" value="${manufacture}" > ${manufacture}<br>
+                               </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                  <br>
+              </div>
+              <div id="price-filter">
+                  Price<br>
+                  Min: <input id="minPrice" type="number" name="minPrice" value="${minPriceInput}"><br>Max: <input id="maxPrice" type="number" name="maxPrice" value="${maxPriceInput}"><br><br>
+              </div>
+              <div id="category-filter">
+                  Category<br>
+                  <c:choose>
+                      <c:when test="${not empty categoryCheck}">
+                          <c:forEach var="category" items="${categories}">
+                                <c:choose>
+                                  <c:when test="${fn:contains(categoryCheck, category)}">
+                                    <input type="checkbox" name="category" value="${category}" checked="checked"> ${category}<br>
+                                  </c:when>
+                                  <c:otherwise>
+                                       <input type="checkbox" name="category" value="${category}" > ${category}<br>
+                                  </c:otherwise>
+                                </c:choose>
+                          </c:forEach>
+                      </c:when>
+                      <c:otherwise>
+                         <c:forEach var="category" items="${categories}">
+                           <input type="checkbox" name="category" value="${category}" > ${category}<br>
+                         </c:forEach>
+                      </c:otherwise>
+                  </c:choose>
+              </div>
+              <br>
+              <input type="submit" value=ok><br>
+          </form>
         </div>
         <div id="center-column">
             <div id="contentHalder">
