@@ -90,7 +90,7 @@
         </div>
         <div id="center-column">
             <c:set var="pageNumber" value="${1}"/>
-            <c:forEach begin="1" end="${3}">
+            <c:forEach begin="1" end="${pageAmount}">
                <button form="amountOfProductsForm" name="page" value="${pageNumber}">
                    ${pageNumber}
                    <c:set var="pageNumber" value="${pageNumber+1}"/>

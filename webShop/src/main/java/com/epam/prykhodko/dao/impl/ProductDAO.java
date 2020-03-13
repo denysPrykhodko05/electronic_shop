@@ -13,6 +13,9 @@ import static com.epam.prykhodko.constants.DBConstants.GET_PRODUCT_BY_ID;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_ADD_USER;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_ALL_PRODUCTS;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_PRODUCT_BY_DEFINE_PARAMETER;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_PRODUCT_BY_FILTERS;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_PRODUCT_BY_ID;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.DAOProduct;
@@ -44,7 +47,7 @@ public class ProductDAO implements DAOProduct {
                 return parseResultSetToProduct(resultSet);
             }
         } catch (SQLException e) {
-            //TODO
+            LOGGER.error(ERR_CANNOT_GET_PRODUCT_BY_ID);
         }
         return null;
     }
@@ -106,7 +109,7 @@ public class ProductDAO implements DAOProduct {
                 parameters.add(resultSet.getString(1));
             }
         } catch (SQLException e) {
-            //TODO
+            LOGGER.error(ERR_CANNOT_GET_PRODUCT_BY_DEFINE_PARAMETER);
         }
         return parameters;
     }
@@ -121,16 +124,17 @@ public class ProductDAO implements DAOProduct {
             }
             return products;
         } catch (SQLException e) {
-            //TODO
+            LOGGER.error(ERR_CANNOT_GET_PRODUCT_BY_FILTERS);
         }
         return products;
     }
 
     private void fillPreparedStatementByProductData(PreparedStatement pstmt, Product product) throws SQLException {
-        pstmt.setString(1, product.getName());
-        pstmt.setInt(2, Integer.parseInt(product.getPrice().toString()));
-        pstmt.setString(3, product.getManufacturer());
-        pstmt.setString(4, product.getCategory());
+        int i=INTEGER_ZERO;
+        pstmt.setString(++i, product.getName());
+        pstmt.setInt(++i, Integer.parseInt(product.getPrice().toString()));
+        pstmt.setString(++i, product.getManufacturer());
+        pstmt.setString(++i, product.getCategory());
     }
 
     private Product parseResultSetToProduct(ResultSet resultSet) throws SQLException {

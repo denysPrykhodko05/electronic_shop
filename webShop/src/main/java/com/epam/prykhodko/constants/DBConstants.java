@@ -26,4 +26,16 @@ public abstract class DBConstants {
 
     //Other db constants
     public static final String SAVEPOINT_INVOKE_TRANSACTION = "savepointInvokeTransaction";
+
+    //DAO operators
+    public static final String WHERE = " WHERE ";
+    public static final String PRICE_BETWEEN = " (price between ";
+    public static final String AND = " and ";
+    public static final String STRING_CLOSE_CIRCLE_BRACKET = ")";
+    public static final String STRING_OPEN_CIRCLE_BRACKET = " (";
+    public static final String MANUFACTURE_PARAMETER = "manufacture='";
+    public static final String STRING_SINGLE_QUOTATION_MARK = "'";
+    public static final String OR_WITH_MANUFACTURE = " or manufacture='";
+    public static final String PRODUCT_CATEGORY_NAME = "(product_category.name = '";
+    public static final String OR_WITH_PRODUCT_CATEGORY_NAME = " or product_category.name = '";
 }

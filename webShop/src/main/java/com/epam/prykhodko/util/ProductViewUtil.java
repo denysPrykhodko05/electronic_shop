@@ -1,11 +1,26 @@
 package com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT_OF_PRODUCTS;
+import static com.epam.prykhodko.constants.ApplicationConstants.BY_ALPHABETICAL_FROM_A_Z;
+import static com.epam.prykhodko.constants.ApplicationConstants.BY_ALPHABETICAL_FROM_Z_A;
+import static com.epam.prykhodko.constants.ApplicationConstants.BY_PRICE_FROM_HIGH;
+import static com.epam.prykhodko.constants.ApplicationConstants.BY_PRICE_FROM_LOW;
+import static com.epam.prykhodko.constants.ApplicationConstants.DEFAULT_PRODUCTS_ON_PAGE;
+import static com.epam.prykhodko.constants.DBConstants.AND;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_A_Z;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_HIGH_PRICE;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_LOW_PRICE;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_Z_A;
+import static com.epam.prykhodko.constants.DBConstants.MANUFACTURE_PARAMETER;
+import static com.epam.prykhodko.constants.DBConstants.OR_WITH_MANUFACTURE;
+import static com.epam.prykhodko.constants.DBConstants.OR_WITH_PRODUCT_CATEGORY_NAME;
+import static com.epam.prykhodko.constants.DBConstants.PRICE_BETWEEN;
+import static com.epam.prykhodko.constants.DBConstants.PRODUCT_CATEGORY_NAME;
+import static com.epam.prykhodko.constants.DBConstants.STRING_CLOSE_CIRCLE_BRACKET;
+import static com.epam.prykhodko.constants.DBConstants.STRING_OPEN_CIRCLE_BRACKET;
+import static com.epam.prykhodko.constants.DBConstants.STRING_SINGLE_QUOTATION_MARK;
+import static com.epam.prykhodko.constants.DBConstants.WHERE;
 
 import com.epam.prykhodko.entity.products.Product;
 import java.util.HashMap;
@@ -14,7 +29,6 @@ import java.util.Map;
 import java.util.Objects;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import java.lang.Math;
 
 public class ProductViewUtil {
 
@@ -25,13 +39,14 @@ public class ProductViewUtil {
             session.setAttribute(AMOUNT_OF_PRODUCTS, amount);
             return;
         }
+
         amount = (String) session.getAttribute(AMOUNT_OF_PRODUCTS);
 
         if (Objects.nonNull(amount)) {
             return;
         }
 
-        String defaultAmountOfProducts = servletContext.getInitParameter("defaultProductsOnPage");
+        String defaultAmountOfProducts = servletContext.getInitParameter(DEFAULT_PRODUCTS_ON_PAGE);
         session.setAttribute(AMOUNT_OF_PRODUCTS, defaultAmountOfProducts);
     }
 
@@ -42,9 +57,9 @@ public class ProductViewUtil {
 
         if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice)) {
 
-            sqlQuery.append(" WHERE ");
+            sqlQuery.append(WHERE);
 
-            sqlQuery.append(" (price between ").append(minPrice).append(" and ").append(maxPrice).append(")");
+            sqlQuery.append(PRICE_BETWEEN).append(minPrice).append(AND).append(maxPrice).append(STRING_CLOSE_CIRCLE_BRACKET);
             appended = true;
         }
 
@@ -52,19 +67,20 @@ public class ProductViewUtil {
             boolean firstManufacture = false;
 
             if (appended) {
-                sqlQuery.append(" and ");
+                sqlQuery.append(AND);
             }
 
-            sqlQuery.append(" (");
+            sqlQuery.append(STRING_OPEN_CIRCLE_BRACKET);
 
             for (String e : manufacture) {
                 if (!firstManufacture) {
-                    sqlQuery.append("manufacture='").append(e).append("'");
+                    sqlQuery.append(MANUFACTURE_PARAMETER).append(e).append(STRING_SINGLE_QUOTATION_MARK);
                     firstManufacture = true;
                     continue;
                 }
-                sqlQuery.append(" or manufacture='").append(e).append("'");
+                sqlQuery.append(OR_WITH_MANUFACTURE).append(e).append(STRING_SINGLE_QUOTATION_MARK);
             }
+
             sqlQuery.append(")");
             appended = true;
         }
@@ -72,19 +88,20 @@ public class ProductViewUtil {
         if (Objects.nonNull(category)) {
             boolean firstCategory = false;
             if (appended) {
-                sqlQuery.append(" and ");
+                sqlQuery.append(AND);
             }
 
             for (String c : category) {
                 if (!firstCategory) {
-                    sqlQuery.append("(product_category.name = '").append(c).append("'");
+                    sqlQuery.append(PRODUCT_CATEGORY_NAME).append(c).append(STRING_SINGLE_QUOTATION_MARK);
                     firstCategory = true;
                     continue;
                 }
-                sqlQuery.append(" or product_category.name = '").append(c).append("'");
+                sqlQuery.append(OR_WITH_PRODUCT_CATEGORY_NAME).append(c).append(STRING_SINGLE_QUOTATION_MARK);
                 appended = true;
             }
-            sqlQuery.append(")");
+
+            sqlQuery.append(STRING_CLOSE_CIRCLE_BRACKET);
         }
         sqlQuery.append(sort);
         return sqlQuery.toString();
@@ -97,19 +114,21 @@ public class ProductViewUtil {
     }
 
     public List<Product> subListOfProducts(List<Product> productList, int pageNumber, int amountProductsOnPage, int amountOfProducts) {
-        int diff = amountOfProducts-amountProductsOnPage;
-        if(diff < 0){
-            amountProductsOnPage = amountOfProduct - abs(diff);
+        int diff = amountProductsOnPage * pageNumber - amountOfProducts;
+
+        if (diff > 0) {
+            return productList.subList(amountProductsOnPage * pageNumber - amountProductsOnPage, amountProductsOnPage * pageNumber - diff);
         }
-        return productList.subList(pageNumber - 1, amountProductsOnPage * pageNumber);
+        
+        return productList.subList(amountProductsOnPage * pageNumber - amountProductsOnPage, amountProductsOnPage * pageNumber);
     }
 
     private Map<String, String> initQueryMAp() {
         Map<String, String> queryMap = new HashMap<>();
-        queryMap.put("byPriceFromLow", GET_ALL_PRODUCTS_FROM_LOW_PRICE);
-        queryMap.put("byPriceFromHigh", GET_ALL_PRODUCTS_FROM_HIGH_PRICE);
-        queryMap.put("byAlphabeticalFromA-Z", GET_ALL_PRODUCTS_FROM_A_Z);
-        queryMap.put("byAlphabeticalFromZ-A", GET_ALL_PRODUCTS_FROM_Z_A);
+        queryMap.put(BY_PRICE_FROM_LOW, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
+        queryMap.put(BY_PRICE_FROM_HIGH, GET_ALL_PRODUCTS_FROM_HIGH_PRICE);
+        queryMap.put(BY_ALPHABETICAL_FROM_A_Z, GET_ALL_PRODUCTS_FROM_A_Z);
+        queryMap.put(BY_ALPHABETICAL_FROM_Z_A, GET_ALL_PRODUCTS_FROM_Z_A);
         return queryMap;
     }
 }

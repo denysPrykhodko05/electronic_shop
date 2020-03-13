@@ -12,6 +12,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
 import static com.epam.prykhodko.constants.ApplicationConstants.IMAGE_DRAW;
 import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
+import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_VIEW_UTIL;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
 import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
@@ -23,7 +24,6 @@ import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
-import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.dao.DAOProduct;
 import com.epam.prykhodko.dao.impl.ProductDAO;
 import com.epam.prykhodko.dao.impl.UserDAO;
@@ -34,6 +34,7 @@ import com.epam.prykhodko.service.DAOService;
 import com.epam.prykhodko.service.productservicedaoimpl.ProductServiceDAOImpl;
 import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
 import com.epam.prykhodko.util.ImageDraw;
+import com.epam.prykhodko.util.ProductViewUtil;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
@@ -61,6 +62,7 @@ public class ContextListener implements ServletContextListener {
     private final UserUtils userUtils = new UserUtils();
     private final ImageDraw imageDraw = new ImageDraw();
     private final ConnectionManager connectionManager = new ConnectionManager();
+    private final ProductViewUtil productViewUtil = new ProductViewUtil();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -84,7 +86,7 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(CONNECTION_MANAGER, connectionManager);
         servletContext.setAttribute(USER_SERVICE, userService);
         servletContext.setAttribute(PRODUCT_SERVICE, productService);
-
+        servletContext.setAttribute(PRODUCT_VIEW_UTIL, productViewUtil);
     }
 
     @Override
