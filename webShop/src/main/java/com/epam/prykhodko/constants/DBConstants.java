@@ -19,7 +19,10 @@ public abstract class DBConstants {
     public static final String DELETE_PRODUCT_BY_NAME = "DELETE FROM product WHERE name = ?";
     public static final String GET_ALL_MANUFACTURES = "SELECT DISTINCT(manufacture) FROM product";
     public static final String GET_ALL_CATEGORIES = "SELECT name FROM product_category";
-
+    public static final String GET_ALL_PRODUCTS_FROM_LOW_PRICE = " ORDER BY product.price";
+    public static final String GET_ALL_PRODUCTS_FROM_HIGH_PRICE = " ORDER BY product.price DESC";
+    public static final String GET_ALL_PRODUCTS_FROM_A_Z = " ORDER BY product.name";
+    public static final String GET_ALL_PRODUCTS_FROM_Z_A = " ORDER BY product.name DESC";
 
     //Other db constants
     public static final String SAVEPOINT_INVOKE_TRANSACTION = "savepointInvokeTransaction";

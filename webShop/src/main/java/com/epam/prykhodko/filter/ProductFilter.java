@@ -14,6 +14,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ProductFilter implements Filter {
 
@@ -21,10 +22,12 @@ public class ProductFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        HttpSession session = httpServletRequest.getSession();
         String[] manufacture = request.getParameterValues("manufacture");
         String[] category = request.getParameterValues("category");
         String minPrice = request.getParameter("minPrice");
         String maxPrice = request.getParameter("maxPrice");
+        String currentSort = request.getParameter("sort");
         List<String> manufacturelist = new ArrayList<>();
         List<String> categoryList = new ArrayList<>();
 
@@ -36,28 +39,36 @@ public class ProductFilter implements Filter {
             categoryList = Arrays.asList(category);
         }
 
-        if (Objects.isNull(minPrice)){
+        if (Objects.isNull(minPrice)) {
             minPrice = "1";
         }
 
-        if (Objects.isNull(maxPrice)){
+        if (Objects.isNull(maxPrice)) {
             maxPrice = "999999";
         }
+
+        ProductViewUtil productViewUtil = new ProductViewUtil();
+
+        if (Objects.isNull(currentSort)){
+            currentSort = (String) session.getAttribute("sortType");
+        }
+
+        String sortQuery = productViewUtil.makeSortQueryForProducts(currentSort);
+        String filterQuery = productViewUtil.makeQueryFilterForProducts(manufacture, minPrice, maxPrice, category, sortQuery);
 
         //TODO
         httpServletRequest.setAttribute("manufactureCheck", manufacturelist);
         httpServletRequest.setAttribute("minPriceInput", minPrice);
         httpServletRequest.setAttribute("maxPriceInput", maxPrice);
         httpServletRequest.setAttribute("categoryCheck", categoryList);
+        session.setAttribute("sortType", currentSort);
+        httpServletRequest.setAttribute("productQuery", filterQuery);
 
-        ProductViewUtil productViewUtil = new ProductViewUtil();
-        String query = productViewUtil.applyFiltersForProducts(manufacture, minPrice, maxPrice, category);
-        httpServletRequest.setAttribute("productQuery", query);
         chain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

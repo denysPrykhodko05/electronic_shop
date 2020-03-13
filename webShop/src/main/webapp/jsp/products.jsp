@@ -20,10 +20,22 @@
         <input type="submit" value="ok"/>
         </div>
     </form>
+    <form id="sort" method="GET" action="/products">
+        <select name="sort" onchange="this.form.submit()">
+            <c:if test="${not empty sortType}">
+              <option value="current">${sortType}</option>
+            </c:if>
+           <option value="byPriceFromLow">Price from low to high</option>
+           <option value="byPriceFromHigh">Price from high to low</option>
+           <option value="byAlphabeticalFromA-Z">A-Z</option>
+           <option value="byAlphabeticalFromZ-A">Z-A</option>
+        </select>
+    </form>
     <div id="common">
         <div id="left-column">
+
           <!-- form for filters-->
-          <form method="GET" action="/products">
+           <form method="GET" action="/products">
               <div id="filter-manufacture">
                   Manufacture<br>
                         <c:choose>

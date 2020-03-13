@@ -2,7 +2,13 @@ package com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT_OF_PRODUCTS;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS;
+import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_A_Z;
+import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_HIGH_PRICE;
+import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_LOW_PRICE;
+import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_Z_A;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -26,7 +32,7 @@ public class ProductViewUtil {
         session.setAttribute(AMOUNT_OF_PRODUCTS, defaultAmountOfProducts);
     }
 
-    public String applyFiltersForProducts(String[] manufacture, String minPrice, String maxPrice, String[] category) {
+    public String makeQueryFilterForProducts(String[] manufacture, String minPrice, String maxPrice, String[] category, String sort) {
         StringBuilder sqlQuery = new StringBuilder();
         boolean appended = false;
         sqlQuery.append(GET_ALL_PRODUCTS);
@@ -77,7 +83,22 @@ public class ProductViewUtil {
             }
             sqlQuery.append(")");
         }
-
+        sqlQuery.append(sort);
         return sqlQuery.toString();
+    }
+
+    public String makeSortQueryForProducts(String parameter) {
+        Map<String,String> queryMap = initQueryMAp();
+        String sort = queryMap.getOrDefault(parameter,GET_ALL_PRODUCTS_FROM_LOW_PRICE);
+        return sort;
+    }
+
+    private Map<String, String> initQueryMAp() {
+        Map<String, String> queryMap = new HashMap<>();
+        queryMap.put("byPriceFromLow", GET_ALL_PRODUCTS_FROM_LOW_PRICE);
+        queryMap.put("byPriceFromHigh", GET_ALL_PRODUCTS_FROM_HIGH_PRICE);
+        queryMap.put("byAlphabeticalFromA-Z", GET_ALL_PRODUCTS_FROM_A_Z);
+        queryMap.put("byAlphabeticalFromZ-A", GET_ALL_PRODUCTS_FROM_Z_A);
+        return queryMap;
     }
 }
