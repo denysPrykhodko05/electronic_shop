@@ -7,11 +7,14 @@ import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_HIG
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_LOW_PRICE;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_Z_A;
 
+import com.epam.prykhodko.entity.products.Product;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import java.lang.Math;
 
 public class ProductViewUtil {
 
@@ -88,9 +91,17 @@ public class ProductViewUtil {
     }
 
     public String makeSortQueryForProducts(String parameter) {
-        Map<String,String> queryMap = initQueryMAp();
-        String sort = queryMap.getOrDefault(parameter,GET_ALL_PRODUCTS_FROM_LOW_PRICE);
+        Map<String, String> queryMap = initQueryMAp();
+        String sort = queryMap.getOrDefault(parameter, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
         return sort;
+    }
+
+    public List<Product> subListOfProducts(List<Product> productList, int pageNumber, int amountProductsOnPage, int amountOfProducts) {
+        int diff = amountOfProducts-amountProductsOnPage;
+        if(diff < 0){
+            amountProductsOnPage = amountOfProduct - abs(diff);
+        }
+        return productList.subList(pageNumber - 1, amountProductsOnPage * pageNumber);
     }
 
     private Map<String, String> initQueryMAp() {

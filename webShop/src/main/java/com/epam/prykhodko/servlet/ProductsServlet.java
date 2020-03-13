@@ -9,6 +9,7 @@ import com.epam.prykhodko.service.DAOServiceProduct;
 import com.epam.prykhodko.util.ProductViewUtil;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,11 +29,32 @@ public class ProductsServlet extends HttpServlet {
         HttpSession session = req.getSession();
         ProductViewUtil productViewUtil = new ProductViewUtil();
         String queryForFilter = (String) req.getAttribute("productQuery");
+        String pageNumberStr = req.getParameter("page");
         String amountFromForm = req.getParameter("amountOfProductsFromForm");
         productDAOService = (DAOServiceProduct<Product, Object>) servletContext.getAttribute(PRODUCT_SERVICE);
         List<Product> products = productDAOService.getFilteredProducts(queryForFilter);
         List<String> manufactures = productDAOService.getAllManufactures();
         List<String> categories = productDAOService.getAllCategories();
+        int amountOfProducts = products.size();
+
+        if (Objects.isNull(amountFromForm)) {
+            amountFromForm = servletContext.getInitParameter("defaultProductsOnPage");
+        }
+
+        if (Objects.isNull(pageNumberStr)) {
+            pageNumberStr = "1";
+        }
+        int pageNumber = Integer.parseInt(pageNumberStr);
+
+        int amountOnPage = Integer.parseInt(amountFromForm);
+        int pageAmount = amountOfProducts / Integer.parseInt(amountFromForm);
+
+        if (pageAmount > 0 && amountOfProducts % Integer.parseInt(amountFromForm) != 0) {
+            pageAmount++;
+        }
+
+        products = productViewUtil.subListOfProducts(products, pageNumber, amountOnPage, amountOfProducts);
+
         req.setAttribute("manufactures", manufactures);
         req.setAttribute("categories", categories);
         req.setAttribute(ALL_PRODUCT_LIST, products);

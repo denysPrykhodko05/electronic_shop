@@ -14,7 +14,7 @@
   </context-param>
   <context-param>
     <param-name>defaultProductsOnPage</param-name>
-    <param-value>12</param-value>
+    <param-value>5</param-value>
   </context-param>
 
   <display-name>Archetype Created Web Application</display-name>
