@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="productTag" uri="/tld/ProductViewTag.tld"%>
-<%@ taglib prefix="viewListOfFilters" uri="/tld/ViewListOfFilters.tld"%>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -36,27 +36,7 @@
           <!-- filters-->
               <div id="filter-manufacture">
                   Manufacture<br>
-                        <c:choose>
-                            <c:when test="${not empty manufactureCheck}">
-                                <c:forEach var="manufacture" items="${manufactures}">
-                                      <c:choose>
-                                        <c:when test="${fn:contains(manufactureCheck, manufacture)}">
-                                          <input form="amountOfProductsForm" type="checkbox" name="manufacture" value="${manufacture}" checked="checked"> ${manufacture}<br>
-                                        </c:when>
-                                        <c:otherwise>
-                                             <input form="amountOfProductsForm"  type="checkbox" name="manufacture" value="${manufacture}" > ${manufacture}<br>
-                                        </c:otherwise>
-                                      </c:choose>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                               <c:forEach var="manufacture" items="${manufactures}">
-                                 <input form="amountOfProductsForm" type="checkbox" name="manufacture" value="${manufacture}" > ${manufacture}<br>
-                               </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-
-                       <!-- <viewListOfProducts:ViewListOfFilters list="${manufactures}" checkedList="${manufactureCheck}" parameterName="manufacture"/>-->
+                  <productTag:ViewListOfFilters list="${manufactures}" checkedList="${manufactureCheck}" parameterName="manufacture"/>
                   <br>
               </div>
               <div id="price-filter">
@@ -65,25 +45,7 @@
               </div>
               <div id="category-filter">
                   Category<br>
-                  <c:choose>
-                      <c:when test="${not empty categoryCheck}">
-                          <c:forEach var="category" items="${categories}">
-                                <c:choose>
-                                  <c:when test="${fn:contains(categoryCheck, category)}">
-                                    <input form="amountOfProductsForm" type="checkbox" name="category" value="${category}" checked="checked"> ${category}<br>
-                                  </c:when>
-                                  <c:otherwise>
-                                       <input form="amountOfProductsForm" type="checkbox" name="category" value="${category}" > ${category}<br>
-                                  </c:otherwise>
-                                </c:choose>
-                          </c:forEach>
-                      </c:when>
-                      <c:otherwise>
-                         <c:forEach var="category" items="${categories}">
-                           <input form="amountOfProductsForm" type="checkbox" name="category" value="${category}" > ${category}<br>
-                         </c:forEach>
-                      </c:otherwise>
-                  </c:choose>
+                  <productTag:ViewListOfFilters list="${categories}" checkedList="${categoryCheck}" parameterName="category"/>
               </div>
               <br>
               <input form="amountOfProductsForm" type="submit" value=ok><br>

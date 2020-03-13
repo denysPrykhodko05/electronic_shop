@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<taglib xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<taglib
   version="2.0"
   xmlns="http://java.sun.com/xml/ns/j2ee">
   <jsp-version>2.0</jsp-version>
@@ -7,6 +7,10 @@
   <tag-file>
     <name>ProductViewTag</name>
     <path>/WEB-INF/tags/productviewtag/ProductViewTag.tag</path>
+  </tag-file>
+  <tag-file>
+    <name>ViewListOfFilters</name>
+    <path>/WEB-INF/tags/productviewtag/ViewListOfFilters.tag</path>
   </tag-file>
   <tlib-version>1.0</tlib-version>
 </taglib>

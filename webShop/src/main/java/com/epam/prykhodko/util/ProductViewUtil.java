@@ -64,44 +64,11 @@ public class ProductViewUtil {
         }
 
         if (Objects.nonNull(manufacture)) {
-            boolean firstManufacture = false;
-
-            if (appended) {
-                sqlQuery.append(AND);
-            }
-
-            sqlQuery.append(STRING_OPEN_CIRCLE_BRACKET);
-
-            for (String e : manufacture) {
-                if (!firstManufacture) {
-                    sqlQuery.append(MANUFACTURE_PARAMETER).append(e).append(STRING_SINGLE_QUOTATION_MARK);
-                    firstManufacture = true;
-                    continue;
-                }
-                sqlQuery.append(OR_WITH_MANUFACTURE).append(e).append(STRING_SINGLE_QUOTATION_MARK);
-            }
-
-            sqlQuery.append(")");
-            appended = true;
+            manufactureFilter(manufacture, appended, sqlQuery);
         }
 
         if (Objects.nonNull(category)) {
-            boolean firstCategory = false;
-            if (appended) {
-                sqlQuery.append(AND);
-            }
-
-            for (String c : category) {
-                if (!firstCategory) {
-                    sqlQuery.append(PRODUCT_CATEGORY_NAME).append(c).append(STRING_SINGLE_QUOTATION_MARK);
-                    firstCategory = true;
-                    continue;
-                }
-                sqlQuery.append(OR_WITH_PRODUCT_CATEGORY_NAME).append(c).append(STRING_SINGLE_QUOTATION_MARK);
-                appended = true;
-            }
-
-            sqlQuery.append(STRING_CLOSE_CIRCLE_BRACKET);
+            categoryFilter(category, appended, sqlQuery);
         }
         sqlQuery.append(sort);
         return sqlQuery.toString();
@@ -109,8 +76,7 @@ public class ProductViewUtil {
 
     public String makeSortQueryForProducts(String parameter) {
         Map<String, String> queryMap = initQueryMAp();
-        String sort = queryMap.getOrDefault(parameter, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
-        return sort;
+        return queryMap.getOrDefault(parameter, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
     }
 
     public List<Product> subListOfProducts(List<Product> productList, int pageNumber, int amountProductsOnPage, int amountOfProducts) {
@@ -119,7 +85,7 @@ public class ProductViewUtil {
         if (diff > 0) {
             return productList.subList(amountProductsOnPage * pageNumber - amountProductsOnPage, amountProductsOnPage * pageNumber - diff);
         }
-        
+
         return productList.subList(amountProductsOnPage * pageNumber - amountProductsOnPage, amountProductsOnPage * pageNumber);
     }
 
@@ -130,5 +96,48 @@ public class ProductViewUtil {
         queryMap.put(BY_ALPHABETICAL_FROM_A_Z, GET_ALL_PRODUCTS_FROM_A_Z);
         queryMap.put(BY_ALPHABETICAL_FROM_Z_A, GET_ALL_PRODUCTS_FROM_Z_A);
         return queryMap;
+    }
+
+    private void categoryFilter(String[] category, boolean appended, StringBuilder sqlQuery) {
+        boolean firstCategory = false;
+
+        if (appended) {
+            sqlQuery.append(AND);
+        }
+
+        for (String c : category) {
+
+            if (!firstCategory) {
+                sqlQuery.append(PRODUCT_CATEGORY_NAME).append(c).append(STRING_SINGLE_QUOTATION_MARK);
+                firstCategory = true;
+                continue;
+            }
+
+            sqlQuery.append(OR_WITH_PRODUCT_CATEGORY_NAME).append(c).append(STRING_SINGLE_QUOTATION_MARK);
+        }
+
+        sqlQuery.append(STRING_CLOSE_CIRCLE_BRACKET);
+    }
+
+    private void manufactureFilter(String[] manufacture, boolean appended, StringBuilder sqlQuery) {
+        boolean firstManufacture = false;
+
+        if (appended) {
+            sqlQuery.append(AND);
+        }
+
+        sqlQuery.append(STRING_OPEN_CIRCLE_BRACKET);
+
+        for (String e : manufacture) {
+
+            if (!firstManufacture) {
+                sqlQuery.append(MANUFACTURE_PARAMETER).append(e).append(STRING_SINGLE_QUOTATION_MARK);
+                firstManufacture = true;
+                continue;
+            }
+            sqlQuery.append(OR_WITH_MANUFACTURE).append(e).append(STRING_SINGLE_QUOTATION_MARK);
+        }
+
+        sqlQuery.append(")");
     }
 }
