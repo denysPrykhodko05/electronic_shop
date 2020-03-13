@@ -32,7 +32,7 @@ import static java.lang.System.currentTimeMillis;
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.DAOService;
 import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
@@ -54,7 +54,7 @@ public class RegistrationServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(RegistrationServlet.class);
     private static final String FILE = "FILE";
-    private UserService userService;
+    private DAOService<User, RegFormBean> userService;
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -71,7 +71,7 @@ public class RegistrationServlet extends HttpServlet {
         ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
         RegFormBean formBean = null;
-        userService = (UserService) servletContext.getAttribute(USER_SERVICE);
+        userService = (DAOService<User, RegFormBean>) servletContext.getAttribute(USER_SERVICE);
         UserUtils userUtils = (UserUtils) servletContext.getAttribute(USER_UTILS);
         Validator validator = (Validator) servletContext.getAttribute(VALIDATOR);
         ImageDraw imageDraw = (ImageDraw) servletContext.getAttribute(IMAGE_DRAW);
@@ -106,7 +106,7 @@ public class RegistrationServlet extends HttpServlet {
             return;
         }
 
-        User user = userService.createUser(formBean);
+        User user = userService.createEntity(formBean);
 
         if (userService.isContains(user)) {
             userUtils.checkLoginAndEmail(user, userService, errors);
@@ -120,7 +120,7 @@ public class RegistrationServlet extends HttpServlet {
         String path = imageDraw.saveUploadedFile(formBean.getAvatar(), formBean.getLogin());
         formBean.setAvatarPath(path);
 
-        if (userService.add(formBean) == null) {
+        if (userService.addByForm(formBean) == null) {
             errors.put(NOT_USER_ERROR, NOT_USER_ERROR);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);

@@ -9,7 +9,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN_EXIST
 
 import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.UserService;
+import com.epam.prykhodko.service.DAOService;
 import java.util.Map;
 import java.util.Objects;
 
@@ -22,8 +22,8 @@ public class UserUtils {
         userData.put(EMAIL, formBean.getEmail());
     }
 
-    public void checkLoginAndEmail(User user, UserService userService, Map<String, String> errors) {
-        if (Objects.nonNull(userService.getByLogin(user.getLogin()))) {
+    public void checkLoginAndEmail(User user, DAOService DAOService, Map<String, String> errors) {
+        if (Objects.nonNull(DAOService.getByName(user.getLogin()))) {
             errors.put(LOGIN, USER_LOGIN_EXISTS);
             return;
         }

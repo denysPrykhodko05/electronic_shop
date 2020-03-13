@@ -1,6 +1,5 @@
 package com.epam.prykhodko.dao;
 
-import com.epam.prykhodko.entity.User;
 import java.util.List;
 
 public interface DAO<E> {
@@ -9,11 +8,12 @@ public interface DAO<E> {
 
     List<E> getAll();
 
-    User add(E e);
+    E add(E e);
 
     void update(E e, String[] params);
 
     boolean delete(E e);
 
-    E getByLogin(String name);
+    E getByName(String name);
+
 }

@@ -46,21 +46,61 @@ public abstract class ApplicationConstants {
     public static final String HIDDEN_FIELD = "hiddenField";
     public static final String KEEPERS = "keepers";
     public static final String ERRORS = "errors";
-    public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
-    public static final String LOGIN_JSP_LINK = "jsp/logIn.jsp";
     public static final String VALIDATOR = "validator";
     public static final String USER_UTILS = "user utils";
     public static final String REG_FORM = "regFormBean";
     public static final String USER_SERVICE = "userService";
+    public static final String PRODUCT_SERVICE = "productService";
+    public static final String ALL_PRODUCT_LIST = "all_product_list";
+    public static final String AMOUNT_OF_PRODUCTS = "amountOfProducts";
     public static final String IMAGE_DRAW = "imageDraw";
     public static final String AVATARS_PATH = "C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\avatars\\";
-    public static final String AVATAR_FORMAT = ".jpg";
+    public static final String PRODUCTS_PATH = "C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\products\\";
+    public static final String JPG_FORMAT = ".jpg";
     public static final String TEMPORARY_STORAGE = "javax.servlet.context.tempdir";
     public static final String CONTEXT_DESTROYER = "context destroyer";
     public static final String HIDDEN = "hidden";
     public static final String CONNECTION_MANAGER = "connection manager";
     public static final String NOT_USER_ERROR = "Try again";
+    public static final String PRODUCT_VIEW_UTIL = "productViewUtil";
 
     //URL path
     public static final String HOME_URL = "/";
+
+    //JSP link
+    public static final String PRODUCT_JSP = "jsp/products.jsp";
+    public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
+    public static final String LOGIN_JSP_LINK = "jsp/logIn.jsp";
+
+    //Product parameters
+    public static final String MANUFACTURE = "manufacture";
+    public static final String CATEGORY = "category";
+    public static final String PRICE = "price";
+    public static final String DESCRIPTION = "description";
+
+    //Filter form
+    public static final String MIN_PRICE = "minPrice";
+    public static final String MAX_PRICE = "maxPrice";
+    public static final String SORT = "sort";
+
+    //Product page constants
+    public static final String STRING_999999 = "999999";
+    public static final String SORT_TYPE = "sortType";
+
+    //Product page request constants
+    public static final String MANUFACTURE_CHECK = "manufactureCheck";
+    public static final String PRODUCT_QUERY = "productQuery";
+    public static final String MIN_PRICE_INPUT = "minPriceInput";
+    public static final String MAX_PRICE_INPUT = "maxPriceInput";
+    public static final String CATEGORY_CHECK = "categoryCheck";
+    public static final String PAGE = "page";
+    public static final String AMOUNT_OF_PRODUCTS_FROM_FORM = "amountOfProductsFromForm";
+    public static final String DEFAULT_PRODUCTS_ON_PAGE = "defaultProductsOnPage";
+    public static final String MANUFACTURES = "manufactures";
+    public static final String CATEGORIES = "categories";
+    public static final String PAGE_AMOUNT = "pageAmount";
+    public static final String BY_PRICE_FROM_LOW = "byPriceFromLow";
+    public static final String BY_PRICE_FROM_HIGH = "byPriceFromHigh";
+    public static final String BY_ALPHABETICAL_FROM_A_Z = "byAlphabeticalFromA-Z";
+    public static final String BY_ALPHABETICAL_FROM_Z_A = "byAlphabeticalFromZ-A";
 }

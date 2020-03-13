@@ -1,7 +1,7 @@
 package com.epam.prykhodko.util;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.AVATARS_PATH;
-import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR_FORMAT;
+import static com.epam.prykhodko.constants.ApplicationConstants.JPG_FORMAT;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_DRAW_AVATAR;
 
 import java.io.File;
@@ -14,7 +14,7 @@ public class ImageDraw {
 
     public String saveUploadedFile(FileItem item, String fileName) {
         File uploadedFile;
-        String path = AVATARS_PATH + fileName + AVATAR_FORMAT;
+        String path = AVATARS_PATH + fileName + JPG_FORMAT;
         try {
             uploadedFile = new File(path);
             if (uploadedFile.exists()) {
