@@ -15,13 +15,14 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    public void add(RegFormBean formBean) {
-        add(new User(99,formBean.getName(), formBean.getSurname(), formBean.getEmail(), formBean.getLogin(), formBean.getPassword(),1));
+    public User add(RegFormBean formBean) {
+        add(new User(formBean.getName(), formBean.getSurname(), formBean.getEmail(), formBean.getLogin(), formBean.getPassword()));
+        return null;
     }
 
     @Override
-    public void add(User user) {
-        userRepository.add(user);
+    public User add(User user) {
+        return userRepository.add(user);
     }
 
     @Override
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isContains(User newUser) {
         List<User> users = userRepository.get();
+
         if (users.contains(newUser)) {
             return true;
         }
@@ -54,6 +56,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(RegFormBean regFormBean) {
-        return new User(1,regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword(),1);
+        return new User(regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword());
     }
 }

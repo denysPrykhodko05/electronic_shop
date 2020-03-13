@@ -10,8 +10,11 @@ public class UserRepositoryImpl implements UserRepository {
     private static final List<User> users = new ArrayList<>();
 
     @Override
-    public void add(User user) {
-        users.add(user);
+    public User add(User user) {
+        if (users.add(user)) {
+            return user;
+        }
+        return null;
     }
 
     @Override

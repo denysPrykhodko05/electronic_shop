@@ -6,7 +6,7 @@
 
   <context-param>
     <param-name>captcha</param-name>
-    <param-value>session</param-value>
+    <param-value>cookie</param-value>
   </context-param>
   <context-param>
     <param-name>captchaTime</param-name>
@@ -21,6 +21,7 @@
     <filter-class>com.epam.prykhodko.filter.LogoutFilter</filter-class>
     <filter-name>logoutFilter</filter-name>
   </filter>
+
   <filter-mapping>
     <filter-name>logoutFilter</filter-name>
     <url-pattern>/logout</url-pattern>
@@ -28,7 +29,7 @@
   <resource-ref>
     <description>DB Connection</description>
     <res-auth>Container</res-auth>
-    <res-ref-name>electronic_store</res-ref-name>
+    <res-ref-name>jdbc/electronic_store</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
   </resource-ref>
 </web-app>

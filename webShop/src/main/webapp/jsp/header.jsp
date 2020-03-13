@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="loginTag" uri="/tld/Login.tld"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="login" uri="/tld/LoginTag.tld"%>
 
 <html lang="en">
 
@@ -15,8 +16,8 @@
     <a href="products.jsp">Products</a>
     <a href="">Something</a>
     <a href="">Something more</a>
-  </div>
-  <loginTag:LoginTag login="${login}"/>
+  </div id="loginTag">
+     <login:LoginTag userLogin="${userLogin}"/>
   </div>
 </div>
 </html>
