@@ -62,7 +62,6 @@ public abstract class ApplicationConstants {
     public static final String HIDDEN = "hidden";
     public static final String CONNECTION_MANAGER = "connection manager";
     public static final String NOT_USER_ERROR = "Try again";
-    public static final String PRODUCT_VIEW_UTIL = "productViewUtil";
 
     //URL path
     public static final String HOME_URL = "/";

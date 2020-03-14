@@ -14,9 +14,10 @@ import static com.epam.prykhodko.constants.ApplicationConstants.SORT_TYPE;
 import static com.epam.prykhodko.constants.ApplicationConstants.STRING_ONE_MILLION;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_PRODUCT_FILTER_DESTROY;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_PRODUCT_FILTER_INIT;
+import static com.epam.prykhodko.util.ProductViewUtil.makeQueryFilterForProducts;
+import static com.epam.prykhodko.util.ProductViewUtil.makeSortQueryForProducts;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 
-import com.epam.prykhodko.util.ProductViewUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,14 +67,12 @@ public class ProductFilter implements Filter {
             maxPrice = STRING_ONE_MILLION;
         }
 
-        ProductViewUtil productViewUtil = new ProductViewUtil();
-
         if (Objects.isNull(currentSort)) {
             currentSort = (String) session.getAttribute(SORT_TYPE);
         }
 
-        String sortQuery = productViewUtil.makeSortQueryForProducts(currentSort);
-        String filterQuery = productViewUtil.makeQueryFilterForProducts(manufacture, minPrice, maxPrice, category, sortQuery);
+        String sortQuery = makeSortQueryForProducts(currentSort);
+        String filterQuery = makeQueryFilterForProducts(manufacture, minPrice, maxPrice, category, sortQuery);
 
         httpServletRequest.setAttribute(MANUFACTURE_CHECK, manufacturelist);
         httpServletRequest.setAttribute(MIN_PRICE_INPUT, minPrice);

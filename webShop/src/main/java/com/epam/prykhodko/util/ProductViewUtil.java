@@ -32,7 +32,11 @@ import javax.servlet.http.HttpSession;
 
 public class ProductViewUtil {
 
-    public void setAmountOfProducts(HttpSession session, String amount) {
+    private ProductViewUtil() {
+        
+    }
+
+    public static void setAmountOfProducts(HttpSession session, String amount) {
         ServletContext servletContext = session.getServletContext();
 
         if (Objects.nonNull(amount)) {
@@ -50,7 +54,7 @@ public class ProductViewUtil {
         session.setAttribute(AMOUNT_OF_PRODUCTS, defaultAmountOfProducts);
     }
 
-    public String makeQueryFilterForProducts(String[] manufacture, String minPrice, String maxPrice, String[] category, String sort) {
+    public static String makeQueryFilterForProducts(String[] manufacture, String minPrice, String maxPrice, String[] category, String sort) {
         StringBuilder sqlQuery = new StringBuilder();
         boolean appended = false;
         sqlQuery.append(GET_ALL_PRODUCTS);
@@ -74,12 +78,12 @@ public class ProductViewUtil {
         return sqlQuery.toString();
     }
 
-    public String makeSortQueryForProducts(String parameter) {
+    public static String makeSortQueryForProducts(String parameter) {
         Map<String, String> queryMap = initQueryMAp();
         return queryMap.getOrDefault(parameter, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
     }
 
-    public List<Product> subListOfProducts(List<Product> productList, int pageNumber, int amountProductsOnPage, int amountOfProducts) {
+    public static List<Product> subListOfProducts(List<Product> productList, int pageNumber, int amountProductsOnPage, int amountOfProducts) {
         int diff = amountProductsOnPage * pageNumber - amountOfProducts;
 
         if (diff > 0) {
@@ -89,7 +93,7 @@ public class ProductViewUtil {
         return productList.subList(amountProductsOnPage * pageNumber - amountProductsOnPage, amountProductsOnPage * pageNumber);
     }
 
-    private Map<String, String> initQueryMAp() {
+    private static Map<String, String> initQueryMAp() {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(BY_PRICE_FROM_LOW, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
         queryMap.put(BY_PRICE_FROM_HIGH, GET_ALL_PRODUCTS_FROM_HIGH_PRICE);
@@ -98,7 +102,7 @@ public class ProductViewUtil {
         return queryMap;
     }
 
-    private void categoryFilter(String[] category, boolean appended, StringBuilder sqlQuery) {
+    private static void categoryFilter(String[] category, boolean appended, StringBuilder sqlQuery) {
         boolean firstCategory = false;
 
         if (appended) {
@@ -119,7 +123,7 @@ public class ProductViewUtil {
         sqlQuery.append(STRING_CLOSE_CIRCLE_BRACKET);
     }
 
-    private void manufactureFilter(String[] manufacture, boolean appended, StringBuilder sqlQuery) {
+    private static void manufactureFilter(String[] manufacture, boolean appended, StringBuilder sqlQuery) {
         boolean firstManufacture = false;
 
         if (appended) {
