@@ -6,7 +6,6 @@ import static com.epam.prykhodko.constants.DBConstants.GET_ALL_MANUFACTURES;
 import com.epam.prykhodko.dao.DAOProduct;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.TransactionHandler;
-import com.epam.prykhodko.mananger.ConnectionManager;
 import com.epam.prykhodko.service.DAOServiceProduct;
 import java.util.List;
 import java.util.Objects;
@@ -15,10 +14,11 @@ import java.util.Optional;
 public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object> {
 
     private final DAOProduct productDAO;
-    private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
+    private final TransactionHandler transactionHandler;
 
-    public ProductServiceDAOImpl(DAOProduct productDAO) {
+    public ProductServiceDAOImpl(DAOProduct productDAO, TransactionHandler transactionHandler) {
         this.productDAO = productDAO;
+        this.transactionHandler = transactionHandler;
     }
 
     @Override

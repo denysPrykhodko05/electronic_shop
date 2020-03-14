@@ -37,7 +37,7 @@ public class UserDAO implements DAO<User> {
     public User get(int id) {
         try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_ID);
             ResultSet resultSet = pstm.executeQuery()) {
-            pstm.setInt(INTEGER_ONE, id);
+            pstm.setInt(1, id);
 
             if (resultSet.next()) {
                 return parseResultSetToUser(resultSet);
@@ -119,7 +119,7 @@ public class UserDAO implements DAO<User> {
     }
 
     private void fillPreparedStatementByUserData(PreparedStatement pstmt, User user) throws SQLException {
-        int i=INTEGER_ZERO;
+        int i = 0;
         pstmt.setString(++i, user.getName());
         pstmt.setString(++i, user.getSurname());
         pstmt.setString(++i, user.getLogin());

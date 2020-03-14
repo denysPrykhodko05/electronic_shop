@@ -54,8 +54,8 @@ public abstract class ApplicationConstants {
     public static final String ALL_PRODUCT_LIST = "all_product_list";
     public static final String AMOUNT_OF_PRODUCTS = "amountOfProducts";
     public static final String IMAGE_DRAW = "imageDraw";
-    public static final String AVATARS_PATH = "C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\avatars\\";
-    public static final String PRODUCTS_PATH = "C:\\task1\\git pracrice I\\webShop\\src\\main\\webapp\\images\\products\\";
+    public static final String AVATARS_PATH = "src\\main\\webapp\\images\\avatars\\";
+    public static final String PRODUCTS_PATH = "src\\main\\webapp\\images\\products\\";
     public static final String JPG_FORMAT = ".jpg";
     public static final String TEMPORARY_STORAGE = "javax.servlet.context.tempdir";
     public static final String CONTEXT_DESTROYER = "context destroyer";
@@ -84,7 +84,7 @@ public abstract class ApplicationConstants {
     public static final String SORT = "sort";
 
     //Product page constants
-    public static final String STRING_999999 = "999999";
+    public static final String STRING_ONE_MILLION = "1000000";
     public static final String SORT_TYPE = "sortType";
 
     //Product page request constants

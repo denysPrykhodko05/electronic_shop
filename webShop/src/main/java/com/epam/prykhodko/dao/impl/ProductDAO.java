@@ -40,8 +40,9 @@ public class ProductDAO implements DAOProduct {
 
     @Override
     public Product get(int id) {
-        try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_PRODUCT_BY_ID);
-            ResultSet resultSet = pstm.executeQuery()) {
+        ResultSet resultSet;
+        try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_PRODUCT_BY_ID)) {
+            resultSet = pstm.executeQuery();
             pstm.setInt(1, id);
             if (resultSet.next()) {
                 return parseResultSetToProduct(resultSet);
@@ -55,8 +56,9 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_PRODUCTS);
-            ResultSet resultSet = preparedStatement.executeQuery()) {
+        ResultSet resultSet;
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_PRODUCTS)) {
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 products.add(parseResultSetToProduct(resultSet));
             }
@@ -103,8 +105,9 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<String> getDefineParameter(String query) {
         List<String> parameters = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery()) {
+        ResultSet resultSet;
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query)) {
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 parameters.add(resultSet.getString(1));
             }
@@ -117,20 +120,23 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<Product> getFilteredEntity(String query) {
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery()) {
+        ResultSet resultSet;
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query)) {
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 products.add(parseResultSetToProduct(resultSet));
             }
             return products;
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_GET_PRODUCT_BY_FILTERS);
+        } finally {
+
         }
         return products;
     }
 
     private void fillPreparedStatementByProductData(PreparedStatement pstmt, Product product) throws SQLException {
-        int i=INTEGER_ZERO;
+        int i = 0;
         pstmt.setString(++i, product.getName());
         pstmt.setInt(++i, Integer.parseInt(product.getPrice().toString()));
         pstmt.setString(++i, product.getManufacturer());

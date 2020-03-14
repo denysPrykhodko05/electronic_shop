@@ -11,7 +11,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.MIN_PRICE_INPUT;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_QUERY;
 import static com.epam.prykhodko.constants.ApplicationConstants.SORT;
 import static com.epam.prykhodko.constants.ApplicationConstants.SORT_TYPE;
-import static com.epam.prykhodko.constants.ApplicationConstants.STRING_999999;
+import static com.epam.prykhodko.constants.ApplicationConstants.STRING_ONE_MILLION;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_PRODUCT_FILTER_DESTROY;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_PRODUCT_FILTER_INIT;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
@@ -63,7 +63,7 @@ public class ProductFilter implements Filter {
         }
 
         if (Objects.isNull(maxPrice)) {
-            maxPrice = STRING_999999;
+            maxPrice = STRING_ONE_MILLION;
         }
 
         ProductViewUtil productViewUtil = new ProductViewUtil();

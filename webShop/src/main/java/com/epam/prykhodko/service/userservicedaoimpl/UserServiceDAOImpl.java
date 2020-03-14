@@ -4,7 +4,6 @@ import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.dao.DAO;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.TransactionHandler;
-import com.epam.prykhodko.mananger.ConnectionManager;
 import com.epam.prykhodko.service.DAOService;
 import java.util.Base64;
 import java.util.List;
@@ -13,10 +12,11 @@ import java.util.Objects;
 public class UserServiceDAOImpl implements DAOService<User, RegFormBean> {
 
     private final DAO<User> userDAO;
-    private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
+    private final TransactionHandler transactionHandler;
 
-    public UserServiceDAOImpl(DAO<User> userDAO) {
+    public UserServiceDAOImpl(DAO<User> userDAO, TransactionHandler transactionHandler) {
         this.userDAO = userDAO;
+        this.transactionHandler = transactionHandler;
     }
 
     @Override
