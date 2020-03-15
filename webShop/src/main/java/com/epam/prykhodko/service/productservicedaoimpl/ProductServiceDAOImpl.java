@@ -84,4 +84,5 @@ public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object>
     public List<Product> getFilteredProducts(String query) {
         return transactionHandler.invokeWithoutTransaction(() -> productDAO.getFilteredEntity(query));
     }
+
 }

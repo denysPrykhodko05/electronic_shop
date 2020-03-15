@@ -31,7 +31,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 public class ProductFilter implements Filter {
@@ -42,7 +41,6 @@ public class ProductFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession();
         String[] manufacture = request.getParameterValues(MANUFACTURE);
         String[] category = request.getParameterValues(CATEGORY);
         String minPrice = request.getParameter(MIN_PRICE);
@@ -68,7 +66,7 @@ public class ProductFilter implements Filter {
         }
 
         if (Objects.isNull(currentSort)) {
-            currentSort = (String) session.getAttribute(SORT_TYPE);
+            currentSort = (String) httpServletRequest.getAttribute(SORT_TYPE);
         }
 
         String sortQuery = makeSortQueryForProducts(currentSort);
@@ -78,7 +76,7 @@ public class ProductFilter implements Filter {
         httpServletRequest.setAttribute(MIN_PRICE_INPUT, minPrice);
         httpServletRequest.setAttribute(MAX_PRICE_INPUT, maxPrice);
         httpServletRequest.setAttribute(CATEGORY_CHECK, categoryList);
-        session.setAttribute(SORT_TYPE, currentSort);
+        httpServletRequest.setAttribute(SORT_TYPE, currentSort);
         httpServletRequest.setAttribute(PRODUCT_QUERY, filterQuery);
 
         chain.doFilter(httpServletRequest, httpServletResponse);

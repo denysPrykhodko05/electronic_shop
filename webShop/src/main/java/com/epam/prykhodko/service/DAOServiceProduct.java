@@ -10,4 +10,5 @@ public interface DAOServiceProduct<E, F> extends DAOService<E, F> {
     List<String> getAllCategories();
 
     List<Product> getFilteredProducts(String query);
+
 }

@@ -8,4 +8,5 @@ public interface DAOProduct extends DAO<Product> {
     List<String> getDefineParameter(String parameter);
 
     List<Product> getFilteredEntity(String query);
+
 }

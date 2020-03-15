@@ -7,11 +7,13 @@ import static com.epam.prykhodko.constants.ApplicationConstants.BY_PRICE_FROM_HI
 import static com.epam.prykhodko.constants.ApplicationConstants.BY_PRICE_FROM_LOW;
 import static com.epam.prykhodko.constants.ApplicationConstants.DEFAULT_PRODUCTS_ON_PAGE;
 import static com.epam.prykhodko.constants.DBConstants.AND;
+import static com.epam.prykhodko.constants.DBConstants.COMMA;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_A_Z;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_HIGH_PRICE;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_LOW_PRICE;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_PRODUCTS_FROM_Z_A;
+import static com.epam.prykhodko.constants.DBConstants.LIMIT;
 import static com.epam.prykhodko.constants.DBConstants.MANUFACTURE_PARAMETER;
 import static com.epam.prykhodko.constants.DBConstants.OR_WITH_MANUFACTURE;
 import static com.epam.prykhodko.constants.DBConstants.OR_WITH_PRODUCT_CATEGORY_NAME;
@@ -22,36 +24,34 @@ import static com.epam.prykhodko.constants.DBConstants.STRING_OPEN_CIRCLE_BRACKE
 import static com.epam.prykhodko.constants.DBConstants.STRING_SINGLE_QUOTATION_MARK;
 import static com.epam.prykhodko.constants.DBConstants.WHERE;
 
-import com.epam.prykhodko.entity.products.Product;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 public class ProductViewUtil {
 
     private ProductViewUtil() {
-        
+
     }
 
-    public static void setAmountOfProducts(HttpSession session, String amount) {
-        ServletContext servletContext = session.getServletContext();
+    public static void setAmountOfProducts(HttpServletRequest request, String amount) {
+        ServletContext servletContext = request.getServletContext();
 
         if (Objects.nonNull(amount)) {
-            session.setAttribute(AMOUNT_OF_PRODUCTS, amount);
+            request.setAttribute(AMOUNT_OF_PRODUCTS, amount);
             return;
         }
 
-        amount = (String) session.getAttribute(AMOUNT_OF_PRODUCTS);
+        amount = (String) request.getAttribute(AMOUNT_OF_PRODUCTS);
 
         if (Objects.nonNull(amount)) {
             return;
         }
 
         String defaultAmountOfProducts = servletContext.getInitParameter(DEFAULT_PRODUCTS_ON_PAGE);
-        session.setAttribute(AMOUNT_OF_PRODUCTS, defaultAmountOfProducts);
+        request.setAttribute(AMOUNT_OF_PRODUCTS, defaultAmountOfProducts);
     }
 
     public static String makeQueryFilterForProducts(String[] manufacture, String minPrice, String maxPrice, String[] category, String sort) {
@@ -83,14 +83,11 @@ public class ProductViewUtil {
         return queryMap.getOrDefault(parameter, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
     }
 
-    public static List<Product> subListOfProducts(List<Product> productList, int pageNumber, int amountProductsOnPage, int amountOfProducts) {
-        int diff = amountProductsOnPage * pageNumber - amountOfProducts;
-
-        if (diff > 0) {
-            return productList.subList(amountProductsOnPage * pageNumber - amountProductsOnPage, amountProductsOnPage * pageNumber - diff);
-        }
-
-        return productList.subList(amountProductsOnPage * pageNumber - amountProductsOnPage, amountProductsOnPage * pageNumber);
+    public static String queryToFindProductsForPage(String query, int pageNumber, int amountProductsOnPage) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(query);
+        stringBuilder.append(LIMIT).append(amountProductsOnPage * pageNumber - amountProductsOnPage).append(COMMA).append(amountProductsOnPage * pageNumber);
+        return stringBuilder.toString();
     }
 
     private static Map<String, String> initQueryMAp() {

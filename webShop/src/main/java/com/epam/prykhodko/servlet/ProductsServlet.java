@@ -11,7 +11,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_JSP;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_QUERY;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.util.ProductViewUtil.setAmountOfProducts;
-import static com.epam.prykhodko.util.ProductViewUtil.subListOfProducts;
+import static com.epam.prykhodko.util.ProductViewUtil.queryToFindProductsForPage;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
@@ -26,7 +26,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @WebServlet("/products")
 public class ProductsServlet extends HttpServlet {
@@ -34,7 +33,6 @@ public class ProductsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = req.getServletContext();
-        HttpSession session = req.getSession();
         String queryForFilter = (String) req.getAttribute(PRODUCT_QUERY);
         String pageNumberStr = req.getParameter(PAGE);
         String amountFromForm = req.getParameter(AMOUNT_OF_PRODUCTS_FROM_FORM);
@@ -60,13 +58,15 @@ public class ProductsServlet extends HttpServlet {
             pageAmount++;
         }
 
-        products = subListOfProducts(products, pageNumber, amountOnPage, amountOfProducts);
+        queryForFilter = queryToFindProductsForPage(queryForFilter, pageNumber, amountOnPage);
+
+        products = productDAOService.getFilteredProducts(queryForFilter);
 
         req.setAttribute(MANUFACTURES, manufactures);
         req.setAttribute(CATEGORIES, categories);
         req.setAttribute(PAGE_AMOUNT, pageAmount);
         req.setAttribute(ALL_PRODUCT_LIST, products);
-        setAmountOfProducts(session, amountFromForm);
+        setAmountOfProducts(req, amountFromForm);
         req.getRequestDispatcher(PRODUCT_JSP).forward(req, resp);
     }
 }
