@@ -55,16 +55,7 @@
               <input form="amountOfProductsForm" type="submit" value=ok><br>
         </div>
         <div id="center-column">
-            <c:set var="pageNumber" value="${1}"/>
-            <c:forEach begin="1" end="${pageAmount}">
-               <button form="amountOfProductsForm" name="page" value="${pageNumber}">
-                   ${pageNumber}
-                   <c:set var="pageNumber" value="${pageNumber+1}"/>
-               </button>
-            </c:forEach>
-            <div id="contentHalder">
-               <productTag:ProductViewTag products="${all_product_list}" amountOfProducts="${amountOfProducts}"/>
-            </div>
+           <paginationTag:PaginationTag/>
         </div>
 
     </div>

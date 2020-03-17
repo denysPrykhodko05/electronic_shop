@@ -1,8 +1,5 @@
 package com.epam.prykhodko.entity.products;
 
-import static com.epam.prykhodko.entity.products.ProductsCategory.SMARTPHONE;
-
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Smartphone extends Product {
