@@ -18,7 +18,7 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GE
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_PRODUCT_BY_ID;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-import com.epam.prykhodko.dao.DAOProduct;
+import com.epam.prykhodko.dao.ProductDAO;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.ConnectionHolder;
 import java.math.BigDecimal;
@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class ProductDAO implements DAOProduct {
+public class ProductDAOImpl implements ProductDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
+    private static final Logger LOGGER = Logger.getLogger(ProductDAOImpl.class);
 
     @Override
     public Product getByName(String name) {
@@ -40,9 +40,8 @@ public class ProductDAO implements DAOProduct {
 
     @Override
     public Product get(int id) {
-        ResultSet resultSet;
         try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_PRODUCT_BY_ID)) {
-            resultSet = pstm.executeQuery();
+            ResultSet resultSet = pstm.executeQuery();
             pstm.setInt(1, id);
             if (resultSet.next()) {
                 return parseResultSetToProduct(resultSet);
@@ -56,9 +55,8 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
-        ResultSet resultSet;
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_PRODUCTS)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 products.add(parseResultSetToProduct(resultSet));
             }
@@ -105,9 +103,8 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<String> getDefineParameter(String query) {
         List<String> parameters = new ArrayList<>();
-        ResultSet resultSet;
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 parameters.add(resultSet.getString(1));
             }
@@ -120,9 +117,8 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<Product> getFilteredEntity(String query) {
         List<Product> products = new ArrayList<>();
-        ResultSet resultSet;
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 products.add(parseResultSetToProduct(resultSet));
             }

@@ -3,32 +3,21 @@ package com.epam.prykhodko.service.productservicedaoimpl;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_CATEGORIES;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_MANUFACTURES;
 
-import com.epam.prykhodko.dao.DAOProduct;
+import com.epam.prykhodko.dao.ProductDAO;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.TransactionHandler;
-import com.epam.prykhodko.service.DAOServiceProduct;
+import com.epam.prykhodko.service.ProductService;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object> {
+public class MysqlProductServiceImplService implements ProductService {
 
-    private final DAOProduct productDAO;
+    private final ProductDAO productDAO;
     private final TransactionHandler transactionHandler;
 
-    public ProductServiceDAOImpl(DAOProduct productDAO, TransactionHandler transactionHandler) {
+    public MysqlProductServiceImplService(ProductDAO productDAO, TransactionHandler transactionHandler) {
         this.productDAO = productDAO;
         this.transactionHandler = transactionHandler;
-    }
-
-    @Override
-    public Product addByForm(Object form) {
-        return null;
-    }
-
-    @Override
-    public Product createEntity(Object form) {
-        return null;
     }
 
     @Override
@@ -37,16 +26,8 @@ public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object>
     }
 
     @Override
-    public boolean deleteByName(String name) {
-        return transactionHandler.invokeWithoutTransaction(() -> {
-            Product product = getByName(name);
-            return productDAO.delete(product);
-        });
-    }
-
-    @Override
     public boolean delete(Product entity) {
-        return productDAO.delete(entity);
+        return transactionHandler.invokeTransaction(() -> productDAO.delete(entity));
     }
 
     @Override
@@ -54,15 +35,6 @@ public class ProductServiceDAOImpl implements DAOServiceProduct<Product, Object>
         List<Product> products = productDAO.getAll();
         Optional<Product> product = products.stream().filter(e -> e.getName().equals(name)).findFirst();
         return product.orElse(null);
-    }
-
-    @Override
-    public boolean isContains(Product entity) {
-        List<Product> products = productDAO.getAll();
-        Optional<Product> userTemp = products.stream()
-            .filter(e -> (e.getName().equals(entity.getName()) && e.getCategory().equals(entity.getCategory())))
-            .findFirst();
-        return Objects.nonNull(userTemp.orElse(null));
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.epam.prykhodko.dao;
 
 import java.util.List;
 
-public interface DAO<E> {
+public interface UserDAO<E> {
 
     E get(int id);
 

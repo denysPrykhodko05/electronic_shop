@@ -19,7 +19,7 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GE
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-import com.epam.prykhodko.dao.DAO;
+import com.epam.prykhodko.dao.UserDAO;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.ConnectionHolder;
 import java.sql.PreparedStatement;
@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class UserDAO implements DAO<User> {
+public class UserUserDAOImpl implements UserDAO<User> {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDAO.class);
+    private static final Logger LOGGER = Logger.getLogger(UserUserDAOImpl.class);
 
     @Override
     public User get(int id) {
@@ -104,10 +104,9 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public User getByName(String login) {
-        ResultSet resultSet;
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_NAME)) {
             preparedStatement.setString(INTEGER_ONE, login);
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 return parseResultSetToUser(resultSet);

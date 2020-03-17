@@ -92,6 +92,7 @@ public abstract class ApplicationConstants {
     public static final String MIN_PRICE_INPUT = "minPriceInput";
     public static final String MAX_PRICE_INPUT = "maxPriceInput";
     public static final String CATEGORY_CHECK = "categoryCheck";
+    public static final String FILTERS = "filters";
     public static final String PAGE = "page";
     public static final String AMOUNT_OF_PRODUCTS_FROM_FORM = "amountOfProductsFromForm";
     public static final String DEFAULT_PRODUCTS_ON_PAGE = "defaultProductsOnPage";

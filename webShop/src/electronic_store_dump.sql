@@ -24,7 +24,7 @@ CREATE TABLE `product` (
   UNIQUE KEY `name_UNIQUE` (`name`),
   KEY `category_fk_idx` (`category`),
   CONSTRAINT `category_fk` FOREIGN KEY (`category`) REFERENCES `product_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;

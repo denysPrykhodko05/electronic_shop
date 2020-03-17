@@ -24,15 +24,17 @@ import static com.epam.prykhodko.constants.DBConstants.STRING_OPEN_CIRCLE_BRACKE
 import static com.epam.prykhodko.constants.DBConstants.STRING_SINGLE_QUOTATION_MARK;
 import static com.epam.prykhodko.constants.DBConstants.WHERE;
 
+import com.epam.prykhodko.bean.FilterBean;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-public class ProductViewUtil {
+public class ProductFilterCreateUtil {
 
-    private ProductViewUtil() {
+    private ProductFilterCreateUtil() {
 
     }
 
@@ -54,32 +56,23 @@ public class ProductViewUtil {
         request.setAttribute(AMOUNT_OF_PRODUCTS, defaultAmountOfProducts);
     }
 
-    public static String makeQueryFilterForProducts(String[] manufacture, String minPrice, String maxPrice, String[] category, String sort) {
+    public static String makeQueryFilterForProducts(FilterBean filterBean) {
         StringBuilder sqlQuery = new StringBuilder();
-        boolean appended = false;
         sqlQuery.append(GET_ALL_PRODUCTS);
 
-        if (Objects.nonNull(minPrice) && Objects.nonNull(maxPrice)) {
+        sqlQuery.append(WHERE);
 
-            sqlQuery.append(WHERE);
+        sqlQuery.append(PRICE_BETWEEN).append(filterBean.getMinPrice()).append(AND).append(filterBean.getMaxPrice()).append(STRING_CLOSE_CIRCLE_BRACKET);
+        manufactureFilter(filterBean.getChoosenManufactureList(), filterBean.getManufactures(), sqlQuery);
 
-            sqlQuery.append(PRICE_BETWEEN).append(minPrice).append(AND).append(maxPrice).append(STRING_CLOSE_CIRCLE_BRACKET);
-            appended = true;
-        }
+        categoryFilter(filterBean.getChossenCategoryList(),filterBean.getCategories(), sqlQuery);
 
-        if (Objects.nonNull(manufacture)) {
-            manufactureFilter(manufacture, appended, sqlQuery);
-        }
-
-        if (Objects.nonNull(category)) {
-            categoryFilter(category, appended, sqlQuery);
-        }
-        sqlQuery.append(sort);
+        sqlQuery.append(filterBean.getSortQuery());
         return sqlQuery.toString();
     }
 
     public static String makeSortQueryForProducts(String parameter) {
-        Map<String, String> queryMap = initQueryMAp();
+        Map<String, String> queryMap = initQueryMap();
         return queryMap.getOrDefault(parameter, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
     }
 
@@ -90,7 +83,7 @@ public class ProductViewUtil {
         return stringBuilder.toString();
     }
 
-    private static Map<String, String> initQueryMAp() {
+    private static Map<String, String> initQueryMap() {
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put(BY_PRICE_FROM_LOW, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
         queryMap.put(BY_PRICE_FROM_HIGH, GET_ALL_PRODUCTS_FROM_HIGH_PRICE);
@@ -99,14 +92,16 @@ public class ProductViewUtil {
         return queryMap;
     }
 
-    private static void categoryFilter(String[] category, boolean appended, StringBuilder sqlQuery) {
+    private static void categoryFilter(List<String> choosenCategory, List<String> allcategories, StringBuilder sqlQuery) {
         boolean firstCategory = false;
 
-        if (appended) {
-            sqlQuery.append(AND);
+        if (Objects.isNull(choosenCategory)) {
+            choosenCategory = allcategories;
         }
 
-        for (String c : category) {
+        sqlQuery.append(AND);
+
+        for (String c : choosenCategory) {
 
             if (!firstCategory) {
                 sqlQuery.append(PRODUCT_CATEGORY_NAME).append(c).append(STRING_SINGLE_QUOTATION_MARK);
@@ -120,13 +115,14 @@ public class ProductViewUtil {
         sqlQuery.append(STRING_CLOSE_CIRCLE_BRACKET);
     }
 
-    private static void manufactureFilter(String[] manufacture, boolean appended, StringBuilder sqlQuery) {
+    private static void manufactureFilter(List<String> manufacture, List<String> allManufactures, StringBuilder sqlQuery) {
         boolean firstManufacture = false;
 
-        if (appended) {
-            sqlQuery.append(AND);
+        if (Objects.isNull(manufacture)) {
+            manufacture = allManufactures;
         }
 
+        sqlQuery.append(AND);
         sqlQuery.append(STRING_OPEN_CIRCLE_BRACKET);
 
         for (String e : manufacture) {

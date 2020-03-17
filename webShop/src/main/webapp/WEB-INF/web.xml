@@ -16,6 +16,10 @@
     <param-name>defaultProductsOnPage</param-name>
     <param-value>5</param-value>
   </context-param>
+  <context-param>
+    <param-name>productSortType</param-name>
+    <param-value>byPriceFromLow</param-value>
+  </context-param>
 
   <display-name>Archetype Created Web Application</display-name>
   <listener>
@@ -32,15 +36,6 @@
     <url-pattern>/logout</url-pattern>
   </filter-mapping>
 
-  <!-- filter for product filtering-->
-  <filter>
-    <filter-class>com.epam.prykhodko.filter.ProductFilter</filter-class>
-    <filter-name>productFilter</filter-name>
-  </filter>
-  <filter-mapping>
-    <filter-name>productFilter</filter-name>
-    <url-pattern>/products</url-pattern>
-  </filter-mapping>
   <resource-ref>
     <description>DB Connection</description>
     <res-auth>Container</res-auth>
