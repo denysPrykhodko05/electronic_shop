@@ -1,6 +1,7 @@
 package com.epam.prykhodko.jsptag;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT_OF_PRODUCTS_FROM_FORM;
+import static com.epam.prykhodko.constants.ApplicationConstants.FILTER_QUERY;
 import static com.epam.prykhodko.constants.ApplicationConstants.PAGE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.JspTagsConstants.BUY_BOTTON;
@@ -40,7 +41,7 @@ public class PaginationTag extends SimpleTagSupport {
         JspWriter writer = getJspContext().getOut();
         HttpServletRequest req = (HttpServletRequest) pageContext.getRequest();
         ServletContext servletContext = req.getServletContext();
-        String filterQuery = (String) req.getAttribute("FILTER_QUERY");
+        String filterQuery = (String) req.getAttribute(FILTER_QUERY);
         String pageNumberStr = req.getParameter(PAGE);
         ProductService productDAOService = (ProductService) servletContext.getAttribute(PRODUCT_SERVICE);
         List<Product> products = productDAOService.getFilteredProducts(filterQuery);

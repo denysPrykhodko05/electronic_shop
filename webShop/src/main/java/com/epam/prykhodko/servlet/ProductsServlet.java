@@ -4,6 +4,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT_OF_PRODUC
 import static com.epam.prykhodko.constants.ApplicationConstants.CATEGORIES;
 import static com.epam.prykhodko.constants.ApplicationConstants.DEFAULT_PRODUCTS_ON_PAGE;
 import static com.epam.prykhodko.constants.ApplicationConstants.FILTERS;
+import static com.epam.prykhodko.constants.ApplicationConstants.FILTER_QUERY;
 import static com.epam.prykhodko.constants.ApplicationConstants.MANUFACTURES;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_JSP;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
@@ -44,7 +45,7 @@ public class ProductsServlet extends HttpServlet {
         String sortQuery = ProductFilterCreateUtil.makeSortQueryForProducts(filterBean.getCurrentSort());
         filterBean.setSortQuery(sortQuery);
         String filterQuery = ProductFilterCreateUtil.makeQueryFilterForProducts(filterBean);
-        req.setAttribute("FILTER_QUERY", filterQuery);
+        req.setAttribute(FILTER_QUERY, filterQuery);
         req.setAttribute(FILTERS, filterBean);
         req.setAttribute(MANUFACTURES, manufactures);
         req.setAttribute(CATEGORIES, categories);
