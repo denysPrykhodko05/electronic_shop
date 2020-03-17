@@ -11,7 +11,7 @@
          <c:forEach var="product" items="${products}" begin="0" end="${amountOfProducts-1}">
            <div class="content">
                 <div class="productImg">
-                   <img src="/productImageDraw?name=${product.name}&category=${product.category}">
+                   <img src="/images/products/${product.category}/${product.name}.jpg">
                 </div>
                 <div class="product-name">
                    ${product.name}
