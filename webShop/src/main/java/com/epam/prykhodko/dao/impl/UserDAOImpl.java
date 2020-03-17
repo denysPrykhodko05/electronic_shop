@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class UserUserDAOImpl implements UserDAO<User> {
+public class UserDAOImpl implements UserDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(UserUserDAOImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
 
     @Override
     public User get(int id) {
@@ -81,11 +81,6 @@ public class UserUserDAOImpl implements UserDAO<User> {
             LOGGER.error(ERR_CANNOT_ADD_USER);
         }
         return null;
-    }
-
-    @Override
-    public void update(User user, String[] params) {
-        throw new UnsupportedOperationException();
     }
 
     @Override

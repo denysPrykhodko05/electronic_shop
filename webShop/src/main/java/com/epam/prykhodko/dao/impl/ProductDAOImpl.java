@@ -34,11 +34,6 @@ public class ProductDAOImpl implements ProductDAO {
     private static final Logger LOGGER = Logger.getLogger(ProductDAOImpl.class);
 
     @Override
-    public Product getByName(String name) {
-        return null;
-    }
-
-    @Override
     public Product get(int id) {
         try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_PRODUCT_BY_ID)) {
             ResultSet resultSet = pstm.executeQuery();
@@ -83,11 +78,6 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void update(Product product, String[] params) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean delete(Product product) {
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_PRODUCT_BY_NAME);) {
             preparedStatement.setString(1, product.getName());
@@ -100,6 +90,10 @@ public class ProductDAOImpl implements ProductDAO {
         return false;
     }
 
+    /**
+     * @param query - query to database
+     * @return specified parameter of {@link Product} from database, etc manufacture, categories
+     */
     @Override
     public List<String> getDefineParameter(String query) {
         List<String> parameters = new ArrayList<>();

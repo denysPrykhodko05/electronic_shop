@@ -11,11 +11,7 @@ public interface ProductDAO {
 
     Product add(Product e);
 
-    void update(Product e, String[] params);
-
     boolean delete(Product e);
-
-    Product getByName(String name);
 
     List<String> getDefineParameter(String parameter);
 

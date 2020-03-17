@@ -26,7 +26,7 @@ import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.dao.UserDAO;
 import com.epam.prykhodko.dao.ProductDAO;
 import com.epam.prykhodko.dao.impl.ProductDAOImpl;
-import com.epam.prykhodko.dao.impl.UserUserDAOImpl;
+import com.epam.prykhodko.dao.impl.UserDAOImpl;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
@@ -54,7 +54,7 @@ public class ContextListener implements ServletContextListener {
     private static final Logger LOGGER = Logger.getLogger(ContextListener.class);
     private final Map<Long, String> captchaKeys = new HashMap<>();
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-    private final UserDAO<User> userUserDAOImpl = new UserUserDAOImpl();
+    private final UserDAO<User> userUserDAOImpl = new UserDAOImpl();
     private final ProductDAO productDAO = new ProductDAOImpl();
     private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
     private final UserService userService = new MysqlUserServiceImpl(userUserDAOImpl, transactionHandler);
