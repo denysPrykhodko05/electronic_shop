@@ -62,7 +62,10 @@ public class ProductFilterCreateUtil {
 
         sqlQuery.append(WHERE);
 
-        sqlQuery.append(PRICE_BETWEEN).append(filterBean.getMinPrice()).append(AND).append(filterBean.getMaxPrice()).append(STRING_CLOSE_CIRCLE_BRACKET);
+        sqlQuery.append(PRICE_BETWEEN)
+                .append(filterBean.getMinPrice())
+                .append(AND).append(filterBean.getMaxPrice())
+                .append(STRING_CLOSE_CIRCLE_BRACKET);
         manufactureFilter(filterBean.getChoosenManufactureList(), filterBean.getManufactures(), sqlQuery);
 
         categoryFilter(filterBean.getChossenCategoryList(),filterBean.getCategories(), sqlQuery);
@@ -79,7 +82,9 @@ public class ProductFilterCreateUtil {
     public static String queryToFindProductsForPage(String query, int pageNumber, int amountProductsOnPage) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(query);
-        stringBuilder.append(LIMIT).append(amountProductsOnPage * pageNumber - amountProductsOnPage).append(COMMA).append(amountProductsOnPage * pageNumber);
+        stringBuilder.append(LIMIT)
+                    .append(amountProductsOnPage * pageNumber - amountProductsOnPage)
+                    .append(COMMA).append(amountProductsOnPage * pageNumber);
         return stringBuilder.toString();
     }
 
