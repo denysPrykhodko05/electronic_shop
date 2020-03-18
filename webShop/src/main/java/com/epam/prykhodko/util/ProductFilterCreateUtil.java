@@ -38,7 +38,7 @@ public class ProductFilterCreateUtil {
 
     }
 
-    public static void setAmountOfProducts(HttpServletRequest request, String amount) {
+    private static void setAmountOfProducts(HttpServletRequest request, String amount) {
         ServletContext servletContext = request.getServletContext();
 
         if (Objects.nonNull(amount)) {
@@ -56,7 +56,7 @@ public class ProductFilterCreateUtil {
         request.setAttribute(AMOUNT_OF_PRODUCTS, defaultAmountOfProducts);
     }
 
-    public static String makeQueryFilterForProducts(FilterBean filterBean) {
+    private static String makeQueryFilterForProducts(FilterBean filterBean) {
         StringBuilder sqlQuery = new StringBuilder();
         sqlQuery.append(GET_ALL_PRODUCTS)
             .append(WHERE)
@@ -70,7 +70,7 @@ public class ProductFilterCreateUtil {
         return sqlQuery.toString();
     }
 
-    public static String makeSortQueryForProducts(String parameter) {
+    private static String makeSortQueryForProducts(String parameter) {
         Map<String, String> queryMap = initQueryMap();
         return queryMap.getOrDefault(parameter, GET_ALL_PRODUCTS_FROM_LOW_PRICE);
     }
@@ -141,5 +141,25 @@ public class ProductFilterCreateUtil {
         }
 
         sqlQuery.append(")");
+    }
+
+    public static FilterBean setFilterBean(List<String> manufactures, List<String> categories, HttpServletRequest req) {
+        FilterBean filterBean = new FilterBean();
+        filterBean.setManufactures(manufactures);
+        filterBean.setCategories(categories);
+        filterBean.setFilterBean(req);
+        return filterBean;
+    }
+
+    public static String combineFilterSettings(String amountFromForm,HttpServletRequest req, FilterBean filterBean){
+        ServletContext servletContext = req.getServletContext();
+        if (Objects.isNull(amountFromForm)) {
+            amountFromForm = servletContext.getInitParameter(DEFAULT_PRODUCTS_ON_PAGE);
+        }
+
+        ProductFilterCreateUtil.setAmountOfProducts(req, amountFromForm);
+        String sortQuery = ProductFilterCreateUtil.makeSortQueryForProducts(filterBean.getCurrentSort());
+        filterBean.setSortQuery(sortQuery);
+        return ProductFilterCreateUtil.makeQueryFilterForProducts(filterBean);
     }
 }
