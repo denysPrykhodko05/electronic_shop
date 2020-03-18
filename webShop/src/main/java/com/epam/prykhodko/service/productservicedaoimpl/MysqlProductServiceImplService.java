@@ -57,4 +57,8 @@ public class MysqlProductServiceImplService implements ProductService {
         return transactionHandler.invokeWithoutTransaction(() -> productDAO.getFilteredEntity(query));
     }
 
+    @Override
+    public Product getById(int id) {
+        return transactionHandler.invokeWithoutTransaction(() -> productDAO.get(id));
+    }
 }

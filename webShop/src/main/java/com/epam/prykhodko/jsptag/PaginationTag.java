@@ -84,7 +84,7 @@ public class PaginationTag extends SimpleTagSupport {
             writer.print(OPEN_DIV_PRODUCT_PRICE);
             writer.print(product.getPrice());
             writer.print(CLOSE_DIV_TAG);
-            writer.print(BUY_BOTTON);
+            writer.print("<div><button class=\"buy-button\" value=\"" + product.getId() +"\">Buy</button></div>");
             writer.print(CLOSE_DIV_TAG);
         }
         writer.print(CLOSE_DIV_TAG);

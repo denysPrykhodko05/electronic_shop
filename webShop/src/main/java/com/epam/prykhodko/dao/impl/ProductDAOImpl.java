@@ -36,8 +36,8 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public Product get(int id) {
         try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_PRODUCT_BY_ID)) {
-            ResultSet resultSet = pstm.executeQuery();
             pstm.setInt(1, id);
+            ResultSet resultSet = pstm.executeQuery();
             if (resultSet.next()) {
                 return parseResultSetToProduct(resultSet);
             }

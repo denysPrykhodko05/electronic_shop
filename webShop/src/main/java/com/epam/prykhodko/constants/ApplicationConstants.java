@@ -95,4 +95,11 @@ public abstract class ApplicationConstants {
     public static final String BY_PRICE_FROM_HIGH = "byPriceFromHigh";
     public static final String BY_ALPHABETICAL_FROM_A_Z = "byAlphabeticalFromA-Z";
     public static final String BY_ALPHABETICAL_FROM_Z_A = "byAlphabeticalFromZ-A";
+
+    //Cart constants
+    public static final String CART = "cart";
+    public static final String PRODUCT_ID = "productId";
+    public static final String SUCCESS = "success";
+    public static final String AMOUNT = "amount";
+
 }

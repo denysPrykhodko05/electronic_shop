@@ -13,11 +13,11 @@ public interface ProductService {
 
     List<Product> getAll();
 
-
     List<String> getAllManufactures();
 
     List<String> getAllCategories();
 
     List<Product> getFilteredProducts(String query);
 
+    Product getById(int id);
 }

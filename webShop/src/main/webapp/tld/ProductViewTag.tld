@@ -5,10 +5,6 @@
   <jsp-version>2.0</jsp-version>
   <short-name>ProductViewTag</short-name>
   <tag-file>
-    <name>ProductViewTag</name>
-    <path>/WEB-INF/tags/productviewtag/ProductViewTag.tag</path>
-  </tag-file>
-  <tag-file>
     <name>ViewListOfFilters</name>
     <path>/WEB-INF/tags/productviewtag/ViewListOfFilters.tag</path>
   </tag-file>

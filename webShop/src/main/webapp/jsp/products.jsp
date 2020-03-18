@@ -60,8 +60,10 @@
 
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script defer src="..\javascript\constants\constants.js"></script>
     <script defer src="..\javascript\validators\AmountOfProductsValidator.js"></script>
+    <script defer src="..\javascript\utils\ProductsUtil"></script>
 </body>
 
 </html>

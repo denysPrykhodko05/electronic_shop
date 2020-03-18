@@ -14,7 +14,7 @@
   <div id="shopName"><a href="/">Electronics store</a></div>
   <div class="menu">
     <a href="/products">Products</a>
-    <a href="">Something</a>
+    <a href="/cart" id="cartRef">Cart</a>
     <a href="">Something more</a>
   </div id="loginTag">
      <login:LoginTag userLogin="${userLogin}"/>
