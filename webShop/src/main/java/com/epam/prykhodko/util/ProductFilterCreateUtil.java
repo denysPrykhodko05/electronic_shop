@@ -133,11 +133,15 @@ public class ProductFilterCreateUtil {
         for (String e : manufacture) {
 
             if (!firstManufacture) {
-                sqlQuery.append(MANUFACTURE_PARAMETER).append(e).append(STRING_SINGLE_QUOTATION_MARK);
+                sqlQuery.append(MANUFACTURE_PARAMETER)
+                        .append(e)
+                        .append(STRING_SINGLE_QUOTATION_MARK);
                 firstManufacture = true;
                 continue;
             }
-            sqlQuery.append(OR_WITH_MANUFACTURE).append(e).append(STRING_SINGLE_QUOTATION_MARK);
+            sqlQuery.append(OR_WITH_MANUFACTURE)
+                    .append(e)
+                    .append(STRING_SINGLE_QUOTATION_MARK);
         }
 
         sqlQuery.append(")");
