@@ -10,4 +10,6 @@ public interface UserRepository {
     List<User> get();
 
     boolean delete(User user);
+
+    List<User> getAll();
 }

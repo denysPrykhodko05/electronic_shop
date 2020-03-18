@@ -26,36 +26,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteByLogin(String login) {
-        List<User> users = userRepository.get();
-        Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
-        return user.map(users::remove).orElse(false);
-    }
-
-    @Override
     public boolean delete(User user) {
         return userRepository.delete(user);
     }
 
     @Override
-    public User getByLogin(String login) {
+    public User getByName(String login) {
         List<User> users = userRepository.get();
         Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
         return user.orElse(null);
     }
 
     @Override
-    public boolean isContains(User newUser) {
-        List<User> users = userRepository.get();
-
-        if (users.contains(newUser)) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public User createUser(RegFormBean regFormBean) {
-        return new User(regFormBean.getName(), regFormBean.getSurname(), regFormBean.getEmail(), regFormBean.getLogin(), regFormBean.getPassword());
+    public List<User> getAll() {
+        return userRepository.getAll();
     }
 }

@@ -39,6 +39,7 @@ import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -106,9 +107,9 @@ public class RegistrationServlet extends HttpServlet {
             return;
         }
 
-        User user = userService.createUser(formBean);
+        User user = userUtils.createUserFromBean(formBean);
 
-        if (userService.isContains(user)) {
+        if (Objects.nonNull(userService.getByName(user.getLogin()))) {
             userUtils.checkLoginAndEmail(user, userService, errors);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);
@@ -120,7 +121,7 @@ public class RegistrationServlet extends HttpServlet {
         String path = imageDraw.saveUploadedFile(formBean.getAvatar(), formBean.getLogin());
         formBean.setAvatarPath(path);
 
-        if (userService.add(formBean) == null) {
+        if (Objects.isNull(userService.add(user))) {
             errors.put(NOT_USER_ERROR, NOT_USER_ERROR);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);

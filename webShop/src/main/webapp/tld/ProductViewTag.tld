@@ -3,10 +3,10 @@
   version="2.0"
   xmlns="http://java.sun.com/xml/ns/j2ee">
   <jsp-version>2.0</jsp-version>
-  <short-name>LoginTag</short-name>
+  <short-name>ProductViewTag</short-name>
   <tag-file>
-    <name>LoginTag</name>
-    <path>/WEB-INF/tags/logintag/Login.tag</path>
+    <name>ViewListOfFilters</name>
+    <path>/WEB-INF/tags/productviewtag/ViewListOfFilters.tag</path>
   </tag-file>
   <tlib-version>1.0</tlib-version>
 </taglib>

@@ -6,7 +6,7 @@
   <short-name>LoginTag</short-name>
   <tag-file>
     <name>LoginTag</name>
-    <path>/WEB-INF/tags/loginTag/loginTag.tag</path>
+    <path>/WEB-INF/tags/logintag/loginTag.tag</path>
   </tag-file>
   <tlib-version>1.0</tlib-version>
 </taglib>

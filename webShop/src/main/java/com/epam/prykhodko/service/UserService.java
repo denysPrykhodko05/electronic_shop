@@ -1,21 +1,15 @@
 package com.epam.prykhodko.service;
 
-import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.entity.User;
+import java.util.List;
 
 public interface UserService {
 
-    User add(RegFormBean formBean);
+    User add(User entity);
 
-    User add(User user);
+    boolean delete(User entity);
 
-    boolean deleteByLogin(String login);
+    User getByName(String name);
 
-    boolean delete(User user);
-
-    User getByLogin(String login);
-
-    boolean isContains(User user);
-
-    User createUser(RegFormBean regFormBean);
+    List<User> getAll();
 }

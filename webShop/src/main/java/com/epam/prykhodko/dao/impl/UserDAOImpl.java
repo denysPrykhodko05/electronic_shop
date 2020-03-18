@@ -1,6 +1,5 @@
 package com.epam.prykhodko.dao.impl;
 
-import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR_PATH;
 import static com.epam.prykhodko.constants.ApplicationConstants.EMAIL;
 import static com.epam.prykhodko.constants.ApplicationConstants.ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN;
@@ -17,9 +16,10 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_AD
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_ALL_USERS;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_USER_BY_ID;
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-import com.epam.prykhodko.dao.DAO;
+import com.epam.prykhodko.dao.UserDAO;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.handler.ConnectionHolder;
 import java.sql.PreparedStatement;
@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class UserDAO implements DAO<User> {
+public class UserDAOImpl implements UserDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDAO.class);
+    private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
 
     @Override
     public User get(int id) {
@@ -84,14 +84,9 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public void update(User user, String[] params) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean delete(User user) {
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_USER_BY_LOGIN);) {
-            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(INTEGER_ONE, user.getLogin());
 
             if (preparedStatement.executeUpdate() > INTEGER_ZERO) {
                 return true;
@@ -103,11 +98,10 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public User getByLogin(String login) {
-        ResultSet resultSet;
+    public User getByName(String login) {
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_NAME)) {
-            preparedStatement.setString(1, login);
-            resultSet = preparedStatement.executeQuery();
+            preparedStatement.setString(INTEGER_ONE, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 return parseResultSetToUser(resultSet);
@@ -119,12 +113,13 @@ public class UserDAO implements DAO<User> {
     }
 
     private void fillPreparedStatementByUserData(PreparedStatement pstmt, User user) throws SQLException {
-        pstmt.setString(1, user.getName());
-        pstmt.setString(2, user.getSurname());
-        pstmt.setString(3, user.getLogin());
-        pstmt.setString(4, user.getEmail());
-        pstmt.setString(5, user.getPassword());
-        pstmt.setInt(6, 1);
+        int i = 0;
+        pstmt.setString(++i, user.getName());
+        pstmt.setString(++i, user.getSurname());
+        pstmt.setString(++i, user.getLogin());
+        pstmt.setString(++i, user.getEmail());
+        pstmt.setString(++i, user.getPassword());
+        pstmt.setInt(++i, INTEGER_ONE);
     }
 
     private User parseResultSetToUser(ResultSet resultSet) throws SQLException {

@@ -11,6 +11,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
 import static com.epam.prykhodko.constants.ApplicationConstants.IMAGE_DRAW;
 import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
+import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
 import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
@@ -22,10 +23,16 @@ import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.CookieKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.HiddenFieldKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
-import com.epam.prykhodko.dao.impl.UserDAO;
+import com.epam.prykhodko.dao.ProductDAO;
+import com.epam.prykhodko.dao.UserDAO;
+import com.epam.prykhodko.dao.impl.ProductDAOImpl;
+import com.epam.prykhodko.dao.impl.UserDAOImpl;
+import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.mananger.ConnectionManager;
+import com.epam.prykhodko.service.ProductService;
 import com.epam.prykhodko.service.UserService;
-import com.epam.prykhodko.service.userservicedaoimpl.UserServiceDAOImpl;
+import com.epam.prykhodko.service.productservicedaoimpl.MysqlProductServiceImpl;
+import com.epam.prykhodko.service.userservicedaoimpl.MysqlUserServiceImpl;
 import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
@@ -46,8 +53,11 @@ public class ContextListener implements ServletContextListener {
     private static final Logger LOGGER = Logger.getLogger(ContextListener.class);
     private final Map<Long, String> captchaKeys = new HashMap<>();
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-    private final UserDAO userDAO = new UserDAO();
-    private final UserService userService = new UserServiceDAOImpl(userDAO);
+    private final UserDAO userUserDAOImpl = new UserDAOImpl();
+    private final ProductDAO productDAO = new ProductDAOImpl();
+    private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
+    private final UserService userService = new MysqlUserServiceImpl(userUserDAOImpl, transactionHandler);
+    private final ProductService productService = new MysqlProductServiceImpl(productDAO, transactionHandler);
     private final Validator validator = new Validator();
     private final UserUtils userUtils = new UserUtils();
     private final ImageDraw imageDraw = new ImageDraw();
@@ -74,6 +84,7 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(IMAGE_DRAW, imageDraw);
         servletContext.setAttribute(CONNECTION_MANAGER, connectionManager);
         servletContext.setAttribute(USER_SERVICE, userService);
+        servletContext.setAttribute(PRODUCT_SERVICE, productService);
     }
 
     @Override

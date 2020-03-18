@@ -1,7 +1,7 @@
 package com.epam.prykhodko.servlet;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.AVATARS_PATH;
-import static com.epam.prykhodko.constants.ApplicationConstants.AVATAR_FORMAT;
+import static com.epam.prykhodko.constants.ApplicationConstants.JPG_FORMAT;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
 
 import java.awt.image.BufferedImage;
@@ -22,7 +22,7 @@ public class AvatarServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String login = (String) session.getAttribute(USER_LOGIN);
-        String path = AVATARS_PATH + login + AVATAR_FORMAT;
+        String path = AVATARS_PATH + login + JPG_FORMAT;
         File file = new File(path);
         BufferedImage avatar = ImageIO.read(file);
         ImageIO.write(avatar, "jpg", resp.getOutputStream());
