@@ -58,18 +58,14 @@ public class ProductFilterCreateUtil {
 
     public static String makeQueryFilterForProducts(FilterBean filterBean) {
         StringBuilder sqlQuery = new StringBuilder();
-        sqlQuery.append(GET_ALL_PRODUCTS);
-
-        sqlQuery.append(WHERE);
-
-        sqlQuery.append(PRICE_BETWEEN)
-                .append(filterBean.getMinPrice())
-                .append(AND).append(filterBean.getMaxPrice())
-                .append(STRING_CLOSE_CIRCLE_BRACKET);
+        sqlQuery.append(GET_ALL_PRODUCTS)
+            .append(WHERE)
+            .append(PRICE_BETWEEN)
+            .append(filterBean.getMinPrice())
+            .append(AND).append(filterBean.getMaxPrice())
+            .append(STRING_CLOSE_CIRCLE_BRACKET);
         manufactureFilter(filterBean.getChoosenManufactureList(), filterBean.getManufactures(), sqlQuery);
-
-        categoryFilter(filterBean.getChossenCategoryList(),filterBean.getCategories(), sqlQuery);
-
+        categoryFilter(filterBean.getChossenCategoryList(), filterBean.getCategories(), sqlQuery);
         sqlQuery.append(filterBean.getSortQuery());
         return sqlQuery.toString();
     }
@@ -81,10 +77,10 @@ public class ProductFilterCreateUtil {
 
     public static String queryToFindProductsForPage(String query, int pageNumber, int amountProductsOnPage) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(query);
-        stringBuilder.append(LIMIT)
-                    .append(amountProductsOnPage * pageNumber - amountProductsOnPage)
-                    .append(COMMA).append(amountProductsOnPage * pageNumber);
+        stringBuilder.append(query)
+            .append(LIMIT)
+            .append(amountProductsOnPage * pageNumber - amountProductsOnPage)
+            .append(COMMA).append(amountProductsOnPage * pageNumber);
         return stringBuilder.toString();
     }
 
@@ -127,21 +123,21 @@ public class ProductFilterCreateUtil {
             manufacture = allManufactures;
         }
 
-        sqlQuery.append(AND);
-        sqlQuery.append(STRING_OPEN_CIRCLE_BRACKET);
+        sqlQuery.append(AND)
+            .append(STRING_OPEN_CIRCLE_BRACKET);
 
         for (String e : manufacture) {
 
             if (!firstManufacture) {
                 sqlQuery.append(MANUFACTURE_PARAMETER)
-                        .append(e)
-                        .append(STRING_SINGLE_QUOTATION_MARK);
+                    .append(e)
+                    .append(STRING_SINGLE_QUOTATION_MARK);
                 firstManufacture = true;
                 continue;
             }
             sqlQuery.append(OR_WITH_MANUFACTURE)
-                    .append(e)
-                    .append(STRING_SINGLE_QUOTATION_MARK);
+                .append(e)
+                .append(STRING_SINGLE_QUOTATION_MARK);
         }
 
         sqlQuery.append(")");
