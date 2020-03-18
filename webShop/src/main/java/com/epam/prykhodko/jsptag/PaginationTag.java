@@ -68,10 +68,10 @@ public class PaginationTag extends SimpleTagSupport {
             writer.print(OPEN_TAG_BUTTON_FOR_PAGE + i + CLOSE_TAG + i + CLOSE_TAG_BUTTON_FOR_PAGE);
         }
 
-        writer.print(createProductBlock(products));
+        writer.print(createProductViewBlock(products));
     }
 
-    private String createProductBlock(List<Product> products) {
+    private String createProductViewBlock(List<Product> products) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(OPEN_TAG_DIV_CONTENT_HANDLER);
