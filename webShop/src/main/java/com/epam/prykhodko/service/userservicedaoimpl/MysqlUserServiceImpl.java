@@ -8,10 +8,10 @@ import java.util.List;
 
 public class MysqlUserServiceImpl implements UserService {
 
-    private final UserDAO<User> userDAO;
+    private final UserDAO userDAO;
     private final TransactionHandler transactionHandler;
 
-    public MysqlUserServiceImpl(UserDAO<User> userDAO, TransactionHandler transactionHandler) {
+    public MysqlUserServiceImpl(UserDAO userDAO, TransactionHandler transactionHandler) {
         this.userDAO = userDAO;
         this.transactionHandler = transactionHandler;
     }

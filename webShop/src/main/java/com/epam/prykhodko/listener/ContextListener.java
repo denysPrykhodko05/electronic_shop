@@ -54,7 +54,7 @@ public class ContextListener implements ServletContextListener {
     private static final Logger LOGGER = Logger.getLogger(ContextListener.class);
     private final Map<Long, String> captchaKeys = new HashMap<>();
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-    private final UserDAO<User> userUserDAOImpl = new UserDAOImpl();
+    private final UserDAO userUserDAOImpl = new UserDAOImpl();
     private final ProductDAO productDAO = new ProductDAOImpl();
     private final TransactionHandler transactionHandler = new TransactionHandler(new ConnectionManager());
     private final UserService userService = new MysqlUserServiceImpl(userUserDAOImpl, transactionHandler);
