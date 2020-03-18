@@ -68,25 +68,36 @@ public class PaginationTag extends SimpleTagSupport {
             writer.print(OPEN_TAG_BUTTON_FOR_PAGE + i + CLOSE_TAG + i + CLOSE_TAG_BUTTON_FOR_PAGE);
         }
 
-        writer.print(OPEN_TAG_DIV_CONTENT_HANDLER);
+        writer.print(createProductViewBlock(products));
+    }
+
+    private String createProductViewBlock(List<Product> products) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(OPEN_TAG_DIV_CONTENT_HANDLER);
 
         for (Product product : products) {
-            writer.print(OPEN_DIV_CONTENT);
-            writer.print(OPEN_DIV_PRODUCT_IMG);
-            writer.print(OPEN_PRODUCT_IMAGE_TAG + product.getCategory() + SLASH + product.getName() + CLOSE_IMAGE_TAG);
-            writer.print(CLOSE_DIV_TAG);
-            writer.print(OPEN_DIV_PRODUCT_NAME);
-            writer.print(product.getName());
-            writer.print(CLOSE_DIV_TAG);
-            writer.print(OPEN_DIV_PRODUCT_DESCRIPTION);
-            writer.print(product.getDescription());
-            writer.print(CLOSE_DIV_TAG);
-            writer.print(OPEN_DIV_PRODUCT_PRICE);
-            writer.print(product.getPrice());
-            writer.print(CLOSE_DIV_TAG);
-            writer.print("<div><button class=\"buy-button\" value=\"" + product.getId() +"\">Buy</button></div>");
-            writer.print(CLOSE_DIV_TAG);
+            stringBuilder.append(OPEN_DIV_CONTENT)
+                .append(OPEN_DIV_PRODUCT_IMG)
+                .append(OPEN_PRODUCT_IMAGE_TAG)
+                .append(product.getCategory())
+                .append(SLASH)
+                .append(product.getName())
+                .append(CLOSE_IMAGE_TAG)
+                .append(CLOSE_DIV_TAG)
+                .append(OPEN_DIV_PRODUCT_NAME)
+                .append(product.getName())
+                .append(CLOSE_DIV_TAG)
+                .append(OPEN_DIV_PRODUCT_DESCRIPTION)
+                .append(product.getDescription())
+                .append(CLOSE_DIV_TAG)
+                .append(OPEN_DIV_PRODUCT_PRICE)
+                .append(product.getPrice())
+                .append(CLOSE_DIV_TAG)
+                .append(BUY_BOTTON)
+                .append(CLOSE_DIV_TAG);
         }
-        writer.print(CLOSE_DIV_TAG);
+        stringBuilder.append(CLOSE_DIV_TAG);
+        return stringBuilder.toString();
     }
 }

@@ -10,12 +10,12 @@ import com.epam.prykhodko.service.ProductService;
 import java.util.List;
 import java.util.Optional;
 
-public class MysqlProductServiceImplService implements ProductService {
+public class MysqlProductServiceImpl implements ProductService {
 
     private final ProductDAO productDAO;
     private final TransactionHandler transactionHandler;
 
-    public MysqlProductServiceImplService(ProductDAO productDAO, TransactionHandler transactionHandler) {
+    public MysqlProductServiceImpl(ProductDAO productDAO, TransactionHandler transactionHandler) {
         this.productDAO = productDAO;
         this.transactionHandler = transactionHandler;
     }
