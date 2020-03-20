@@ -59,40 +59,20 @@ public class FilterBean {
         return choosenManufactureList;
     }
 
-    public void setChoosenManufactureList(List<String> choosenManufactureList) {
-        this.choosenManufactureList = choosenManufactureList;
-    }
-
     public List<String> getChossenCategoryList() {
         return chossenCategoryList;
-    }
-
-    public void setChossenCategoryList(List<String> chossenCategoryList) {
-        this.chossenCategoryList = chossenCategoryList;
     }
 
     public String getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(String minPrice) {
-        this.minPrice = minPrice;
-    }
-
     public String getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(String maxPrice) {
-        this.maxPrice = maxPrice;
-    }
-
     public String getCurrentSort() {
         return currentSort;
-    }
-
-    public void setCurrentSort(String currentSort) {
-        this.currentSort = currentSort;
     }
 
     public String getSortQuery() {

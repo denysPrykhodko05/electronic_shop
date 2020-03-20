@@ -48,6 +48,7 @@ public class AddProductToCart extends HttpServlet {
         if (Objects.isNull(cart)) {
             cart = new Cart();
         }
+
         if (Objects.isNull(amount)) {
             amount = "1";
         }

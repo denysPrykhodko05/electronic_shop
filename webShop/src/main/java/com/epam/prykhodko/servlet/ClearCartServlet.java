@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ClearCartServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Cart cart = (Cart) req.getSession().getAttribute(CART);
         JsonObject jsonObject = new JsonObject();
         PrintWriter printWriter = resp.getWriter();

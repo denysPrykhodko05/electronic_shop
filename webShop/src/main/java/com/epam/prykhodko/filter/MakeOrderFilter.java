@@ -1,5 +1,6 @@
 package com.epam.prykhodko.filter;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.MAKE_ORDER_USER_CHECK_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.SUCCESS;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/makeOrderUserCheck")
+@WebServlet(MAKE_ORDER_USER_CHECK_URL)
 public class MakeOrderFilter extends HttpServlet {
 
     @Override

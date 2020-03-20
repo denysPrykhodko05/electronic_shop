@@ -18,8 +18,7 @@ public class MysqlUserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        return transactionHandler.invokeTransaction(
-            () -> userDAO.add(user));
+        return transactionHandler.invokeTransaction(() -> userDAO.add(user));
     }
 
     @Override

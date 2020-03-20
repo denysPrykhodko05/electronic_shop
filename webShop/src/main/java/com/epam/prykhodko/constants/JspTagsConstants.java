@@ -2,6 +2,7 @@ package com.epam.prykhodko.constants;
 
 public abstract class JspTagsConstants {
 
+    //Elements for pagination tag
     public static final String CLOSE_TAG = "\">";
     public static final String OPEN_TAG_BUTTON_FOR_PAGE = "<button form=\"amountOfProductsForm\" name=\"page\" value=\"";
     public static final String CLOSE_TAG_BUTTON_FOR_PAGE = "</button>";
@@ -17,4 +18,7 @@ public abstract class JspTagsConstants {
     public static final String OPEN_PRODUCT_IMAGE_TAG = "<img src=\"/images/products/";
     public static final String SLASH = "/";
     public static final String CLOSE_IMAGE_TAG = ".jpg\">";
+
+    //Elements for cart view tag
+    public static final String OPEN_DIV_PRICE_TAG = "<div id=\"cartPrice\">price: ";
 }

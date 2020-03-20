@@ -63,11 +63,15 @@ public abstract class ApplicationConstants {
 
     //URL path
     public static final String HOME_URL = "/";
+    public static final String MAKE_ORDER_USER_CHECK_URL = "/makeOrderUserCheck";
+    public static final String REGISTRATION = "/registration";
+    public static final String MAKE_ORDER = "/makeOrder";
 
     //JSP link
     public static final String PRODUCT_JSP = "jsp/products.jsp";
     public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
     public static final String LOGIN_JSP_LINK = "jsp/logIn.jsp";
+    public static final String ORDER_PAGE = "jsp/OrderPage.jsp";
 
     //Product parameters
     public static final String MANUFACTURE = "manufacture";
@@ -105,5 +109,13 @@ public abstract class ApplicationConstants {
 
     //Order constants
     public static final String ORDERED_PRODUCTS = "ordered products";
-
+    public static final String PAYMENT_METHOD = "paymentMethod";
+    public static final String DELIVERY_METHOD = "deliveryMethod";
+    public static final String CARD_NUMBER = "cardNumber";
+    public static final String DATA_OF_CARD = "dataOfCard";
+    public static final String CVC = "CVC";
+    public static final String CARD = "card";
+    public static final String CARD_NUMBER_REGEX = "^\\d{4}-\\d{4}-\\d{4}-\\d{4}$";
+    public static final String CARD_DATE_REGEX = "^\\d{2}/\\d{2}$";
+    public static final String CVC_REGEX = "^\\d{3}$";
 }

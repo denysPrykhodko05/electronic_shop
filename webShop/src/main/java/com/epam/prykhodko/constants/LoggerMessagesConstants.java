@@ -31,4 +31,9 @@ public abstract class LoggerMessagesConstants {
 
     //File exception
     public static final String ERR_CANNOT_LOAD_FILE = "Cannot load file";
+
+    //OrderDAOImpl
+    public static final String ERR_CANNOT_ADD_ORDER = "Cannot add order";
+    public static final String ERR_CANNOT_MAKE_ORDER = "Cannot make order";
+    public static final String ERR_CANNOT_ADD_ORDERED_PRODUCT = "Cannot add ordered product";
 }
