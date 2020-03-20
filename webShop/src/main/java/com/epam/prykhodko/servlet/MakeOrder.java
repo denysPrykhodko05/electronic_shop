@@ -59,7 +59,7 @@ public class MakeOrder extends HttpServlet {
         cart.forEach((k, v) -> orderedProducts.add(createOrderedProduct(k, v)));
 
         session.setAttribute(ORDERED_PRODUCTS, orderedProducts);
-        req.getRequestDispatcher("jsp/OrderPage.jsp").forward(req, resp);
+        req.getRequestDispatcher(ORDER_PAGE).forward(req, resp);
     }
 
     @Override

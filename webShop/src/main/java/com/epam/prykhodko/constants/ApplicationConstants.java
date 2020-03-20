@@ -71,7 +71,7 @@ public abstract class ApplicationConstants {
     public static final String PRODUCT_JSP = "jsp/products.jsp";
     public static final String REGISTRATION_JSP_LINK = "jsp/registration.jsp";
     public static final String LOGIN_JSP_LINK = "jsp/logIn.jsp";
-    public static final String ORDER_PAGE = "jsp/OrderPage.jsp";
+    public static final String ORDER_PAGE = "jsp/orderPage.jsp";
 
     //Product parameters
     public static final String MANUFACTURE = "manufacture";

@@ -36,11 +36,13 @@
         <input class="paymentMethod" type="radio" name="paymentMethod" value="uponReceipt" checked="checked">
         <label>Upon receipt of order</label>
     </div><br>
+
         <c:if test="${not empty errors}">
             <c:forEach var="entry" items="${errors}">
                    <p id="incorrectField">${entry.value}</p>
             </c:forEach>
         </c:if>
+
          <div id="cardMethod">
            <br><br><label>Card number: </label> <input type="tel" name="cardNumber"
                   pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"><br>
@@ -51,15 +53,16 @@
 
          <div id="deliveryDiv">
              Choose delivery method:
-
              <input type="radio" name="deliveryMethod" value="post">
              <label>By post</label>
 
              <input type="radio" name="deliveryMethod" value="fromStore" checked="checked">
              <label>From store</label>
          </div>
+
           <input type="submit" id="submit" value="Submit">
        </form>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="../javascript/utils/OrderUtils"></script>
 </body>

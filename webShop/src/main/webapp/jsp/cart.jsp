@@ -8,7 +8,7 @@
     <link href="../styles/homePage.css" rel="stylesheet">
     <link href="../styles/cart.css" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>Products</title>
+    <title>Cart</title>
 </head>
 
 <body>

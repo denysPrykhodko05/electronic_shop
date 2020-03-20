@@ -45,7 +45,7 @@
      data = JSON.parse(data);
      var success = data.success;
      var cartPrice = document.getElementById("cartPrice");
-     if(success==true){
+     if(success == true){
         var productDiv = document.getElementById(data.productId);
         productDiv.parentNode.removeChild(productDiv);
         cartPrice.textContent = "Price: " + data.cartPrice;
