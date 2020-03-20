@@ -12,7 +12,8 @@ public abstract class JspTagsConstants {
     public static final String OPEN_DIV_PRODUCT_NAME = "<div class=\"product-name\">";
     public static final String OPEN_DIV_PRODUCT_DESCRIPTION = "<div class=\"product-description\">";
     public static final String OPEN_DIV_PRODUCT_PRICE = "<div class=\"product-price\">";
-    public static final String BUY_BOTTON = "<div><button class=\"buy-button\">Buy</button></div>";
+    public static final String OPEN_BUY_BOTTON = "<div><button class=\"buy-button\" data-id=\"";
+    public static final String CLOSE_BUY_BOTTON = "\">Buy</button></div>";
     public static final String OPEN_PRODUCT_IMAGE_TAG = "<img src=\"/images/products/";
     public static final String SLASH = "/";
     public static final String CLOSE_IMAGE_TAG = ".jpg\">";

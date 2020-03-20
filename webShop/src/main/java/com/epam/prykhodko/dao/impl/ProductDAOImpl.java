@@ -119,8 +119,6 @@ public class ProductDAOImpl implements ProductDAO {
             return products;
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_GET_PRODUCT_BY_FILTERS);
-        } finally {
-
         }
         return products;
     }

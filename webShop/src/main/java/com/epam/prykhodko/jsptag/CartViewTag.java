@@ -3,9 +3,9 @@ package com.epam.prykhodko.jsptag;
 import static com.epam.prykhodko.constants.ApplicationConstants.CART;
 
 import com.epam.prykhodko.entity.Cart;
-import com.epam.prykhodko.entity.products.Product;
 import java.io.IOException;
-import java.util.Map.Entry;
+import java.math.BigDecimal;
+import java.util.Objects;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -21,7 +21,11 @@ public class CartViewTag extends SimpleTagSupport {
         HttpSession session = pageContext.getSession();
         Cart cart = (Cart) session.getAttribute(CART);
 
-        for (Entry<Product,Integer> entry:cart.getAll()) {
+        if (Objects.isNull(cart)){
+            return;
         }
+
+        BigDecimal price = cart.cartPrice();
+        jspWriter.print("<div id=\"cartPrice\">price: " + price + "</div>");
     }
 }

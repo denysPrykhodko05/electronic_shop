@@ -2,6 +2,7 @@ package com.epam.prykhodko.servlet;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT;
 import static com.epam.prykhodko.constants.ApplicationConstants.CART;
+import static com.epam.prykhodko.constants.ApplicationConstants.CART_PRICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.SUCCESS;
@@ -33,8 +34,10 @@ public class AddProductToCart extends HttpServlet {
         JsonObject jsonObject = new JsonObject();
         PrintWriter writer = resp.getWriter();
         String reqId = req.getParameter(PRODUCT_ID);
+        String amount = req.getParameter(AMOUNT);
 
         if (Objects.isNull(reqId)) {
+            jsonObject.addProperty(SUCCESS, false);
             writer.write(jsonObject.toString());
             return;
         }
@@ -45,11 +48,15 @@ public class AddProductToCart extends HttpServlet {
         if (Objects.isNull(cart)) {
             cart = new Cart();
         }
+        if (Objects.isNull(amount)) {
+            amount = "1";
+        }
 
-        cart.add(product);
+        cart.add(product, Integer.parseInt(amount));
         session.setAttribute(CART, cart);
         jsonObject.addProperty(SUCCESS, true);
         jsonObject.addProperty(AMOUNT, cart.size());
+        jsonObject.addProperty(CART_PRICE, cart.cartPrice());
         writer.write(jsonObject.toString());
         writer.close();
     }

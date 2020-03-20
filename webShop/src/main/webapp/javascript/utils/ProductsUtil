@@ -1,6 +1,6 @@
   var buy_button = $(".buy-button");
   buy_button.click(function(){
-      var id = buy_button.val();
+     var id = $(this).data(id).id;
       $.ajax({
       url: "/addToCart",
       method: "POST",

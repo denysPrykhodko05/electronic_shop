@@ -50,7 +50,7 @@ public abstract class ApplicationConstants {
     public static final String REG_FORM = "regFormBean";
     public static final String USER_SERVICE = "userService";
     public static final String PRODUCT_SERVICE = "productService";
-    public static final String ALL_PRODUCT_LIST = "all_product_list";
+    public static final String ORDER_SERVICE = "orderService";
     public static final String AMOUNT_OF_PRODUCTS = "amountOfProducts";
     public static final String IMAGE_DRAW = "imageDraw";
     public static final String AVATARS_PATH = "src\\main\\webapp\\images\\avatars\\";
@@ -101,5 +101,6 @@ public abstract class ApplicationConstants {
     public static final String PRODUCT_ID = "productId";
     public static final String SUCCESS = "success";
     public static final String AMOUNT = "amount";
+    public static final String CART_PRICE = "cartPrice";
 
 }
