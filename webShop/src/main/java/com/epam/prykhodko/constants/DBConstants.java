@@ -38,4 +38,6 @@ public abstract class DBConstants {
     public static final String OR_WITH_MANUFACTURE = " or manufacture='";
     public static final String PRODUCT_CATEGORY_NAME = "(product_category.name = '";
     public static final String OR_WITH_PRODUCT_CATEGORY_NAME = " or product_category.name = '";
+    public static final String LIMIT = " LIMIT ";
+    public static final String COMMA = ", ";
 }

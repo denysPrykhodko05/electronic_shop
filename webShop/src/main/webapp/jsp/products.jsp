@@ -4,7 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="productTag" uri="/tld/ProductViewTag.tld"%>
-<%@ taglib prefix="viewListOfFilters" uri="/tld/ViewListOfFilters.tld"%>
+<%@ taglib prefix="paginationTag" uri="/tld/PaginationTag.tld"%>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -22,6 +23,7 @@
         </div>
     </form>
         <select form="amountOfProductsForm" name="sort" onchange="this.form.submit()">
+            <c:set var="sortType" value="${filters.currentSort}"/>
             <c:if test="${not empty sortType}">
               <option value="${sortType}">${sortType}</option>
             </c:if>
@@ -36,70 +38,26 @@
           <!-- filters-->
               <div id="filter-manufacture">
                   Manufacture<br>
-                        <c:choose>
-                            <c:when test="${not empty manufactureCheck}">
-                                <c:forEach var="manufacture" items="${manufactures}">
-                                      <c:choose>
-                                        <c:when test="${fn:contains(manufactureCheck, manufacture)}">
-                                          <input form="amountOfProductsForm" type="checkbox" name="manufacture" value="${manufacture}" checked="checked"> ${manufacture}<br>
-                                        </c:when>
-                                        <c:otherwise>
-                                             <input form="amountOfProductsForm"  type="checkbox" name="manufacture" value="${manufacture}" > ${manufacture}<br>
-                                        </c:otherwise>
-                                      </c:choose>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                               <c:forEach var="manufacture" items="${manufactures}">
-                                 <input form="amountOfProductsForm" type="checkbox" name="manufacture" value="${manufacture}" > ${manufacture}<br>
-                               </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-
-                       <!-- <viewListOfProducts:ViewListOfFilters list="${manufactures}" checkedList="${manufactureCheck}" parameterName="manufacture"/>-->
+                  <c:set var="manufactures" value="${filters.manufactures}"/>
+                  <c:set var="manufactureCheck" value="${filters.choosenManufactureList}"/>
+                  <productTag:ViewListOfFilters list="${manufactures}" checkedList="${manufactureCheck}" parameterName="manufacture"/>
                   <br>
               </div>
               <div id="price-filter">
                   Price<br>
-                  Min: <input form="amountOfProductsForm" id="minPrice" type="number" name="minPrice" value="${minPriceInput}"><br>Max: <input id="maxPrice" type="number" name="maxPrice" value="${maxPriceInput}"><br><br>
+                  Min: <input form="amountOfProductsForm" id="minPrice" type="number" name="minPrice" value="${filters.minPrice}"><br>Max: <input id="maxPrice" type="number" name="maxPrice" value="${filters.maxPrice}"><br><br>
               </div>
               <div id="category-filter">
                   Category<br>
-                  <c:choose>
-                      <c:when test="${not empty categoryCheck}">
-                          <c:forEach var="category" items="${categories}">
-                                <c:choose>
-                                  <c:when test="${fn:contains(categoryCheck, category)}">
-                                    <input form="amountOfProductsForm" type="checkbox" name="category" value="${category}" checked="checked"> ${category}<br>
-                                  </c:when>
-                                  <c:otherwise>
-                                       <input form="amountOfProductsForm" type="checkbox" name="category" value="${category}" > ${category}<br>
-                                  </c:otherwise>
-                                </c:choose>
-                          </c:forEach>
-                      </c:when>
-                      <c:otherwise>
-                         <c:forEach var="category" items="${categories}">
-                           <input form="amountOfProductsForm" type="checkbox" name="category" value="${category}" > ${category}<br>
-                         </c:forEach>
-                      </c:otherwise>
-                  </c:choose>
+                  <productTag:ViewListOfFilters list="${filters.categories}" checkedList="${filters.chossenCategoryList}" parameterName="category"/>
               </div>
               <br>
               <input form="amountOfProductsForm" type="submit" value=ok><br>
         </div>
         <div id="center-column">
-            <c:set var="pageNumber" value="${1}"/>
-            <c:forEach begin="1" end="${pageAmount}">
-               <button form="amountOfProductsForm" name="page" value="${pageNumber}">
-                   ${pageNumber}
-                   <c:set var="pageNumber" value="${pageNumber+1}"/>
-               </button>
-            </c:forEach>
-            <div id="contentHalder">
-               <productTag:ProductViewTag products="${all_product_list}" amountOfProducts="${amountOfProducts}"/>
-            </div>
+           <paginationTag:PaginationTag/>
         </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script defer src="..\javascript\constants\constants.js"></script>

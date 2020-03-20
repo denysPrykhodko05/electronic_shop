@@ -81,6 +81,12 @@
       <groupId>commons-codec</groupId>
       <version>1.9</version>
     </dependency>
+    <dependency>
+      <artifactId>jsp-api</artifactId>
+      <groupId>javax.servlet</groupId>
+      <scope>provided</scope>
+      <version>2.0</version>
+    </dependency>
 
   </dependencies>
   <groupId>com.epam</groupId>

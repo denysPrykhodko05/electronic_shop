@@ -1,6 +1,5 @@
 package com.epam.prykhodko.entity.products;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Smartphone extends Product {
@@ -15,13 +14,6 @@ public class Smartphone extends Product {
         super(telephone);
     }
 
-    public Smartphone(int id, String name, BigDecimal price, String manufacturer, String communicationStandard,
-        String modelOfTouchScreen, String description) {
-        super(id, name, price, manufacturer, "smartphone", description);
-        this.modelOfTouchScreen = modelOfTouchScreen;
-        this.communicationStandard = communicationStandard;
-    }
-
     public String getModelOfTouchScreen() {
         return modelOfTouchScreen;
     }
@@ -30,19 +22,20 @@ public class Smartphone extends Product {
         this.modelOfTouchScreen = modelOfTouchScreen;
     }
 
-  public String getCommunicationStandard() {
-    return communicationStandard;
-  }
+    public String getCommunicationStandard() {
+        return communicationStandard;
+    }
 
-  public void setCommunicationStandard(String communicationStandard) {
-    this.communicationStandard = communicationStandard;
-  }
+    public void setCommunicationStandard(String communicationStandard) {
+        this.communicationStandard = communicationStandard;
+    }
 
-  @Override
+    @Override
     public boolean equals(Object o) {
         if (!super.equals(o)) {
             return false;
         }
+
         Smartphone that = (Smartphone) o;
         return Objects.equals(modelOfTouchScreen, that.modelOfTouchScreen);
     }

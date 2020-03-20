@@ -18,7 +18,7 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GE
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_PRODUCT_BY_ID;
 import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
-import com.epam.prykhodko.dao.DAOProduct;
+import com.epam.prykhodko.dao.ProductDAO;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.ConnectionHolder;
 import java.math.BigDecimal;
@@ -29,19 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class ProductDAO implements DAOProduct {
+public class ProductDAOImpl implements ProductDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
-
-    @Override
-    public Product getByName(String name) {
-        return null;
-    }
+    private static final Logger LOGGER = Logger.getLogger(ProductDAOImpl.class);
 
     @Override
     public Product get(int id) {
-        try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_PRODUCT_BY_ID);
-            ResultSet resultSet = pstm.executeQuery()) {
+        try (PreparedStatement pstm = ConnectionHolder.getConnection().prepareStatement(GET_PRODUCT_BY_ID)) {
+            ResultSet resultSet = pstm.executeQuery();
             pstm.setInt(1, id);
             if (resultSet.next()) {
                 return parseResultSetToProduct(resultSet);
@@ -55,8 +50,8 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<Product> getAll() {
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_PRODUCTS);
-            ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_ALL_PRODUCTS)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 products.add(parseResultSetToProduct(resultSet));
             }
@@ -83,11 +78,6 @@ public class ProductDAO implements DAOProduct {
     }
 
     @Override
-    public void update(Product product, String[] params) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean delete(Product product) {
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(DELETE_PRODUCT_BY_NAME);) {
             preparedStatement.setString(1, product.getName());
@@ -100,11 +90,15 @@ public class ProductDAO implements DAOProduct {
         return false;
     }
 
+    /**
+     * @param query - query to database
+     * @return specified parameter of {@link Product} from database, etc manufacture, categories
+     */
     @Override
     public List<String> getDefineParameter(String query) {
         List<String> parameters = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 parameters.add(resultSet.getString(1));
             }
@@ -117,20 +111,22 @@ public class ProductDAO implements DAOProduct {
     @Override
     public List<Product> getFilteredEntity(String query) {
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 products.add(parseResultSetToProduct(resultSet));
             }
             return products;
         } catch (SQLException e) {
             LOGGER.error(ERR_CANNOT_GET_PRODUCT_BY_FILTERS);
+        } finally {
+
         }
         return products;
     }
 
     private void fillPreparedStatementByProductData(PreparedStatement pstmt, Product product) throws SQLException {
-        int i=INTEGER_ZERO;
+        int i = 0;
         pstmt.setString(++i, product.getName());
         pstmt.setInt(++i, Integer.parseInt(product.getPrice().toString()));
         pstmt.setString(++i, product.getManufacturer());
