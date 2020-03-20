@@ -13,6 +13,6 @@ public interface UserDAO {
 
     boolean delete(User user);
 
-    User getByName(String name);
+    User getByLogin(String name);
 
 }

@@ -14,18 +14,6 @@ $(document).ready(function() {
       $(field).removeClass(INVALID_STRING).addClass(VALID_STRING);
       $('#amountOfProductsForm').submit();
   });
-/*
-  $('#amountOfProductsForm').on('submit',function(){
-      var valid = $(field).hasClass(INVALID_STRING);
-
-      if(valid){
-        event.preventDefault();
-        return;
-      }
-
-      $(field).removeClass(INVALID_STRING).addClass(VALID_STRING);
-      $('#amountOfProductsForm').submit();
-  });*/
 
   function numberValidator(data){
      data.change(function(e) {

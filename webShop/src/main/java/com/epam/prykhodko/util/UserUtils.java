@@ -24,7 +24,7 @@ public class UserUtils {
     }
 
     public void checkLoginAndEmail(User user, UserService userService, Map<String, String> errors) {
-        if (Objects.nonNull(userService.getByName(user.getLogin()))) {
+        if (Objects.nonNull(userService.getByLogin(user.getLogin()))) {
             errors.put(LOGIN, USER_LOGIN_EXISTS);
             return;
         }

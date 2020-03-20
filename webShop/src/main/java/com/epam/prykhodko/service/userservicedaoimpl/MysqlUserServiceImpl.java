@@ -18,8 +18,7 @@ public class MysqlUserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        return transactionHandler.invokeTransaction(
-            () -> userDAO.add(user));
+        return transactionHandler.invokeTransaction(() -> userDAO.add(user));
     }
 
     @Override
@@ -28,8 +27,8 @@ public class MysqlUserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByName(String login) {
-        return transactionHandler.invokeWithoutTransaction(() -> userDAO.getByName(login));
+    public User getByLogin(String login) {
+        return transactionHandler.invokeWithoutTransaction(() -> userDAO.getByLogin(login));
     }
 
     @Override

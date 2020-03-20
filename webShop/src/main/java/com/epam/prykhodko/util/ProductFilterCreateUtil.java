@@ -80,7 +80,7 @@ public class ProductFilterCreateUtil {
         stringBuilder.append(query)
             .append(LIMIT)
             .append(amountProductsOnPage * pageNumber - amountProductsOnPage)
-            .append(COMMA).append(amountProductsOnPage * pageNumber);
+            .append(COMMA).append(amountProductsOnPage);
         return stringBuilder.toString();
     }
 
@@ -152,11 +152,6 @@ public class ProductFilterCreateUtil {
     }
 
     public static String combineFilterSettings(String amountFromForm,HttpServletRequest req, FilterBean filterBean){
-        ServletContext servletContext = req.getServletContext();
-        if (Objects.isNull(amountFromForm)) {
-            amountFromForm = servletContext.getInitParameter(DEFAULT_PRODUCTS_ON_PAGE);
-        }
-
         ProductFilterCreateUtil.setAmountOfProducts(req, amountFromForm);
         String sortQuery = ProductFilterCreateUtil.makeSortQueryForProducts(filterBean.getCurrentSort());
         filterBean.setSortQuery(sortQuery);

@@ -9,7 +9,7 @@ public interface UserService {
 
     boolean delete(User entity);
 
-    User getByName(String name);
+    User getByLogin(String login);
 
     List<User> getAll();
 }

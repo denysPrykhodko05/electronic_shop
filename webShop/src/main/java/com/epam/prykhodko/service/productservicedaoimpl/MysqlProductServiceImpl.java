@@ -8,7 +8,6 @@ import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.service.ProductService;
 import java.util.List;
-import java.util.Optional;
 
 public class MysqlProductServiceImpl implements ProductService {
 
@@ -32,9 +31,10 @@ public class MysqlProductServiceImpl implements ProductService {
 
     @Override
     public Product getByName(String name) {
-        List<Product> products = productDAO.getAll();
-        Optional<Product> product = products.stream().filter(e -> e.getName().equals(name)).findFirst();
-        return product.orElse(null);
+        return getAll().stream()
+            .filter(e -> e.getName().equals(name))
+            .findFirst()
+            .orElse(null);
     }
 
     @Override
@@ -57,4 +57,8 @@ public class MysqlProductServiceImpl implements ProductService {
         return transactionHandler.invokeWithoutTransaction(() -> productDAO.getFilteredEntity(query));
     }
 
+    @Override
+    public Product getById(int id) {
+        return transactionHandler.invokeWithoutTransaction(() -> productDAO.get(id));
+    }
 }

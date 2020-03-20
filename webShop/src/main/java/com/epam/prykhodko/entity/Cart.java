@@ -1,0 +1,52 @@
+package com.epam.prykhodko.entity;
+
+import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
+
+import com.epam.prykhodko.entity.products.Product;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+public class Cart {
+
+    private final Map<Product, Integer> cartMap = new HashMap<>();
+
+    public Product add(Product product, int amountOfProducts) {
+        cartMap.put(product, amountOfProducts);
+        return product;
+    }
+
+    public Integer delete(int id) {
+        Optional<Product> product = cartMap.keySet().stream().filter(e -> e.getId() == id).findFirst();
+        if (product.isPresent()) {
+            return cartMap.remove(product.get());
+        }
+        return -1;
+    }
+
+    public Set<Entry<Product, Integer>> getAll() {
+        return cartMap.entrySet();
+    }
+
+    public int size() {
+        return cartMap.values().stream().mapToInt(v -> v).sum();
+    }
+
+    public BigDecimal cartPrice() {
+        final BigDecimal[] sum = {new BigDecimal(INTEGER_ZERO)};
+        cartMap.entrySet().forEach(k -> {
+            if (Objects.nonNull(k)) {
+                sum[0] = sum[0].add(k.getKey().getPrice().multiply(BigDecimal.valueOf(k.getValue())));
+            }
+        });
+        return sum[0];
+    }
+
+    public Map<Product, Integer> getCart() {
+        return cartMap;
+    }
+}
