@@ -10,7 +10,7 @@ public abstract class DBConstants {
     public static final String GET_ALL_USERS = "SELECT * FROM user";
     public static final String GET_USER_BY_ID = "SELECT * FROM user WHERE id =?";
     public static final String DELETE_USER_BY_LOGIN = "DELETE FROM user WHERE login=?";
-    public static final String GET_USER_BY_NAME = "SELECT id, name, surname, login, email, password, role_id FROM user WHERE login = ?";
+    public static final String GET_USER_BY_LOGIN = "SELECT id, name, surname, login, email, password, role_id FROM user WHERE login = ?";
 
     //PRODUCTDAO QUERIES
     public static final String ADD_PRODUCT = "INSERT INTO product(name, price, manufacture, category) VALUES(?,?,?,?)";
@@ -23,6 +23,10 @@ public abstract class DBConstants {
     public static final String GET_ALL_PRODUCTS_FROM_HIGH_PRICE = " ORDER BY product.price DESC";
     public static final String GET_ALL_PRODUCTS_FROM_A_Z = " ORDER BY product.name";
     public static final String GET_ALL_PRODUCTS_FROM_Z_A = " ORDER BY product.name DESC";
+
+    //ORDERDAO QUERIES
+    public static final String INSERT_INTO_ORDER = "INSERT INTO orders (status, description, date, user_email) VALUES (?,?,?,?)";
+    public static final String INSERT_INTO_ORDERED_PRDUCT = "INSERT INTO ordered_product (product_id, order_id, price, amount) VALUES (?,?,?,?)";
 
     //Other db constants
     public static final String SAVEPOINT_INVOKE_TRANSACTION = "savepointInvokeTransaction";

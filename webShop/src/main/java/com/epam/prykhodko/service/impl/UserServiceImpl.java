@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByName(String login) {
+    public User getByLogin(String login) {
         List<User> users = userRepository.get();
         Optional<User> user = users.stream().filter(e -> e.getLogin().equals(login)).findFirst();
         return user.orElse(null);

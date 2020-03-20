@@ -4,5 +4,5 @@ import com.epam.prykhodko.entity.Order;
 
 public interface OrderService {
 
-    void add(Order order);
+    Order add(Order order);
 }

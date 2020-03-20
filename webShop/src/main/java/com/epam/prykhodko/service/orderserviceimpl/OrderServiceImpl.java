@@ -16,7 +16,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void add(Order order) {
-        transactionHandler.invokeTransaction(()->orderDAO.add(order));
+    public Order add(Order order) {
+        return transactionHandler.invokeTransaction(()->orderDAO.add(order));
     }
 }

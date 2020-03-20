@@ -109,7 +109,7 @@ public class RegistrationServlet extends HttpServlet {
 
         User user = userUtils.createUserFromBean(formBean);
 
-        if (Objects.nonNull(userService.getByName(user.getLogin()))) {
+        if (Objects.nonNull(userService.getByLogin(user.getLogin()))) {
             userUtils.checkLoginAndEmail(user, userService, errors);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);

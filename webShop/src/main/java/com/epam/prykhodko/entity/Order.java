@@ -1,5 +1,6 @@
 package com.epam.prykhodko.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class Order {
     private int id;
     private OrderStatus orderStatus;
     private String description;
-    private Date date;
+    private LocalDate date;
     private String userEmail;
     private List<OrderedProduct> orderedProducts;
 
@@ -36,11 +37,11 @@ public class Order {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -103,4 +103,7 @@ public abstract class ApplicationConstants {
     public static final String AMOUNT = "amount";
     public static final String CART_PRICE = "cartPrice";
 
+    //Order constants
+    public static final String ORDERED_PRODUCTS = "ordered products";
+
 }

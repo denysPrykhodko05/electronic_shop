@@ -11,7 +11,7 @@ import static com.epam.prykhodko.constants.DBConstants.ADD_USER;
 import static com.epam.prykhodko.constants.DBConstants.DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.DBConstants.GET_ALL_USERS;
 import static com.epam.prykhodko.constants.DBConstants.GET_USER_BY_ID;
-import static com.epam.prykhodko.constants.DBConstants.GET_USER_BY_NAME;
+import static com.epam.prykhodko.constants.DBConstants.GET_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_ADD_USER;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_DELETE_USER_BY_LOGIN;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_GET_ALL_USERS;
@@ -98,8 +98,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getByName(String login) {
-        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_NAME)) {
+    public User getByLogin(String login) {
+        try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(GET_USER_BY_LOGIN)) {
             preparedStatement.setString(INTEGER_ONE, login);
             ResultSet resultSet = preparedStatement.executeQuery();
 
