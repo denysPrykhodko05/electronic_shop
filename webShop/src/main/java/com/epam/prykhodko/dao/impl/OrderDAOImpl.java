@@ -9,7 +9,7 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ONE;
 
 import com.epam.prykhodko.dao.OrderDAO;
 import com.epam.prykhodko.entity.Order;
-import com.epam.prykhodko.entity.OrderedProduct;
+import com.epam.prykhodko.entity.OrderedItem;
 import com.epam.prykhodko.handler.ConnectionHolder;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -26,7 +26,6 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Order add(Order order) {
-        ResultSet resultSet;
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(INSERT_INTO_ORDER, Statement.RETURN_GENERATED_KEYS)) {
             fillPreparedStatementByOrder(order, preparedStatement);
 
@@ -35,12 +34,12 @@ public class OrderDAOImpl implements OrderDAO {
                 return null;
             }
 
-            resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 addOrderIdToOrderedProducts(resultSet, order);
             }
 
-            if (Objects.nonNull(addOrderedProduct(order.getOrderedProducts()))) {
+            if (Objects.nonNull(addOrderedProduct(order.getOrderedItems()))) {
                 return order;
             }
 
@@ -51,12 +50,12 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<OrderedProduct> addOrderedProduct(List<OrderedProduct> orderedProducts) {
+    public List<OrderedItem> addOrderedProduct(List<OrderedItem> orderedItems) {
         try (PreparedStatement preparedStatement = ConnectionHolder.getConnection().prepareStatement(INSERT_INTO_ORDERED_PRDUCT)) {
-            fillPreparedStatmentByOrderedProducts(orderedProducts, preparedStatement);
+            fillPreparedStatmentByOrderedProducts(orderedItems, preparedStatement);
 
             if (!preparedStatement.executeBatch().equals(Statement.EXECUTE_FAILED)) {
-                return orderedProducts;
+                return orderedItems;
             }
 
         } catch (SQLException e) {
@@ -74,13 +73,13 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     private void addOrderIdToOrderedProducts(ResultSet resultSet, Order order) throws SQLException {
-        for (OrderedProduct o : order.getOrderedProducts()) {
+        for (OrderedItem o : order.getOrderedItems()) {
             o.setOrderId(resultSet.getInt(INTEGER_ONE));
         }
     }
 
-    private void fillPreparedStatmentByOrderedProducts(List<OrderedProduct> orderedProducts, PreparedStatement preparedStatement) throws SQLException {
-        for (OrderedProduct op : orderedProducts) {
+    private void fillPreparedStatmentByOrderedProducts(List<OrderedItem> orderedItems, PreparedStatement preparedStatement) throws SQLException {
+        for (OrderedItem op : orderedItems) {
             int i = 0;
             preparedStatement.setInt(++i, op.getProductId());
             preparedStatement.setInt(++i, op.getOrderId());

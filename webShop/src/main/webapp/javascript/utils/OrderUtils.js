@@ -1,3 +1,4 @@
+$(document).ready(function() {
 var payment = $("input[name='paymentMethod']");
  payment.change(function(){
     var method = $(this).val();
@@ -7,3 +8,4 @@ var payment = $("input[name='paymentMethod']");
         $("#cardMethod").css("display", "none");
     }
  });
+});

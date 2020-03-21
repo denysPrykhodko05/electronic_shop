@@ -10,7 +10,7 @@ public class Order {
     private String description;
     private LocalDate date;
     private String userEmail;
-    private List<OrderedProduct> orderedProducts;
+    private List<OrderedItem> orderedItems;
 
     public int getId() {
         return id;
@@ -52,11 +52,11 @@ public class Order {
         this.userEmail = userEmail;
     }
 
-    public List<OrderedProduct> getOrderedProducts() {
-        return orderedProducts;
+    public List<OrderedItem> getOrderedItems() {
+        return orderedItems;
     }
 
-    public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
-        this.orderedProducts = orderedProducts;
+    public void setOrderedItems(List<OrderedItem> orderedItems) {
+        this.orderedItems = orderedItems;
     }
 }

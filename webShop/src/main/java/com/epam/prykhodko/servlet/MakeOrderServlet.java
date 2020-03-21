@@ -26,7 +26,7 @@ import com.epam.prykhodko.bean.OrderBean;
 import com.epam.prykhodko.entity.Cart;
 import com.epam.prykhodko.entity.Order;
 import com.epam.prykhodko.entity.OrderStatus;
-import com.epam.prykhodko.entity.OrderedProduct;
+import com.epam.prykhodko.entity.OrderedItem;
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.entity.products.Product;
 import com.epam.prykhodko.service.OrderService;
@@ -48,17 +48,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(MAKE_ORDER)
-public class MakeOrder extends HttpServlet {
+public class MakeOrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Map<Product, Integer> cart = ((Cart) session.getAttribute(CART)).getCart();
-        List<OrderedProduct> orderedProducts = new ArrayList<>();
+        List<OrderedItem> orderedItems = new ArrayList<>();
 
-        cart.forEach((k, v) -> orderedProducts.add(createOrderedProduct(k, v)));
+        cart.forEach((k, v) -> orderedItems.add(createOrderedProduct(k, v)));
 
-        session.setAttribute(ORDERED_PRODUCTS, orderedProducts);
+        session.setAttribute(ORDERED_PRODUCTS, orderedItems);
         req.getRequestDispatcher(ORDER_PAGE).forward(req, resp);
     }
 
@@ -70,14 +70,13 @@ public class MakeOrder extends HttpServlet {
         Validator validator = (Validator) servletContext.getAttribute(VALIDATOR);
         UserService userService = (UserService) servletContext.getAttribute(USER_SERVICE);
         OrderService orderService = (OrderService) servletContext.getAttribute(ORDER_SERVICE);
-        List<OrderedProduct> orderedProducts = (List<OrderedProduct>) session.getAttribute(ORDERED_PRODUCTS);
+        List<OrderedItem> orderedItems = (List<OrderedItem>) session.getAttribute(ORDERED_PRODUCTS);
         String login = (String) session.getAttribute(USER_LOGIN);
-        OrderBean orderBean = new OrderBean();
         Map<String, String> errors = new LinkedHashMap<>();
         Order order;
         User user;
 
-        orderBean.setOrderBeanFromRequest(req);
+        OrderBean orderBean = OrderBean.setOrderBeanFromRequest(req);
         orderBeanValidation(orderBean, validator, errors);
 
         if (errors.size() > INTEGER_ZERO) {
@@ -92,7 +91,7 @@ public class MakeOrder extends HttpServlet {
         }
 
         user = userService.getByLogin(login);
-        order = fillOrder(orderedProducts, user.getEmail(), OrderStatus.ACCEPTED);
+        order = createOrder(orderedItems, user.getEmail(), OrderStatus.ACCEPTED);
 
         if (Objects.isNull(orderService.add(order))) {
             resp.sendRedirect(MAKE_ORDER);
@@ -103,18 +102,18 @@ public class MakeOrder extends HttpServlet {
         resp.sendRedirect(HOME_URL);
     }
 
-    private OrderedProduct createOrderedProduct(Product product, int amount) {
-        OrderedProduct orderedProduct = new OrderedProduct();
-        orderedProduct.setProductId(product.getId());
-        orderedProduct.setPrice(product.getPrice());
-        orderedProduct.setAmount(amount);
-        return orderedProduct;
+    private OrderedItem createOrderedProduct(Product product, int amount) {
+        OrderedItem orderedItem = new OrderedItem();
+        orderedItem.setProductId(product.getId());
+        orderedItem.setPrice(product.getPrice());
+        orderedItem.setAmount(amount);
+        return orderedItem;
     }
 
-    private Order fillOrder(List<OrderedProduct> orderedProducts, String email, OrderStatus orderStatus) {
+    private Order createOrder(List<OrderedItem> orderedItems, String email, OrderStatus orderStatus) {
         Order order = new Order();
         order.setDate(LocalDate.now());
-        order.setOrderedProducts(orderedProducts);
+        order.setOrderedItems(orderedItems);
         order.setUserEmail(email);
         order.setOrderStatus(orderStatus);
         return order;

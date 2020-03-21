@@ -5,7 +5,6 @@ import static com.epam.prykhodko.constants.ApplicationConstants.CART;
 import static com.epam.prykhodko.constants.ApplicationConstants.CART_PRICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
-import static com.epam.prykhodko.constants.ApplicationConstants.SUCCESS;
 
 import com.epam.prykhodko.entity.Cart;
 import com.epam.prykhodko.entity.products.Product;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Objects;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +24,7 @@ import javax.servlet.http.HttpSession;
 public class AddProductToCart extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ServletContext servletContext = req.getServletContext();
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute(CART);
@@ -37,7 +35,6 @@ public class AddProductToCart extends HttpServlet {
         String amount = req.getParameter(AMOUNT);
 
         if (Objects.isNull(reqId)) {
-            jsonObject.addProperty(SUCCESS, false);
             writer.write(jsonObject.toString());
             return;
         }
@@ -55,7 +52,6 @@ public class AddProductToCart extends HttpServlet {
 
         cart.add(product, Integer.parseInt(amount));
         session.setAttribute(CART, cart);
-        jsonObject.addProperty(SUCCESS, true);
         jsonObject.addProperty(AMOUNT, cart.size());
         jsonObject.addProperty(CART_PRICE, cart.cartPrice());
         writer.write(jsonObject.toString());

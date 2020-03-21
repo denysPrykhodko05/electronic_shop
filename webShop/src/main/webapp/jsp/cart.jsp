@@ -7,14 +7,19 @@
 <head>
     <link href="../styles/homePage.css" rel="stylesheet">
     <link href="../styles/cart.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script defer src="..\javascript\utils\CartUtil.js"></script>
     <meta charset="UTF-8">
     <title>Cart</title>
 </head>
 
 <body>
+
   <div id="productholder">
     <c:forEach var="product" items="${cart.cart}">
         <div class="product" id="${product.key.id}">
+
+              <!-- product image-->
               <div id="productImg"><img src="/images/products/${product.key.category}/${product.key.name}.jpg"/></div>
 
               <!--product name-->
@@ -34,17 +39,23 @@
          </div>
     </c:forEach>
   </div>
+
+  <!-- Block to manage cart -->
   <div id="productInfoBlock">
+
     <c:if test="${not empty cart.cart}">
+
         <cartView:CartView/>
+
         <div id="clearCart">
             <button id="clearCartButton">Clear cart</button>
         </div>
+
         <div id="makeOrder">
             <button id="makeOrderButton">Make order</button>
         </div>
+
      </c:if>
+
   </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script defer src="..\javascript\utils\CartUtil.js"></script>
 </body>

@@ -2,7 +2,7 @@ package com.epam.prykhodko.entity;
 
 import java.math.BigDecimal;
 
-public class OrderedProduct {
+public class OrderedItem {
 
     private int productId;
     private int orderId;

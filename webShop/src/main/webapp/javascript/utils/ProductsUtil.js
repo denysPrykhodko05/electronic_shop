@@ -1,3 +1,4 @@
+ $(document).ready(function() {
   var buy_button = $(".buy-button");
   buy_button.click(function(){
      var id = $(this).data(id).id;
@@ -14,3 +15,4 @@
   var cartRef = document.getElementById("cartRef");
   cartRef.text = "Cart(" + data.amount + ")";
   }
+});

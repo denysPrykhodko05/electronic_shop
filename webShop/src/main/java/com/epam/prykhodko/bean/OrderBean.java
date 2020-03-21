@@ -10,18 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 
 public class OrderBean {
 
-    private String payment;
-    private String delivery;
-    private String cardNumber;
-    private String dataOfCard;
-    private String cvc;
+    private static String payment;
+    private static String delivery;
+    private static String cardNumber;
+    private static String dataOfCard;
+    private static String cvc;
 
-    public void setOrderBeanFromRequest(HttpServletRequest request) {
-        payment = request.getParameter(PAYMENT_METHOD);
-        delivery = request.getParameter(DELIVERY_METHOD);
-        cardNumber = request.getParameter(CARD_NUMBER);
-        dataOfCard = request.getParameter(DATA_OF_CARD);
-        cvc = request.getParameter(CVC);
+    public static OrderBean setOrderBeanFromRequest(HttpServletRequest request) {
+        OrderBean orderBean = new OrderBean();
+        orderBean.payment = request.getParameter(PAYMENT_METHOD);
+        orderBean.delivery = request.getParameter(DELIVERY_METHOD);
+        orderBean.cardNumber = request.getParameter(CARD_NUMBER);
+        orderBean.dataOfCard = request.getParameter(DATA_OF_CARD);
+        orderBean.cvc = request.getParameter(CVC);
+        return orderBean;
     }
 
     public String getPayment() {
