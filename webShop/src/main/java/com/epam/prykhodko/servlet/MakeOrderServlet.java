@@ -10,7 +10,6 @@ import static com.epam.prykhodko.constants.ApplicationConstants.CVC_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.DATA_OF_CARD;
 import static com.epam.prykhodko.constants.ApplicationConstants.DELIVERY_METHOD;
 import static com.epam.prykhodko.constants.ApplicationConstants.ERRORS;
-import static com.epam.prykhodko.constants.ApplicationConstants.HOME_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.MAKE_ORDER;
 import static com.epam.prykhodko.constants.ApplicationConstants.ORDERED_PRODUCTS;
 import static com.epam.prykhodko.constants.ApplicationConstants.ORDER_PAGE;
@@ -76,7 +75,7 @@ public class MakeOrderServlet extends HttpServlet {
         Order order;
         User user;
 
-        OrderBean orderBean = OrderBean.setOrderBeanFromRequest(req);
+        OrderBean orderBean = OrderBean.createOrderBeanFromRequest(req);
         orderBeanValidation(orderBean, validator, errors);
 
         if (errors.size() > INTEGER_ZERO) {
@@ -92,14 +91,15 @@ public class MakeOrderServlet extends HttpServlet {
 
         user = userService.getByLogin(login);
         order = createOrder(orderedItems, user.getEmail(), OrderStatus.ACCEPTED);
-
-        if (Objects.isNull(orderService.add(order))) {
+        Order ordered = orderService.add(order);
+        if (Objects.isNull(ordered)) {
             resp.sendRedirect(MAKE_ORDER);
             return;
         }
 
+        req.setAttribute("orderId", ordered.getId());
         cart.getCart().clear();
-        resp.sendRedirect(HOME_URL);
+        req.getRequestDispatcher("jsp/orderedPage.jsp").forward(req, resp);
     }
 
     private OrderedItem createOrderedProduct(Product product, int amount) {

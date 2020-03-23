@@ -3,17 +3,16 @@ $(document).ready(function() {
   var delete_button = $(".delete-button");
   var clear_cart_button = $("#clearCartButton");
   var make_order_button = $("#makeOrderButton");
-
   increase_amount_button.change(function(){
      var amount = $(this).val();
      var id = $(this).data(id).id;
 
-     if(amount > 0 && amount <= 15){
+     if(amount > 0 && amount <= 15 ){
          $.ajax({
-         url: "/addToCart",
-         method: "POST",
-         data: ({productId: id,amount:amount}),
-         success: responseForAdd
+           url: "/addToCart",
+           method: "POST",
+           data: ({productId: id,amount:amount}),
+           success: responseForAdd
          });
       }
   });
@@ -48,11 +47,13 @@ $(document).ready(function() {
      data = JSON.parse(data);
      var success = data.success;
      var cartPrice = document.getElementById("cartPrice");
+     var cartRef = document.getElementById("cartRef");
 
      if(cartPrice != undefined){
         var productDiv = document.getElementById(data.productId);
         productDiv.parentNode.removeChild(productDiv);
         cartPrice.textContent = "Price: " + data.cartPrice;
+        cartRef.text = "Cart(" + data.amount + ")";
         return;
      }
      alert("Cannot delete product!!!");
@@ -64,17 +65,20 @@ $(document).ready(function() {
   var cartPrice = document.getElementById("cartPrice");
   cartPrice.textContent = "Price: " + data.cartPrice;
   cartRef.text = "Cart(" + data.amount + ")";
+  prev = data.amount;
   }
 
   function responseForClear(data){
     data = JSON.parse(data);
     var productInfoBlock = document.getElementById("productInfoBlock");
     var productHolder = document.getElementById("productholder");
+    var cartRef = document.getElementById("cartRef");
     var success = data.success;
 
     if(success = true){
       productHolder.parentNode.removeChild(productholder);
       productInfoBlock.parentNode.removeChild(productInfoBlock);
+      cartRef.text = "Cart";
       return;
     }
     alert("Cannot clear cart!!!");
@@ -88,6 +92,6 @@ $(document).ready(function() {
           window.location = "/makeOrder";
           return;
       }
-      window.location = "/registration";
+          window.location = "/login";
   }
 });

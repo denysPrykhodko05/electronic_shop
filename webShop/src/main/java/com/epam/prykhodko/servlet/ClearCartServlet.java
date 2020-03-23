@@ -1,5 +1,6 @@
 package com.epam.prykhodko.servlet;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT;
 import static com.epam.prykhodko.constants.ApplicationConstants.CART;
 import static com.epam.prykhodko.constants.ApplicationConstants.SUCCESS;
 
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/clearCart")
 public class ClearCartServlet extends HttpServlet {
@@ -19,6 +21,7 @@ public class ClearCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Cart cart = (Cart) req.getSession().getAttribute(CART);
+        HttpSession session = req.getSession();
         JsonObject jsonObject = new JsonObject();
         PrintWriter printWriter = resp.getWriter();
 
@@ -30,6 +33,7 @@ public class ClearCartServlet extends HttpServlet {
 
         cart.getCart().clear();
         jsonObject.addProperty(SUCCESS, true);
+        session.removeAttribute(AMOUNT);
         printWriter.write(jsonObject.toString());
     }
 }

@@ -4,7 +4,6 @@ import com.epam.prykhodko.entity.products.Product;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -34,10 +33,8 @@ public class Cart {
     }
 
     public int cartPrice() {
-        return cartMap.keySet().stream()
-            .filter(Objects::nonNull)
-            .mapToInt(p -> p.getPrice().intValue())
-            .sum();
+        return cartMap.entrySet().stream()
+            .mapToInt(e -> e.getKey().getPrice().intValue() * e.getValue()).sum();
     }
 
     public Map<Product, Integer> getCart() {

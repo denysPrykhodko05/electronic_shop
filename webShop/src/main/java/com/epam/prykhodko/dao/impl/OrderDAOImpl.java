@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 
 public class OrderDAOImpl implements OrderDAO {
 
-    private final Logger LOGGER = Logger.getLogger(OrderDAOImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderDAOImpl.class);
 
     @Override
     public Order add(Order order) {
@@ -36,6 +36,7 @@ public class OrderDAOImpl implements OrderDAO {
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
+                order.setId(resultSet.getInt(1));
                 addOrderIdToOrderedProducts(resultSet, order);
             }
 

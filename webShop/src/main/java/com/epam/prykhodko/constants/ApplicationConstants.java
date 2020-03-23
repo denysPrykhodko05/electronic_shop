@@ -102,6 +102,7 @@ public abstract class ApplicationConstants {
 
     //Cart constants
     public static final String CART = "cart";
+    public static final String CART_SIZE = "cartSize";
     public static final String PRODUCT_ID = "productId";
     public static final String SUCCESS = "success";
     public static final String AMOUNT = "amount";

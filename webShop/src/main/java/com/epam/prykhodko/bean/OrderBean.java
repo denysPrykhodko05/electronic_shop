@@ -16,7 +16,7 @@ public class OrderBean {
     private static String dataOfCard;
     private static String cvc;
 
-    public static OrderBean setOrderBeanFromRequest(HttpServletRequest request) {
+    public static OrderBean createOrderBeanFromRequest(HttpServletRequest request) {
         OrderBean orderBean = new OrderBean();
         orderBean.payment = request.getParameter(PAYMENT_METHOD);
         orderBean.delivery = request.getParameter(DELIVERY_METHOD);

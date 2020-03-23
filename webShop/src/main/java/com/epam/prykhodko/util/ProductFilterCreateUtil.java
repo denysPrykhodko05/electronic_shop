@@ -143,11 +143,11 @@ public class ProductFilterCreateUtil {
         sqlQuery.append(")");
     }
 
-    public static FilterBean setFilterBean(List<String> manufactures, List<String> categories, HttpServletRequest req) {
-        FilterBean filterBean = new FilterBean();
+    public static FilterBean createFilterBeanFromRequest(List<String> manufactures, List<String> categories, HttpServletRequest req) {
+        FilterBean filterBean;
+        filterBean = FilterBean.setFilterBean(req);
         filterBean.setManufactures(manufactures);
         filterBean.setCategories(categories);
-        filterBean.setFilterBean(req);
         return filterBean;
     }
 

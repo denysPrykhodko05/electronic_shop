@@ -37,7 +37,7 @@ public class ProductsServlet extends HttpServlet {
             amountFromForm = servletContext.getInitParameter(DEFAULT_PRODUCTS_ON_PAGE);
         }
 
-        FilterBean filterBean = ProductFilterCreateUtil.setFilterBean(manufactures, categories, req);
+        FilterBean filterBean = ProductFilterCreateUtil.createFilterBeanFromRequest(manufactures, categories, req);
         String filterQuery = ProductFilterCreateUtil.combineFilterSettings(amountFromForm, req, filterBean);
         req.setAttribute(FILTER_QUERY, filterQuery);
         req.setAttribute(FILTERS, filterBean);

@@ -3,6 +3,7 @@ package com.epam.prykhodko.servlet;
 import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT;
 import static com.epam.prykhodko.constants.ApplicationConstants.CART;
 import static com.epam.prykhodko.constants.ApplicationConstants.CART_PRICE;
+import static com.epam.prykhodko.constants.ApplicationConstants.CART_SIZE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_ID;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 
@@ -13,6 +14,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Objects;
+import java.util.Optional;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,15 +48,31 @@ public class AddProductToCart extends HttpServlet {
             cart = new Cart();
         }
 
+        Optional<Product> productTemp = cart.getCart().keySet().stream().filter(e -> e.getId() == id).findFirst();
+        if (Objects.isNull(amount) && productTemp.isPresent()) {
+            amount = String.valueOf(cart.getCart().get(productTemp.get()));
+            cart.add(product, Integer.parseInt(amount) + 1);
+            setAttributes(session, jsonObject, cart);
+            writer.write(jsonObject.toString());
+            writer.close();
+            return;
+        }
+
         if (Objects.isNull(amount)) {
             amount = "1";
         }
 
         cart.add(product, Integer.parseInt(amount));
-        session.setAttribute(CART, cart);
-        jsonObject.addProperty(AMOUNT, cart.size());
-        jsonObject.addProperty(CART_PRICE, cart.cartPrice());
+        setAttributes(session, jsonObject, cart);
         writer.write(jsonObject.toString());
         writer.close();
     }
+
+    private void setAttributes(HttpSession session, JsonObject jsonObject, Cart cart) {
+        session.setAttribute(CART, cart);
+        session.setAttribute(CART_SIZE, cart.size());
+        jsonObject.addProperty(AMOUNT, cart.size());
+        jsonObject.addProperty(CART_PRICE, cart.cartPrice());
+    }
+
 }
