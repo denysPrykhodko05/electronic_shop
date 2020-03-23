@@ -9,10 +9,7 @@ public interface ProductService {
 
     boolean delete(Product entity);
 
-    Product getByName(String name);
-
     List<Product> getAll();
-
 
     List<String> getAllManufactures();
 
@@ -20,4 +17,5 @@ public interface ProductService {
 
     List<Product> getFilteredProducts(String query);
 
+    Product getById(int id);
 }

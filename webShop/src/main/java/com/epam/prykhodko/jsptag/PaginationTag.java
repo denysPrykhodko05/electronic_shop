@@ -4,11 +4,12 @@ import static com.epam.prykhodko.constants.ApplicationConstants.AMOUNT_OF_PRODUC
 import static com.epam.prykhodko.constants.ApplicationConstants.FILTER_QUERY;
 import static com.epam.prykhodko.constants.ApplicationConstants.PAGE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
-import static com.epam.prykhodko.constants.JspTagsConstants.BUY_BOTTON;
+import static com.epam.prykhodko.constants.JspTagsConstants.CLOSE_BUY_BOTTON;
 import static com.epam.prykhodko.constants.JspTagsConstants.CLOSE_DIV_TAG;
 import static com.epam.prykhodko.constants.JspTagsConstants.CLOSE_IMAGE_TAG;
 import static com.epam.prykhodko.constants.JspTagsConstants.CLOSE_TAG;
 import static com.epam.prykhodko.constants.JspTagsConstants.CLOSE_TAG_BUTTON_FOR_PAGE;
+import static com.epam.prykhodko.constants.JspTagsConstants.OPEN_BUY_BOTTON;
 import static com.epam.prykhodko.constants.JspTagsConstants.OPEN_DIV_CONTENT;
 import static com.epam.prykhodko.constants.JspTagsConstants.OPEN_DIV_PRODUCT_DESCRIPTION;
 import static com.epam.prykhodko.constants.JspTagsConstants.OPEN_DIV_PRODUCT_IMG;
@@ -94,7 +95,9 @@ public class PaginationTag extends SimpleTagSupport {
                 .append(OPEN_DIV_PRODUCT_PRICE)
                 .append(product.getPrice())
                 .append(CLOSE_DIV_TAG)
-                .append(BUY_BOTTON)
+                .append(OPEN_BUY_BOTTON)
+                .append(product.getId())
+                .append(CLOSE_BUY_BOTTON)
                 .append(CLOSE_DIV_TAG);
         }
         stringBuilder.append(CLOSE_DIV_TAG);

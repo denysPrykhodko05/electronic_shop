@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LogInBean {
 
-    private String login;
-    private String password;
+    private static String login;
+    private static String password;
 
-    public void setLoginForm(HttpServletRequest httpServletRequest) {
-        login = httpServletRequest.getParameter(LOGIN);
-        password = httpServletRequest.getParameter(PASSWORD);
+    public static LogInBean createLoginBeanFromRequest(HttpServletRequest httpServletRequest) {
+        LogInBean logInBean = new LogInBean();
+        logInBean.login = httpServletRequest.getParameter(LOGIN);
+        logInBean.password = httpServletRequest.getParameter(PASSWORD);
+        return logInBean;
     }
 
     public String getLogin() {

@@ -19,80 +19,62 @@ public class FilterBean {
 
     private List<String> manufactures;
     private List<String> categories;
-    private List<String> choosenManufactureList;
-    private List<String> chossenCategoryList;
-    private String minPrice;
-    private String maxPrice;
-    private String currentSort;
-    private String sortQuery;
+    private static List<String> choosenManufactureList;
+    private static List<String> chossenCategoryList;
+    private static String minPrice;
+    private static String maxPrice;
+    private static String currentSort;
+    private static String sortQuery;
 
-    public void setFilterBean(HttpServletRequest request) {
+    public static FilterBean setFilterBean(HttpServletRequest request) {
+        FilterBean filterBean = new FilterBean();
         String[] manufactureReq = request.getParameterValues(MANUFACTURE);
         String[] categoryReq = request.getParameterValues(CATEGORY);
-        minPrice = request.getParameter(MIN_PRICE);
-        maxPrice = request.getParameter(MAX_PRICE);
-        currentSort = request.getParameter(SORT);
+        filterBean.minPrice = request.getParameter(MIN_PRICE);
+        filterBean.maxPrice = request.getParameter(MAX_PRICE);
+        filterBean.currentSort = request.getParameter(SORT);
 
         if (Objects.nonNull(manufactureReq)) {
-            choosenManufactureList = Arrays.asList(manufactureReq);
+            filterBean.choosenManufactureList = Arrays.asList(manufactureReq);
         }
 
         if (Objects.nonNull(categoryReq)) {
-            chossenCategoryList = Arrays.asList(categoryReq);
+            filterBean.chossenCategoryList = Arrays.asList(categoryReq);
         }
 
-        if (Objects.isNull(minPrice) || StringUtils.EMPTY.equals(minPrice)) {
-            this.minPrice = String.valueOf(INTEGER_ONE);
+        if (Objects.isNull(filterBean.minPrice) || StringUtils.EMPTY.equals(filterBean.minPrice)) {
+            filterBean.minPrice = String.valueOf(INTEGER_ONE);
         }
 
-        if (Objects.isNull(maxPrice)) {
-            maxPrice = STRING_ONE_MILLION;
+        if (Objects.isNull(filterBean.maxPrice)) {
+            filterBean. maxPrice = STRING_ONE_MILLION;
         }
 
-        if (Objects.isNull(currentSort)) {
+        if (Objects.isNull(filterBean.currentSort)) {
             ServletContext servletContext = request.getServletContext();
-            currentSort = servletContext.getInitParameter("productSortType");
+            filterBean.currentSort = servletContext.getInitParameter("productSortType");
         }
+        return filterBean;
     }
 
     public List<String> getChoosenManufactureList() {
         return choosenManufactureList;
     }
 
-    public void setChoosenManufactureList(List<String> choosenManufactureList) {
-        this.choosenManufactureList = choosenManufactureList;
-    }
-
     public List<String> getChossenCategoryList() {
         return chossenCategoryList;
-    }
-
-    public void setChossenCategoryList(List<String> chossenCategoryList) {
-        this.chossenCategoryList = chossenCategoryList;
     }
 
     public String getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(String minPrice) {
-        this.minPrice = minPrice;
-    }
-
     public String getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(String maxPrice) {
-        this.maxPrice = maxPrice;
-    }
-
     public String getCurrentSort() {
         return currentSort;
-    }
-
-    public void setCurrentSort(String currentSort) {
-        this.currentSort = currentSort;
     }
 
     public String getSortQuery() {
