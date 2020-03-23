@@ -30,14 +30,6 @@ public class MysqlProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getByName(String name) {
-        return getAll().stream()
-            .filter(e -> e.getName().equals(name))
-            .findFirst()
-            .orElse(null);
-    }
-
-    @Override
     public List<Product> getAll() {
         return transactionHandler.invokeWithoutTransaction(productDAO::getAll);
     }

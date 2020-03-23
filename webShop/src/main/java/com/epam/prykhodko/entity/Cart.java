@@ -1,13 +1,9 @@
 package com.epam.prykhodko.entity;
 
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
-
 import com.epam.prykhodko.entity.products.Product;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -36,14 +32,9 @@ public class Cart {
         return cartMap.values().stream().mapToInt(v -> v).sum();
     }
 
-    public BigDecimal cartPrice() {
-        final BigDecimal[] sum = {new BigDecimal(INTEGER_ZERO)};
-        cartMap.entrySet().forEach(k -> {
-            if (Objects.nonNull(k)) {
-                sum[0] = sum[0].add(k.getKey().getPrice().multiply(BigDecimal.valueOf(k.getValue())));
-            }
-        });
-        return sum[0];
+    public int cartPrice() {
+        return cartMap.entrySet().stream()
+            .mapToInt(e -> e.getKey().getPrice().intValue() * e.getValue()).sum();
     }
 
     public Map<Product, Integer> getCart() {

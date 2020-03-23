@@ -1,4 +1,4 @@
-package com.epam.prykhodko.filter;
+package com.epam.prykhodko.servlet;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.MAKE_ORDER_USER_CHECK_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.SUCCESS;
@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Objects;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet(MAKE_ORDER_USER_CHECK_URL)
-public class MakeOrderFilter extends HttpServlet {
+public class CheckUserRootServlet extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServletContext servletContext = request.getServletContext();
         UserService userService = (UserService) servletContext.getAttribute(USER_SERVICE);
         HttpSession session = request.getSession();

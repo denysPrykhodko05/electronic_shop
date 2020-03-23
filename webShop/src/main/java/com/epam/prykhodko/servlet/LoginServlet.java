@@ -49,11 +49,11 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LogInBean logInBean = new LogInBean();
+        LogInBean logInBean;
         Map<String, String> errors = new LinkedHashMap<>();
         ServletContext servletContext = req.getServletContext();
         userService = (UserService) servletContext.getAttribute(USER_SERVICE);
-        logInBean.setLoginForm(req);
+        logInBean = LogInBean.createLoginBeanFromRequest(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
         validator.checkField(PASSWORD, logInBean.getPassword(), PASSWORD_REGEX, errors);
 

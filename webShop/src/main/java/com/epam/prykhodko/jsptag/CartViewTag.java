@@ -6,7 +6,6 @@ import static com.epam.prykhodko.constants.JspTagsConstants.OPEN_DIV_PRICE_TAG;
 
 import com.epam.prykhodko.entity.Cart;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Objects;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
@@ -26,7 +25,7 @@ public class CartViewTag extends SimpleTagSupport {
             return;
         }
 
-        BigDecimal price = cart.cartPrice();
+        int price = cart.cartPrice();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(OPEN_DIV_PRICE_TAG)
             .append(price)
