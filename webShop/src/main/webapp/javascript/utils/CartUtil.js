@@ -3,6 +3,7 @@ $(document).ready(function() {
   var delete_button = $(".delete-button");
   var clear_cart_button = $("#clearCartButton");
   var make_order_button = $("#makeOrderButton");
+
   increase_amount_button.change(function(){
      var amount = $(this).val();
      var id = $(this).data(id).id;
@@ -60,12 +61,12 @@ $(document).ready(function() {
   }
 
   function responseForAdd(data){
-  data = JSON.parse(data);
-  var cartRef = document.getElementById("cartRef");
-  var cartPrice = document.getElementById("cartPrice");
-  cartPrice.textContent = "Price: " + data.cartPrice;
-  cartRef.text = "Cart(" + data.amount + ")";
-  prev = data.amount;
+    data = JSON.parse(data);
+    var cartRef = document.getElementById("cartRef");
+    var cartPrice = document.getElementById("cartPrice");
+    cartPrice.textContent = "Price: " + data.cartPrice;
+    cartRef.text = "Cart(" + data.amount + ")";
+    prev = data.amount;
   }
 
   function responseForClear(data){
