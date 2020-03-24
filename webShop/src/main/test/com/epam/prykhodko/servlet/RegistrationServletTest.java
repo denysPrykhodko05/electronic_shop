@@ -13,7 +13,7 @@ import com.epam.prykhodko.bean.RegFormBean;
 import com.epam.prykhodko.captchakeepers.CaptchaKeeper;
 import com.epam.prykhodko.captchakeepers.captchakeeperimpl.SessionKeeper;
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.service.DAOService;
+import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class RegistrationServletTest {
     @Mock
     private Validator validator;
     @Mock
-    private DAOService DAOService;
+    private UserService DAOService;
     @Mock
     private User user;
     @Mock
@@ -107,7 +107,6 @@ public class RegistrationServletTest {
         captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
-        when(DAOService.isContains(user)).thenReturn(false);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter1@asd.com");
         registrationServlet.doPost(httpServletRequest, httpServletResponse);
     }
@@ -131,7 +130,6 @@ public class RegistrationServletTest {
         captchaKeys.put(1L, "1234");
         keepers.put("session", new SessionKeeper());
         init(captchaKeys, keepers);
-        when(DAOService.isContains(user)).thenReturn(true);
         when(httpServletRequest.getParameter(EMAIL)).thenReturn("peter@gmail.com");
         when(httpServletRequest.getRequestDispatcher("jsp/registration.jsp")).thenReturn(dispatcher);
         registrationServlet.doPost(httpServletRequest, httpServletResponse);

@@ -72,7 +72,7 @@
                   <productTag:ViewListOfFilters list="${filters.categories}" checkedList="${filters.chossenCategoryList}" parameterName="category"/>
               </div>
               <br>
-              <input form="amountOfProductsForm" type="submit" value=ok><br>
+              <input form="amountOfProductsForm" type="submit" value="ok"/><br>
         </div>
 
         <!-- block that show products-->

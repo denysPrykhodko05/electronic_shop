@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="login" uri="/tld/LoginTag.tld"%>
+<%@ taglib prefix="locale" uri="/tld/LocaleTag.tld"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -29,4 +30,5 @@
      <login:LoginTag userLogin="${userLogin}"/>
   </div>
 </div>
+  <locale:LocaleTag/>
 </html>
