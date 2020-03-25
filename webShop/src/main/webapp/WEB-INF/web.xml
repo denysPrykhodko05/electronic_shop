@@ -22,7 +22,11 @@
   </context-param>
   <context-param>
     <param-name>applicationLocale</param-name>
-    <param-value>en_ru_de</param-value>
+    <param-value>ua</param-value>
+  </context-param>
+  <context-param>
+    <param-name>localeSaveTime</param-name>
+    <param-value>10</param-value>
   </context-param>
 
   <display-name>Archetype Created Web Application</display-name>

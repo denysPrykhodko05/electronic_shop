@@ -1,24 +1,30 @@
 package com.epam.prykhodko.wrapper;
 
+import com.epam.prykhodko.localekeepers.LocaleKeeper;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LocalizationWrapper extends ServletRequestWrapper {
+public class LocalizationWrapper extends HttpServletRequestWrapper {
 
-    HttpServletRequest servletRequest;
+    private HttpServletRequest servletRequest;
+    private HttpServletResponse response;
+    private LocaleKeeper localeKeeper;
 
-    public LocalizationWrapper(ServletRequest request) {
+    public LocalizationWrapper(HttpServletRequest request, HttpServletResponse response,
+        LocaleKeeper localeKeeper) {
         super(request);
-        this.servletRequest = (HttpServletRequest) request;
+        this.servletRequest = request;
+        this.response = response;
+        this.localeKeeper = localeKeeper;
     }
 
     @Override
@@ -48,13 +54,16 @@ public class LocalizationWrapper extends ServletRequestWrapper {
 
     private Locale getLocaleFromStorage(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        ServletContext servletContext = request.getServletContext();
         HttpSession session = request.getSession();
+        String keepsTime = servletContext.getInitParameter("localeSaveTime");
         String locale;
 
         if (Objects.nonNull(cookies)) {
             Optional<Cookie> cookie = Arrays.stream(cookies).filter(c -> c.getName().equals("localization")).findFirst();
             if (cookie.isPresent()) {
                 locale = cookie.get().getValue();
+                cookie.get().setMaxAge(Integer.parseInt(keepsTime));
                 return new Locale(locale);
             }
         }
@@ -83,6 +92,7 @@ public class LocalizationWrapper extends ServletRequestWrapper {
             }
         }
         servletContext.setInitParameter("applicationLocale", "en");
+        localeKeeper.save(httpServletRequest, response, "en");
         return new Locale("en");
     }
 }

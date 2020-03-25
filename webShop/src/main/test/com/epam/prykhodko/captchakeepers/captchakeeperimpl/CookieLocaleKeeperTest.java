@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class CookieKeeperTest {
+public class CookieLocaleKeeperTest {
 
     private CookieKeeper cookieKeeper = new CookieKeeper();
     @Mock

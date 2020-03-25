@@ -119,4 +119,7 @@ public abstract class ApplicationConstants {
     public static final String CARD_NUMBER_REGEX = "^\\d{4}-\\d{4}-\\d{4}-\\d{4}$";
     public static final String CARD_DATE_REGEX = "^\\d{2}/\\d{2}$";
     public static final String CVC_REGEX = "^\\d{3}$";
+
+    //Locale constants
+    public static final String LOCALE_KEEPERS = "localeKeepers";
 }
