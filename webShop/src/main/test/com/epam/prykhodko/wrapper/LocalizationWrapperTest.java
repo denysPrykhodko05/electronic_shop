@@ -1,14 +1,17 @@
 package com.epam.prykhodko.wrapper;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.LOCALE_SAVE_TIME;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
+import com.epam.prykhodko.localekeepers.LocaleKeeper;
+import com.epam.prykhodko.localekeepers.localekeeperimpl.SessionLocaleKeeper;
 import java.util.Enumeration;
 import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +25,8 @@ public class LocalizationWrapperTest {
     @Mock
     private HttpServletRequest httpServletRequest;
     @Mock
+    private HttpServletResponse httpServletResponse;
+    @Mock
     private HttpSession session;
 
     @Before
@@ -31,23 +36,30 @@ public class LocalizationWrapperTest {
 
     @Test
     public void getLocaleShouldReturnSuccessfullyLocaleFromCookies() {
+        LocaleKeeper localeKeeper = new SessionLocaleKeeper();
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[]{new Cookie("localization", "de")});
         when(httpServletRequest.getSession()).thenReturn(session);
-        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest);
+        when(httpServletRequest.getServletContext()).thenReturn(servletContext);
+        when(servletContext.getInitParameter(LOCALE_SAVE_TIME)).thenReturn("300");
+        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         assertNotNull(localizationWrapper.getLocale());
     }
 
     @Test
     public void getLocaleShouldReturnSuccessfullyLocaleFromSession() {
+        LocaleKeeper localeKeeper = new SessionLocaleKeeper();
         when(httpServletRequest.getCookies()).thenReturn(null);
         when(httpServletRequest.getSession()).thenReturn(session);
         when(session.getAttribute("localization")).thenReturn("de");
-        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest);
+        when(httpServletRequest.getServletContext()).thenReturn(servletContext);
+        when(servletContext.getInitParameter(LOCALE_SAVE_TIME)).thenReturn("300");
+        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         assertNotNull(localizationWrapper.getLocale());
     }
 
     @Test
     public void getLocaleShouldReturnLocaleFromBrowser() {
+        LocaleKeeper localeKeeper = new SessionLocaleKeeper();
         when(httpServletRequest.getCookies()).thenReturn(null);
         when(httpServletRequest.getSession()).thenReturn(session);
         when(httpServletRequest.getServletContext()).thenReturn(servletContext);
@@ -64,11 +76,13 @@ public class LocalizationWrapperTest {
                 return new Locale("de");
             }
         });
-        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest);
+        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         assertNotNull(localizationWrapper.getLocale());
     }
+
     @Test
     public void getLocaleShouldReturnLocaleFromBrowserWhenLocaleDoesNotMatchAnyFromBrowser() {
+        LocaleKeeper localeKeeper = new SessionLocaleKeeper();
         when(httpServletRequest.getCookies()).thenReturn(null);
         when(httpServletRequest.getSession()).thenReturn(session);
         when(httpServletRequest.getServletContext()).thenReturn(servletContext);
@@ -85,15 +99,16 @@ public class LocalizationWrapperTest {
                 return new Locale("de");
             }
         });
-        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest);
+        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         assertNotNull(localizationWrapper.getLocale());
     }
 
     @Test
     public void getLocales() {
+        LocaleKeeper localeKeeper = new SessionLocaleKeeper();
         when(httpServletRequest.getCookies()).thenReturn(new Cookie[]{new Cookie("localization", "de")});
         when(httpServletRequest.getSession()).thenReturn(session);
-        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest);
+        LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         assertNotNull(localizationWrapper.getLocales());
     }
 }
