@@ -24,25 +24,25 @@
 
     <form id="amountOfProductsForm" method="GET" action="/products">
         <div id="filter-settings">
-          Amount of products on page:
+          <fmt:message key="amount_of_products_on_page"/>
           <input name="amountOfProductsFromForm" id="amountOfProductsOnPage" type="number" value="${amountOfProducts}"/>
           <input type="submit" value="ok"/>
         </div>
     </form>
 
-        <!-- select amount of products that should be show on the page-->
-        <select form="amountOfProductsForm" name="sort" onchange="this.form.submit()">
-            <c:set var="sortType" value="${filters.currentSort}"/>
+    <!-- select amount of products that should be show on the page-->
+    <select form="amountOfProductsForm" name="sort" onchange="this.form.submit()">
+        <c:set var="sortType" value="${filters.currentSort}"/>
 
-            <c:if test="${not empty sortType}">
-              <option value="${sortType}">${sortType}</option>
-            </c:if>
+        <c:if test="${not empty sortType}">
+          <option value="${sortType}">${sortType}</option>
+        </c:if>
 
-           <option value="byPriceFromLow">Price from low to high</option>
-           <option value="byPriceFromHigh">Price from high to low</option>
-           <option value="byAlphabeticalFromA-Z">A-Z</option>
-           <option value="byAlphabeticalFromZ-A">Z-A</option>
-        </select>
+       <option value="byPriceFromLow">Price from low to high</option>
+       <option value="byPriceFromHigh">Price from high to low</option>
+       <option value="byAlphabeticalFromA-Z">A-Z</option>
+       <option value="byAlphabeticalFromZ-A">Z-A</option>
+    </select>
 
     <!-- block that separate below header-->
     <div id="common">
@@ -52,7 +52,7 @@
 
                <!--manufacture filter-->
               <div id="filter-manufacture">
-                  Manufacture<br>
+                  <fmt:message key="manufacture"/><br>
                   <c:set var="manufactures" value="${filters.manufactures}"/>
                   <c:set var="manufactureCheck" value="${filters.choosenManufactureList}"/>
 
@@ -62,17 +62,17 @@
 
                <!--price filter-->
               <div id="price-filter">
-                  Price<br>
-                  Min: <input form="amountOfProductsForm" id="minPrice" type="number" name="minPrice" value="${filters.minPrice}"><br>Max: <input id="maxPrice" type="number" name="maxPrice" value="${filters.maxPrice}"><br><br>
+                 <fmt:message key="price"/><br>
+                 <fmt:message key="min"/>: <input form="amountOfProductsForm" id="minPrice" type="number" name="minPrice" value="${filters.minPrice}"><br><fmt:message key="max"/>: <input id="maxPrice" type="number" name="maxPrice" value="${filters.maxPrice}"><br><br>
               </div>
 
               <!-- category filter-->
               <div id="category-filter">
-                  Category<br>
-                  <productTag:ViewListOfFilters list="${filters.categories}" checkedList="${filters.chossenCategoryList}" parameterName="category"/>
+                 <fmt:message key="category"/><br><br>
+                 <productTag:ViewListOfFilters list="${filters.categories}" checkedList="${filters.chossenCategoryList}" parameterName="category"/>
               </div>
               <br>
-              <input form="amountOfProductsForm" type="submit" value=ok><br>
+              <input form="amountOfProductsForm" type="submit" value="ok"/><br>
         </div>
 
         <!-- block that show products-->

@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="../javascript/utils/OrderUtils.js"></script>
     <meta charset="UTF-8">
-    <title>MakeOrder</title>
+    <title>Confirm order</title>
 </head>
 
 <body>
@@ -39,13 +39,13 @@
 
         <!-- block for choose payment method-->
         <div id="PaymentDiv">
-            Choose payment method:
+            <fmt:message key="choose_payment_method"/>:
 
             <input class="paymentMethod" type="radio" name="paymentMethod" value="card">
-            <label>Card</label>
+            <label><fmt:message key="card"/></label>
 
             <input class="paymentMethod" type="radio" name="paymentMethod" value="uponReceipt" checked="checked">
-            <label>Upon receipt of order</label>
+            <label><fmt:message key="upon_receipt_of_order"/></label>
         </div><br>
 
         <c:if test="${not empty errors}">
@@ -56,10 +56,10 @@
 
         <!-- block for credit card-->
         <div id="cardMethod">
-          <label>Card number: </label> <input type="tel" name="cardNumber"
+          <label><fmt:message key="card_number"/>: </label> <input type="tel" name="cardNumber"
                  pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"><br>
 
-          <label>Data of card: </label><input type="text" name="dataOfCard" pattern="\d{2}/\d{2}"><br>
+          <label><fmt:message key="data_of_card"/>: </label><input type="text" name="dataOfCard" pattern="\d{2}/\d{2}"><br>
 
           <label>CVC: </label> <input name="CVC" type="number" pattern="\d{3}"><br>
         </div>
@@ -67,13 +67,13 @@
 
         <!-- block for choose delivery method-->
         <div id="deliveryDiv">
-            Choose delivery method:
+            <fmt:message key="choose_delivery_method"/>:
 
             <input type="radio" name="deliveryMethod" value="post">
-            <label>By post</label>
+            <label><fmt:message key="by_post"/></label>
 
             <input type="radio" name="deliveryMethod" value="fromStore" checked="checked">
-            <label>From store</label>
+            <label><fmt:message key="from_store"/></label>
         </div>
 
         <input type="submit" id="submit" value="Submit">

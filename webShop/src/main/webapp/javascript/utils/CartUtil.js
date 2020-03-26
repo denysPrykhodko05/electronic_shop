@@ -54,9 +54,15 @@ $(document).ready( function () {
       var productDiv = document.getElementById(data.productId);
       productDiv.parentNode.removeChild(productDiv);
       cartPrice.textContent = "Price: " + data.cartPrice;
-      cartRef.text = "Cart(" + data.amount + ")";
+
+      if(data.amount==1){
+        cartRef.text = cartRef.text + "(" + data.amount + ")";
+      }
+
+      var name = cartRef.text.replace(/\(\d+\)/g,"(" + data.amount + ")");
+      cartRef.text = name;
       return;
-     }
+    }
     alert("Cannot delete product!!!");
   }
 
@@ -65,7 +71,12 @@ $(document).ready( function () {
     var cartRef = document.getElementById("cartRef");
     var cartPrice = document.getElementById("cartPrice");
     cartPrice.textContent = "Price: " + data.cartPrice;
-    cartRef.text = "Cart(" + data.amount + ")";
+
+    if(data.amount==1){
+          cartRef.text = cartRef.text + "(" + data.amount + ")";
+    }
+    var name = cartRef.text.replace(/\(\d+\)/g,"(" + data.amount + ")");
+    cartRef.text = name;
     prev = data.amount;
   }
 
@@ -82,6 +93,7 @@ $(document).ready( function () {
       cartRef.text = "Cart";
       return;
     }
+
     alert("Cannot clear cart!!!");
   }
 
@@ -93,6 +105,7 @@ $(document).ready( function () {
       window.location = "/makeOrder";
       return;
     }
+
     window.location = "/login";
   }
 });

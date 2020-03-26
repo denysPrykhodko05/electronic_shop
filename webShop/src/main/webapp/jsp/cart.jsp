@@ -26,16 +26,16 @@
               <div id="productInfo">${product.key.description}<br>
 
               <!-product price-->
-              Price: $ ${product.key.price}
+              <fmt:message key="price"/>: $ ${product.key.price}
               </div>
 
               <!--amount of products-->
               <div class="amountOfProductField">
-                 <label>Amount: <input type="number" class="amountOfProduct" data-id="${product.key.id}" min="1" max="15" value="${product.value}"/></label>
+                 <label><fmt:message key="amount"/>: <input type="number" class="amountOfProduct" data-id="${product.key.id}" min="1" max="15" value="${product.value}"/></label>
               </div>
 
               <!--delete button-->
-              <div id="deleteButton"><button class="delete-button" data-id="${product.key.id}">Delete</button></div>
+              <div id="deleteButton"><button class="delete-button" data-id="${product.key.id}"><fmt:message key="delete"/></button></div>
          </div>
     </c:forEach>
   </div>
@@ -48,11 +48,11 @@
         <cartView:CartView/>
 
         <div id="clearCart">
-            <button id="clearCartButton">Clear cart</button>
+            <button id="clearCartButton"><fmt:message key="clear_cart"/></button>
         </div>
 
         <div id="makeOrder">
-            <button id="makeOrderButton">Make order</button>
+            <button id="makeOrderButton"><fmt:message key="make_order"/></button>
         </div>
 
      </c:if>
