@@ -58,6 +58,7 @@ $(document).ready( function () {
       if(data.amount==1){
         cartRef.text = cartRef.text + "(" + data.amount + ")";
       }
+
       var name = cartRef.text.replace(/\(\d+\)/g,"(" + data.amount + ")");
       cartRef.text = name;
       return;
@@ -92,6 +93,7 @@ $(document).ready( function () {
       cartRef.text = "Cart";
       return;
     }
+
     alert("Cannot clear cart!!!");
   }
 
@@ -103,6 +105,7 @@ $(document).ready( function () {
       window.location = "/makeOrder";
       return;
     }
+
     window.location = "/login";
   }
 });

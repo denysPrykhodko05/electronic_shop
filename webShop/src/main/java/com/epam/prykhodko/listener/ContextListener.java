@@ -7,14 +7,18 @@ import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_TIME;
 import static com.epam.prykhodko.constants.ApplicationConstants.CONNECTION_MANAGER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CONTEXT_DESTROYER;
 import static com.epam.prykhodko.constants.ApplicationConstants.COOKIE;
+import static com.epam.prykhodko.constants.ApplicationConstants.DE;
+import static com.epam.prykhodko.constants.ApplicationConstants.EN;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
 import static com.epam.prykhodko.constants.ApplicationConstants.IMAGE_DRAW;
 import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOCALES;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOCALE_KEEPERS;
 import static com.epam.prykhodko.constants.ApplicationConstants.ORDER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
+import static com.epam.prykhodko.constants.ApplicationConstants.RU;
 import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
@@ -83,7 +87,7 @@ public class ContextListener implements ServletContextListener {
         String capthaKeeper = servletContextEvent.getServletContext().getInitParameter(CAPTCHA);
         String captchaTime = servletContextEvent.getServletContext().getInitParameter(CAPTCHA_TIME);
         ServletContext servletContext = servletContextEvent.getServletContext();
-        List<String> localeList = new ArrayList<>(Arrays.asList("en", "ru", "de"));
+        List<String> localeList = new ArrayList<>(Arrays.asList(EN, RU, DE));
         servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
         executorService.scheduleWithFixedDelay(new TimerThread(captchaKeys), 0, Long.parseLong(captchaTime), TimeUnit.SECONDS);
@@ -101,7 +105,7 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(USER_SERVICE, userService);
         servletContext.setAttribute(PRODUCT_SERVICE, productService);
         servletContext.setAttribute(ORDER_SERVICE, orderService);
-        servletContext.setAttribute("locales", localeList);
+        servletContext.setAttribute(LOCALES, localeList);
         servletContext.setAttribute(LOCALE_KEEPERS, createLocaleKeepers());
     }
 

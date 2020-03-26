@@ -1,4 +1,4 @@
- $(document).ready(function () {
+$(document).ready(function () {
   var buy_button = $(".buy-button");
 
   buy_button.click(function () {
@@ -19,8 +19,9 @@
     if(data.amount==1){
       cartRef.text = cartRef.text + "(" + data.amount + ")";
     }
+
     var name = cartRef.text.replace(/\(\d+\)/g,"(" + data.amount + ")");
-      cartRef.text = name;
+    cartRef.text = name;
     amount = data.amount;
   }
 });

@@ -54,6 +54,26 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!-- fileter for cache-->
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.CacheFilter</filter-class>
+    <filter-name>CacheFilter</filter-name>
+  </filter>
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.GZipServletFilter</filter-class>
+    <filter-name>GzipFilter</filter-name>
+  </filter>
+
+  <!-- filter for GZip-->
+  <filter-mapping>
+    <filter-name>CacheFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>GzipFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <resource-ref>
     <description>DB Connection</description>
     <res-auth>Container</res-auth>

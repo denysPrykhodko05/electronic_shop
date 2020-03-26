@@ -1,5 +1,11 @@
 package com.epam.prykhodko.wrapper;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.APPLICATION_LOCALE;
+import static com.epam.prykhodko.constants.ApplicationConstants.APP_LOCALE;
+import static com.epam.prykhodko.constants.ApplicationConstants.EN;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOCALE_SAVE_TIME;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOCALIZATION;
+
 import com.epam.prykhodko.localekeepers.LocaleKeeper;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -34,6 +40,7 @@ public class LocalizationWrapper extends HttpServletRequestWrapper {
         if (Objects.isNull(locale)) {
             locale = getLocaleFromBrowser(servletRequest);
         }
+
         return locale;
     }
 
@@ -56,11 +63,12 @@ public class LocalizationWrapper extends HttpServletRequestWrapper {
         Cookie[] cookies = request.getCookies();
         ServletContext servletContext = request.getServletContext();
         HttpSession session = request.getSession();
-        String keepsTime = servletContext.getInitParameter("localeSaveTime");
+        String keepsTime = servletContext.getInitParameter(LOCALE_SAVE_TIME);
         String locale;
 
         if (Objects.nonNull(cookies)) {
-            Optional<Cookie> cookie = Arrays.stream(cookies).filter(c -> c.getName().equals("localization")).findFirst();
+            Optional<Cookie> cookie = Arrays.stream(cookies).filter(c -> c.getName().equals(LOCALIZATION)).findFirst();
+
             if (cookie.isPresent()) {
                 locale = cookie.get().getValue();
                 cookie.get().setMaxAge(Integer.parseInt(keepsTime));
@@ -68,7 +76,7 @@ public class LocalizationWrapper extends HttpServletRequestWrapper {
             }
         }
 
-        locale = (String) session.getAttribute("localization");
+        locale = (String) session.getAttribute(LOCALIZATION);
 
         if (Objects.nonNull(locale)) {
             return new Locale(locale);
@@ -80,19 +88,21 @@ public class LocalizationWrapper extends HttpServletRequestWrapper {
     private Locale getLocaleFromBrowser(HttpServletRequest httpServletRequest) {
         ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
-        String[] applicationLocale = servletContext.getInitParameter("applicationLocale").split("_");
+        String[] applicationLocale = servletContext.getInitParameter(APPLICATION_LOCALE).split("_");
         Enumeration<Locale> browserLocales = httpServletRequest.getLocales();
         Locale locale;
 
         while (browserLocales.hasMoreElements()) {
             locale = browserLocales.nextElement();
+
             if (Arrays.asList(applicationLocale).contains(locale.getLanguage())) {
-                session.setAttribute("appLocale", locale);
+                session.setAttribute(APP_LOCALE, locale);
                 return locale;
             }
         }
-        servletContext.setInitParameter("applicationLocale", "en");
-        localeKeeper.save(httpServletRequest, response, "en");
-        return new Locale("en");
+
+        servletContext.setInitParameter(APPLICATION_LOCALE, EN);
+        localeKeeper.save(httpServletRequest, response, EN);
+        return new Locale(EN);
     }
 }
