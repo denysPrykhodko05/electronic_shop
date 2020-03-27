@@ -33,16 +33,15 @@ public class LocaleFilter implements Filter {
 
     public static final Logger LOGGER = Logger.getLogger(LocaleFilter.class);
     private LocaleKeeper localeKeeper;
+    private List<String> localeList;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
-        ServletContext servletContext = httpServletRequest.getServletContext();
         LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         String language = httpServletRequest.getParameter(LANG);
-        List<String> localeList = Arrays.asList(servletContext.getInitParameter(APPLICATION_LOCALE).split(", "));
         httpServletRequest.setAttribute(LOCALES, localeList);
 
         if (Objects.nonNull(language)) {
@@ -58,6 +57,7 @@ public class LocaleFilter implements Filter {
         ServletContext servletContext = filterConfig.getServletContext();
         Map<String, LocaleKeeper> localeKeeperMap = (Map<String, LocaleKeeper>) servletContext.getAttribute(LOCALE_KEEPERS);
         localeKeeper = localeKeeperMap.getOrDefault(COOKIE, new SessionLocaleKeeper());
+        localeList = Arrays.asList(servletContext.getInitParameter(APPLICATION_LOCALE).split(", "));
     }
 
     @Override
