@@ -6,7 +6,6 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_GET_OU
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_GET_PRINT_WRITER;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import javax.servlet.ServletOutputStream;
@@ -18,20 +17,14 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
 
     private static final Logger LOGGER = Logger.getLogger(GZipServletResponseWrapper.class);
     private GZipServletOutputStream gzipOutputStream = null;
-    private PrintWriter printWriter = null;
+    private PrintWriter printWriter;
 
     public GZipServletResponseWrapper(HttpServletResponse response) throws IOException {
         super(response);
     }
 
-    public void close() throws IOException {
-        if (this.printWriter != null) {
-            this.printWriter.close();
-        }
-
-        if (this.gzipOutputStream != null) {
-            this.gzipOutputStream.close();
-        }
+    public void close() {
+        this.printWriter.close();
     }
 
     @Override
@@ -74,10 +67,8 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
             throw new IllegalStateException(CANNOT_GET_PRINT_WRITER);
         }
 
-        if (this.printWriter == null) {
-            this.gzipOutputStream = new GZipServletOutputStream(getResponse().getOutputStream());
-            this.printWriter = new PrintWriter(new OutputStreamWriter(this.gzipOutputStream, getResponse().getCharacterEncoding()));
-        }
+        this.gzipOutputStream = new GZipServletOutputStream(getResponse().getOutputStream());
+        this.printWriter = new PrintWriter(new OutputStreamWriter(this.gzipOutputStream, getResponse().getCharacterEncoding()));
 
         return this.printWriter;
     }
