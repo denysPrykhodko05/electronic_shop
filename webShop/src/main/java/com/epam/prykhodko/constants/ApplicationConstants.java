@@ -137,9 +137,4 @@ public abstract class ApplicationConstants {
     public static final String CONTENT_ENCODING = "Content-Encoding";
     public static final String GZIP = "gzip";
     public static final String ACCEPT_ENCODING = "Accept-Encoding";
-
-    //Language constants
-    public static final String EN = "en";
-    public static final String RU = "ru";
-    public static final String DE = "de";
 }

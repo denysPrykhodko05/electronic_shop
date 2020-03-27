@@ -22,7 +22,7 @@
   </context-param>
   <context-param>
     <param-name>applicationLocale</param-name>
-    <param-value>ua</param-value>
+    <param-value>en, ru, de</param-value>
   </context-param>
   <context-param>
     <param-name>localeSaveTime</param-name>

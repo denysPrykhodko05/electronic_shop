@@ -2,7 +2,6 @@ package com.epam.prykhodko.wrapper;
 
 import static com.epam.prykhodko.constants.ApplicationConstants.APPLICATION_LOCALE;
 import static com.epam.prykhodko.constants.ApplicationConstants.APP_LOCALE;
-import static com.epam.prykhodko.constants.ApplicationConstants.EN;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOCALE_SAVE_TIME;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOCALIZATION;
 
@@ -88,7 +87,7 @@ public class LocalizationWrapper extends HttpServletRequestWrapper {
     private Locale getLocaleFromBrowser(HttpServletRequest httpServletRequest) {
         ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
-        String[] applicationLocale = servletContext.getInitParameter(APPLICATION_LOCALE).split("_");
+        String[] applicationLocale = servletContext.getInitParameter(APPLICATION_LOCALE).split(", ");
         Enumeration<Locale> browserLocales = httpServletRequest.getLocales();
         Locale locale;
 
@@ -101,8 +100,7 @@ public class LocalizationWrapper extends HttpServletRequestWrapper {
             }
         }
 
-        servletContext.setInitParameter(APPLICATION_LOCALE, EN);
-        localeKeeper.save(httpServletRequest, response, EN);
-        return new Locale(EN);
+        localeKeeper.save(httpServletRequest, response, applicationLocale[0]);
+        return new Locale(applicationLocale[0]);
     }
 }

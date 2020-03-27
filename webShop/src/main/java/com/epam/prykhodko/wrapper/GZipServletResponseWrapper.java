@@ -6,6 +6,7 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_GET_OU
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_GET_PRINT_WRITER;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import javax.servlet.ServletOutputStream;
@@ -19,7 +20,7 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
     private GZipServletOutputStream gzipOutputStream = null;
     private PrintWriter printWriter = null;
 
-    public GZipServletResponseWrapper(HttpServletResponse response) {
+    public GZipServletResponseWrapper(HttpServletResponse response) throws IOException {
         super(response);
     }
 
@@ -34,7 +35,7 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
     }
 
     @Override
-    public void flushBuffer() throws IOException {
+    public void flushBuffer() {
         if (this.printWriter != null) {
             this.printWriter.flush();
         }
@@ -83,6 +84,5 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
 
     @Override
     public void setContentLength(int len) {
-        throw new UnsupportedOperationException();
     }
 }

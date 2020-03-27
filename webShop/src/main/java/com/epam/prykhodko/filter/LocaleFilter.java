@@ -1,5 +1,6 @@
 package com.epam.prykhodko.filter;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.APPLICATION_LOCALE;
 import static com.epam.prykhodko.constants.ApplicationConstants.COOKIE;
 import static com.epam.prykhodko.constants.ApplicationConstants.LANG;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOCALES;
@@ -12,6 +13,7 @@ import com.epam.prykhodko.localekeepers.LocaleKeeper;
 import com.epam.prykhodko.localekeepers.localekeeperimpl.SessionLocaleKeeper;
 import com.epam.prykhodko.wrapper.LocalizationWrapper;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -40,7 +42,7 @@ public class LocaleFilter implements Filter {
         ServletContext servletContext = httpServletRequest.getServletContext();
         LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         String language = httpServletRequest.getParameter(LANG);
-        List<String> localeList = (List<String>) servletContext.getAttribute(LOCALES);
+        List<String> localeList = Arrays.asList(servletContext.getInitParameter(APPLICATION_LOCALE).split(", "));
         httpServletRequest.setAttribute(LOCALES, localeList);
 
         if (Objects.nonNull(language)) {
