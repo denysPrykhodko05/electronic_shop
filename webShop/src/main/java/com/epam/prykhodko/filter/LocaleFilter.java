@@ -42,11 +42,10 @@ public class LocaleFilter implements Filter {
         HttpSession session = httpServletRequest.getSession();
         LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         String language = httpServletRequest.getParameter(LANG);
-        httpServletRequest.setAttribute(LOCALES, localeList);
 
-        if (Objects.nonNull(language)) {
-            session.setAttribute(LOCALIZATION, language);
-        }
+        httpServletRequest.setAttribute(LOCALES, localeList);
+        language = Objects.nonNull(language) ? language : localizationWrapper.getLocale().getLanguage();
+        session.setAttribute(LOCALIZATION, language);
         chain.doFilter(localizationWrapper, response);
     }
 

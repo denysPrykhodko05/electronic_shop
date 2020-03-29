@@ -43,7 +43,7 @@ public class GZipServletFilter implements Filter {
             gzipResponse.addHeader(CONTENT_ENCODING, GZIP);
             chain.doFilter(request, gzipResponse);
             gzipResponse.close();
-            
+
             return;
         }
 

@@ -1,5 +1,6 @@
 package com.epam.prykhodko.listener;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.APPLICATION_LOCALE;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
