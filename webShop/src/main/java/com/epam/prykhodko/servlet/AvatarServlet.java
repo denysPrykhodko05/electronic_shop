@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/avatarDraw")
+@WebServlet("/avatarDraw.do")
 public class AvatarServlet extends HttpServlet {
 
     @Override

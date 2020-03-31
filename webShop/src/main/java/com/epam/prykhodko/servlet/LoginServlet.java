@@ -8,6 +8,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN_JSP_LINK;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOGIN_REGEX;
 import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD;
 import static com.epam.prykhodko.constants.ApplicationConstants.PASSWORD_REGEX;
+import static com.epam.prykhodko.constants.ApplicationConstants.PREVIOUS_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/login")
+@WebServlet("/login.do")
 public class LoginServlet extends HttpServlet {
 
     private Validator validator;
@@ -52,6 +53,8 @@ public class LoginServlet extends HttpServlet {
         LogInBean logInBean;
         Map<String, String> errors = new LinkedHashMap<>();
         ServletContext servletContext = req.getServletContext();
+        HttpSession session = req.getSession();
+        String prevUrl = (String) session.getAttribute(PREVIOUS_URL);
         userService = (UserService) servletContext.getAttribute(USER_SERVICE);
         logInBean = LogInBean.createLoginBeanFromRequest(req);
         validator.checkField(LOGIN, logInBean.getLogin(), LOGIN_REGEX, errors);
@@ -79,8 +82,14 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        HttpSession session = req.getSession();
         session.setAttribute(USER_LOGIN, user.getLogin());
+
+        if (Objects.nonNull(prevUrl)) {
+            session.removeAttribute(PREVIOUS_URL);
+            resp.sendRedirect(prevUrl);
+            return;
+        }
+
         resp.sendRedirect(HOME_URL);
     }
 

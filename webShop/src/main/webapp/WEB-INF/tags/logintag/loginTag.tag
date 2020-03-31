@@ -8,10 +8,10 @@
 
       <c:choose>
           <c:when test="${not empty userLogin}">
-            <div id="profile"><img src=/avatarDraw alt="" width="50px" height="50px"><a href="/">${userLogin}<br></a><a href="/logout"><fmt:message key="logOut"/></a>
+            <div id="profile"><img src=/avatarDraw.do alt="" width="50px" height="50px"><a href="/">${userLogin}<br></a><a href="/logout"><fmt:message key="logOut"/></a>
           </c:when>
 
           <c:otherwise>
-             <div id="profile"><img src="images/profile.jpg" alt="" width="0" height="0"><a href="/login"><fmt:message key="logIn"/><br></a><a href="/registration"><fmt:message key="registration"/></a>
+             <div id="profile"><img src="images/profile.jpg" alt="" width="0" height="0"><a href="/login.do"><fmt:message key="logIn"/><br></a><a href="/registration.do"><fmt:message key="registration"/></a>
           </c:otherwise>
       </c:choose>

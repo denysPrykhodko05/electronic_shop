@@ -10,7 +10,7 @@ public abstract class DBConstants {
     public static final String GET_ALL_USERS = "SELECT * FROM user";
     public static final String GET_USER_BY_ID = "SELECT * FROM user WHERE id =?";
     public static final String DELETE_USER_BY_LOGIN = "DELETE FROM user WHERE login=?";
-    public static final String GET_USER_BY_LOGIN = "SELECT id, name, surname, login, email, password, role_id FROM user WHERE login = ?";
+    public static final String GET_USER_BY_LOGIN = "SELECT user.id, user.name, surname, login, email, password, role.role FROM user INNER JOIN role on role.id = user.role_id WHERE login = ?";
 
     //PRODUCTDAO QUERIES
     public static final String ADD_PRODUCT = "INSERT INTO product(name, price, manufacture, category) VALUES(?,?,?,?)";

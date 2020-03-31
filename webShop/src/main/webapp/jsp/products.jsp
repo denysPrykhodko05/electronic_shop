@@ -22,7 +22,7 @@
 
 <body>
 
-    <form id="amountOfProductsForm" method="GET" action="/products">
+    <form id="amountOfProductsForm" method="GET" action="/products.do">
         <div id="filter-settings">
           <fmt:message key="amount_of_products_on_page"/>
           <input name="amountOfProductsFromForm" id="amountOfProductsOnPage" type="number" value="${amountOfProducts}"/>

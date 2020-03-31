@@ -5,7 +5,7 @@ $(document).ready(function () {
     var id = $(this).data(id).id;
 
     $.ajax({
-      url: "/addToCart",
+      url: "/addToCart.do",
       method: "POST",
       data: ({productId: id}),
       success: response
