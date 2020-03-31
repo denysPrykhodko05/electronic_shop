@@ -1,5 +1,6 @@
 package com.epam.prykhodko.filter;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.APPLICATION_LOCALE;
 import static com.epam.prykhodko.constants.ApplicationConstants.COOKIE;
 import static com.epam.prykhodko.constants.ApplicationConstants.LANG;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOCALES;
@@ -12,6 +13,7 @@ import com.epam.prykhodko.localekeepers.LocaleKeeper;
 import com.epam.prykhodko.localekeepers.localekeeperimpl.SessionLocaleKeeper;
 import com.epam.prykhodko.wrapper.LocalizationWrapper;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31,21 +33,19 @@ public class LocaleFilter implements Filter {
 
     public static final Logger LOGGER = Logger.getLogger(LocaleFilter.class);
     private LocaleKeeper localeKeeper;
+    private List<String> localeList;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
-        ServletContext servletContext = httpServletRequest.getServletContext();
         LocalizationWrapper localizationWrapper = new LocalizationWrapper(httpServletRequest, httpServletResponse, localeKeeper);
         String language = httpServletRequest.getParameter(LANG);
-        List<String> localeList = (List<String>) servletContext.getAttribute(LOCALES);
-        httpServletRequest.setAttribute(LOCALES, localeList);
 
-        if (Objects.nonNull(language)) {
-            session.setAttribute(LOCALIZATION, language);
-        }
+        httpServletRequest.setAttribute(LOCALES, localeList);
+        language = Objects.nonNull(language) ? language : localizationWrapper.getLocale().getLanguage();
+        session.setAttribute(LOCALIZATION, language);
         chain.doFilter(localizationWrapper, response);
     }
 
@@ -56,6 +56,7 @@ public class LocaleFilter implements Filter {
         ServletContext servletContext = filterConfig.getServletContext();
         Map<String, LocaleKeeper> localeKeeperMap = (Map<String, LocaleKeeper>) servletContext.getAttribute(LOCALE_KEEPERS);
         localeKeeper = localeKeeperMap.getOrDefault(COOKIE, new SessionLocaleKeeper());
+        localeList = Arrays.asList(servletContext.getInitParameter(APPLICATION_LOCALE).split(", "));
     }
 
     @Override

@@ -18,7 +18,7 @@
 
 <body>
 
-    <form action="/login" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password,password)">
+    <form action="/login.do" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password,password)">
         <div class="commonContainer">
 
             <!--block for credential fields-->

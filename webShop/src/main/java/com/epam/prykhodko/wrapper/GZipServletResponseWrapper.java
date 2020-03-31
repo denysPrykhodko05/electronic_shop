@@ -8,6 +8,7 @@ import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_GET_PR
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Objects;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -17,24 +18,25 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
 
     private static final Logger LOGGER = Logger.getLogger(GZipServletResponseWrapper.class);
     private GZipServletOutputStream gzipOutputStream = null;
-    private PrintWriter printWriter = null;
+    private PrintWriter printWriter;
 
-    public GZipServletResponseWrapper(HttpServletResponse response) {
+    public GZipServletResponseWrapper(HttpServletResponse response) throws IOException {
         super(response);
     }
 
     public void close() throws IOException {
-        if (this.printWriter != null) {
-            this.printWriter.close();
+        if (Objects.nonNull(printWriter)){
+            printWriter.close();
         }
 
-        if (this.gzipOutputStream != null) {
-            this.gzipOutputStream.close();
+        if (Objects.nonNull(gzipOutputStream)){
+            gzipOutputStream.close();
         }
+
     }
 
     @Override
-    public void flushBuffer() throws IOException {
+    public void flushBuffer() {
         if (this.printWriter != null) {
             this.printWriter.flush();
         }
@@ -83,6 +85,6 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
 
     @Override
     public void setContentLength(int len) {
-        throw new UnsupportedOperationException();
     }
 }
+

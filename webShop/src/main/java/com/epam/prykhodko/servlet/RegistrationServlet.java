@@ -50,7 +50,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.log4j.Logger;
 
-@WebServlet("/registration")
+@WebServlet("/registration.do")
 public class RegistrationServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(RegistrationServlet.class);

@@ -38,12 +38,15 @@ public class GZipServletFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         if (acceptsGZipEncoding(httpRequest)) {
-            httpResponse.addHeader(CONTENT_ENCODING, GZIP);
             GZipServletResponseWrapper gzipResponse = new GZipServletResponseWrapper(httpResponse);
+
+            gzipResponse.addHeader(CONTENT_ENCODING, GZIP);
             chain.doFilter(request, gzipResponse);
             gzipResponse.close();
+
             return;
         }
+
         chain.doFilter(request, response);
     }
 

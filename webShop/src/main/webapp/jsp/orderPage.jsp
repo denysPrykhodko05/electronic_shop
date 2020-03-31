@@ -35,7 +35,7 @@
     </div>
 
     <!-- form for input user payment information-->
-    <form action="/makeOrder" method="POST">
+    <form action="/makeOrder.do" method="POST">
 
         <!-- block for choose payment method-->
         <div id="PaymentDiv">

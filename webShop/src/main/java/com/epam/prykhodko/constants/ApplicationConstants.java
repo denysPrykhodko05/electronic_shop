@@ -60,12 +60,13 @@ public abstract class ApplicationConstants {
     public static final String HIDDEN = "hidden";
     public static final String CONNECTION_MANAGER = "connection manager";
     public static final String NOT_USER_ERROR = "Try again";
+    public static final String PREVIOUS_URL = "prevUrl";
 
     //URL path
     public static final String HOME_URL = "/";
-    public static final String MAKE_ORDER_USER_CHECK_URL = "/makeOrderUserCheck";
-    public static final String REGISTRATION = "/registration";
-    public static final String MAKE_ORDER = "/makeOrder";
+    public static final String MAKE_ORDER_USER_CHECK_URL = "/makeOrderUserCheck.do";
+    public static final String REGISTRATION = "/registration.do";
+    public static final String MAKE_ORDER = "/makeOrder.do";
 
     //JSP link
     public static final String PRODUCT_JSP = "jsp/products.jsp";
@@ -137,9 +138,4 @@ public abstract class ApplicationConstants {
     public static final String CONTENT_ENCODING = "Content-Encoding";
     public static final String GZIP = "gzip";
     public static final String ACCEPT_ENCODING = "Accept-Encoding";
-
-    //Language constants
-    public static final String EN = "en";
-    public static final String RU = "ru";
-    public static final String DE = "de";
 }

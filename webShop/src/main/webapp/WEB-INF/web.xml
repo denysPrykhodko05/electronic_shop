@@ -22,7 +22,7 @@
   </context-param>
   <context-param>
     <param-name>applicationLocale</param-name>
-    <param-value>ua</param-value>
+    <param-value>en, ru, de</param-value>
   </context-param>
   <context-param>
     <param-name>localeSaveTime</param-name>
@@ -72,6 +72,16 @@
   <filter-mapping>
     <filter-name>GzipFilter</filter-name>
     <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- filter for security-->
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.SecurityFilter</filter-class>
+    <filter-name>SecurityFilter</filter-name>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
   </filter-mapping>
 
   <resource-ref>

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/captcha")
+@WebServlet("/captcha.do")
 public class CaptchaServlet extends HttpServlet {
 
     @Override
