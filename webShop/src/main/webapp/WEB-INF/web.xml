@@ -20,6 +20,14 @@
     <param-name>productSortType</param-name>
     <param-value>byPriceFromLow</param-value>
   </context-param>
+  <context-param>
+    <param-name>applicationLocale</param-name>
+    <param-value>en, ru, de</param-value>
+  </context-param>
+  <context-param>
+    <param-name>localeSaveTime</param-name>
+    <param-value>10</param-value>
+  </context-param>
 
   <display-name>Archetype Created Web Application</display-name>
   <listener>
@@ -34,6 +42,36 @@
   <filter-mapping>
     <filter-name>logoutFilter</filter-name>
     <url-pattern>/logout</url-pattern>
+  </filter-mapping>
+
+  <!-- fileter for localization-->
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.LocaleFilter</filter-class>
+    <filter-name>localizationFilter</filter-name>
+  </filter>
+  <filter-mapping>
+    <filter-name>localizationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- fileter for cache-->
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.CacheFilter</filter-class>
+    <filter-name>CacheFilter</filter-name>
+  </filter>
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.GZipServletFilter</filter-class>
+    <filter-name>GzipFilter</filter-name>
+  </filter>
+
+  <!-- filter for GZip-->
+  <filter-mapping>
+    <filter-name>CacheFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>GzipFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <resource-ref>

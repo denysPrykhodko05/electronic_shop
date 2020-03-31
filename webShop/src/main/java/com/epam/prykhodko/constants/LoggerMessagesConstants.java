@@ -22,9 +22,14 @@ public abstract class LoggerMessagesConstants {
 
     //Filter messages
     public static final String INFO_LOGOUT_FILTER_INIT = "Log out filter init";
-    public static final String INFO_PRODUCT_FILTER_INIT = "Product filter init";
     public static final String INFO_LOGOUT_FILTER_DESTROY = "Log out filter destroy";
-    public static final String INFO_PRODUCT_FILTER_DESTROY = "Product filter destroy";
+    public static final String INFO_CACHE_FILTER_INIT = "Cache filter init";
+    public static final String INFO_CACHE_FILTER_DESTROY = "Cache filter destroy";
+    public static final String INFO_GZIP_FILTER_INIT = "GZip filter init";
+    public static final String INFO_GZIP_FILTER_DESTROY = "GZip filter destroy";
+    public static final String INFO_LOCALE_FILTER_INIT = "Locale filter init";
+    public static final String INFO_LOCALE_FILTER_DESTROY = "Locale filter destroy";
+
 
     //ImageDraw exception
     public static final String ERR_CANNOT_DRAW_AVATAR = "Cannot draw avatar";
@@ -36,4 +41,10 @@ public abstract class LoggerMessagesConstants {
     public static final String ERR_CANNOT_ADD_ORDER = "Cannot add order";
     public static final String ERR_CANNOT_MAKE_ORDER = "Cannot make order";
     public static final String ERR_CANNOT_ADD_ORDERED_PRODUCT = "Cannot add ordered product";
+
+    //Wrapper constants
+    public static final String CANNOT_FLUSH_OUTPUT_STREAM = "Cannot flush output stream";
+    public static final String CANNOT_FLUSH_BUFFER = "Cannot flush buffer";
+    public static final String CANNOT_GET_OUTPUT_STREAM = "PrintWriter obtained already - cannot get OutputStream";
+    public static final String CANNOT_GET_PRINT_WRITER = "OutputStream obtained already - cannot get PrintWriter";
 }

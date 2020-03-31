@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class SessionKeeperTest {
+public class SessionLocaleKeeperTest {
 
     private SessionKeeper sessionKeeper = new SessionKeeper();
 

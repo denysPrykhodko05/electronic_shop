@@ -1,5 +1,6 @@
 package com.epam.prykhodko.listener;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.APPLICATION_LOCALE;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
@@ -11,6 +12,8 @@ import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
 import static com.epam.prykhodko.constants.ApplicationConstants.IMAGE_DRAW;
 import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOCALES;
+import static com.epam.prykhodko.constants.ApplicationConstants.LOCALE_KEEPERS;
 import static com.epam.prykhodko.constants.ApplicationConstants.ORDER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
@@ -31,6 +34,9 @@ import com.epam.prykhodko.dao.impl.OrderDAOImpl;
 import com.epam.prykhodko.dao.impl.ProductDAOImpl;
 import com.epam.prykhodko.dao.impl.UserDAOImpl;
 import com.epam.prykhodko.handler.TransactionHandler;
+import com.epam.prykhodko.localekeepers.LocaleKeeper;
+import com.epam.prykhodko.localekeepers.localekeeperimpl.CookieLocaleKeeper;
+import com.epam.prykhodko.localekeepers.localekeeperimpl.SessionLocaleKeeper;
 import com.epam.prykhodko.mananger.ConnectionManager;
 import com.epam.prykhodko.service.OrderService;
 import com.epam.prykhodko.service.ProductService;
@@ -42,7 +48,10 @@ import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -93,12 +102,20 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(USER_SERVICE, userService);
         servletContext.setAttribute(PRODUCT_SERVICE, productService);
         servletContext.setAttribute(ORDER_SERVICE, orderService);
+        servletContext.setAttribute(LOCALE_KEEPERS, createLocaleKeepers());
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         executorService.shutdownNow();
         LOGGER.info(CONTEXT_DESTROYER);
+    }
+
+    private Map<String, LocaleKeeper> createLocaleKeepers() {
+        Map<String, LocaleKeeper> localeKeeperMap = new HashMap<>();
+        localeKeeperMap.put(COOKIE, new CookieLocaleKeeper());
+        localeKeeperMap.put(SESSION, new SessionLocaleKeeper());
+        return localeKeeperMap;
     }
 
     private CaptchaKeeper createKeeper(String keeper, ServletContext servletContext) {

@@ -119,4 +119,22 @@ public abstract class ApplicationConstants {
     public static final String CARD_NUMBER_REGEX = "^\\d{4}-\\d{4}-\\d{4}-\\d{4}$";
     public static final String CARD_DATE_REGEX = "^\\d{2}/\\d{2}$";
     public static final String CVC_REGEX = "^\\d{3}$";
+
+    //Locale constants
+    public static final String LOCALE_KEEPERS = "localeKeepers";
+    public static final String LANG = "lang";
+    public static final String LOCALES = "locales";
+    public static final String LOCALIZATION = "localization";
+    public static final String LOCALE_SAVE_TIME = "localeSaveTime";
+    public static final String APPLICATION_LOCALE = "applicationLocale";
+    public static final String APP_LOCALE = "appLocale";
+
+    //Cache constants
+    public static final String CACHE_CONTROL = "Cache-Control";
+    public static final String NO_CACHE = "no-store, no-cache, must-revalidate, max-age=0";
+
+    //GZip constants
+    public static final String CONTENT_ENCODING = "Content-Encoding";
+    public static final String GZIP = "gzip";
+    public static final String ACCEPT_ENCODING = "Accept-Encoding";
 }
