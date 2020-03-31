@@ -1,7 +1,5 @@
 package com.epam.prykhodko.wrapper;
 
-import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_FLUSH_BUFFER;
-import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_FLUSH_OUTPUT_STREAM;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_GET_OUTPUT_STREAM;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.CANNOT_GET_PRINT_WRITER;
 
@@ -25,35 +23,27 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
     }
 
     public void close() throws IOException {
-        if (Objects.nonNull(printWriter)){
+        if (Objects.nonNull(printWriter)) {
             printWriter.close();
         }
 
-        if (Objects.nonNull(gzipOutputStream)){
+        if (Objects.nonNull(gzipOutputStream)) {
             gzipOutputStream.close();
         }
 
     }
 
     @Override
-    public void flushBuffer() {
+    public void flushBuffer() throws IOException {
         if (this.printWriter != null) {
             this.printWriter.flush();
         }
 
-        try {
-            if (this.gzipOutputStream != null) {
-                this.gzipOutputStream.flush();
-            }
-        } catch (IOException e) {
-            LOGGER.info(CANNOT_FLUSH_OUTPUT_STREAM);
+        if (this.gzipOutputStream != null) {
+            this.gzipOutputStream.flush();
         }
 
-        try {
-            super.flushBuffer();
-        } catch (IOException e) {
-            LOGGER.info(CANNOT_FLUSH_BUFFER);
-        }
+        super.flushBuffer();
     }
 
     @Override
