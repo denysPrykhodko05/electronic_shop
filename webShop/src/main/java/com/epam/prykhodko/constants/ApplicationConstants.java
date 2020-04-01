@@ -64,9 +64,9 @@ public abstract class ApplicationConstants {
 
     //URL path
     public static final String HOME_URL = "/";
-    public static final String MAKE_ORDER_USER_CHECK_URL = "/makeOrderUserCheck.do";
-    public static final String REGISTRATION = "/registration.do";
-    public static final String MAKE_ORDER = "/makeOrder.do";
+    public static final String MAKE_ORDER_USER_CHECK_URL = "/makeOrderUserCheck";
+    public static final String REGISTRATION = "/registration";
+    public static final String MAKE_ORDER = "/makeOrder";
 
     //JSP link
     public static final String PRODUCT_JSP = "jsp/products.jsp";

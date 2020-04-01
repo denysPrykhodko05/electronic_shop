@@ -19,7 +19,7 @@
 <body>
 
     <!-- registartion form-->
-    <form action="/registration.do" enctype="multipart/form-data" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password, confirmPassword)">
+    <form action="/registration" enctype="multipart/form-data" id="reg" method="POST" name="regFrom" onsubmit="return dataValidation(password, confirmPassword)">
 
          <!-- block for all page-->
         <div class="commonContainer">
