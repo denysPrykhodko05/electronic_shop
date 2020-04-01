@@ -3,7 +3,6 @@ package com.epam.prykhodko.util;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_CANNOT_PARSE_FILE;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_INCORRECT_CONFIGURATION;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.ERR_INCORRECT_FILE_PATH;
-import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,19 +39,7 @@ public class XMLParser {
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
-                    int roleElement = 0;
-                    String url = element.getElementsByTagName("url-pattern").item(INTEGER_ZERO).getTextContent();
-                    NodeList roles = element.getElementsByTagName("role");
-                    Node role = roles.item(roleElement);
-                    List<String> roleList = new ArrayList<>();
-
-                    while (Objects.nonNull(role)) {
-                        roleList.add(role.getTextContent());
-                        roleElement++;
-                        role = roles.item(roleElement);
-                    }
-
-                    urlMap.put(url, roleList);
+                    urlMap.put(getUrlPattern(element), getRoles(element));
                 }
             }
         } catch (ParserConfigurationException ex) {
@@ -64,5 +50,26 @@ public class XMLParser {
             LOGGER.error(ERR_CANNOT_PARSE_FILE);
         }
         return urlMap;
+    }
+
+    private static String getUrlPattern(Element element) {
+        return element
+            .getElementsByTagName("url-pattern")
+            .item(0)
+            .getTextContent();
+    }
+
+    private static List<String> getRoles(Element element) {
+        List<String> roleList = new ArrayList<>();
+
+        NodeList roleNodeList = element.getElementsByTagName("role");
+
+        for (int i = 0; i < roleNodeList.getLength(); i++) {
+            Node node = roleNodeList.item(i);
+            Element roleElement = (Element) node;
+            String role = roleElement.getTextContent();
+            roleList.add(role);
+        }
+        return roleList;
     }
 }
