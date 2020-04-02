@@ -5,17 +5,13 @@ import static com.epam.prykhodko.constants.ApplicationConstants.PREVIOUS_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_SECURITY_FILTER_DESTROY;
+import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_SECURITY_FILTER_INIT;
 
 import com.epam.prykhodko.entity.User;
 import com.epam.prykhodko.mananger.AccessManager;
 import com.epam.prykhodko.service.UserService;
-import com.epam.prykhodko.util.XMLParser;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Optional;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -31,7 +27,6 @@ import org.apache.log4j.Logger;
 public class SecurityFilter implements Filter {
 
     private static final Logger LOGGER = Logger.getLogger(SecurityFilter.class);
-    private Map<String, List<String>> urlMap;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -40,30 +35,24 @@ public class SecurityFilter implements Filter {
         HttpSession session = ((HttpServletRequest) request).getSession();
         ServletContext servletContext = request.getServletContext();
         String url = httpServletRequest.getRequestURI();
-
-        if (url.matches("^(.+)(\\..+)$")) {
-            chain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
-
         String userLogin = (String) session.getAttribute(USER_LOGIN);
-        UserService userService = (UserService) servletContext.getAttribute(USER_SERVICE);
-        User user = userService.getByLogin(userLogin);
         AccessManager accessManager = (AccessManager) servletContext.getAttribute(ACCESS_MANAGER);
-        Optional<Entry<String, List<String>>> key = accessManager.checkUrl(urlMap, url);
 
-        if (!key.isPresent()) {
+        if (!accessManager.checkUrl(url)) {
             chain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
 
-        if (Objects.isNull(user)) {
+        if (Objects.isNull(userLogin)) {
             session.setAttribute(PREVIOUS_URL, url);
             httpServletResponse.sendRedirect("/login");
             return;
         }
 
-        if (accessManager.checkAccess(user, key.get().getValue())) {
+        UserService userService = (UserService) servletContext.getAttribute(USER_SERVICE);
+        User user = userService.getUser(userLogin);
+
+        if (accessManager.checkAccess(user.getRole(), url)) {
             chain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
@@ -73,9 +62,7 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        ServletContext servletContext = filterConfig.getServletContext();
-        String path = servletContext.getInitParameter("securityFilePath");
-        urlMap = XMLParser.securityXMLParse(path);
+        LOGGER.info(INFO_SECURITY_FILTER_INIT);
     }
 
     @Override

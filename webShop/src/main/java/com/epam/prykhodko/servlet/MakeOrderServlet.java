@@ -89,7 +89,7 @@ public class MakeOrderServlet extends HttpServlet {
             return;
         }
 
-        user = userService.getByLogin(login);
+        user = userService.getUser(login);
         order = createOrder(orderedItems, user.getEmail(), OrderStatus.ACCEPTED);
         Order ordered = orderService.add(order);
         if (Objects.isNull(ordered)) {

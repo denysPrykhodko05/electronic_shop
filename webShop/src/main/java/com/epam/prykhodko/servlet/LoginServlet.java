@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
         user.setLogin(logInBean.getLogin());
         user.setPassword(logInBean.getPassword());
 
-        User foundUser = userService.getByLogin(user.getLogin());
+        User foundUser = userService.getUser(user.getLogin());
         byte[] decodePass = Base64.getDecoder().decode(foundUser.getPassword());
         if (Objects.isNull(foundUser) || !user.getPassword().equals(new String(decodePass))) {
             errors.put(LOGIN, INCORRECT_INPUT + LOGIN);

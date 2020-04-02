@@ -62,6 +62,7 @@ public abstract class ApplicationConstants {
     public static final String NOT_USER_ERROR = "Try again";
     public static final String PREVIOUS_URL = "prevUrl";
     public static final String ACCESS_MANAGER = "access manager";
+    public static final String URL_MAP = "urlMap";
 
     //URL path
     public static final String HOME_URL = "/";

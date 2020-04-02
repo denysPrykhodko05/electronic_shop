@@ -17,6 +17,7 @@ import static com.epam.prykhodko.constants.ApplicationConstants.ORDER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
 import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
+import static com.epam.prykhodko.constants.ApplicationConstants.URL_MAP;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
@@ -48,7 +49,9 @@ import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
+import com.epam.prykhodko.util.XMLParser;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -75,7 +78,6 @@ public class ContextListener implements ServletContextListener {
     private final UserUtils userUtils = new UserUtils();
     private final ImageDraw imageDraw = new ImageDraw();
     private final ConnectionManager connectionManager = new ConnectionManager();
-    private final AccessManager accessManager = new AccessManager();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -85,11 +87,15 @@ public class ContextListener implements ServletContextListener {
         ServletContext servletContext = servletContextEvent.getServletContext();
         servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
+        Map<String, List<String>> urlMap;
         executorService.scheduleWithFixedDelay(new TimerThread(captchaKeys), 0, Long.parseLong(captchaTime), TimeUnit.SECONDS);
         keepers.put(SESSION, new SessionKeeper());
         keepers.put(COOKIE, new CookieKeeper());
         keepers.put(HIDDEN_FIELD, new HiddenFieldKeeper());
         CaptchaKeeper captchaKeeper = createKeeper(capthaKeeper, servletContextEvent.getServletContext());
+        String path = servletContext.getInitParameter("securityFilePath");
+        urlMap = XMLParser.securityXMLParse(path);
+        AccessManager accessManager = new AccessManager(urlMap);
         servletContext.setAttribute(KEEPERS, keepers);
         servletContext.setAttribute(VALIDATOR, validator);
         servletContext.setAttribute(USER_UTILS, userUtils);
@@ -102,6 +108,7 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(ORDER_SERVICE, orderService);
         servletContext.setAttribute(LOCALE_KEEPERS, createLocaleKeepers());
         servletContext.setAttribute(ACCESS_MANAGER, accessManager);
+        servletContext.setAttribute(URL_MAP, urlMap);
     }
 
     @Override

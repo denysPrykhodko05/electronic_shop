@@ -29,7 +29,7 @@ public class CheckUserRootServlet extends HttpServlet {
         JsonObject jsonObject = new JsonObject();
         PrintWriter writer = response.getWriter();
 
-        if (Objects.nonNull(login) && Objects.nonNull(userService.getByLogin(login))) {
+        if (Objects.nonNull(login) && Objects.nonNull(userService.getUser(login))) {
             jsonObject.addProperty(SUCCESS, true);
             writer.write(jsonObject.toString());
             return;

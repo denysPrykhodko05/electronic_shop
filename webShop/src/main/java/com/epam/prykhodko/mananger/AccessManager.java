@@ -1,34 +1,33 @@
 package com.epam.prykhodko.mananger;
 
-import com.epam.prykhodko.entity.User;
+import com.epam.prykhodko.entity.UserRole;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AccessManager {
 
-    private static final Pattern PATTERN = Pattern.compile("^(/)(.+)((/\\*)|$)");
+    private Map<String, List<String>> urlMap;
 
-    public Optional<Entry<String, List<String>>> checkUrl(Map<String, List<String>> urlMap, String url) {
-        return urlMap.entrySet().stream()
-            .filter(e -> {
-                boolean res = false;
-                Matcher matcher = PATTERN.matcher(e.getKey().trim());
-
-                if (matcher.find()) {
-                    res = url.contains(matcher.group(2));
-                }
-
-                return res;
-            })
-            .findFirst();
+    public AccessManager(Map<String, List<String>> urlMap) {
+        this.urlMap = urlMap;
     }
 
-    public boolean checkAccess(User user, List<String> roles) {
-        return roles.contains(user.getRole().toString().toLowerCase());
+    public boolean checkUrl(String url) {
+        return urlMap.entrySet().stream()
+            .anyMatch(e -> url.matches(e.getKey().trim()));
+    }
+
+    public boolean checkAccess(UserRole role, String url) {
+        Optional<Entry<String, List<String>>> roles = urlMap.entrySet().stream().filter(e -> url.matches(e.getKey().trim())).findFirst();
+
+        if (!roles.isPresent()) {
+            return true;
+        }
+
+        List<String> roleList = roles.get().getValue();
+        return roleList.contains(role.toString().toLowerCase());
     }
 
 }

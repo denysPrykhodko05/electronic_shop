@@ -53,4 +53,5 @@ public abstract class LoggerMessagesConstants {
     public static final String ERR_INCORRECT_FILE_PATH = "Incorrect file path";
     public static final String ERR_CANNOT_PARSE_FILE = "Cannot parse file";
     public static final String INFO_SECURITY_FILTER_DESTROY = "Security file destroy";
+    public static final String INFO_SECURITY_FILTER_INIT = "Security file init";
 }
