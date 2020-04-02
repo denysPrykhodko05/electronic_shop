@@ -1,0 +1,7 @@
+<security>
+  <constraint>
+    <role>admin</role>
+    <role>user</role>
+    <url-pattern>.*/logout.*</url-pattern>
+  </constraint>
+</security>

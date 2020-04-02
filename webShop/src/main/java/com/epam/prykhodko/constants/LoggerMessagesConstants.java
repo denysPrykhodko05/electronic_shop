@@ -47,4 +47,11 @@ public abstract class LoggerMessagesConstants {
     public static final String CANNOT_FLUSH_BUFFER = "Cannot flush buffer";
     public static final String CANNOT_GET_OUTPUT_STREAM = "PrintWriter obtained already - cannot get OutputStream";
     public static final String CANNOT_GET_PRINT_WRITER = "OutputStream obtained already - cannot get PrintWriter";
+
+    //Security constants
+    public static final String ERR_INCORRECT_CONFIGURATION = "Incorrect configuration";
+    public static final String ERR_INCORRECT_FILE_PATH = "Incorrect file path";
+    public static final String ERR_CANNOT_PARSE_FILE = "Cannot parse file";
+    public static final String INFO_SECURITY_FILTER_DESTROY = "Security file destroy";
+    public static final String INFO_SECURITY_FILTER_INIT = "Security file init";
 }

@@ -1,6 +1,6 @@
 package com.epam.prykhodko.listener;
 
-import static com.epam.prykhodko.constants.ApplicationConstants.APPLICATION_LOCALE;
+import static com.epam.prykhodko.constants.ApplicationConstants.ACCESS_MANAGER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEEPER;
 import static com.epam.prykhodko.constants.ApplicationConstants.CAPTCHA_KEYS;
@@ -12,12 +12,12 @@ import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN;
 import static com.epam.prykhodko.constants.ApplicationConstants.HIDDEN_FIELD;
 import static com.epam.prykhodko.constants.ApplicationConstants.IMAGE_DRAW;
 import static com.epam.prykhodko.constants.ApplicationConstants.KEEPERS;
-import static com.epam.prykhodko.constants.ApplicationConstants.LOCALES;
 import static com.epam.prykhodko.constants.ApplicationConstants.LOCALE_KEEPERS;
 import static com.epam.prykhodko.constants.ApplicationConstants.ORDER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.PRODUCT_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.REG_FORM;
 import static com.epam.prykhodko.constants.ApplicationConstants.SESSION;
+import static com.epam.prykhodko.constants.ApplicationConstants.URL_MAP;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_UTILS;
 import static com.epam.prykhodko.constants.ApplicationConstants.VALIDATOR;
@@ -37,6 +37,7 @@ import com.epam.prykhodko.handler.TransactionHandler;
 import com.epam.prykhodko.localekeepers.LocaleKeeper;
 import com.epam.prykhodko.localekeepers.localekeeperimpl.CookieLocaleKeeper;
 import com.epam.prykhodko.localekeepers.localekeeperimpl.SessionLocaleKeeper;
+import com.epam.prykhodko.mananger.AccessManager;
 import com.epam.prykhodko.mananger.ConnectionManager;
 import com.epam.prykhodko.service.OrderService;
 import com.epam.prykhodko.service.ProductService;
@@ -48,8 +49,7 @@ import com.epam.prykhodko.util.ImageDraw;
 import com.epam.prykhodko.util.TimerThread;
 import com.epam.prykhodko.util.UserUtils;
 import com.epam.prykhodko.util.Validator;
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.epam.prykhodko.util.XMLParser;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,11 +87,15 @@ public class ContextListener implements ServletContextListener {
         ServletContext servletContext = servletContextEvent.getServletContext();
         servletContext.setAttribute(CAPTCHA_KEYS, captchaKeys);
         Map<String, CaptchaKeeper> keepers = new HashMap<>();
+        Map<String, List<String>> urlMap;
         executorService.scheduleWithFixedDelay(new TimerThread(captchaKeys), 0, Long.parseLong(captchaTime), TimeUnit.SECONDS);
         keepers.put(SESSION, new SessionKeeper());
         keepers.put(COOKIE, new CookieKeeper());
         keepers.put(HIDDEN_FIELD, new HiddenFieldKeeper());
         CaptchaKeeper captchaKeeper = createKeeper(capthaKeeper, servletContextEvent.getServletContext());
+        String path = servletContext.getInitParameter("securityFilePath");
+        urlMap = XMLParser.securityXMLParse(path);
+        AccessManager accessManager = new AccessManager(urlMap);
         servletContext.setAttribute(KEEPERS, keepers);
         servletContext.setAttribute(VALIDATOR, validator);
         servletContext.setAttribute(USER_UTILS, userUtils);
@@ -103,6 +107,8 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(PRODUCT_SERVICE, productService);
         servletContext.setAttribute(ORDER_SERVICE, orderService);
         servletContext.setAttribute(LOCALE_KEEPERS, createLocaleKeepers());
+        servletContext.setAttribute(ACCESS_MANAGER, accessManager);
+        servletContext.setAttribute(URL_MAP, urlMap);
     }
 
     @Override

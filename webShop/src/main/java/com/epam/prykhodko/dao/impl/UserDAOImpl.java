@@ -21,6 +21,7 @@ import static org.apache.commons.lang3.math.NumberUtils.INTEGER_ZERO;
 
 import com.epam.prykhodko.dao.UserDAO;
 import com.epam.prykhodko.entity.User;
+import com.epam.prykhodko.entity.UserRole;
 import com.epam.prykhodko.handler.ConnectionHolder;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -129,7 +130,7 @@ public class UserDAOImpl implements UserDAO {
         String login = resultSet.getString(LOGIN);
         String email = resultSet.getString(EMAIL);
         String password = resultSet.getString(PASSWORD);
-        int roleId = resultSet.getInt(ROLE_ID);
+        UserRole roleId = UserRole.valueOf(resultSet.getString("role").toUpperCase());
         return new User(id, name, surName, email, login, password, roleId);
     }
 }

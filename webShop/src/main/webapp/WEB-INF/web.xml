@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  version="3.0"
-  xmlns="http://java.sun.com/xml/ns/javaee"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  version="3.1"
+  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
   <context-param>
     <param-name>captcha</param-name>
@@ -28,13 +28,28 @@
     <param-name>localeSaveTime</param-name>
     <param-value>10</param-value>
   </context-param>
+  <context-param>
+    <param-name>securityFilePath</param-name>
+    <param-value>src/main/resources/Security.xml</param-value>
+  </context-param>
 
   <display-name>Archetype Created Web Application</display-name>
   <listener>
     <listener-class>com.epam.prykhodko.listener.ContextListener</listener-class>
   </listener>
 
-  <!-- fileter for logout-->
+
+  <!-- filter for security-->
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.SecurityFilter</filter-class>
+    <filter-name>SecurityFilter</filter-name>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- filter for logout-->
   <filter>
     <filter-class>com.epam.prykhodko.filter.LogoutFilter</filter-class>
     <filter-name>logoutFilter</filter-name>
@@ -44,7 +59,7 @@
     <url-pattern>/logout</url-pattern>
   </filter-mapping>
 
-  <!-- fileter for localization-->
+  <!-- filter for localization-->
   <filter>
     <filter-class>com.epam.prykhodko.filter.LocaleFilter</filter-class>
     <filter-name>localizationFilter</filter-name>
@@ -54,25 +69,27 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- fileter for cache-->
+  <!-- filter for cache-->
   <filter>
     <filter-class>com.epam.prykhodko.filter.CacheFilter</filter-class>
     <filter-name>CacheFilter</filter-name>
   </filter>
-  <filter>
-    <filter-class>com.epam.prykhodko.filter.GZipServletFilter</filter-class>
-    <filter-name>GzipFilter</filter-name>
-  </filter>
 
-  <!-- filter for GZip-->
   <filter-mapping>
     <filter-name>CacheFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <filter-mapping>
+
+  <!-- filter for GZip-->
+  <error-page>
+    <error-code>403</error-code>
+    <location>/jsp/403Error.jsp</location>
+  </error-page>
+
+  <filter>
+    <filter-class>com.epam.prykhodko.filter.GZipServletFilter</filter-class>
     <filter-name>GzipFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter>
 
   <resource-ref>
     <description>DB Connection</description>
@@ -80,4 +97,11 @@
     <res-ref-name>jdbc/electronic_store</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
   </resource-ref>
+
+  <!--Errors-->
+  <filter-mapping>
+    <filter-name>GzipFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 </web-app>
