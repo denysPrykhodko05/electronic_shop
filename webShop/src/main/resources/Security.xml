@@ -4,8 +4,4 @@
     <role>user</role>
     <url-pattern>/logout</url-pattern>
   </constraint>
-  <constraint>
-    <role>admin</role>
-    <url-pattern>/products</url-pattern>
-  </constraint>
 </security>

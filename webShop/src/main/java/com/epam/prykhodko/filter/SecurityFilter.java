@@ -1,19 +1,21 @@
 package com.epam.prykhodko.filter;
 
+import static com.epam.prykhodko.constants.ApplicationConstants.ACCESS_MANAGER;
 import static com.epam.prykhodko.constants.ApplicationConstants.PREVIOUS_URL;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_LOGIN;
 import static com.epam.prykhodko.constants.ApplicationConstants.USER_SERVICE;
 import static com.epam.prykhodko.constants.LoggerMessagesConstants.INFO_SECURITY_FILTER_DESTROY;
 
 import com.epam.prykhodko.entity.User;
-import com.epam.prykhodko.exception.NoAccessRightsException;
-import com.epam.prykhodko.exception.NoUserLoginException;
 import com.epam.prykhodko.mananger.AccessManager;
 import com.epam.prykhodko.service.UserService;
 import com.epam.prykhodko.util.XMLParser;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Optional;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -47,19 +49,26 @@ public class SecurityFilter implements Filter {
         String userLogin = (String) session.getAttribute(USER_LOGIN);
         UserService userService = (UserService) servletContext.getAttribute(USER_SERVICE);
         User user = userService.getByLogin(userLogin);
-        AccessManager accessManager = new AccessManager(url, urlMap, user);
+        AccessManager accessManager = (AccessManager) servletContext.getAttribute(ACCESS_MANAGER);
+        Optional<Entry<String, List<String>>> key = accessManager.checkUrl(urlMap, url);
 
-        try {
+        if (!key.isPresent()) {
+            chain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
 
-            if (accessManager.checkAccess()) {
-                chain.doFilter(httpServletRequest, httpServletResponse);
-            }
-        } catch (NoAccessRightsException noAccessRightsException) {
-            httpServletRequest.getRequestDispatcher("jsp/403Error.jsp").forward(httpServletRequest, httpServletResponse);
-        } catch (NoUserLoginException e) {
+        if (Objects.isNull(user)) {
             session.setAttribute(PREVIOUS_URL, url);
             httpServletResponse.sendRedirect("/login");
+            return;
         }
+
+        if (accessManager.checkAccess(user, key.get().getValue())) {
+            chain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
+
+        httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
     }
 
     @Override
