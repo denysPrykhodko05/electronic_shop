@@ -50,7 +50,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.log4j.Logger;
 
-@WebServlet("/registration.do")
+@WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(RegistrationServlet.class);
@@ -109,7 +109,7 @@ public class RegistrationServlet extends HttpServlet {
 
         User user = userUtils.createUserFromBean(formBean);
 
-        if (Objects.nonNull(userService.getByLogin(user.getLogin()))) {
+        if (Objects.nonNull(userService.getUser(user.getLogin()))) {
             userUtils.checkLoginAndEmail(user, userService, errors);
             userUtils.fillUserData(formBean, userData);
             httpServletRequest.setAttribute(USER_DATA, userData);

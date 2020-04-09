@@ -61,12 +61,14 @@ public abstract class ApplicationConstants {
     public static final String CONNECTION_MANAGER = "connection manager";
     public static final String NOT_USER_ERROR = "Try again";
     public static final String PREVIOUS_URL = "prevUrl";
+    public static final String ACCESS_MANAGER = "access manager";
+    public static final String URL_MAP = "urlMap";
 
     //URL path
     public static final String HOME_URL = "/";
-    public static final String MAKE_ORDER_USER_CHECK_URL = "/makeOrderUserCheck.do";
-    public static final String REGISTRATION = "/registration.do";
-    public static final String MAKE_ORDER = "/makeOrder.do";
+    public static final String MAKE_ORDER_USER_CHECK_URL = "/makeOrderUserCheck";
+    public static final String REGISTRATION = "/registration";
+    public static final String MAKE_ORDER = "/makeOrder";
 
     //JSP link
     public static final String PRODUCT_JSP = "jsp/products.jsp";

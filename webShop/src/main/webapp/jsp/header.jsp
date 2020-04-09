@@ -20,13 +20,13 @@
 <div id="header">
   <div id="shopName"><a href="/">Electronics store</a></div>
   <div class="menu">
-    <a href="/products.do"><fmt:message key="products"/></a>
+    <a href="/products"><fmt:message key="products"/></a>
     <c:choose>
     <c:when test="${empty cartSize}">
-      <a href="/cart.do" id="cartRef"><fmt:message key="cart"/></a>
+      <a href="/cart" id="cartRef"><fmt:message key="cart"/></a>
     </c:when>
     <c:otherwise>
-      <a href="/cart.do" id="cartRef"><fmt:message key="cart"/>(${cartSize})</a>
+      <a href="/cart" id="cartRef"><fmt:message key="cart"/>(${cartSize})</a>
     </c:otherwise>
     </c:choose>
     <a href="">Something more</a>

@@ -10,7 +10,7 @@ $(document).ready( function () {
 
     if (amount > 0 && amount <= 15) {
       $.ajax({
-        url: "/addToCart.do",
+        url: "/addToCart",
         method: "POST",
         data: ({productId: id,amount:amount}),
         success: responseForAdd
@@ -22,7 +22,7 @@ $(document).ready( function () {
     var id = $(this).data(id).id;
 
     $.ajax({
-      url: "/deleteProductFromCart.do",
+      url: "/deleteProductFromCart",
       method: "POST",
       data: ({productId: id}),
       success: responseForDelete
@@ -31,7 +31,7 @@ $(document).ready( function () {
 
   clear_cart_button.click(function () {
     $.ajax({
-      url: "/clearCart.do",
+      url: "/clearCart",
       method: "POST",
       success:responseForClear
     });
@@ -39,7 +39,7 @@ $(document).ready( function () {
 
   make_order_button.click(function () {
     $.ajax({
-      url: "/makeOrderUserCheck.do",
+      url: "/makeOrderUserCheck",
       success: responseForMakeOrder
     });
   });
@@ -102,10 +102,10 @@ $(document).ready( function () {
     var success = data.success;
 
     if (success == true) {
-      window.location = "/makeOrder.do";
+      window.location = "/makeOrder";
       return;
     }
 
-    window.location = "/login.do";
+    window.location = "/login";
   }
 });
