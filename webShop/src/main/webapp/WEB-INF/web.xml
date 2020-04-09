@@ -34,15 +34,16 @@
   </context-param>
 
   <display-name>Archetype Created Web Application</display-name>
-  <listener>
-    <listener-class>com.epam.prykhodko.listener.ContextListener</listener-class>
-  </listener>
+  <filter>
+    <filter-class>com.nure.prykhodko.filter.SecurityFilter</filter-class>
+    <filter-name>SecurityFilter</filter-name>
+  </filter>
 
 
   <!-- filter for security-->
   <filter>
-    <filter-class>com.epam.prykhodko.filter.SecurityFilter</filter-class>
-    <filter-name>SecurityFilter</filter-name>
+    <filter-class>com.nure.prykhodko.filter.LogoutFilter</filter-class>
+    <filter-name>logoutFilter</filter-name>
   </filter>
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
@@ -51,8 +52,8 @@
 
   <!-- filter for logout-->
   <filter>
-    <filter-class>com.epam.prykhodko.filter.LogoutFilter</filter-class>
-    <filter-name>logoutFilter</filter-name>
+    <filter-class>com.nure.prykhodko.filter.LocaleFilter</filter-class>
+    <filter-name>localizationFilter</filter-name>
   </filter>
   <filter-mapping>
     <filter-name>logoutFilter</filter-name>
@@ -61,8 +62,8 @@
 
   <!-- filter for localization-->
   <filter>
-    <filter-class>com.epam.prykhodko.filter.LocaleFilter</filter-class>
-    <filter-name>localizationFilter</filter-name>
+    <filter-class>com.nure.prykhodko.filter.CacheFilter</filter-class>
+    <filter-name>CacheFilter</filter-name>
   </filter>
   <filter-mapping>
     <filter-name>localizationFilter</filter-name>
@@ -71,8 +72,8 @@
 
   <!-- filter for cache-->
   <filter>
-    <filter-class>com.epam.prykhodko.filter.CacheFilter</filter-class>
-    <filter-name>CacheFilter</filter-name>
+    <filter-class>com.nure.prykhodko.filter.GZipServletFilter</filter-class>
+    <filter-name>GzipFilter</filter-name>
   </filter>
 
   <filter-mapping>
@@ -86,10 +87,9 @@
     <location>/jsp/403Error.jsp</location>
   </error-page>
 
-  <filter>
-    <filter-class>com.epam.prykhodko.filter.GZipServletFilter</filter-class>
-    <filter-name>GzipFilter</filter-name>
-  </filter>
+  <listener>
+    <listener-class>com.nure.prykhodko.listener.ContextListener</listener-class>
+  </listener>
 
   <resource-ref>
     <description>DB Connection</description>

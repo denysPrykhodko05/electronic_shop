@@ -6,7 +6,7 @@
   <tag>
     <body-content>scriptless</body-content>
     <name>CartView</name>
-    <tag-class>com.epam.prykhodko.jsptag.CartViewTag</tag-class>
+    <tag-class>com.nure.prykhodko.jsptag.CartViewTag</tag-class>
   </tag>
   <tlib-version>1.0</tlib-version>
 </taglib>
